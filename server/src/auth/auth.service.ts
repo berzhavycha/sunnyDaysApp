@@ -1,5 +1,5 @@
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
-import { UsersService } from '@users';
+import { User, UsersService } from '@users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserDto } from './dtos/user.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -29,34 +29,27 @@ export class AuthService {
             expiresIn: '1h',
         });
 
-        this.refreshTokenIdsStorage.insert(user.userId, refreshToken)
+        await this.refreshTokenIdsStorage.insert(user.userId, refreshToken)
 
         return {
-            user,
             accessToken,
             refreshToken,
         };
 
     }
 
-    async signIn(loginUserDto: UserDto): Promise<AuthType> {
-        const { email, password } = loginUserDto
+    async signIn(loggedUser: User): Promise<AuthType> {
+        const { userId, email } = loggedUser
 
-        const user = await this.validateUser(email, password)
-        if (!user) {
-            throw new UnauthorizedException('Invalid email or password');
-        }
-
-        const payload = { sub: user.userId, email: user.email };
+        const payload = { sub: userId, email: email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: '1h',
         });
 
-        this.refreshTokenIdsStorage.insert(user.userId, refreshToken)
+        await this.refreshTokenIdsStorage.insert(userId, refreshToken)
 
         return {
-            user,
             accessToken: accessToken,
             refreshToken: refreshToken,
         };
@@ -73,12 +66,18 @@ export class AuthService {
 
     async refreshAccessToken(
         refreshToken: string,
-    ): Promise<{ accessToken: string }> {
+    ): Promise<AuthType> {
         const decoded = await this.jwtService.verifyAsync(refreshToken);
         await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
         const payload = { sub: decoded.sub, email: decoded.email };
         const accessToken = await this.jwtService.signAsync(payload);
-        return { accessToken: accessToken };
+        const newRefreshToken = await this.jwtService.signAsync(payload, {
+            expiresIn: '1h',
+        });
+        return { 
+            accessToken,
+            refreshToken: newRefreshToken 
+        };
     }
 
     async invalidateToken(accessToken: string): Promise<void> {

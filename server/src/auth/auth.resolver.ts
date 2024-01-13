@@ -1,10 +1,11 @@
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Resolver, Query, Context } from "@nestjs/graphql";
 import { AuthType } from "./entities/auth.type";
 import { UserDto } from './dtos/user.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtRefreshTokenGuard } from './guards/jwt-refresh-token.guard';
+import { LocalAuthGuard } from './guards';
 
 @Resolver(() => AuthType)
 export class AuthResolver {
@@ -14,28 +15,30 @@ export class AuthResolver {
 
     @Mutation(() => AuthType)
     async signUp(
-        @Args('UserDto') userDto: UserDto
+        @Args('userDto') userDto: UserDto
     ) {
         return await this.authService.signUp(userDto)
     }
 
     @Mutation(() => AuthType)
+    @UseGuards(LocalAuthGuard)
     async signIn(
-        @Args('UserDto') userDto: UserDto
+        @Args('userDto') userDto: UserDto,
+        @Context() context
     ) {
-        return await this.authService.signIn(userDto)
+        return await this.authService.signIn(context.user)
     }
 
-    // @UseGuards(JwtRefreshTokenGuard)
-    @Mutation(() => String)
+    @Mutation(() => AuthType)
+    @UseGuards(JwtRefreshTokenGuard)
     public async refreshAccess(
         @Args('refreshToken') refreshToken: string
     ) {
         return await this.authService.refreshAccessToken(refreshToken);
     }
 
-    @UseGuards(JwtAuthGuard)
     @Mutation(() => String)
+    @UseGuards(JwtAuthGuard)
     public async invalidateToken(
         @Args('authorization') authorization: string
     ) {

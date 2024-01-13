@@ -1,3 +1,4 @@
+import { JwtRefreshTokenStrategy } from './strategy/jwt.refresh-token.strategy';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersModule } from '@users';
@@ -19,6 +20,6 @@ const configService = new ConfigService()
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [AuthService, JwtStrategy, LocalStrategy, AuthResolver, RefreshTokenIdsStorage],
+  providers: [AuthService, JwtStrategy, LocalStrategy, AuthResolver, RefreshTokenIdsStorage, JwtRefreshTokenStrategy],
 })
 export class AuthModule { }

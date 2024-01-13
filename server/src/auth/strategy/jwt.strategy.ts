@@ -4,6 +4,9 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UsersService, User } from '@users';
 import { JwtPayload } from './jwt-payload.interface';
 import { ConfigService } from '@nestjs/config';
+import { config } from 'dotenv'
+
+config()
 
 const configService = new ConfigService()
 

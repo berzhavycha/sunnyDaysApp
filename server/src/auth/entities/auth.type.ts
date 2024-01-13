@@ -4,9 +4,6 @@ import { IUser } from '@users/interfaces/user.interface';
 
 @ObjectType('Auth')
 export abstract class AuthType {
-    @Field(() => User)
-    public user: IUser;
-
     @Field(() => String)
     public accessToken: string;
 
