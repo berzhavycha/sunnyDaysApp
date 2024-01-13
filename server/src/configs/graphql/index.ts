@@ -1,7 +1,7 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { GqlOptionsFactory, GqlModuleAsyncOptions } from '@nestjs/graphql';
-import { IContext } from '../interfaces/context.interface';
+import { IContext } from './context.interface';
 
 class GraphQLConfig implements GqlOptionsFactory {
   public createGqlOptions(): ApolloDriverConfig {
@@ -12,7 +12,7 @@ class GraphQLConfig implements GqlOptionsFactory {
         res,
       }),
       path: '/api/graphql',
-      autoSchemaFile: './schema.gql',
+      autoSchemaFile: 'src/configs/graphql/schema.gql',
       sortSchema: true,
       introspection: true,
     };

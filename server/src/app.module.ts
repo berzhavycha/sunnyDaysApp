@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppResolver } from './app.resolver';
-import { AppService } from './app.service';
-import { AuthModule } from '@auth/auth.module';
-import { UsersModule } from '@users/users.module';
 import { ConfigModule } from '@nestjs/config'
-import { CitiesModule } from './cities/cities.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
-import { DatabaseModule } from './database/database.module';
+import { AppService } from './app.service';
+import { AppResolver } from './app.resolver';
 import { GraphQLModule } from '@nestjs/graphql';
 import { CacheModule } from '@nestjs/cache-manager'
-import { graphqlConfigAsync } from './configs/graphql/graphql.config'
-import { RedisOptions } from './configs/redis/cache.config';
+import { graphqlConfigAsync, RedisOptions } from '@configs'
+import { AuthModule } from '@auth';
+import { UsersModule } from '@users';
+import { DatabaseModule } from '@database';
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
@@ -22,8 +19,6 @@ dotenv.config({ path: "./.env" });
     GraphQLModule.forRootAsync(graphqlConfigAsync),
     AuthModule,
     UsersModule,
-    CitiesModule,
-    SubscriptionsModule,
     DatabaseModule
   ],
   providers: [AppService, AppResolver],

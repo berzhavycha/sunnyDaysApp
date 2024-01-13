@@ -1,10 +1,10 @@
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
-import { UsersService } from './../users/users.service';
+import { UsersService } from '@users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserDto } from './dtos/user.dto';
-import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { AuthType } from './entities/auth.type';
+import * as bcrypt from 'bcrypt'
 
 
 @Injectable()
