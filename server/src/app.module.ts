@@ -7,9 +7,10 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { graphqlConfigAsync, RedisOptions } from '@configs'
 import { AuthModule, JwtAuthGuard } from '@auth';
 import { UsersModule } from '@users';
-import { DatabaseModule } from '@database';
 import { APP_GUARD } from '@nestjs/core';
 import dotenv from "dotenv";
+import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { typeOrmConfig } from '@configs';
 
 dotenv.config({ path: "./.env" });
 
@@ -18,9 +19,13 @@ dotenv.config({ path: "./.env" });
     CacheModule.registerAsync(RedisOptions),
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
     GraphQLModule.forRootAsync(graphqlConfigAsync),
+    TypeOrmModule.forRootAsync({
+      useFactory: async () => ({
+        ...typeOrmConfig as TypeOrmModuleAsyncOptions
+      })
+    }),
     AuthModule,
     UsersModule,
-    DatabaseModule
   ],
   providers: [
     AppService,

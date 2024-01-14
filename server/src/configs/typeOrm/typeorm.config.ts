@@ -1,5 +1,5 @@
 import { DataSource, DataSourceOptions } from "typeorm";
-import { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_USER } from '../global';
+import { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_USER } from '../../global';
 
 export const typeOrmConfig = {
   type: 'postgres',
