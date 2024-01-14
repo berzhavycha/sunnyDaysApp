@@ -1,20 +1,16 @@
-import { DataSource } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
-import { config } from 'dotenv';
-import { City } from '../cities/entities/city.entity';
-import { User } from '@users'; 
-import { Subscription } from '../subscriptions/entities/subscription.entity';
+import { DataSource, DataSourceOptions } from "typeorm";
+import { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_USER } from '../global';
 
-config();
- 
-const configService = new ConfigService();
- 
-export default new DataSource({
+export const typeOrmConfig = {
   type: 'postgres',
-  host: configService.get<string>('POSTGRES_HOST'),
-  username: configService.get<string>('POSTGRES_USER'),
-  password: configService.get<string>('POSTGRES_PASSWORD'),
-  database: configService.get<string>('POSTGRES_DB'),
-  entities: [User, City, Subscription],
+  host: POSTGRES_HOST,
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+  entities: [],
+  autoLoadEntities: true,
   migrations: ['./migrations/*.ts'],
-});
+  synchronize: true,
+};
+
+export const connectionSource = new DataSource(typeOrmConfig as DataSourceOptions);

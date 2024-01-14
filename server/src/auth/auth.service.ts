@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthType } from './entities/auth.type';
 import * as bcrypt from 'bcrypt'
 import { JwtPayload } from './strategy';
+import { JWT_REFRESH_TOKEN_TIME } from '@global';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class AuthService {
         const payload: JwtPayload = { sub: user.userId, email: user.email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
-            expiresIn: '1h',
+            expiresIn: JWT_REFRESH_TOKEN_TIME,
         });
 
         await this.refreshTokenIdsStorage.insert(user.userId, refreshToken)
@@ -44,7 +45,7 @@ export class AuthService {
         const payload: JwtPayload = { sub: userId, email: email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
-            expiresIn: '1h',
+            expiresIn: JWT_REFRESH_TOKEN_TIME,
         });
 
         await this.refreshTokenIdsStorage.insert(userId, refreshToken)
@@ -72,7 +73,7 @@ export class AuthService {
         const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
         const accessToken = await this.jwtService.signAsync(payload);
         const newRefreshToken = await this.jwtService.signAsync(payload, {
-            expiresIn: '1h',
+            expiresIn: JWT_REFRESH_TOKEN_TIME,
         });
         return { 
             accessToken,

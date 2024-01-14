@@ -19,7 +19,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@global": ["global/index.ts"],
+      "@global": ["./src/global"],
       "@auth": ["./src/auth"],
       "@auth/*": ["./src/auth/*"],
       "@database": ["./src/database"],

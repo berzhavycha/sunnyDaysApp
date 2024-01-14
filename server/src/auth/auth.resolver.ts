@@ -25,7 +25,7 @@ export class AuthResolver {
     @Mutation(() => AuthType)
     @UseGuards(LocalAuthGuard)
     async signIn(
-        @Args('user') userDto: UserDto,
+        @Args('userDto') userDto: UserDto,
         @CurrentUser() user: User
     ) {
         return await this.authService.signIn(user)
