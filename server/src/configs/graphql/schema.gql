@@ -9,16 +9,20 @@ type Auth {
 
 type Mutation {
   invalidateToken(authorization: String!): String!
-  refreshAccess(refreshToken: String!): Auth!
-  signIn(userDto: UserDto!): Auth!
-  signUp(userDto: UserDto!): Auth!
+  refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
+  signIn(user: userDto!): Auth!
+  signUp(userDto: userDto!): Auth!
 }
 
 type Query {
   sayHello: String!
 }
 
-input UserDto {
+input refreshTokenDto {
+  refreshToken: String!
+}
+
+input userDto {
   email: String!
   password: String!
 }
