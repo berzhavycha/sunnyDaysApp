@@ -5,6 +5,7 @@ import { UserDto } from './dtos/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthType } from './entities/auth.type';
 import * as bcrypt from 'bcrypt'
+import { JwtPayload } from './strategy';
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class AuthService {
 
         const user = await this.usersService.createUser(email, hashedPassword)
 
-        const payload = { sub: user.userId, email: user.email };
+        const payload: JwtPayload = { sub: user.userId, email: user.email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: '1h',
@@ -35,13 +36,12 @@ export class AuthService {
             accessToken,
             refreshToken,
         };
-
     }
 
-    async signIn(loggedUser: User): Promise<AuthType> {
-        const { userId, email } = loggedUser
+    async signIn(loggedInUser: User): Promise<AuthType> {
+        const { userId, email } = loggedInUser
 
-        const payload = { sub: userId, email: email };
+        const payload: JwtPayload = { sub: userId, email: email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: '1h',
@@ -69,7 +69,7 @@ export class AuthService {
     ): Promise<AuthType> {
         const decoded = await this.jwtService.verifyAsync(refreshToken);
         await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
-        const payload = { sub: decoded.sub, email: decoded.email };
+        const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
         const accessToken = await this.jwtService.signAsync(payload);
         const newRefreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: '1h',

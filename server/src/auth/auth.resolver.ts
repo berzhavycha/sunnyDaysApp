@@ -6,6 +6,8 @@ import { UserDto } from './dtos/user.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtRefreshTokenGuard } from './guards/jwt-refresh-token.guard';
 import { LocalAuthGuard } from './guards';
+import { CurrentUser } from './decorators/user.decorator';
+import { User } from '@users';
 
 @Resolver(() => AuthType)
 export class AuthResolver {
@@ -24,9 +26,9 @@ export class AuthResolver {
     @UseGuards(LocalAuthGuard)
     async signIn(
         @Args('userDto') userDto: UserDto,
-        @Context() context
+        @CurrentUser() user: User
     ) {
-        return await this.authService.signIn(context.user)
+        return await this.authService.signIn(user)
     }
 
     @Mutation(() => AuthType)
