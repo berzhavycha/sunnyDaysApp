@@ -4,7 +4,7 @@ import { AuthType } from "./entities/auth.type";
 import { UserDto, RefreshTokenDto } from './dtos';
 import { UseGuards } from '@nestjs/common';
 import { LocalAuthGuard, JwtRefreshTokenGuard, JwtAuthGuard } from './guards';
-import { CurrentUser } from './decorators';
+import { CurrentUser, Public } from './decorators';
 import { User } from '@users';
 
 @Resolver(() => AuthType)
@@ -13,6 +13,7 @@ export class AuthResolver {
         private readonly authService: AuthService
     ) { }
 
+    @Public()
     @Mutation(() => AuthType)
     async signUp(
         @Args('userDto') userDto: UserDto
@@ -20,6 +21,7 @@ export class AuthResolver {
         return await this.authService.signUp(userDto)
     }
 
+    @Public()
     @Mutation(() => AuthType)
     @UseGuards(LocalAuthGuard)
     async signIn(
@@ -29,6 +31,7 @@ export class AuthResolver {
         return await this.authService.signIn(user)
     }
 
+    @Public()
     @Mutation(() => AuthType)
     @UseGuards(JwtRefreshTokenGuard)
     public async refreshAccess(
@@ -38,7 +41,6 @@ export class AuthResolver {
     }
 
     @Mutation(() => String)
-    @UseGuards(JwtAuthGuard)
     public async invalidateToken(
         @Args('authorization') authorization: string
     ) {

@@ -5,9 +5,10 @@ import { AppResolver } from './app.resolver';
 import { GraphQLModule } from '@nestjs/graphql';
 import { CacheModule } from '@nestjs/cache-manager'
 import { graphqlConfigAsync, RedisOptions } from '@configs'
-import { AuthModule } from '@auth';
+import { AuthModule, JwtAuthGuard } from '@auth';
 import { UsersModule } from '@users';
 import { DatabaseModule } from '@database';
+import { APP_GUARD } from '@nestjs/core';
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
@@ -21,6 +22,13 @@ dotenv.config({ path: "./.env" });
     UsersModule,
     DatabaseModule
   ],
-  providers: [AppService, AppResolver],
+  providers: [
+    AppService,
+    AppResolver,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule { }
