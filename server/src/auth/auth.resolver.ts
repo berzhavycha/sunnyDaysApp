@@ -6,7 +6,7 @@ import { UserDto } from './dtos/user.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtRefreshTokenGuard } from './guards/jwt-refresh-token.guard';
 import { LocalAuthGuard } from './guards';
-import { CurrentUser } from './decorators/user.decorator';
+import { CurrentUser } from './decorators';
 import { User } from '@users';
 
 @Resolver(() => AuthType)
