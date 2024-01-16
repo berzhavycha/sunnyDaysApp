@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -9,13 +10,22 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@global": ["./src/global"],
+      "@auth": ["./src/auth"],
+      "@auth/*": ["./src/auth/*"],
+      "@configs": ["./src/configs"],
+      "@configs/*": ["./src/configs/*"],
+      "@users": ["./src/users"],
+      "@users/*": ["./src/users/*"]
+    }
   }
 }
