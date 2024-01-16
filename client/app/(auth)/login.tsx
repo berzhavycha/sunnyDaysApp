@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { Input, Button } from './components';
 import { Link } from 'expo-router';
 
 const LoginScreen = () => {
     return (
-        <View>
+        <View className='flex-1 justify-center items-center bg-gray-900'>
+            <Image
+                source={require('../../assets/images/weather-icon.png')}
+                className='w-[80px] h-[80px] mb-8'
+            />
             <Text className='text-2xl mb-8 text-white font-bold'>Welcome back!</Text>
             <Input placeholder='Email' />
             <Input placeholder='Password' />

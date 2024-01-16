@@ -1,14 +1,10 @@
-import { Slot } from 'expo-router';
-import { View, Image } from 'react-native';
+import { Stack } from 'expo-router';
 
-export default function AuthLayout() {
+export default function Layout() {
     return (
-        <View className='flex-1 justify-center items-center bg-gray-900'>
-            <Image
-                source={require('../../assets/images/weather-icon.png')}
-                className='w-[80px] h-[80px] mb-8'
-            />
-            <Slot />
-        </View>
+        <Stack>
+            <Stack.Screen name="login" options={{ headerShown: false }} />
+            <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+        </Stack>
     )
 }
