@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Input, Button } from './components';
 import { Link } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
 
 const LoginScreen = () => {
+    
     return (
         <View className='flex-1 justify-center items-center bg-gray-900'>
             <Image
