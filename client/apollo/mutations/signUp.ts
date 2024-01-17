@@ -8,3 +8,9 @@ export const SIGN_UP_MUTATION = gql`
     }
   }
 `;
+
+export const SAY_HELLO_QUERY = gql`
+  query {
+    sayHello
+  }
+`;

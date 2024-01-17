@@ -1,21 +1,29 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
-import { GRAPHQL_BASE_URL } from '@env';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setContext } from '@apollo/client/link/context';
+import * as Keychaing from 'react-native-keychain'
 
-const httpLink = new HttpLink({ uri: 'https://0bca-45-12-25-249.ngrok-free.app/api/graphql' });
 
-const authLink = new ApolloLink((operation, forward) => {
-    const token = null;
+const httpLink = new HttpLink({
+    uri: 'https://0bca-45-12-25-249.ngrok-free.app/api/graphql',
+});
 
-    operation.setContext({
-        headers: {
-            authorization: token ? `Bearer ${token}` : ''
+const authLink = setContext(async (_, { headers }) => {
+    const tokens = await AsyncStorage.getItem('tokens')
+    if (tokens) {
+        const { accessToken } = JSON.parse(tokens)
+
+        return {
+            headers: {
+                ...headers,
+                authorization: accessToken ? `Bearer ${accessToken}` : "",
+            }
         }
-    });
-
-    return forward(operation);
+    }
 });
 
 export const apolloClient = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache()
 });
+

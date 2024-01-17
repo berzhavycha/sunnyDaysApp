@@ -2,6 +2,33 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/apollo": [
+        "./apollo"
+      ],
+      "@/apollo/*": [
+        "./apollo/*"
+      ],
+      "@/app": [
+        "./app"
+      ],
+      "@/app/*": [
+        "./app/*"
+      ],
+      "@/components": [
+        "./components"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/context": [
+        "./context"
+      ],
+      "@/context/*": [
+        "./context/*"
+      ],
+    }
   },
   "include": [
     "**/*.ts",
