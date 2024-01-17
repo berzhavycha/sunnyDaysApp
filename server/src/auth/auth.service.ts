@@ -1,12 +1,12 @@
-import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
-import { User, UsersService } from '@users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserDto } from './dtos/user.dto';
+import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
+import { UserDto } from './dtos';
 import { JwtService } from '@nestjs/jwt';
-import { AuthType } from './entities/auth.type';
-import * as bcrypt from 'bcrypt'
+import { IUser, User, UsersService } from '@users';
+import { AuthType } from './entities';
 import { JwtPayload } from './strategy';
 import { JWT_REFRESH_TOKEN_TIME } from '@global';
+import * as bcrypt from 'bcrypt'
 
 
 @Injectable()
@@ -42,7 +42,7 @@ export class AuthService {
     async signIn(loggedInUser: User): Promise<AuthType> {
         const { userId, email } = loggedInUser
 
-        const payload: JwtPayload = { sub: userId, email: email };
+        const payload: JwtPayload = { sub: userId, email };
         const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: JWT_REFRESH_TOKEN_TIME,
@@ -51,12 +51,12 @@ export class AuthService {
         await this.refreshTokenIdsStorage.insert(userId, refreshToken)
 
         return {
-            accessToken: accessToken,
-            refreshToken: refreshToken,
+            accessToken,
+            refreshToken,
         };
     }
 
-    async validateUser(email: string, password: string) {
+    async validateUser(email: string, password: string): Promise<IUser | null> {
         const user = await this.usersService.findByEmail(email);
         if (user && (await bcrypt.compare(password, user.passwordHash))) {
             const { passwordHash, ...result } = user;
@@ -75,9 +75,9 @@ export class AuthService {
         const newRefreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: JWT_REFRESH_TOKEN_TIME,
         });
-        return { 
+        return {
             accessToken,
-            refreshToken: newRefreshToken 
+            refreshToken: newRefreshToken
         };
     }
 

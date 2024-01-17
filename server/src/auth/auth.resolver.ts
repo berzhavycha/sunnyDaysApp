@@ -1,9 +1,9 @@
-import { AuthService } from './auth.service';
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { AuthType } from "./entities/auth.type";
-import { UserDto, RefreshTokenDto } from './dtos';
 import { UseGuards } from '@nestjs/common';
-import { LocalAuthGuard, JwtRefreshTokenGuard, JwtAuthGuard } from './guards';
+import { AuthService } from './auth.service';
+import { AuthType } from "./entities";
+import { UserDto, RefreshTokenDto } from './dtos';
+import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { CurrentUser, Public } from './decorators';
 import { User } from '@users';
 
@@ -17,7 +17,7 @@ export class AuthResolver {
     @Mutation(() => AuthType)
     async signUp(
         @Args('userDto') userDto: UserDto
-    ) {
+    ): Promise<AuthType> {
         return await this.authService.signUp(userDto)
     }
 
@@ -25,9 +25,9 @@ export class AuthResolver {
     @Mutation(() => AuthType)
     @UseGuards(LocalAuthGuard)
     async signIn(
-        @Args('userDto') userDto: UserDto,
+        @Args('userDto') _userDto: UserDto,
         @CurrentUser() user: User
-    ) {
+    ): Promise<AuthType> {
         return await this.authService.signIn(user)
     }
 
@@ -36,14 +36,14 @@ export class AuthResolver {
     @UseGuards(JwtRefreshTokenGuard)
     public async refreshAccess(
         @Args('refreshTokenDto') refreshTokenDto: RefreshTokenDto
-    ) {
+    ): Promise<AuthType> {
         return await this.authService.refreshAccessToken(refreshTokenDto.refreshToken);
     }
 
     @Mutation(() => String)
     public async invalidateToken(
         @Args('authorization') authorization: string
-    ) {
+    ): Promise<void> {
         const token = authorization.split(' ')[1];
         await this.authService.invalidateToken(token);
     }
