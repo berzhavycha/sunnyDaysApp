@@ -5,7 +5,7 @@ import * as Keychaing from 'react-native-keychain'
 
 
 const httpLink = new HttpLink({
-    uri: 'https://0bca-45-12-25-249.ngrok-free.app/api/graphql',
+    uri: 'https://21d4-194-44-70-13.ngrok-free.app/api/graphql',
 });
 
 const authLink = setContext(async (_, { headers }) => {

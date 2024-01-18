@@ -1,5 +1,5 @@
-import { ApolloClient, ApolloError } from "@apollo/client";
-import { FieldErrors } from "../sign-up";
+import { ApolloError } from "@apollo/client";
+import { FieldErrors } from "@/app/(auth)/sign-up";
 
 export const fieldsErrorHandler = (errors: ApolloError): FieldErrors => {
     const fieldErrors = {
