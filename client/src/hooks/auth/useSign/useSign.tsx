@@ -5,6 +5,7 @@ import { fieldsErrorHandler } from "@/apollo";
 import { FieldErrors } from "@/app/(auth)/sign-up";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
+import { AuthType } from "./constants";
 
 export interface userDto {
   email: string;
@@ -20,7 +21,7 @@ export interface IUseSign {
 export const useSign = (
   mutation: DocumentNode,
   setFieldsError: Dispatch<SetStateAction<FieldErrors>>,
-  signType: "signIn" | "signUp",
+  signType: AuthType,
 ): IUseSign => {
   const router = useRouter();
   const [signMutation, { loading, error }] = useMutation(mutation);
