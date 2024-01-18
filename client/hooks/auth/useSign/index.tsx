@@ -4,7 +4,8 @@ import { Dispatch, SetStateAction } from "react";
 import { fieldsErrorHandler } from "../../../apollo/utils";
 import { FieldErrors } from "../../../app/(auth)/sign-up";
 import { useRouter } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 export interface userDto {
   email: string;
@@ -37,7 +38,12 @@ export const useSign = (
         refreshToken,
       }));
 
-      await AsyncStorage.setItem(
+      // await AsyncStorage.setItem(
+      //   "tokens",
+      //   JSON.stringify({ accessToken, refreshToken }),
+      // );
+
+      await SecureStore.setItemAsync(
         "tokens",
         JSON.stringify({ accessToken, refreshToken }),
       );

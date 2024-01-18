@@ -29,7 +29,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         className="w-[80px] h-[80px] mb-8"
       />
       <Text
-        className={`text-2xl mb-${subTitle ? "2" : "5"} text-white font-bold`}
+        className={`text-2xl mb-${subTitle ? "2" : "6"} text-white font-bold`}
       >
         {title}
       </Text>
@@ -51,7 +51,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         placeholder="Password"
         icon="lock"
         error={fieldsError.password}
-        isSecured={true}
+        isSecured
       />
       {confirmPassword !== undefined && (
         <Input
@@ -60,7 +60,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           placeholder="Confirm Password"
           icon="key"
           error={fieldsError.confirmPassword as string}
-          isSecured={true}
+          isSecured
         />
       )}
       <Button text={actionButtonText} onPress={handleAuth} />
@@ -68,14 +68,14 @@ export const AuthForm: FC<AuthFormProps> = ({
         {actionButtonText === "Login" ? (
           <Text className="text-gray-400 mt-8">
             Don`t have an account?{" "}
-            <Link href={"/sign-up/"} className="font-bold text-blue-500">
+            <Link href="/sign-up/" className="font-bold text-blue-500">
               Sign Up
             </Link>
           </Text>
         ) : (
           <Text className="text-gray-400 mt-8">
             Have an account?{" "}
-            <Link href={"/login/"} className="font-bold text-blue-500">
+            <Link href="/login/" className="font-bold text-blue-500">
               Login
             </Link>
           </Text>
