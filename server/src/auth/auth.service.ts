@@ -66,22 +66,17 @@ export class AuthService {
   }
 
   async refreshAccessToken(refreshToken: string): Promise<AuthType> {
-    try {
-      console.log('logo')
-      const decoded = await this.jwtService.verifyAsync(refreshToken);
-      await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
-      const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
-      const accessToken = await this.jwtService.signAsync(payload);
-      const newRefreshToken = await this.jwtService.signAsync(payload, {
-        expiresIn: JWT_REFRESH_TOKEN_TIME,
-      });
-      return {
-        accessToken,
-        refreshToken: newRefreshToken,
-      };
-    } catch (error) {
-      console.log(error)      
-    }
+    const decoded = await this.jwtService.verifyAsync(refreshToken);
+    await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
+    const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
+    const accessToken = await this.jwtService.signAsync(payload);
+    const newRefreshToken = await this.jwtService.signAsync(payload, {
+      expiresIn: JWT_REFRESH_TOKEN_TIME,
+    });
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
+    };
   }
 
   async invalidateToken(accessToken: string): Promise<void> {
