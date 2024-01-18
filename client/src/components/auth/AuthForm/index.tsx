@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { AuthFormProps } from "./authForm.interface";
+import { AuthType } from "@/hooks";
 
 export const AuthForm: FC<AuthFormProps> = ({
   title,
@@ -65,7 +66,7 @@ export const AuthForm: FC<AuthFormProps> = ({
       )}
       <Button text={actionButtonText} onPress={handleAuth} />
       <View>
-        {actionButtonText === "Login" ? (
+        {actionButtonText === AuthType.SIGN_IN ? (
           <Text className="text-gray-400 mt-8">
             Don`t have an account?{" "}
             <Link href="/sign-up/" className="font-bold text-blue-500">
@@ -75,7 +76,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         ) : (
           <Text className="text-gray-400 mt-8">
             Have an account?{" "}
-            <Link href="/login/" className="font-bold text-blue-500">
+            <Link href="/sign-in/" className="font-bold text-blue-500">
               Login
             </Link>
           </Text>

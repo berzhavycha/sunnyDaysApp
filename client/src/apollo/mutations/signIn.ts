@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const LOGIN_MUTATION = gql`
-  mutation login($userDto: userDto!) {
+export const SIGN_IN_MUTATION = gql`
+  mutation SignIn($userDto: userDto!) {
     signIn(userDto: $userDto) {
       accessToken
       refreshToken

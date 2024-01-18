@@ -1,3 +1,4 @@
+import { AuthType } from "@/hooks";
 import { Dispatch, SetStateAction } from "react";
 
 export interface AuthFormProps {
@@ -17,5 +18,5 @@ export interface AuthFormProps {
     };
   };
   handleAuth: () => Promise<void>;
-  actionButtonText: "Login" | "Sign Up";
+  actionButtonText: AuthType;
 }

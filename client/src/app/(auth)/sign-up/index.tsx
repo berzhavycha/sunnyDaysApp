@@ -56,7 +56,7 @@ const SignUpScreen = (): JSX.Element => {
       subTitle="Please fill in the form to continue"
       fields={fields}
       handleAuth={handleSignUp}
-      actionButtonText="Sign Up"
+      actionButtonText={AuthType.SIGN_UP}
     />
   );
 };
