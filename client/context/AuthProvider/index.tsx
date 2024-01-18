@@ -7,7 +7,6 @@ import {
   useState,
   useContext,
 } from "react";
-import * as Keychain from "react-native-keychain";
 
 interface AuthState {
   accessToken: string | null;
@@ -40,7 +39,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   });
 
   const logout = async () => {
-    await Keychain.resetGenericPassword();
     setAuthState({
       accessToken: null,
       refreshToken: null,
