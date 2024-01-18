@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { AuthType } from "./entities/auth.type";
 import { UserDto, RefreshTokenDto } from './dtos';
 import { UseGuards } from '@nestjs/common';
@@ -26,9 +26,9 @@ export class AuthResolver {
     @UseGuards(LocalAuthGuard)
     async signIn(
         @Args('userDto') userDto: UserDto,
-        @CurrentUser() user: User
+        @Context() context
     ) {
-        return await this.authService.signIn(user)
+        return await this.authService.signIn(context.user)
     }
 
     @Public()

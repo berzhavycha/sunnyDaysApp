@@ -75,9 +75,9 @@ export class AuthService {
         const newRefreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: JWT_REFRESH_TOKEN_TIME,
         });
-        return { 
+        return {
             accessToken,
-            refreshToken: newRefreshToken 
+            refreshToken: newRefreshToken
         };
     }
 
