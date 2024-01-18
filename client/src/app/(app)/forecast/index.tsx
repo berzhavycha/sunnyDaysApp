@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
-import { View, Text, Image } from "react-native";
-import { SAY_HELLO_QUERY } from "../../apollo";
+import React from "react";
+import { View, Text } from "react-native";
+import { SAY_HELLO_QUERY } from "@/apollo";
 
-const ForecastScreen = () => {
+const ForecastScreen = (): JSX.Element => {
   const { loading, error, data } = useQuery(SAY_HELLO_QUERY);
 
   if (loading) return <Text>Loading...</Text>;

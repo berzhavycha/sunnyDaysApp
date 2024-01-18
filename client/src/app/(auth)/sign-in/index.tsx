@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Spinner, AuthForm } from "@/components";
-import { AuthType, useSign } from "@/hooks";
+import { AuthType, ResponseSignType, useSign } from "@/hooks";
 import { SIGN_IN_MUTATION } from "@/apollo";
 import { FieldErrors } from "../sign-up";
 
@@ -14,7 +14,7 @@ const SignInScreen = (): JSX.Element => {
   const { loading, handleAuth } = useSign(
     SIGN_IN_MUTATION,
     setFieldsError,
-    AuthType.SIGN_IN,
+    ResponseSignType.SIGN_IN,
   );
 
   if (loading) {

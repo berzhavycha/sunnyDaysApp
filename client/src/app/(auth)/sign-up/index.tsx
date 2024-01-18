@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AuthType, useSign } from "@/hooks";
+import { AuthType, ResponseSignType, useSign } from "@/hooks";
 import { Spinner, AuthForm } from "@/components";
 import { SIGN_UP_MUTATION } from "@/apollo";
 
@@ -22,7 +22,7 @@ const SignUpScreen = (): JSX.Element => {
   const { loading, handleAuth } = useSign(
     SIGN_UP_MUTATION,
     setFieldsError,
-    AuthType.SIGN_UP,
+    ResponseSignType.SIGN_UP,
   );
 
   const handleSignUp = async (): Promise<void> => {

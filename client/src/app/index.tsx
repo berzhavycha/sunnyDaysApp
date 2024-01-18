@@ -1,8 +1,7 @@
-import React from "react";
-import { Redirect } from "expo-router";
+import { Spinner } from "@/components";
 
-const Index = (): JSX.Element => {
-  return <Redirect href="/(auth)/sign-in" />;
+const StartPage = (): JSX.Element => {
+  return <Spinner />;
 };
 
-export default Index;
+export default StartPage;

@@ -4,7 +4,7 @@ import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
 
 const httpLink = new HttpLink({
-  uri: REACT_APP_GRAPHQL_BASE_URL,
+  uri: "https://e2dc-194-44-70-13.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {

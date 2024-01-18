@@ -1,14 +1,35 @@
+import { apolloClient } from "@/apollo";
+import { AuthProvider, useAuth } from "@/context";
 import { ApolloProvider } from "@apollo/client";
-import { apolloClient } from "../apollo";
-import { AuthProvider } from "../context";
-import { Slot } from "expo-router";
+import { Slot, useRouter, useSegments } from "expo-router";
+import { useEffect } from "react";
 
-export default function Root(): JSX.Element {
+const InitialLayout = (): JSX.Element => {
+  const { authState } = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
+
+  const inAppSegment = segments[0] === "(app)";
+
+  useEffect(() => {
+    if (authState.authenticated && !inAppSegment) {
+      router.replace("/forecast/");
+    } else if (!authState.authenticated) {
+      router.replace("/sign-in/");
+    }
+  }, [authState]);
+
+  return <Slot />;
+};
+
+const RootLayout = (): JSX.Element => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <AuthProvider>
-        <Slot />
-      </AuthProvider>
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloProvider client={apolloClient}>
+        <InitialLayout />
+      </ApolloProvider>
+    </AuthProvider>
   );
-}
+};
+
+export default RootLayout;
