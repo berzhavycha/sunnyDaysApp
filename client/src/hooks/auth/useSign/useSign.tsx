@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { fieldsErrorHandler } from "@/apollo";
 import { FieldErrors } from "@/app/(auth)/sign-up";
 import * as SecureStore from "expo-secure-store";
-import { ResponseSignType } from "./constants";
+import { AuthType } from "./constants";
 
 export interface userDto {
   email: string;
@@ -20,7 +20,7 @@ export interface IUseSign {
 export const useSign = (
   mutation: DocumentNode,
   setFieldsError: Dispatch<SetStateAction<FieldErrors>>,
-  signType: ResponseSignType,
+  signType: AuthType,
 ): IUseSign => {
   const [signMutation, { loading, error }] = useMutation(mutation);
   const { setAuthState } = useAuth();
@@ -34,6 +34,8 @@ export const useSign = (
       });
 
       const { accessToken, refreshToken } = data[signType];
+
+      console.log(refreshToken);
 
       await SecureStore.setItemAsync("tokens", JSON.stringify({ accessToken, refreshToken }));
 
