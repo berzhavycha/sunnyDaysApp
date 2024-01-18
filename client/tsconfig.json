@@ -42,6 +42,18 @@
       ],
       "@/global": [
         "./src/global"
+      ],
+      "@/regex/*": [
+        "./src/regex/*"
+      ],
+      "@/regex": [
+        "./src/regex"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/utils": [
+        "./src/utils"
       ]
     }
   },

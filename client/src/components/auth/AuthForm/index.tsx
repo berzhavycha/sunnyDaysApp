@@ -5,6 +5,7 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { AuthFormProps } from "./authForm.interface";
 import { AuthType } from "@/hooks";
+import { convertPascalCaseToSpaced } from "@/utils";
 
 export const AuthForm: FC<AuthFormProps> = ({
   title,
@@ -64,7 +65,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           isSecured
         />
       )}
-      <Button text={actionButtonText} onPress={handleAuth} />
+      <Button text={convertPascalCaseToSpaced(actionButtonText)} onPress={handleAuth} />
       <View>
         {actionButtonText === AuthType.SIGN_IN ? (
           <Text className="text-gray-400 mt-8">
@@ -77,7 +78,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           <Text className="text-gray-400 mt-8">
             Have an account?{" "}
             <Link href="/sign-in/" className="font-bold text-blue-500">
-              Login
+              Sign In
             </Link>
           </Text>
         )}
