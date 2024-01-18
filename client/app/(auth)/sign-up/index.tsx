@@ -1,60 +1,65 @@
-import React, { useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import { Link } from 'expo-router';
-import { useSign } from '@/hooks';
-import { Input, Button, Spinner, AuthForm } from '@/components';
-import { SIGN_UP_MUTATION } from '@/apollo';
+import React, { useState } from "react";
+import { View, Text, Image } from "react-native";
+import { Link } from "expo-router";
+import { useSign } from "@/hooks";
+import { Input, Button, Spinner, AuthForm } from "@/components";
+import { SIGN_UP_MUTATION } from "@/apollo";
 
 export type FieldErrors = {
-    email: string,
-    password: string,
-    confirmPassword?: string
-}
+  email: string;
+  password: string;
+  confirmPassword?: string;
+};
 
 const SignUpScreen = () => {
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [confirmPassword, setConfirmPassword] = useState<string>('')
-    const [fieldsError, setFieldsError] = useState<FieldErrors>({
-        email: '',
-        password: '',
-        confirmPassword: ''
-    })
-    const { loading, handleAuth } = useSign(SIGN_UP_MUTATION, setFieldsError, "signUp")
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [fieldsError, setFieldsError] = useState<FieldErrors>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const { loading, handleAuth } = useSign(
+    SIGN_UP_MUTATION,
+    setFieldsError,
+    "signUp",
+  );
 
-    const handleSignUp = async () => {
-        if (confirmPassword != password) {
-            setFieldsError(prevState => ({
-                ...prevState,
-                confirmPassword: 'Passwords doesn`t match'
-            }))
-            return
-        }
-        await handleAuth({ email, password })
+  const handleSignUp = async () => {
+    if (confirmPassword != password) {
+      setFieldsError((prevState) => ({
+        ...prevState,
+        confirmPassword: "Passwords doesn`t match",
+      }));
+      return;
     }
+    await handleAuth({ email, password });
+  };
 
-    if (loading) { return <Spinner /> }
+  if (loading) {
+    return <Spinner />;
+  }
 
-    const fields = {
-        email,
-        setEmail,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
-        fieldsError,
-    };
+  const fields = {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    fieldsError,
+  };
 
-
-    return (
-        <AuthForm
-            title={'Create New Account'}
-            subTitle='Please fill in the form to continue'
-            fields={fields}
-            handleAuth={handleSignUp}
-            actionButtonText={'Sign Up'}
-        />
-    );
+  return (
+    <AuthForm
+      title={"Create New Account"}
+      subTitle="Please fill in the form to continue"
+      fields={fields}
+      handleAuth={handleSignUp}
+      actionButtonText={"Sign Up"}
+    />
+  );
 };
 
 export default SignUpScreen;
