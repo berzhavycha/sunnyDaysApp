@@ -38,14 +38,14 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     refreshToken: null,
   });
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     setAuthState({
       accessToken: null,
       refreshToken: null,
     });
   };
 
-  const getAccessToken = () => {
+  const getAccessToken = (): string | null => {
     return authState.accessToken;
   };
 

@@ -8,12 +8,8 @@ export const fieldsErrorHandler = (errors: ApolloError): FieldErrors => {
   };
 
   errors.graphQLErrors.forEach((graphQLError) => {
-    if (
-      graphQLError.extensions?.code === "BAD_REQUEST" &&
-      graphQLError.extensions?.originalError?.message
-    ) {
-      const inputErrorMessages = graphQLError.extensions.originalError
-        .message as string[];
+    if (graphQLError.extensions?.code === "BAD_REQUEST" && graphQLError.extensions?.originalError?.message) {
+      const inputErrorMessages = graphQLError.extensions.originalError.message as string[];
 
       inputErrorMessages.forEach((error) => {
         console.log(error);

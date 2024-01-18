@@ -29,7 +29,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         className="w-[80px] h-[80px] mb-8"
       />
       <Text
-        className={`text-2xl mb-${subTitle ? "2" : "6"} text-white font-bold`}
+        className={`text-2xl mb-${subTitle !== undefined ? "2" : "8"} text-white font-bold`}
       >
         {title}
       </Text>

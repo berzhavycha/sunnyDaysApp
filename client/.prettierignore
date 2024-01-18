@@ -3,4 +3,3 @@ package.json
 assets/**
 .vscode
 .expo-shared
-.prettirrc

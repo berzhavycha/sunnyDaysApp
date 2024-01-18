@@ -5,45 +5,48 @@
     "baseUrl": ".",
     "paths": {
       "@/apollo": [
-        "./apollo"
+        "./src/apollo"
       ],
       "@/apollo/*": [
-        "./apollo/*"
+        "./src/apollo/*"
       ],
       "@/app": [
-        "./app"
+        "./src/app"
       ],
       "@/app/*": [
-        "./app/*"
+        "./src/app/*"
       ],
       "@/components": [
-        "./components"
+        "./src/components"
       ],
       "@/components/*": [
-        "./components/*"
+        "./src/components/*"
       ],
       "@/context": [
-        "./context"
+        "./src/context"
       ],
       "@/context/*": [
-        "./context/*"
+        "./src/context/*"
       ],
       "@/assets": [
-        "./assets"
+        "./src/assets"
       ],
       "@/assets/*": [
-        "./assets/*"
+        "./src/assets/*"
       ],
       "@/hooks": [
-        "./hooks"
+        "./src/hooks"
       ],
       "@/hooks/*": [
-        "./hooks/*"
+        "./src/hooks/*"
+      ],
+      "@/global": [
+        "./src/global"
       ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "index.tsx"  ]
 }

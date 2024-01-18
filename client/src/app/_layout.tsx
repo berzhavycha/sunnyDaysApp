@@ -3,7 +3,7 @@ import { apolloClient } from "../apollo";
 import { AuthProvider } from "../context";
 import { Slot } from "expo-router";
 
-export default function Root() {
+export default function Root(): JSX.Element {
   return (
     <ApolloProvider client={apolloClient}>
       <AuthProvider>

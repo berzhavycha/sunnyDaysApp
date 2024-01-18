@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Spinner, AuthForm } from "@/components";
 import { useSign } from "@/hooks";
-import { FieldErrors } from "../sign-up";
 import { LOGIN_MUTATION } from "@/apollo";
+import { FieldErrors } from "../sign-up";
 
-const LoginScreen = () => {
+const LoginScreen = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [fieldsError, setFieldsError] = useState<FieldErrors>({

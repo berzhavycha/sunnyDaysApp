@@ -1,10 +1,9 @@
 import { ApolloError, DocumentNode, useMutation } from "@apollo/client";
-import { useAuth } from "../../../context";
+import { useAuth } from "@/context";
 import { Dispatch, SetStateAction } from "react";
-import { fieldsErrorHandler } from "../../../apollo/utils";
-import { FieldErrors } from "../../../app/(auth)/sign-up";
+import { fieldsErrorHandler } from "@/apollo";
+import { FieldErrors } from "@/app/(auth)/sign-up";
 import { useRouter } from "expo-router";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
 
 export interface userDto {
@@ -12,23 +11,28 @@ export interface userDto {
   password: string;
 }
 
+export interface IUseSign {
+  loading: boolean;
+  error: ApolloError | undefined;
+  handleAuth: (userDto: userDto) => Promise<void>;
+}
+
 export const useSign = (
   mutation: DocumentNode,
   setFieldsError: Dispatch<SetStateAction<FieldErrors>>,
   signType: "signIn" | "signUp",
-) => {
+): IUseSign => {
   const router = useRouter();
   const [signMutation, { loading, error }] = useMutation(mutation);
   const { setAuthState } = useAuth();
 
-  const handleAuth = async (userDto: userDto) => {
+  const handleAuth = async (userDto: userDto): Promise<void> => {
     try {
       const { data } = await signMutation({
         variables: {
           userDto,
         },
       });
-      console.log("DATA:", data);
 
       const { accessToken, refreshToken } = data[signType];
 
@@ -37,11 +41,6 @@ export const useSign = (
         accessToken,
         refreshToken,
       }));
-
-      // await AsyncStorage.setItem(
-      //   "tokens",
-      //   JSON.stringify({ accessToken, refreshToken }),
-      // );
 
       await SecureStore.setItemAsync(
         "tokens",

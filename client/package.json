@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "main": "expo-router/entry",
+  "main": "index",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --tunnel",
@@ -50,6 +50,7 @@
     "jest": "^29.2.1",
     "jest-expo": "~49.0.0",
     "prettier": "^3.2.4",
+    "react-native-config": "^1.5.1",
     "react-native-dotenv": "^3.4.9",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "^3.3.2",
