@@ -2,11 +2,63 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/apollo": [
+        "./src/apollo"
+      ],
+      "@/apollo/*": [
+        "./src/apollo/*"
+      ],
+      "@/app": [
+        "./src/app"
+      ],
+      "@/app/*": [
+        "./src/app/*"
+      ],
+      "@/components": [
+        "./src/components"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/context": [
+        "./src/context"
+      ],
+      "@/context/*": [
+        "./src/context/*"
+      ],
+      "@/assets": [
+        "./src/assets"
+      ],
+      "@/assets/*": [
+        "./src/assets/*"
+      ],
+      "@/hooks": [
+        "./src/hooks"
+      ],
+      "@/hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@/global": [
+        "./src/global"
+      ],
+      "@/regex/*": [
+        "./src/regex/*"
+      ],
+      "@/regex": [
+        "./src/regex"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/utils": [
+        "./src/utils"
+      ]
+    }
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+    "**/*.tsx"
+, "index.tsx"  ]
 }
