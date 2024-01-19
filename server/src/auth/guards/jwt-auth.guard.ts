@@ -1,15 +1,14 @@
-import { Injectable, ExecutionContext } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { GqlExecutionContext } from '@nestjs/graphql'
-import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '@auth/decorators';
+import { Injectable, ExecutionContext } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { GqlExecutionContext } from "@nestjs/graphql";
+import { Reflector } from "@nestjs/core";
+import { IS_PUBLIC_KEY } from "@auth/decorators";
+import { Observable } from "rxjs";
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor(
-    private readonly reflector: Reflector,
-  ) {
-    super()
+export class JwtAuthGuard extends AuthGuard("jwt") {
+  constructor(private readonly reflector: Reflector) {
+    super();
   }
 
   getRequest(context: ExecutionContext): Request {
@@ -17,7 +16,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return ctx.getContext().req;
   }
 
-  canActivate(context: ExecutionContext) {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -27,5 +28,4 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
     return super.canActivate(context);
   }
-
 }
