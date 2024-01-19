@@ -7,6 +7,7 @@ import { AuthType } from "./entities";
 import { JwtPayload } from "./strategy";
 import { JWT_REFRESH_TOKEN_TIME } from "@global";
 import * as bcrypt from "bcrypt";
+import { DUPLICATE_EMAIL_ERROR_CODE } from "./constants";
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,7 @@ export class AuthService {
         refreshToken,
       };
     } catch (error) {
-      if (error.code === '23505') {
+      if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
         throw new Error('Email is already in use.');
     } else {
         throw error;
