@@ -17,15 +17,15 @@ export class AuthResolver {
     return await this.authService.signUp(userDto);
   }
 
-  @Public()
-  @Mutation(() => AuthType)
-  @UseGuards(LocalAuthGuard)
-  async signIn(
-    @Args("userDto") _userDto: UserDto,
-    @CurrentUser() user: User,
-  ): Promise<AuthType> {
-    return await this.authService.signIn(user);
-  }
+    @Public()
+    @Mutation(() => AuthType)
+    @UseGuards(LocalAuthGuard)
+    async signIn(
+        @Args('userDto') userDto: UserDto,
+        @Context() context
+    ) {
+        return await this.authService.signIn(context.user)
+    }
 
   @Public()
   @Mutation(() => AuthType)
