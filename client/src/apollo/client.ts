@@ -7,7 +7,7 @@ import { refreshAccessToken } from "./utils/refreshAccessToken";
 import { GraphQLError } from "graphql";
 
 const httpLink = new HttpLink({
-  uri: "https://e2dc-194-44-70-13.ngrok-free.app/api/graphql",
+  uri: "https://3d01-194-44-70-13.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (operation, { headers }) => {
