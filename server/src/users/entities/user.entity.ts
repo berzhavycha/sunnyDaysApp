@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Field, ObjectType } from '@nestjs/graphql';
-import { IUser } from '@users/interfaces/user.interface';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Field, ObjectType } from "@nestjs/graphql";
+import { IUser } from "../interfaces";
 
-@ObjectType('User')
-@Entity({ name: 'users' })
+@ObjectType("User")
+@Entity({ name: "users" })
 export class User implements IUser {
   @Field(() => String)
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   userId: string;
 
   @Field(() => String)
