@@ -28,3 +28,5 @@ export const REDIS_PORT = configService.get<string>("REDIS_PORT");
 export const LOGIN_FIELD = configService.get<string>("LOGIN_FIELD");
 
 export const PORT = configService.get<string>("PORT");
+
+export const PASSWORD_MIN_LENGTH = configService.get<number>("PASSWORD_MIN_LENGTH");
