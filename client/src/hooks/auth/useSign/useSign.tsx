@@ -35,8 +35,6 @@ export const useSign = (
 
       const { accessToken, refreshToken } = data[signType];
 
-      console.log(refreshToken);
-
       await SecureStore.setItemAsync("tokens", JSON.stringify({ accessToken, refreshToken }));
 
       setFieldsError({ email: "", password: "", confirmPassword: "" });
@@ -44,10 +42,11 @@ export const useSign = (
       setAuthState({
         accessToken,
         refreshToken,
-        authenticated: true,
+        isAuthenticated: true,
       });
     } catch (error) {
       if (error instanceof ApolloError) {
+        console.log("ERROR", error)
         const fieldErrors = fieldsErrorHandler(error);
         setFieldsError((prevState) => ({
           ...prevState,

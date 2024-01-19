@@ -9,8 +9,7 @@ import { AuthModule, JwtAuthGuard } from "@auth";
 import { UsersModule } from "@users";
 import { APP_GUARD } from "@nestjs/core";
 import dotenv from "dotenv";
-import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { typeOrmConfig } from '@configs';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitiesModule } from './cities/cities.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
@@ -36,4 +35,4 @@ dotenv.config({ path: "./.env" });
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

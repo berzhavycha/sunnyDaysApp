@@ -17,25 +17,33 @@ export class AuthService {
   ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthType> {
-    const { email, password } = registerUserDto;
-
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const user = await this.usersService.createUser(email, hashedPassword);
-
-    const payload: JwtPayload = { sub: user.userId, email: user.email };
-    const accessToken = await this.jwtService.signAsync(payload);
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      expiresIn: JWT_REFRESH_TOKEN_TIME,
-    });
-
-    await this.refreshTokenIdsStorage.insert(user.userId, refreshToken);
-
-    return {
-      accessToken,
-      refreshToken,
-    };
+    try {
+      const { email, password } = registerUserDto;
+  
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
+  
+      const user = await this.usersService.createUser(email, hashedPassword);
+  
+      const payload: JwtPayload = { sub: user.userId, email: user.email };
+      const accessToken = await this.jwtService.signAsync(payload);
+      const refreshToken = await this.jwtService.signAsync(payload, {
+        expiresIn: JWT_REFRESH_TOKEN_TIME,
+      });
+  
+      await this.refreshTokenIdsStorage.insert(user.userId, refreshToken);
+  
+      return {
+        accessToken,
+        refreshToken,
+      };
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new Error('Email is already in use.');
+    } else {
+        throw error;
+    }      
+    }
   }
 
   async signIn(loggedInUser: User): Promise<AuthType> {

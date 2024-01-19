@@ -12,9 +12,9 @@ const InitialLayout = (): JSX.Element => {
   const inAppSegment = segments[0] === "(app)";
 
   useEffect(() => {
-    if (authState.authenticated && !inAppSegment) {
+    if (authState.isAuthenticated && !inAppSegment) {
       router.replace("/forecast/");
-    } else if (!authState.authenticated) {
+    } else if (!authState.isAuthenticated) {
       router.replace("/sign-in/");
     }
   }, [authState]);

@@ -13,12 +13,11 @@ import * as SecureStore from "expo-secure-store";
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
-  authenticated: boolean;
+  isAuthenticated: boolean;
 }
 
 interface AuthContextType {
   authState: AuthState;
-  getAccessToken: () => string | null;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
   onLogout: () => void;
 }
@@ -39,7 +38,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
     accessToken: null,
     refreshToken: null,
-    authenticated: false,
+    isAuthenticated: false,
   });
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         setAuthState({
           accessToken,
           refreshToken,
-          authenticated: true,
+          isAuthenticated: true,
         });
       }
     };
@@ -66,17 +65,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setAuthState({
       accessToken: null,
       refreshToken: null,
-      authenticated: false,
+      isAuthenticated: false,
     });
-  };
-
-  const getAccessToken = (): string | null => {
-    return authState.accessToken;
   };
 
   const contextValue: AuthContextType = {
     authState,
-    getAccessToken,
     setAuthState,
     onLogout,
   };
