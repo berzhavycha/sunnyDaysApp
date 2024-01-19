@@ -9,7 +9,10 @@ import { AuthModule, JwtAuthGuard } from "@auth";
 import { UsersModule } from "@users";
 import { APP_GUARD } from "@nestjs/core";
 import dotenv from "dotenv";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { typeOrmConfig } from '@configs';
+import { CitiesModule } from './cities/cities.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 dotenv.config({ path: "./.env" });
 
@@ -21,6 +24,8 @@ dotenv.config({ path: "./.env" });
     TypeOrmModule.forRootAsync(typeOrmOptions),
     AuthModule,
     UsersModule,
+    CitiesModule,
+    SubscriptionsModule,
   ],
   providers: [
     AppService,
