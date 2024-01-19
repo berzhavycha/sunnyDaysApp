@@ -39,7 +39,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => String)
-  public async invalidateToken(
+  public async signOut(
     @Args("authorization") authorization: string,
   ): Promise<void> {
     const token = authorization.split(" ")[1];

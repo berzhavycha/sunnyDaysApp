@@ -19,7 +19,7 @@ interface AuthState {
 interface AuthContextType {
   authState: AuthState;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
-  onLogout: () => void;
+  onSignOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -59,7 +59,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     // loadTokens();
   }, []);
 
-  const onLogout = async (): Promise<void> => {
+  const onSignOut = async (): Promise<void> => {
     await SecureStore.deleteItemAsync("tokens");
 
     setAuthState({
@@ -72,7 +72,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const contextValue: AuthContextType = {
     authState,
     setAuthState,
-    onLogout,
+    onSignOut,
   };
 
   return (

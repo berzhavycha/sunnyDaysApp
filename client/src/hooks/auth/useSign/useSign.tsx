@@ -13,7 +13,6 @@ export interface userDto {
 
 export interface IUseSign {
   loading: boolean;
-  error: ApolloError | undefined;
   handleAuth: (userDto: userDto) => Promise<void>;
 }
 
@@ -22,14 +21,15 @@ export const useSign = (
   setFieldsError: Dispatch<SetStateAction<FieldErrors>>,
   signType: AuthType,
 ): IUseSign => {
-  const [signMutation, { loading, error }] = useMutation(mutation);
+  const [signMutation, { loading }] = useMutation(mutation);
   const { setAuthState } = useAuth();
 
   const handleAuth = async (userDto: userDto): Promise<void> => {
     try {
+      console.log(userDto)
       const { data } = await signMutation({
         variables: {
-          userDto,
+          userDto
         },
       });
 
@@ -45,8 +45,8 @@ export const useSign = (
         isAuthenticated: true,
       });
     } catch (error) {
+      console.log(error);
       if (error instanceof ApolloError) {
-        console.log("ERROR", error)
         const fieldErrors = fieldsErrorHandler(error);
         setFieldsError((prevState) => ({
           ...prevState,
@@ -58,7 +58,6 @@ export const useSign = (
 
   return {
     loading,
-    error,
     handleAuth,
   };
 };

@@ -19,13 +19,11 @@ const SignUpScreen = (): JSX.Element => {
     confirmPassword: "",
   });
 
-  const { loading, error, handleAuth } = useSign(
+  const { loading, handleAuth } = useSign(
     SIGN_UP_MUTATION,
     setFieldsError,
     AuthType.SIGN_UP,
   );
-
-  console.log(error)
 
   const handleSignUp = async (): Promise<void> => {
     if (confirmPassword !== password) {
