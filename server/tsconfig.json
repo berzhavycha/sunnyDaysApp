@@ -25,7 +25,11 @@
       "@configs": ["./src/configs"],
       "@configs/*": ["./src/configs/*"],
       "@users": ["./src/users"],
-      "@users/*": ["./src/users/*"]
+      "@users/*": ["./src/users/*"],
+      "@cities": ["./src/cities"],
+      "@cities/*": ["./src/cities/*"],
+      "@subscriptions": ["./src/subscriptions"],
+      "@subscriptions/*": ["./src/subscriptions/*"]
     }
   }
 }
