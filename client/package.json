@@ -2,6 +2,10 @@
   "name": "client",
   "main": "index",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "start": "expo start --tunnel",
     "android": "expo start --android",
