@@ -40,7 +40,7 @@ export class AuthService {
       };
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
-        throw new Error('Email is already in use.');
+        throw new Error('Email is already in use!');
     } else {
         throw error;
     }      
@@ -66,12 +66,17 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<IUser | null> {
     const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(password, user.passwordHash))) {
+    if(!user){
+      throw new Error("Invalid email!")
+    }
+
+    if ((await bcrypt.compare(password, user.passwordHash))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;
       return result;
     }
-    return null;
+    
+    throw new Error("Invalid password!")
   }
 
     async refreshAccessToken(

@@ -8,11 +8,16 @@ export const fieldsErrorHandler = (errors: ApolloError): FieldErrors => {
     password: "",
   };
 
+  console.log(errors.graphQLErrors)
+
   errors.graphQLErrors.forEach((graphQLError) => {
     if (graphQLError.extensions?.code === "BAD_REQUEST" && graphQLError.extensions?.originalError?.message) {
       const inputErrorMessages = graphQLError.extensions.originalError.message as string[];
       fieldsError = pickErrorMessages(inputErrorMessages);
-    } else if (graphQLError.extensions?.code === "INTERNAL_SERVER_ERROR" && graphQLError.message) {
+    } else if (
+      graphQLError.extensions?.code === "INTERNAL_SERVER_ERROR" ||
+      graphQLError.extensions?.code === "BAD_USER_INPUT"
+      && graphQLError.message) {
       const inputErrorMessage = graphQLError.message;
       fieldsError = pickErrorMessages([inputErrorMessage]);
     }
