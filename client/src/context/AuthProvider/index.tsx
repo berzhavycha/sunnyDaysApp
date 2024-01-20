@@ -1,13 +1,4 @@
-import {
-  FC,
-  createContext,
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  useState,
-  useContext,
-  useEffect,
-} from "react";
+import { FC, createContext, Dispatch, PropsWithChildren, SetStateAction, useState, useContext, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 
 interface AuthState {
@@ -74,7 +65,5 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     onSignOut,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };

@@ -19,7 +19,7 @@ export type FieldErrorsState<T> = {
 export type SignHookReturnType = {
   loading: boolean;
   handleAuth: (userDto: UserDto) => Promise<void>;
-}
+};
 
 export const useSign = (
   mutation: DocumentNode,

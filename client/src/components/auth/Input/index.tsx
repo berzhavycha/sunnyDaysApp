@@ -11,22 +11,10 @@ type IProps = {
   isSecured?: boolean;
 };
 
-export const Input: FC<IProps> = ({
-  value,
-  onChange,
-  placeholder,
-  icon,
-  error,
-  isSecured,
-}) => {
+export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured }) => {
   return (
     <View className="relative">
-      <Feather
-        name={icon}
-        size={20}
-        color="#ccc"
-        style={{ position: "absolute", top: 12, left: 12, zIndex: 100 }}
-      />
+      <Feather name={icon} size={20} color="#ccc" style={{ position: "absolute", top: 12, left: 12, zIndex: 100 }} />
       <TextInput
         secureTextEntry={isSecured}
         className="pl-11 py-2 w-64 mb-1 text-white rounded bg-gray-800"
