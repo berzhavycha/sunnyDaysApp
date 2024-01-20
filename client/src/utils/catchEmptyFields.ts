@@ -21,6 +21,11 @@ export const catchEmptyFields = <T>(
         [field]: `${upperCaseFirstLetter(field)} must be provided!`,
       }));
       isError = true;
+    } else {
+      setFieldsError((prevState) => ({
+        ...prevState,
+        [field]: "",
+      }));
     }
   });
 

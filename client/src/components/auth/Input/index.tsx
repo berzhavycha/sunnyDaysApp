@@ -1,3 +1,4 @@
+import { upperCaseFirstLetter } from "@/utils/upperCaseFirstLetter";
 import { Feather } from "@expo/vector-icons";
 import { Dispatch, FC, SetStateAction } from "react";
 import { View, TextInput, Text } from "react-native";
@@ -23,7 +24,7 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
         value={value}
         onChangeText={(text) => onChange(text)}
       />
-      <Text className="w-64 text-xs text-red-500 mb-3">{error}</Text>
+      <Text className="w-64 text-xs text-red-500 mb-3">{error && upperCaseFirstLetter(error)}</Text>
     </View>
   );
 };

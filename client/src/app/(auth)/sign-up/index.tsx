@@ -22,6 +22,11 @@ const SignUpScreen = (): JSX.Element => {
         confirmPassword: "Passwords doesn`t match",
       }));
       return;
+    } else {
+      setFieldsError((prevState) => ({
+        ...prevState,
+        confirmPassword: "",
+      }));
     }
     await handleAuth({ email, password });
   };
