@@ -26,10 +26,9 @@ export const useSign = (
 
   const handleAuth = async (userDto: userDto): Promise<void> => {
     try {
-      console.log(userDto)
       const { data } = await signMutation({
         variables: {
-          userDto
+          userDto,
         },
       });
 
@@ -45,7 +44,6 @@ export const useSign = (
         isAuthenticated: true,
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof ApolloError) {
         const fieldErrors = fieldsErrorHandler(error);
         setFieldsError((prevState) => ({
