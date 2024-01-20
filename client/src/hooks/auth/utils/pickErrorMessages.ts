@@ -1,6 +1,7 @@
-import { FieldErrors } from "@/app/(auth)/sign-up";
+import { UserDto } from "@/hooks";
+import { FieldErrorsState } from "@/utils";
 
-export const pickErrorMessages = (inputErrorMessages: string[]): FieldErrors => {
+export const pickUserErrorMessages = (inputErrorMessages: string[]): FieldErrorsState<UserDto> => {
   const fieldErrors = {
     email: "",
     password: "",

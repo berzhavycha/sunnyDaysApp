@@ -2,8 +2,7 @@ import { onError } from "@apollo/client/link/error";
 // import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import { ApolloClient, FetchResult, HttpLink, InMemoryCache, Observable, ApolloLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { getProperToken } from "./utils/getProperToken";
-import { refreshAccessToken } from "./utils/refreshAccessToken";
+import { getProperToken, refreshAccessToken } from "./utils";
 import { GraphQLError } from "graphql";
 
 const httpLink = new HttpLink({
@@ -12,8 +11,6 @@ const httpLink = new HttpLink({
 
 const authLink = setContext(async (operation, { headers }) => {
   const token = await getProperToken(operation);
-
-  console.log(operation.operationName)
 
   return {
     headers: {

@@ -1,49 +1,37 @@
+import { Dispatch, SetStateAction } from "react";
 import { ApolloError, DocumentNode, useMutation } from "@apollo/client";
 import { useAuth } from "@/context";
-import { Dispatch, SetStateAction } from "react";
-import { fieldsErrorHandler } from "@/apollo";
-import { FieldErrors } from "@/app/(auth)/sign-up";
 import * as SecureStore from "expo-secure-store";
-import { AuthType } from "./constants";
-import { upperCaseFirstLetter } from "@/utils/index";
+import { AuthType } from "../constants";
+import { catchEmptyFields, fieldsErrorHandler } from "@/utils";
+import { pickUserErrorMessages } from "../utils";
 
-export interface userDto {
+export type UserDto = {
   email: string;
   password: string;
-}
+  confirmPassword?: string;
+};
 
-export interface IUseSign {
+export type FieldErrorsState<T> = {
+  [key in keyof T]?: string;
+};
+
+export type SignHookReturnType = {
   loading: boolean;
-  handleAuth: (userDto: userDto) => Promise<void>;
+  handleAuth: (userDto: UserDto) => Promise<void>;
 }
 
 export const useSign = (
   mutation: DocumentNode,
-  setFieldsError: Dispatch<SetStateAction<FieldErrors>>,
+  setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   signType: AuthType,
-): IUseSign => {
+): SignHookReturnType => {
   const [signMutation, { loading }] = useMutation(mutation);
   const { setAuthState } = useAuth();
 
-  const handleAuth = async (userDto: userDto): Promise<void> => {
+  const handleAuth = async (userDto: UserDto): Promise<void> => {
     try {
-      const validateEmptyFields = (fields: (keyof userDto)[]): boolean => {
-        let isError = false;
-        fields.forEach((field) => {
-          const fieldValue = userDto[field];
-
-          if (!fieldValue) {
-            setFieldsError((prevState) => ({
-              ...prevState,
-              [field]: `${upperCaseFirstLetter(field)} must be provided!`,
-            }));
-            isError = true;
-          }
-        });
-        return isError;
-      };
-
-      if (validateEmptyFields(Object.keys(userDto) as (keyof userDto)[])) {
+      if (catchEmptyFields(userDto, Object.keys(userDto) as (keyof UserDto)[], setFieldsError)) {
         return;
       }
 
@@ -66,7 +54,7 @@ export const useSign = (
       });
     } catch (error) {
       if (error instanceof ApolloError) {
-        const fieldErrors = fieldsErrorHandler(error);
+        const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
         setFieldsError((prevState) => ({
           ...prevState,
           ...fieldErrors,

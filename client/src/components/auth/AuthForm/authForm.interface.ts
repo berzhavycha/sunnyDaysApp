@@ -12,8 +12,8 @@ export interface AuthFormProps {
     confirmPassword?: string;
     setConfirmPassword?: Dispatch<SetStateAction<string>>;
     fieldsError: {
-      email: string;
-      password: string;
+      email?: string;
+      password?: string;
       confirmPassword?: string;
     };
   };
