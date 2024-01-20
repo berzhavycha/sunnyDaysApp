@@ -35,7 +35,7 @@ export const Input: FC<IProps> = ({
         value={value}
         onChangeText={(text) => onChange(text)}
       />
-      <Text className="w-64 text-xs text-red-500 mb-1">{error}</Text>
+      <Text className="w-64 text-xs text-red-500 mb-3">{error}</Text>
     </View>
   );
 };

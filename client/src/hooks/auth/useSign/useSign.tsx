@@ -5,6 +5,7 @@ import { fieldsErrorHandler } from "@/apollo";
 import { FieldErrors } from "@/app/(auth)/sign-up";
 import * as SecureStore from "expo-secure-store";
 import { AuthType } from "./constants";
+import { upperCaseFirstLetter } from "@/utils/index";
 
 export interface userDto {
   email: string;
@@ -26,6 +27,26 @@ export const useSign = (
 
   const handleAuth = async (userDto: userDto): Promise<void> => {
     try {
+      const validateEmptyFields = (fields: (keyof userDto)[]): boolean => {
+        let isError = false;
+        fields.forEach((field) => {
+          const fieldValue = userDto[field];
+
+          if (!fieldValue) {
+            setFieldsError((prevState) => ({
+              ...prevState,
+              [field]: `${upperCaseFirstLetter(field)} must be provided!`,
+            }));
+            isError = true;
+          }
+        });
+        return isError;
+      };
+
+      if (validateEmptyFields(Object.keys(userDto) as (keyof userDto)[])) {
+        return;
+      }
+
       const { data } = await signMutation({
         variables: {
           userDto,

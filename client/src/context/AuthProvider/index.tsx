@@ -61,7 +61,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const onSignOut = async (): Promise<void> => {
     await SecureStore.deleteItemAsync("tokens");
-
     setAuthState({
       accessToken: null,
       refreshToken: null,

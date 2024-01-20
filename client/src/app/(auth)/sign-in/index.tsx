@@ -11,15 +11,15 @@ const SignInScreen = (): JSX.Element => {
     email: "",
     password: "",
   });
-  const { loading, handleAuth } = useSign(
-    SIGN_IN_MUTATION,
-    setFieldsError,
-    AuthType.SIGN_IN,
-  );
+  const { loading, handleAuth } = useSign(SIGN_IN_MUTATION, setFieldsError, AuthType.SIGN_IN);
 
   if (loading) {
     return <Spinner />;
   }
+
+  const handleSignIn = async (): Promise<void> => {
+    await handleAuth({ email, password });
+  };
 
   const fields = {
     email,
@@ -30,12 +30,7 @@ const SignInScreen = (): JSX.Element => {
   };
 
   return (
-    <AuthForm
-      title="Welcome Back"
-      fields={fields}
-      handleAuth={async () => await handleAuth({ email, password })}
-      actionButtonText={AuthType.SIGN_IN}
-    />
+    <AuthForm title="Welcome Back" fields={fields} handleAuth={handleSignIn} actionButtonText={AuthType.SIGN_IN} />
   );
 };
 

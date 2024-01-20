@@ -10,7 +10,7 @@ type Auth {
 type Mutation {
   refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
   signIn(userDto: userDto!): Auth!
-  signOut(authorization: String!): String!
+  signOut(authorization: String!): String
   signUp(userDto: userDto!): Auth!
 }
 

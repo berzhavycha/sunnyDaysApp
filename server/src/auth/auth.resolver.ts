@@ -38,11 +38,13 @@ export class AuthResolver {
     );
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String, { nullable: true })
   public async signOut(
     @Args("authorization") authorization: string,
-  ): Promise<void> {
+  ): Promise<string> {
     const token = authorization.split(" ")[1];
     await this.authService.invalidateToken(token);
+
+    return "Has signed out successfully!"
   }
 }
