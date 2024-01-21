@@ -1,31 +1,25 @@
-import { Feather } from "@expo/vector-icons";
-import { Dispatch, FC, SetStateAction } from "react";
-import { View, TextInput, Text } from "react-native";
+import { upperCaseFirstLetter } from '@/utils/upperCaseFirstLetter';
+import { Feather } from '@expo/vector-icons';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { View, TextInput, Text } from 'react-native';
 
 type IProps = {
   value: string;
   onChange: Dispatch<SetStateAction<string>>;
   placeholder: string;
-  icon: "mail" | "lock" | "key";
+  icon: 'mail' | 'lock' | 'key';
   error: string;
   isSecured?: boolean;
 };
 
-export const Input: FC<IProps> = ({
-  value,
-  onChange,
-  placeholder,
-  icon,
-  error,
-  isSecured,
-}) => {
+export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured }) => {
   return (
     <View className="relative">
       <Feather
         name={icon}
         size={20}
         color="#ccc"
-        style={{ position: "absolute", top: 12, left: 12, zIndex: 100 }}
+        style={{ position: 'absolute', top: 12, left: 12, zIndex: 100 }}
       />
       <TextInput
         secureTextEntry={isSecured}
@@ -35,7 +29,7 @@ export const Input: FC<IProps> = ({
         value={value}
         onChangeText={(text) => onChange(text)}
       />
-      <Text className="w-64 text-xs text-red-500 mb-1">{error}</Text>
+      <Text className="w-64 text-xs text-red-500 mb-3">{error && upperCaseFirstLetter(error)}</Text>
     </View>
   );
 };

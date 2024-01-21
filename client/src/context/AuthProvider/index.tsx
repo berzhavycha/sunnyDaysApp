@@ -7,20 +7,19 @@ import {
   useState,
   useContext,
   useEffect,
-} from "react";
-import * as SecureStore from "expo-secure-store";
+} from 'react';
+import * as SecureStore from 'expo-secure-store';
 
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
-  authenticated: boolean;
+  isAuthenticated: boolean;
 }
 
 interface AuthContextType {
   authState: AuthState;
-  getAccessToken: () => string | null;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
-  onLogout: () => void;
+  onSignOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -29,7 +28,7 @@ export const useAuth = (): AuthContextType => {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   return authContext;
@@ -39,12 +38,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
     accessToken: null,
     refreshToken: null,
-    authenticated: false,
+    isAuthenticated: false,
   });
 
   useEffect(() => {
     const loadTokens = async (): Promise<void> => {
-      const tokens = await SecureStore.getItemAsync("tokens");
+      const tokens = await SecureStore.getItemAsync('tokens');
 
       if (tokens) {
         const { accessToken, refreshToken } = JSON.parse(tokens);
@@ -52,7 +51,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         setAuthState({
           accessToken,
           refreshToken,
-          authenticated: true,
+          isAuthenticated: true,
         });
       }
     };
@@ -60,28 +59,20 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     // loadTokens();
   }, []);
 
-  const onLogout = async (): Promise<void> => {
-    await SecureStore.deleteItemAsync("tokens");
-
+  const onSignOut = async (): Promise<void> => {
+    await SecureStore.deleteItemAsync('tokens');
     setAuthState({
       accessToken: null,
       refreshToken: null,
-      authenticated: false,
+      isAuthenticated: false,
     });
-  };
-
-  const getAccessToken = (): string | null => {
-    return authState.accessToken;
   };
 
   const contextValue: AuthContextType = {
     authState,
-    getAccessToken,
     setAuthState,
-    onLogout,
+    onSignOut,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };

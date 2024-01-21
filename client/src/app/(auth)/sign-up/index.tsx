@@ -1,37 +1,32 @@
-import React, { useState } from "react";
-import { AuthType, useSign } from "@/hooks";
-import { Spinner, AuthForm } from "@/components";
-import { SIGN_UP_MUTATION } from "@/apollo";
-
-export type FieldErrors = {
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
+import React, { useState } from 'react';
+import { AuthType, FieldErrorsState, UserDto, useSign } from '@/hooks';
+import { Spinner, AuthForm } from '@/components';
+import { SIGN_UP_MUTATION } from '@/apollo';
 
 const SignUpScreen = (): JSX.Element => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [fieldsError, setFieldsError] = useState<FieldErrors>({
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const { loading, handleAuth } = useSign(
-    SIGN_UP_MUTATION,
-    setFieldsError,
-    AuthType.SIGN_UP,
-  );
+  const { loading, handleAuth } = useSign(SIGN_UP_MUTATION, setFieldsError, AuthType.SIGN_UP);
 
   const handleSignUp = async (): Promise<void> => {
     if (confirmPassword !== password) {
       setFieldsError((prevState) => ({
         ...prevState,
-        confirmPassword: "Passwords doesn`t match",
+        confirmPassword: 'Passwords doesn`t match',
       }));
       return;
+    } else {
+      setFieldsError((prevState) => ({
+        ...prevState,
+        confirmPassword: '',
+      }));
     }
     await handleAuth({ email, password });
   };

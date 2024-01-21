@@ -1,13 +1,19 @@
-import { onError } from "@apollo/client/link/error";
+import { onError } from '@apollo/client/link/error';
 // import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
-import { ApolloClient, FetchResult, HttpLink, InMemoryCache, Observable, ApolloLink } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { getProperToken } from "./utils/getProperToken";
-import { refreshAccessToken } from "./utils/refreshAccessToken";
-import { GraphQLError } from "graphql";
+import {
+  ApolloClient,
+  FetchResult,
+  HttpLink,
+  InMemoryCache,
+  Observable,
+  ApolloLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { getProperToken, refreshAccessToken } from './utils';
+import { GraphQLError } from 'graphql';
 
 const httpLink = new HttpLink({
-  uri: "https://3d01-194-44-70-13.ngrok-free.app/api/graphql",
+  uri: 'https://a187-194-44-70-13.ngrok-free.app/api/graphql',
 });
 
 const authLink = setContext(async (operation, { headers }) => {
@@ -16,7 +22,7 @@ const authLink = setContext(async (operation, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });
@@ -24,8 +30,8 @@ const authLink = setContext(async (operation, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
   if (graphQLErrors) {
     for (const err of graphQLErrors) {
-      if (err.extensions.code === "UNAUTHENTICATED") {
-        if (operation.operationName === "refreshToken") return;
+      if (err.extensions.code === 'UNAUTHENTICATED') {
+        if (operation.operationName === 'RefreshAccess') return;
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
@@ -34,7 +40,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
               const accessToken = await refreshAccessToken(apolloClient);
 
               if (!accessToken) {
-                throw new GraphQLError("Empty AccessToken");
+                throw new GraphQLError('Empty AccessToken');
               }
 
               const subscriber = {

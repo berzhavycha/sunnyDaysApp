@@ -1,6 +1,6 @@
-import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
-import { Cache } from "cache-manager";
-import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class RefreshTokenIdsStorage {
@@ -13,7 +13,7 @@ export class RefreshTokenIdsStorage {
   async validate(userId: string, tokenId: string): Promise<boolean> {
     const storedId = await this.cacheService.get(this.getKey(userId));
     if (storedId !== tokenId) {
-      throw new UnauthorizedException("Invalid refresh token");
+      throw new UnauthorizedException('Invalid refresh token');
     }
     return storedId === tokenId;
   }

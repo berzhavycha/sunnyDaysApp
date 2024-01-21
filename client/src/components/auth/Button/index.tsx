@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Pressable, Text } from "react-native";
+import { FC } from 'react';
+import { Pressable, Text } from 'react-native';
 
 type IProps = {
   text: string;

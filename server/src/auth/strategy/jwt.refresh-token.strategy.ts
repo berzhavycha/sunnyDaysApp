@@ -1,14 +1,14 @@
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { PassportStrategy } from "@nestjs/passport";
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { User, UsersService } from "@users";
-import { JwtPayload } from "./jwt-payload.interface";
-import { JWT_REFRESH_SECRET } from "@global";
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { PassportStrategy } from '@nestjs/passport';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { User, UsersService } from '@users';
+import { JwtPayload } from './jwt-payload.interface';
+import { JWT_REFRESH_SECRET } from '@global';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  "jwt-refresh",
+  'jwt-refresh',
 ) {
   constructor(private readonly usersService: UsersService) {
     super({

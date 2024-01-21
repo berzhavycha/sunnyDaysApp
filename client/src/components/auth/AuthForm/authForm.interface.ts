@@ -1,5 +1,5 @@
-import { AuthType } from "@/hooks";
-import { Dispatch, SetStateAction } from "react";
+import { AuthType, FieldErrorsState, UserDto } from '@/hooks';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface AuthFormProps {
   title: string;
@@ -11,11 +11,7 @@ export interface AuthFormProps {
     setPassword: Dispatch<SetStateAction<string>>;
     confirmPassword?: string;
     setConfirmPassword?: Dispatch<SetStateAction<string>>;
-    fieldsError: {
-      email: string;
-      password: string;
-      confirmPassword?: string;
-    };
+    fieldsError: FieldErrorsState<UserDto>;
   };
   handleAuth: () => Promise<void>;
   actionButtonText: AuthType;

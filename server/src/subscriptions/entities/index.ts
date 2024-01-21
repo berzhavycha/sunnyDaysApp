@@ -1,1 +1,1 @@
-export * from './subscriptions.entity'
+export * from './subscriptions.entity';

@@ -10,5 +10,6 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": ["error", { allowExpressions: true }],
     "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": ["error", { allowArgumentsExplicitlyTypedAsAny: true }],
+    "prettier/prettier": "off",
   },
 };

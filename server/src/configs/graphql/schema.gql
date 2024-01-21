@@ -8,9 +8,9 @@ type Auth {
 }
 
 type Mutation {
-  invalidateToken(authorization: String!): String!
   refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
   signIn(userDto: userDto!): Auth!
+  signOut(authorization: String!): String
   signUp(userDto: userDto!): Auth!
 }
 

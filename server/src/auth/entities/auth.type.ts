@@ -1,6 +1,6 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType("Auth")
+@ObjectType('Auth')
 export abstract class AuthType {
   @Field(() => String)
   public accessToken: string;

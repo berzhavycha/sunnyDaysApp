@@ -2,6 +2,10 @@
   "name": "client",
   "main": "index",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "start": "expo start --tunnel",
     "android": "expo start --android",
@@ -38,7 +42,6 @@
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
-    "@apollo/client": "^3.8.9",
     "@apollo/client": "^3.8.9",
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",

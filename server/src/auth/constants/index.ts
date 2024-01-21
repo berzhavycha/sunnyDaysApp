@@ -1,0 +1,1 @@
+export const DUPLICATE_EMAIL_ERROR_CODE = '23505';
