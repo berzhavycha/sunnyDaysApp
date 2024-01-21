@@ -1,5 +1,5 @@
-import { Redirect, Stack } from "expo-router";
-import { useAuth } from "../../../context";
+import { Redirect, Stack } from 'expo-router';
+import { useAuth } from '../../../context';
 
 export default function ForecastLayout(): JSX.Element {
   const { authState } = useAuth();

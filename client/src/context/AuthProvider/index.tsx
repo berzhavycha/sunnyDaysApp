@@ -1,5 +1,14 @@
-import { FC, createContext, Dispatch, PropsWithChildren, SetStateAction, useState, useContext, useEffect } from "react";
-import * as SecureStore from "expo-secure-store";
+import {
+  FC,
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
+import * as SecureStore from 'expo-secure-store';
 
 interface AuthState {
   accessToken: string | null;
@@ -19,7 +28,7 @@ export const useAuth = (): AuthContextType => {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   return authContext;
@@ -34,7 +43,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const loadTokens = async (): Promise<void> => {
-      const tokens = await SecureStore.getItemAsync("tokens");
+      const tokens = await SecureStore.getItemAsync('tokens');
 
       if (tokens) {
         const { accessToken, refreshToken } = JSON.parse(tokens);
@@ -51,7 +60,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const onSignOut = async (): Promise<void> => {
-    await SecureStore.deleteItemAsync("tokens");
+    await SecureStore.deleteItemAsync('tokens');
     setAuthState({
       accessToken: null,
       refreshToken: null,

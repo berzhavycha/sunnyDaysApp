@@ -1,4 +1,4 @@
-import { Spinner } from "@/components";
+import { Spinner } from '@/components';
 
 const StartPage = (): JSX.Element => {
   return <Spinner />;

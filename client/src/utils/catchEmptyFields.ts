@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import { upperCaseFirstLetter } from "./upperCaseFirstLetter";
+import { Dispatch, SetStateAction } from 'react';
+import { upperCaseFirstLetter } from './upperCaseFirstLetter';
 
 export type FieldErrorsState<T> = {
   [key in keyof T]?: string;
@@ -24,7 +24,7 @@ export const catchEmptyFields = <T>(
     } else {
       setFieldsError((prevState) => ({
         ...prevState,
-        [field]: "",
+        [field]: '',
       }));
     }
   });

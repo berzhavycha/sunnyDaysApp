@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { Spinner, AuthForm } from "@/components";
-import { AuthType, useSign, FieldErrorsState, UserDto } from "@/hooks";
-import { SIGN_IN_MUTATION } from "@/apollo";
+import { useState } from 'react';
+import { Spinner, AuthForm } from '@/components';
+import { AuthType, useSign, FieldErrorsState, UserDto } from '@/hooks';
+import { SIGN_IN_MUTATION } from '@/apollo';
 
 const SignInScreen = (): JSX.Element => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const { loading, handleAuth } = useSign(SIGN_IN_MUTATION, setFieldsError, AuthType.SIGN_IN);
 
@@ -29,7 +29,12 @@ const SignInScreen = (): JSX.Element => {
   };
 
   return (
-    <AuthForm title="Welcome Back" fields={fields} handleAuth={handleSignIn} actionButtonText={AuthType.SIGN_IN} />
+    <AuthForm
+      title="Welcome Back"
+      fields={fields}
+      handleAuth={handleSignIn}
+      actionButtonText={AuthType.SIGN_IN}
+    />
   );
 };
 

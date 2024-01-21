@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { AuthType, FieldErrorsState, UserDto, useSign } from "@/hooks";
-import { Spinner, AuthForm } from "@/components";
-import { SIGN_UP_MUTATION } from "@/apollo";
+import React, { useState } from 'react';
+import { AuthType, FieldErrorsState, UserDto, useSign } from '@/hooks';
+import { Spinner, AuthForm } from '@/components';
+import { SIGN_UP_MUTATION } from '@/apollo';
 
 const SignUpScreen = (): JSX.Element => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const { loading, handleAuth } = useSign(SIGN_UP_MUTATION, setFieldsError, AuthType.SIGN_UP);
@@ -19,13 +19,13 @@ const SignUpScreen = (): JSX.Element => {
     if (confirmPassword !== password) {
       setFieldsError((prevState) => ({
         ...prevState,
-        confirmPassword: "Passwords doesn`t match",
+        confirmPassword: 'Passwords doesn`t match',
       }));
       return;
     } else {
       setFieldsError((prevState) => ({
         ...prevState,
-        confirmPassword: "",
+        confirmPassword: '',
       }));
     }
     await handleAuth({ email, password });

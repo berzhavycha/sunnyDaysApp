@@ -1,5 +1,5 @@
-import { FieldErrorsState } from "@/utils";
-import { ApolloError } from "@apollo/client";
+import { FieldErrorsState } from '@/utils';
+import { ApolloError } from '@apollo/client';
 
 export const fieldsErrorHandler = <T>(
   errors: ApolloError,
@@ -8,12 +8,15 @@ export const fieldsErrorHandler = <T>(
   let fieldsError: FieldErrorsState<T> = {};
 
   errors.graphQLErrors.forEach((graphQLError) => {
-    if (graphQLError.extensions?.code === "BAD_REQUEST" && graphQLError.extensions?.originalError?.message) {
+    if (
+      graphQLError.extensions?.code === 'BAD_REQUEST' &&
+      graphQLError.extensions?.originalError?.message
+    ) {
       const inputErrorMessages = graphQLError.extensions.originalError.message as string[];
       fieldsError = pickErrorsCallback(inputErrorMessages);
     } else if (
-      graphQLError.extensions?.code === "INTERNAL_SERVER_ERROR" ||
-      (graphQLError.extensions?.code === "BAD_USER_INPUT" && graphQLError.message)
+      graphQLError.extensions?.code === 'INTERNAL_SERVER_ERROR' ||
+      (graphQLError.extensions?.code === 'BAD_USER_INPUT' && graphQLError.message)
     ) {
       const inputErrorMessage = graphQLError.message;
       fieldsError = pickErrorsCallback([inputErrorMessage]);

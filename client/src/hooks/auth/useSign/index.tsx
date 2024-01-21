@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
-import { ApolloError, DocumentNode, useMutation } from "@apollo/client";
-import { useAuth } from "@/context";
-import * as SecureStore from "expo-secure-store";
-import { AuthType } from "../constants";
-import { catchEmptyFields, fieldsErrorHandler } from "@/utils";
-import { pickUserErrorMessages } from "../utils";
+import { Dispatch, SetStateAction } from 'react';
+import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
+import { useAuth } from '@/context';
+import * as SecureStore from 'expo-secure-store';
+import { AuthType } from '../constants';
+import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
+import { pickUserErrorMessages } from '../utils';
 
 export type UserDto = {
   email: string;
@@ -43,9 +43,9 @@ export const useSign = (
 
       const { accessToken, refreshToken } = data[signType];
 
-      await SecureStore.setItemAsync("tokens", JSON.stringify({ accessToken, refreshToken }));
+      await SecureStore.setItemAsync('tokens', JSON.stringify({ accessToken, refreshToken }));
 
-      setFieldsError({ email: "", password: "", confirmPassword: "" });
+      setFieldsError({ email: '', password: '', confirmPassword: '' });
 
       setAuthState({
         accessToken,

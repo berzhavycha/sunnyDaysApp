@@ -1,5 +1,5 @@
-import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
 export const Spinner = (): JSX.Element => (
   <View className="flex-1 justify-center items-center bg-gray-900">
