@@ -1,5 +1,5 @@
 import { onError } from '@apollo/client/link/error';
-// import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
+import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import {
   ApolloClient,
   FetchResult,
@@ -13,7 +13,7 @@ import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
 
 const httpLink = new HttpLink({
-  uri: 'https://a187-194-44-70-13.ngrok-free.app/api/graphql',
+  uri: REACT_APP_GRAPHQL_BASE_URL,
 });
 
 const authLink = setContext(async (operation, { headers }) => {
