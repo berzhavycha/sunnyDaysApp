@@ -13,7 +13,7 @@ type IProps = {
 };
 
 export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured }) => {
-  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(true);
+  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
   const toggleShowPassword = (): void => {
     setIsPasswordShown(!isPasswordShown);
