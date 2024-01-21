@@ -56,7 +56,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     };
 
-    // loadTokens();
+    loadTokens();
   }, []);
 
   const onSignOut = async (): Promise<void> => {
