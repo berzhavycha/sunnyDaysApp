@@ -1,12 +1,12 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
 import { RefreshTokenIdsStorage } from "./refresh-token-ids.storage";
 import { UserDto } from "./dtos";
-import { JwtService } from "@nestjs/jwt";
 import { IUser, User, UsersService } from "@users";
 import { AuthType } from "./entities";
 import { JwtPayload } from "./strategy";
-import { JWT_REFRESH_TOKEN_TIME } from "@global";
-import * as bcrypt from "bcrypt";
+import { JWT_REFRESH_SECRET, JWT_REFRESH_TOKEN_TIME } from "@global";
 import { DUPLICATE_EMAIL_ERROR_CODE } from "./constants";
 
 @Injectable()
@@ -20,20 +20,21 @@ export class AuthService {
   async signUp(registerUserDto: UserDto): Promise<AuthType> {
     try {
       const { email, password } = registerUserDto;
-  
+
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(password, salt);
-  
+
       const user = await this.usersService.createUser(email, hashedPassword);
 
       const payload: JwtPayload = { sub: user.userId, email: user.email };
       const accessToken = await this.jwtService.signAsync(payload);
       const refreshToken = await this.jwtService.signAsync(payload, {
+        secret: JWT_REFRESH_SECRET,
         expiresIn: JWT_REFRESH_TOKEN_TIME,
       });
-  
+
       await this.refreshTokenIdsStorage.insert(user.userId, refreshToken);
-  
+
       return {
         accessToken,
         refreshToken,
@@ -41,9 +42,9 @@ export class AuthService {
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
         throw new Error('Email is already in use!');
-    } else {
+      } else {
         throw error;
-    }      
+      }
     }
   }
 
@@ -53,6 +54,7 @@ export class AuthService {
     const payload: JwtPayload = { sub: userId, email };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: JWT_REFRESH_SECRET,
       expiresIn: JWT_REFRESH_TOKEN_TIME,
     });
 
@@ -66,7 +68,7 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<IUser | null> {
     const user = await this.usersService.findByEmail(email);
-    if(!user){
+    if (!user) {
       throw new Error("Invalid email!")
     }
 
@@ -75,25 +77,26 @@ export class AuthService {
       const { passwordHash, ...result } = user;
       return result;
     }
-    
+
     throw new Error("Invalid password!")
   }
 
-    async refreshAccessToken(
-        refreshToken: string,
-    ): Promise<AuthType> {
-        const decoded = await this.jwtService.verifyAsync(refreshToken);
-        await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
-        const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
-        const accessToken = await this.jwtService.signAsync(payload);
-        const newRefreshToken = await this.jwtService.signAsync(payload, {
-            expiresIn: JWT_REFRESH_TOKEN_TIME,
-        });
-        return {
-            accessToken,
-            refreshToken: newRefreshToken
-        };
-    }
+  async refreshAccessToken(
+    refreshToken: string,
+  ): Promise<AuthType> {
+    const decoded = await this.jwtService.verifyAsync(refreshToken);
+    await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
+    const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
+    const accessToken = await this.jwtService.signAsync(payload);
+    const newRefreshToken = await this.jwtService.signAsync(payload, {
+      secret: JWT_REFRESH_SECRET,
+      expiresIn: JWT_REFRESH_TOKEN_TIME,
+    });
+    return {
+      accessToken,
+      refreshToken: newRefreshToken
+    };
+  }
 
   async invalidateToken(accessToken: string): Promise<void> {
     try {

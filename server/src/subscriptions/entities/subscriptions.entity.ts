@@ -3,7 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType('Subscription')
 @Entity({ name: 'subscriptions' })
-export class City {
+export class Subscription {
     @Field(() => String)
     @PrimaryGeneratedColumn('uuid')
     subscriptionId: string;
