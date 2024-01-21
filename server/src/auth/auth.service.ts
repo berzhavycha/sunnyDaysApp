@@ -1,13 +1,13 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import * as bcrypt from "bcrypt";
-import { RefreshTokenIdsStorage } from "./refresh-token-ids.storage";
-import { UserDto } from "./dtos";
-import { IUser, User, UsersService } from "@users";
-import { AuthType } from "./entities";
-import { JwtPayload } from "./strategy";
-import { JWT_REFRESH_SECRET, JWT_REFRESH_TOKEN_TIME } from "@global";
-import { DUPLICATE_EMAIL_ERROR_CODE } from "./constants";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
+import { UserDto } from './dtos';
+import { IUser, User, UsersService } from '@users';
+import { AuthType } from './entities';
+import { JwtPayload } from './strategy';
+import { JWT_REFRESH_SECRET, JWT_REFRESH_TOKEN_TIME } from '@global';
+import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly refreshTokenIdsStorage: RefreshTokenIdsStorage,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthType> {
     try {
@@ -69,21 +69,19 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<IUser | null> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
-      throw new Error("Invalid email!")
+      throw new Error('Invalid email!');
     }
 
-    if ((await bcrypt.compare(password, user.passwordHash))) {
+    if (await bcrypt.compare(password, user.passwordHash)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;
       return result;
     }
 
-    throw new Error("Invalid password!")
+    throw new Error('Invalid password!');
   }
 
-  async refreshAccessToken(
-    refreshToken: string,
-  ): Promise<AuthType> {
+  async refreshAccessToken(refreshToken: string): Promise<AuthType> {
     const decoded = await this.jwtService.verifyAsync(refreshToken);
     await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
     const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
@@ -94,7 +92,7 @@ export class AuthService {
     });
     return {
       accessToken,
-      refreshToken: newRefreshToken
+      refreshToken: newRefreshToken,
     };
   }
 
@@ -103,7 +101,7 @@ export class AuthService {
       const decoded = await this.jwtService.verifyAsync(accessToken);
       await this.refreshTokenIdsStorage.invalidate(decoded.sub);
     } catch (error) {
-      throw new UnauthorizedException("Invalid access token");
+      throw new UnauthorizedException('Invalid access token');
     }
   }
 }

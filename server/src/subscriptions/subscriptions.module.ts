@@ -3,6 +3,6 @@ import { SubscriptionsService } from './subscriptions.service';
 import { SubscriptionsResolver } from './subscriptions.resolver';
 
 @Module({
-  providers: [SubscriptionsService, SubscriptionsResolver]
+  providers: [SubscriptionsService, SubscriptionsResolver],
 })
 export class SubscriptionsModule {}

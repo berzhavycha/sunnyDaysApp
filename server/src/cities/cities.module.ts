@@ -3,6 +3,6 @@ import { CitiesService } from './cities.service';
 import { CitiesResolver } from './cities.resolver';
 
 @Module({
-  providers: [CitiesService, CitiesResolver]
+  providers: [CitiesService, CitiesResolver],
 })
 export class CitiesModule {}
