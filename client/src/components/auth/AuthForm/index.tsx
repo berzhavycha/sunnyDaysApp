@@ -40,14 +40,14 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, fields, handleAut
           <Text className="text-gray-400 mt-8">
             Don`t have an account?{" "}
             <Link href="/sign-up/" className="font-bold text-blue-500">
-              {convertPascalCaseToSpaced(AuthType.SIGN_IN)}
+              {convertPascalCaseToSpaced(AuthType.SIGN_UP)}
             </Link>
           </Text>
         ) : (
           <Text className="text-gray-400 mt-8">
             Have an account?{" "}
             <Link href="/sign-in/" className="font-bold text-blue-500">
-              {convertPascalCaseToSpaced(AuthType.SIGN_UP)}
+              {convertPascalCaseToSpaced(AuthType.SIGN_IN)}
             </Link>
           </Text>
         )}
