@@ -1,5 +1,5 @@
 import { onError } from '@apollo/client/link/error';
-import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
+// import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import {
   ApolloClient,
   FetchResult,
@@ -7,13 +7,14 @@ import {
   InMemoryCache,
   Observable,
   ApolloLink,
+  split,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
 
-const httpLink = new HttpLink({
-  uri: REACT_APP_GRAPHQL_BASE_URL,
+const mainHttpLink = new HttpLink({
+  uri: "https://44ad-45-12-25-249.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (operation, { headers }) => {
@@ -25,6 +26,15 @@ const authLink = setContext(async (operation, { headers }) => {
       authorization: token ? `Bearer ${token}` : '',
     },
   };
+});
+
+const citiesHttpLink = new HttpLink({
+  uri: "https://geodb-cities-graphql.p.rapidapi.com/",
+  headers: {
+    'x-rapidapi-key': '193726f521msh8d092bde3ff5c7bp128865jsn51660578c98a',
+    'x-rapidapi-host': 'geodb-cities-graphql.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
@@ -64,6 +74,14 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 });
 
 export const apolloClient = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink, httpLink]),
+  link: ApolloLink.from([
+    errorLink,
+    authLink,
+    split(
+      operation => operation.getContext().clientName === "cities-endpoint",
+      citiesHttpLink,
+      mainHttpLink
+    )
+  ]),
   cache: new InMemoryCache(),
 });
