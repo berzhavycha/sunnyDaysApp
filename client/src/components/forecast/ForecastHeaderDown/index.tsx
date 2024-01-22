@@ -1,31 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { GET_CITIES } from '@/apollo';
-import { Button, InputAutocomplete } from '../../common';
+import { Button, InputAutocomplete, ListItem } from '../../common';
 import { ADD_CITY_BTN_TEXT } from '../constants';
-import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_FETCH_CITY_SORT, REACT_APP_GEODB_CLIENT_NAME } from '@env';
+import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
+import { useInputCompleteQuery } from '@/hooks';
+import { getCitiesQueryVariables, extractData } from './utils';
 
-type City = {
+export type City = {
     node: {
         name: string;
     };
 };
 
-type CitiesQueryVariables = {
-    namePrefix: string,
-    sort: string,
-    first: number,
+export type CityQuery = {
+    populatedPlaces: {
+        edges: City[]
+    }
 }
 
-type DataExtractorType = {
-    populatedPlaces: {
-        edges: City[];
-    };
-};
+export type QueryVariables = {
+    namePrefix: string;
+    sort: string;
+    first: number;
+}
 
 export const ForecastHeaderDown = (): JSX.Element => {
     const [city, setCity] = useState<string>('');
-
+    const { data, loading } = useInputCompleteQuery<CityQuery, City, QueryVariables>(
+        GET_CITIES,
+        city,
+        getCitiesQueryVariables(city),
+        { clientName: REACT_APP_GEODB_CLIENT_NAME },
+        extractData
+    )
     const addCityHandler = (): void => {
         console.log(city)
     }
@@ -35,30 +43,19 @@ export const ForecastHeaderDown = (): JSX.Element => {
     };
 
     const renderCityItem = ({ item }: { item: City }): JSX.Element => (
-        <TouchableOpacity className='w-full p-2' onPress={() => handleCitySelect(item.node.name)}>
-            <Text className='w-full text-white'>{item.node.name}</Text>
-        </TouchableOpacity>
+        <ListItem content={item.node.name} onItemClick={handleCitySelect} />
     );
 
     return (
         <View className='w-full flex-row justify-between'>
             <View className='w-60'>
-                <InputAutocomplete<DataExtractorType, City, CitiesQueryVariables>
-                    variables={{
-                        namePrefix: city,
-                        sort: REACT_APP_FETCH_CITY_SORT,
-                        first: REACT_APP_FETCH_CITY_AMOUNT,
-                    }}
-                    context={{
-                        clientName: REACT_APP_GEODB_CLIENT_NAME
-                    }}
-                    renderItem={renderCityItem}
-                    query={GET_CITIES}
-                    search={city}
-                    setSearch={setCity}
-                    keyExtractor={(item) => item.node.name}
-                    dataExtractor={(data) => data ? data?.populatedPlaces.edges : []}
+                <InputAutocomplete<City>
+                    loading={loading}
+                    onRenderItem={renderCityItem}
                     placeholder='Search City'
+                    search={city}
+                    onSearchChange={setCity}
+                    data={data}
                 />
             </View>
             <View className='w-14'>
