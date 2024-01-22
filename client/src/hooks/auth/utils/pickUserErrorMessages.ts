@@ -1,5 +1,5 @@
 import { UserDto } from '@/hooks';
-import { FieldErrorsState } from '@/utils';
+import { FieldErrorsState } from '../useSign';
 
 export const pickUserErrorMessages = (inputErrorMessages: string[]): FieldErrorsState<UserDto> => {
   const fieldErrors = {
