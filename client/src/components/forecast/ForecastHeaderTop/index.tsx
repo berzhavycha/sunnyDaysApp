@@ -19,18 +19,16 @@ export const ForecastHeaderTop = (): JSX.Element => {
     };
 
     return (
-        <View>
-            <View className='w-full flex-row items-center mb-4 justify-between'>
-                <View>
-                    <Text className="text-white text-lg">Manage Cities</Text>
-                </View>
-                <View>
-                    <TouchableOpacity
-                        onPress={async () => await handleSignOut()}
-                    >
-                        <FontAwesome name="sign-out" size={24} color="#ccc" />
-                    </TouchableOpacity>
-                </View>
+        <View className='w-full flex-row items-center mb-4 justify-between'>
+            <View>
+                <Text className="text-white text-lg">Manage Cities</Text>
+            </View>
+            <View>
+                <TouchableOpacity
+                    onPress={async () => await handleSignOut()}
+                >
+                    <FontAwesome name="sign-out" size={24} color="#ccc" />
+                </TouchableOpacity>
             </View>
         </View>
     );
