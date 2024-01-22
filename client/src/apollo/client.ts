@@ -12,6 +12,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
+import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL } from '@env';
 
 const mainHttpLink = new HttpLink({
   uri: "https://44ad-45-12-25-249.ngrok-free.app/api/graphql",
@@ -29,10 +30,10 @@ const authLink = setContext(async (operation, { headers }) => {
 });
 
 const citiesHttpLink = new HttpLink({
-  uri: "https://geodb-cities-graphql.p.rapidapi.com/",
+  uri: REACT_APP_GEODB_CITIES_URL,
   headers: {
-    'x-rapidapi-key': '193726f521msh8d092bde3ff5c7bp128865jsn51660578c98a',
-    'x-rapidapi-host': 'geodb-cities-graphql.p.rapidapi.com',
+    'x-rapidapi-key': REACT_APP_GEODB_CITIES_API_KEY,
+    'x-rapidapi-host': REACT_APP_GEODB_CITIES_HOST,
     'Content-Type': 'application/json'
   }
 });

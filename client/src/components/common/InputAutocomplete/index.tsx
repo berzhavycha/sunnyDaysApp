@@ -3,7 +3,7 @@ import { View, FlatList, Text } from 'react-native';
 import { DocumentNode, useLazyQuery, OperationVariables } from '@apollo/client';
 import { Input } from '../Input';
 
-type Props<TVariables extends OperationVariables | undefined, TItem> = {
+type Props<TData, TItem, TVariables extends OperationVariables | undefined> = {
     query: DocumentNode;
     variables: TVariables;
     context?: {
@@ -11,14 +11,15 @@ type Props<TVariables extends OperationVariables | undefined, TItem> = {
     };
     renderItem: ({ item }: { item: TItem }) => JSX.Element;
     keyExtractor: (item: TItem) => string;
-    dataExtractor: (response: any) => TItem[];
+    dataExtractor: (response: TData) => TItem[];
     search: string;
-    setSearch: Dispatch<SetStateAction<string>>
+    setSearch: Dispatch<SetStateAction<string>>,
+    placeholder: string;
 };
 
-export const InputAutocomplete: <TVariables extends OperationVariables | undefined, TItem>(
-    props: Props<TVariables, TItem>
-) => ReactElement<Props<TVariables, TItem>> = ({
+export const InputAutocomplete: <TData, TItem, TVariables extends OperationVariables | undefined>(
+    props: Props<TData, TItem, TVariables>
+) => ReactElement<Props<TData, TItem, TVariables>> = ({
     query,
     variables,
     context,
@@ -27,6 +28,7 @@ export const InputAutocomplete: <TVariables extends OperationVariables | undefin
     dataExtractor,
     search,
     setSearch,
+    placeholder
 }) => {
         const [getQueryItems, { loading, data }] = useLazyQuery(query);
 
@@ -43,7 +45,7 @@ export const InputAutocomplete: <TVariables extends OperationVariables | undefin
 
         return (
             <View className='relative'>
-                <Input value={search} onChange={setSearch} placeholder="Search City" icon="search" error="" />
+                <Input value={search} onChange={setSearch} placeholder={placeholder} icon="search" error="" />
                 {loading && !data ? (
                     <Text className='text-white'>Loading...</Text>
                 ) : (

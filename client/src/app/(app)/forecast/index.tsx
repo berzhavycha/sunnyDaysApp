@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ForecastHeader } from '@/components/forecast/ForecastHeader';
+import { ForecastHeader } from '@/components';
 
 const ForecastScreen = (): JSX.Element => {
   return (
