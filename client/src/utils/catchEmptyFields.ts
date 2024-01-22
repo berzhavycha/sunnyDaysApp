@@ -1,9 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { upperCaseFirstLetter } from './upperCaseFirstLetter';
-
-export type FieldErrorsState<T> = {
-  [key in keyof T]?: string;
-};
+import { FieldErrorsState } from '@/hooks';
 
 export const catchEmptyFields = <T>(
   data: T,
