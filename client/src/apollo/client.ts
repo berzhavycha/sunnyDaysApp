@@ -12,7 +12,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
-import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL } from '@env';
+import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
   uri: "https://44ad-45-12-25-249.ngrok-free.app/api/graphql",
@@ -79,7 +79,7 @@ export const apolloClient = new ApolloClient({
     errorLink,
     authLink,
     split(
-      operation => operation.getContext().clientName === "cities-endpoint",
+      operation => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
       citiesHttpLink,
       mainHttpLink
     )
