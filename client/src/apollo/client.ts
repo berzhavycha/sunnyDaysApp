@@ -1,5 +1,5 @@
 import { onError } from '@apollo/client/link/error';
-import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
+// import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import {
   ApolloClient,
   FetchResult,
@@ -7,13 +7,15 @@ import {
   InMemoryCache,
   Observable,
   ApolloLink,
+  split,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
+import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
-const httpLink = new HttpLink({
-  uri: REACT_APP_GRAPHQL_BASE_URL,
+const mainHttpLink = new HttpLink({
+  uri: "https://44ad-45-12-25-249.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (operation, { headers }) => {
@@ -25,6 +27,15 @@ const authLink = setContext(async (operation, { headers }) => {
       authorization: token ? `Bearer ${token}` : '',
     },
   };
+});
+
+const citiesHttpLink = new HttpLink({
+  uri: REACT_APP_GEODB_CITIES_URL,
+  headers: {
+    'x-rapidapi-key': REACT_APP_GEODB_CITIES_API_KEY,
+    'x-rapidapi-host': REACT_APP_GEODB_CITIES_HOST,
+    'Content-Type': 'application/json'
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
@@ -64,6 +75,14 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 });
 
 export const apolloClient = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink, httpLink]),
+  link: ApolloLink.from([
+    errorLink,
+    authLink,
+    split(
+      operation => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
+      citiesHttpLink,
+      mainHttpLink
+    )
+  ]),
   cache: new InMemoryCache(),
 });
