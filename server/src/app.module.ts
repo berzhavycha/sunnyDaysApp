@@ -10,7 +10,7 @@ import { graphqlConfigAsync, redisOptions, typeOrmOptions } from '@configs';
 import { AuthModule, JwtAuthGuard } from '@auth';
 import { UsersModule } from '@users';
 import { SubscriptionsModule } from '@subscriptions';
-import { CitiesModule } from '@cities';
+import { WeatherForecastModule } from '@weather-forecast';
 
 @Module({
   imports: [
@@ -20,8 +20,8 @@ import { CitiesModule } from '@cities';
     TypeOrmModule.forRootAsync(typeOrmOptions),
     AuthModule,
     UsersModule,
-    CitiesModule,
     SubscriptionsModule,
+    WeatherForecastModule,
   ],
   providers: [
     AppService,

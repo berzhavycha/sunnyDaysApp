@@ -8,6 +8,8 @@ type Auth {
 }
 
 type Mutation {
+  addWeatherSubscriptions(city: String!): Subscription!
+  deleteWeatherSubscriptions(city: String!): Subscription!
   refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
   signIn(userDto: userDto!): Auth!
   signOut(authorization: String!): String
@@ -15,7 +17,29 @@ type Mutation {
 }
 
 type Query {
-  sayHello: String!
+  getUserCitiesWeather(citiesLimit: Float!, forecastDaysAmount: Float!): [WeatherForecast!]!
+}
+
+type Subscription {
+  cityName: String!
+  subscriptionId: String!
+  userId: String!
+}
+
+type WeatherDay {
+  humidity: Int!
+  tempCelsius: Float!
+  tempFahrenheit: Float!
+  text: String!
+}
+
+type WeatherForecast {
+  city: String!
+  daysForecast: [WeatherDay!]!
+  humidity: Int!
+  tempCelsius: Float!
+  tempFahrenheit: Float!
+  text: String!
 }
 
 input refreshTokenDto {
