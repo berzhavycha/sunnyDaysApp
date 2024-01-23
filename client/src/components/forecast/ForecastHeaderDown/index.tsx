@@ -6,24 +6,7 @@ import { ADD_CITY_BTN_TEXT } from '../constants';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { useInputCompleteQuery } from '@/hooks';
 import { getCitiesQueryVariables, extractData } from './utils';
-
-export type City = {
-    node: {
-        name: string;
-    };
-};
-
-export type CityQuery = {
-    populatedPlaces: {
-        edges: City[]
-    }
-}
-
-export type QueryVariables = {
-    namePrefix: string;
-    sort: string;
-    first: number;
-}
+import { City, CityQuery, QueryVariables} from './interfaces'
 
 export const ForecastHeaderDown = (): JSX.Element => {
     const [city, setCity] = useState<string>('');
