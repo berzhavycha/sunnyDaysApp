@@ -13,7 +13,6 @@ export class SubscriptionsResolver {
         @Args('city') city: string,
         @CurrentUser() user: User
     ) {
-        console.log(user)
         return this.subscriptionService.createSubscription(city, user)
     }
 
@@ -23,13 +22,5 @@ export class SubscriptionsResolver {
         @CurrentUser() user: User
     ) {
         return this.subscriptionService.deleteSubscription(city, user)
-    }
-
-
-    async getUserSubscriptions(
-        @Args('limit') limit: number,
-        @CurrentUser() user: User
-    ) {
-        return this.subscriptionService.getSubscriptionsByUserId(user.userId, limit)
     }
 }

@@ -33,6 +33,7 @@ export const PASSWORD_MIN_LENGTH = configService.get<number>(
   'PASSWORD_MIN_LENGTH',
 );
 
-export const OPEN_WEATHER_API_KEY = configService.get<string>(
-  'OPEN_WEATHER_API_KEY',
+export const WEATHER_API_KEY = configService.get<string>(
+  'WEATHER_API_KEY',
 );
+

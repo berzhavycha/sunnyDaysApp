@@ -4,6 +4,7 @@ import { Subscription } from './entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
+
 @Injectable()
 export class SubscriptionsService {
     constructor(
@@ -21,7 +22,6 @@ export class SubscriptionsService {
     }
 
     async getSubscriptionsByUserId(userId: string, limit: number) {
-        console.log(userId)
-        return this.subscriptionRepository.find({ where: { userId }, take: limit})
+        return this.subscriptionRepository.find({ where: { userId }, take: limit })
     }
 }

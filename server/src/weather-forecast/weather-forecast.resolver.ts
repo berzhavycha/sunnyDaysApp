@@ -1,9 +1,9 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { WeatherForecastService } from './weather-forecast.service';
 import { CurrentUser } from '@auth';
 import { User } from '@users';
 import { Observable } from 'rxjs';
-import { WeatherForecast } from './entities/weather.entity';
+import { WeatherForecast } from './entities';
 
 @Resolver()
 export class WeatherForecastResolver {
@@ -12,8 +12,11 @@ export class WeatherForecastResolver {
     ) { }
 
     @Query(() => [WeatherForecast])
-    async getUserCitiesWeather(@CurrentUser() user: User): Promise<Observable<WeatherForecast[]>> {
-        const result = await this.weatherForecastService.getUserCitiesWeather(user.userId);
-        return result
+    async getUserCitiesWeather(
+        @Args('citiesLimit') citiesLimit: number,
+        @Args('forecastDaysAmount') forecastDaysAmount: number,
+        @CurrentUser() user: User
+    ): Promise<Observable<WeatherForecast[]>> {
+        return this.weatherForecastService.getUserCitiesWeather(user.userId, citiesLimit, forecastDaysAmount);
     }
 }

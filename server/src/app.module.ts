@@ -10,7 +10,7 @@ import { graphqlConfigAsync, redisOptions, typeOrmOptions } from '@configs';
 import { AuthModule, JwtAuthGuard } from '@auth';
 import { UsersModule } from '@users';
 import { SubscriptionsModule } from '@subscriptions';
-import { WeatherForecastModule } from './weather-forecast/weather-forecast.module';
+import { WeatherForecastModule } from '@weather-forecast';
 
 @Module({
   imports: [
