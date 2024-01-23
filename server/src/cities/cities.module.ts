@@ -4,5 +4,6 @@ import { CitiesResolver } from './cities.resolver';
 
 @Module({
   providers: [CitiesService, CitiesResolver],
+  exports: [CitiesService]
 })
 export class CitiesModule {}

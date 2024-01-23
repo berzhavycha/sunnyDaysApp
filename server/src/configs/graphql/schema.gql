@@ -8,6 +8,7 @@ type Auth {
 }
 
 type Mutation {
+  addWeatherSubscriptions(city: String!): Subscription!
   refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
   signIn(userDto: userDto!): Auth!
   signOut(authorization: String!): String
@@ -16,6 +17,12 @@ type Mutation {
 
 type Query {
   sayHello: String!
+}
+
+type Subscription {
+  cityId: String!
+  subscriptionId: String!
+  userId: String!
 }
 
 input refreshTokenDto {
