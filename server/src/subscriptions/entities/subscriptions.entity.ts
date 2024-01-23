@@ -14,5 +14,5 @@ export class Subscription {
 
   @Field(() => String)
   @Column()
-  cityId: string;
+  cityName: string;
 }

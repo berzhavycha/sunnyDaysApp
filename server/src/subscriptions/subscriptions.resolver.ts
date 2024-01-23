@@ -13,8 +13,18 @@ export class SubscriptionsResolver {
         @Args('city') city: string,
         @CurrentUser() user: User
     ) {
+        console.log(user)
         return this.subscriptionService.createSubscription(city, user)
     }
+
+    @Mutation(() => Subscription)
+    async deleteWeatherSubscriptions(
+        @Args('city') city: string,
+        @CurrentUser() user: User
+    ) {
+        return this.subscriptionService.deleteSubscription(city, user)
+    }
+
 
     async getUserSubscriptions(
         @Args('limit') limit: number,

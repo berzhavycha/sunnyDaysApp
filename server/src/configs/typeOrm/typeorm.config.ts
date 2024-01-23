@@ -7,9 +7,8 @@ import {
   TYPEORM_TYPE,
 } from '../../global';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { User } from '../../users';
-import { City } from '../../cities';
-import { Subscription } from '../../subscriptions';
+import { User } from '../../users/entities/index';
+import { Subscription } from '../../subscriptions/entities/index';
 
 export const typeOrmConfig = {
   type: TYPEORM_TYPE,
@@ -17,7 +16,7 @@ export const typeOrmConfig = {
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
-  entities: [User, City, Subscription],
+  entities: [User, Subscription],
   autoLoadEntities: true,
   migrations: ['./migrations/*.ts'],
   synchronize: true,

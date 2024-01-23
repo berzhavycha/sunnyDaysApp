@@ -26,10 +26,10 @@
       "@configs/*": ["./src/configs/*"],
       "@users": ["./src/users"],
       "@users/*": ["./src/users/*"],
-      "@cities": ["./src/cities"],
-      "@cities/*": ["./src/cities/*"],
       "@subscriptions": ["./src/subscriptions"],
-      "@subscriptions/*": ["./src/subscriptions/*"]
+      "@subscriptions/*": ["./src/subscriptions/*"],
+      "@weather-forecast": ["./src/weather-forecast"],
+      "@weather-forecast/*": ["./src/weather-forecast/*"]
     }
   }
 }
