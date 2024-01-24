@@ -6,7 +6,6 @@ interface WeatherCardProps {
   temperature: string;
   rain: string;
   description: string;
-  weatherImage: string;
 }
 
 export const WeatherCard: React.FC<WeatherCardProps> = ({
@@ -14,7 +13,6 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
   temperature,
   description,
   rain,
-  weatherImage,
 }) => {
   return (
     <View className="flex flex-row p-4 pt-2 items-start justify-between bg-blue-800 rounded-xl">
@@ -24,7 +22,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
         <Text className="text-xs text-white mb-2">Precipitation: {rain}</Text>
         <Text className="text-[20px] font-bold font-light text-white">{city}</Text>
       </View>
-      <Image source={require(`@/assets/images/${weatherImage}.png`)} className="w-24 h-24" />
+      <Image source={require(`@/assets/images/weather-icon.png`)} className="w-24 h-24" />
     </View>
   );
 };
