@@ -1,1 +1,1 @@
-export * from './getCities'
+export * from './getCities';

@@ -1,5 +1,5 @@
 import { upperCaseFirstLetter } from '@/utils';
-import { Feather} from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 
