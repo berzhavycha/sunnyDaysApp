@@ -17,8 +17,9 @@ export const ForecastHeaderDown = (): JSX.Element => {
     { clientName: REACT_APP_GEODB_CLIENT_NAME },
     extractData,
   );
+  
   const addCityHandler = (): void => {
-    console.log(city);
+    throw new Error("Implement addCityHandler function")
   };
 
   const handleCitySelect = (selectedCity: string): void => {

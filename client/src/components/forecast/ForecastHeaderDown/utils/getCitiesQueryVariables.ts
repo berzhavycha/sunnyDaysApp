@@ -1,5 +1,5 @@
 import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_FETCH_CITY_SORT } from '@env';
-import { QueryVariables } from '..';
+import { QueryVariables } from '../interfaces';
 
 export const getCitiesQueryVariables = (city: string): QueryVariables => ({
   namePrefix: city,
