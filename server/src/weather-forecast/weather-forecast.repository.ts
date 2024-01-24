@@ -8,7 +8,7 @@ import { WeatherApiResponse } from './interfaces';
 export class WeatherApiRepository {
     constructor(private readonly httpService: HttpService) { }
 
-    async getWeatherApiResponse(cityName: string, forecastDays: number): Promise<AxiosResponse<WeatherApiResponse>> {
+    async getCityWeather(cityName: string, forecastDays: number): Promise<AxiosResponse<WeatherApiResponse>> {
         const apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${cityName}&days=${forecastDays}`;
         return this.httpService.get(apiUrl).toPromise();
     }
