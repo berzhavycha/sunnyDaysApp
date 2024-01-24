@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
-import { useAuth } from '@/context';
+import { useAuthManager } from '@/context';
 import * as SecureStore from 'expo-secure-store';
 import { AuthType } from '../constants';
 import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
@@ -16,20 +16,20 @@ export type FieldErrorsState<T> = {
   [key in keyof T]?: string;
 };
 
-export type SignHookReturnType = {
+export type AuthHookReturnType = {
   loading: boolean;
-  handleAuth: (userDto: UserDto) => Promise<void>;
+  authHandler: (userDto: UserDto) => Promise<void>;
 };
 
-export const useSign = (
+export const useAuth = (
   mutation: DocumentNode,
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
-  signType: AuthType,
-): SignHookReturnType => {
+  authType: AuthType,
+): AuthHookReturnType => {
   const [signMutation, { loading }] = useMutation(mutation);
-  const { setAuthState } = useAuth();
+  const { setAuthState } = useAuthManager();
 
-  const handleAuth = async (userDto: UserDto): Promise<void> => {
+  const authHandler = async (userDto: UserDto): Promise<void> => {
     try {
       if (catchEmptyFields(userDto, Object.keys(userDto) as (keyof UserDto)[], setFieldsError)) {
         return;
@@ -41,7 +41,7 @@ export const useSign = (
         },
       });
 
-      const { accessToken, refreshToken } = data[signType];
+      const { accessToken, refreshToken } = data[authType];
 
       await SecureStore.setItemAsync('tokens', JSON.stringify({ accessToken, refreshToken }));
 
@@ -65,6 +65,6 @@ export const useSign = (
 
   return {
     loading,
-    handleAuth,
+    authHandler,
   };
 };

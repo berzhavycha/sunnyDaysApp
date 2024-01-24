@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useSignOut } from '@/hooks';
-import { Spinner } from '@/components';
+import { Spinner } from '../../common';
 
 export const ForecastHeaderTop = (): JSX.Element => {
   const { signOutHandler, loading } = useSignOut()

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useAuth } from '@/context';
+import { useAuthManager } from '@/context';
 import { SIGN_OUT_MUTATION } from '@/apollo';
 
 export type SignOutHookReturnType = {
@@ -8,7 +8,7 @@ export type SignOutHookReturnType = {
 };
 
 export const useSignOut = (): SignOutHookReturnType => {
-    const { authState, onSignOut } = useAuth();
+    const { authState, onSignOut } = useAuthManager();
     const [signOutMutation, { loading }] = useMutation(SIGN_OUT_MUTATION, {
         variables: {
             authorization: `Bearer ${authState.accessToken}`,

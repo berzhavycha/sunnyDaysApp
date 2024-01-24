@@ -24,7 +24,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const useAuth = (): AuthContextType => {
+export const useAuthManager = (): AuthContextType => {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
