@@ -12,7 +12,7 @@ type Mutation {
   deleteWeatherSubscriptions(city: String!): Subscription!
   refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
   signIn(userDto: userDto!): Auth!
-  signOut(authorization: String!): String
+  signOut: String
   signUp(userDto: userDto!): Auth!
 }
 

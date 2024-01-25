@@ -15,7 +15,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly refreshTokenIdsStorage: RefreshTokenIdsStorage,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthType> {
     try {
@@ -101,10 +101,9 @@ export class AuthService {
     };
   }
 
-  async invalidateToken(accessToken: string): Promise<void> {
+  async invalidateToken(userId: string): Promise<void> {
     try {
-      const decoded = await this.jwtService.verifyAsync(accessToken);
-      await this.refreshTokenIdsStorage.invalidate(decoded.sub);
+      await this.refreshTokenIdsStorage.invalidate(userId);
     } catch (error) {
       throw new UnauthorizedException('Invalid access token');
     }
