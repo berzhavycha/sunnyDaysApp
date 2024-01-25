@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { GET_CITIES } from '@/apollo';
-import { Button, InputAutocomplete } from '@/components';
+import { Button, InputAutocomplete } from '@/components/common';
 import { SpinnerView } from '@/components/forecast/SpinnerView'
-import { ADD_CITY_BTN_TEXT } from '../../../constants';
-import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
-import { useInputCompleteQuery, useWeatherSubscription } from '@/hooks';
-import { getCitiesQueryVariables, extractData } from './utils';
-import { City, CityQuery, QueryVariables } from './interfaces'
-import { useCitySelection } from './hooks';
+import { ADD_CITY_BTN_TEXT } from '@/components/forecast/constants';
+import { useWeatherSubscription } from '@/hooks';
+import { City } from './interfaces'
+import { useCitySelection, useCityInputComplete } from './hooks';
 
 export const ForecastHeaderDown = (): JSX.Element => {
     const [city, setCity] = useState<string>('');
     const { addSubscriptionHandler, additionLoading } = useWeatherSubscription()
     const { renderCityItem } = useCitySelection(setCity)
-    const { data, loading } = useInputCompleteQuery<CityQuery, City, QueryVariables>(
-        GET_CITIES,
-        city,
-        getCitiesQueryVariables(city),
-        { clientName: REACT_APP_GEODB_CLIENT_NAME },
-        extractData
-    )
+    const { data, loading } = useCityInputComplete(city)
 
     if (additionLoading) return <SpinnerView />
 

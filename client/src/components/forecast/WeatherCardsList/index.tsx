@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { useWeatherData } from './hooks';
 import { SpinnerView } from '../SpinnerView';
 import { ErrorView } from '../ErrorView';
-import { NoData } from '@/components';
+import { NoData } from '@/components/common';
 
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading, error, renderItem } = useWeatherData();

@@ -5,19 +5,19 @@ import { pickWeatherIcon } from './utils';
 import { weatherIconMapping } from '../constants';
 import { Feather } from '@expo/vector-icons';
 import WeatherCard, { WeatherCardProps } from '../WeatherCard';
-import { useSwipeAnimation } from './hooks';
+import { useDeleteAnimation } from './hooks';
 
 type IProps = {
     item: WeatherCardProps;
-    onSwipeableRightOpen: () => void;
+    onDelete: () => void;
 }
 
 export const SwipeableWeatherCard: FC<IProps> = ({
     item,
-    onSwipeableRightOpen,
+    onDelete,
 }): JSX.Element => {
     const weatherIcon = pickWeatherIcon(item.text);
-    const { opacityAnimatedValue, animateOnSwipeRight } = useSwipeAnimation(onSwipeableRightOpen);
+    const { opacityAnimatedValue, animateOnDelete } = useDeleteAnimation(onDelete);
 
     const cardStyle = {
         opacity: opacityAnimatedValue,
@@ -29,7 +29,7 @@ export const SwipeableWeatherCard: FC<IProps> = ({
                 <Animated.View style={[{ opacity: opacityAnimatedValue }, { backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 }]}>
                     <TouchableOpacity
                         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-                        onPress={animateOnSwipeRight}
+                        onPress={animateOnDelete}
                     >
                         <Text style={{ color: 'white' }}>
                             <Feather name="trash-2" size={30} color="#ccc" />

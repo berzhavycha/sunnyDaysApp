@@ -3,25 +3,24 @@ import { Animated } from "react-native";
 
 type SwipeAnimationHookReturn = {
     opacityAnimatedValue: Animated.Value;
-    animateOnSwipeRight: () => void;
+    animateOnDelete: () => void;
 };
 
-export const useSwipeAnimation = (onSwipeRight: () => void): SwipeAnimationHookReturn => {
+export const useDeleteAnimation = (onSwipeRight: () => void): SwipeAnimationHookReturn => {
     const opacityAnimatedValue = useRef(new Animated.Value(1)).current;
 
-    const animateOnSwipeRight = (): void => {
+    const animateOnDelete = (): void => {
         Animated.timing(opacityAnimatedValue, {
             toValue: 0,
             duration: 200,
             useNativeDriver: false,
         }).start(() => {
             onSwipeRight();
-            opacityAnimatedValue.setValue(1);
         });
     };
 
     return {
         opacityAnimatedValue,
-        animateOnSwipeRight,
+        animateOnDelete,
     };
 };

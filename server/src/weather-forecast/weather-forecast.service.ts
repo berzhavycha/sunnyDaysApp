@@ -19,6 +19,13 @@ export class WeatherForecastService {
     async getUserCitiesWeather(userId: string, citiesLimit: number, forecastDaysAmount: number): Promise<Observable<WeatherForecast[]>> {
         const userSubscriptions = await this.subscriptionsService.getSubscriptionsByUserId(userId, citiesLimit);
 
+        if (userSubscriptions.length === 0) {
+            return new Observable<WeatherForecast[]>(observer => {
+                observer.next([]);
+                observer.complete();
+            });
+        }
+
         const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount));
 
         return forkJoin(requests).pipe(

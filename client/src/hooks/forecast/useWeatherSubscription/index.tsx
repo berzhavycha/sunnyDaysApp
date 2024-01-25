@@ -15,18 +15,17 @@ type UseWeatherSubscriptionReturnType = {
 };
 
 export const useWeatherSubscription = (): UseWeatherSubscriptionReturnType => {
+    const refetchQueries = [GET_USER_CITIES_WEATHER]
+
     const [addWeatherSubscription, { loading: additionLoading, error: additionError }] = useMutation(
-        ADD_WEATHER_SUBSCRIPTION,
-        {
-            refetchQueries: [GET_USER_CITIES_WEATHER]
-        })
+        ADD_WEATHER_SUBSCRIPTION, {
+        refetchQueries
+    })
 
     const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] = useMutation(
-        DELETE_WEATHER_SUBSCRIPTION,
-        {
-            refetchQueries: [GET_USER_CITIES_WEATHER],
-        }
-    );
+        DELETE_WEATHER_SUBSCRIPTION, {
+        refetchQueries,
+    });
 
     const deleteSubscriptionHandler = async (city: string): Promise<void> => {
         await deleteWeatherSubscription({

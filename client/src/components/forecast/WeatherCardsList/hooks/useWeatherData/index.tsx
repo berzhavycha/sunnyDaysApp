@@ -2,8 +2,8 @@ import { ApolloError, useQuery } from '@apollo/client';
 import { GET_USER_CITIES_WEATHER, } from '@/apollo';
 import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_MAX_FORECAST_DAYS } from '@env';
 import { WeatherCardProps } from '@/components/forecast/WeatherCard';
-import { useWeatherSubscription } from '@/hooks';
 import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';
+import { useWeatherSubscription } from '@/hooks';
 
 type QueryWeatherData = {
     getUserCitiesWeather: WeatherCardProps[]
@@ -32,7 +32,7 @@ export const useWeatherData = (): WeatherData => {
         return (
             <SwipeableWeatherCard
                 item={item}
-                onSwipeableRightOpen={() => deleteSubscriptionHandler(item.city)}
+                onDelete={() => deleteSubscriptionHandler(item.city)}
             />
         );
     }

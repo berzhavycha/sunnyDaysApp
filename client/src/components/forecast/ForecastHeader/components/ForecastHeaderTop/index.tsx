@@ -2,11 +2,11 @@ import { useMutation } from '@apollo/client';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { SIGN_OUT_MUTATION } from '@/apollo';
-import { useAuth } from '@/context';
+import { useAuthManager } from '@/context';
 import { FontAwesome } from '@expo/vector-icons';
 
 export const ForecastHeaderTop = (): JSX.Element => {
-    const { tokens, setTokens, onSignOut } = useAuth();
+    const { tokens, setTokens, onSignOut } = useAuthManager();
     const [signOutMutation] = useMutation(SIGN_OUT_MUTATION, {
         variables: {
             authorization: tokens?.accessToken ? `Bearer ${tokens.accessToken}` : '',

@@ -1,4 +1,4 @@
-import { ListItem } from '@/components';
+import { ListItem } from '@/components/common';
 import { Dispatch, SetStateAction } from 'react';
 import { City } from '../../interfaces';
 

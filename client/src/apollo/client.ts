@@ -15,7 +15,7 @@ import { GraphQLError } from 'graphql';
 import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: "https://e761-194-44-70-13.ngrok-free.app/api/graphql",
+  uri: "https://9bb2-194-44-70-13.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (operation, { headers }) => {
