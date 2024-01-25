@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { GET_CITIES } from '@/apollo';
-import { Button, InputAutocomplete, Spinner } from '../../common';
-import { ADD_CITY_BTN_TEXT } from '../constants';
+import { Button, InputAutocomplete } from '@/components';
+import { SpinnerView } from '@/components/forecast/SpinnerView'
+import { ADD_CITY_BTN_TEXT } from '../../../constants';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { useInputCompleteQuery, useWeatherSubscription } from '@/hooks';
 import { getCitiesQueryVariables, extractData } from './utils';
@@ -21,11 +22,7 @@ export const ForecastHeaderDown = (): JSX.Element => {
         extractData
     )
 
-    if (additionLoading) {
-        return (
-            <View className='w-full h-full flex-row justify-center item-center'><Spinner /></View>
-        )
-    }
+    if (additionLoading) return <SpinnerView />
 
     return (
         <View className='w-full flex-row justify-between'>

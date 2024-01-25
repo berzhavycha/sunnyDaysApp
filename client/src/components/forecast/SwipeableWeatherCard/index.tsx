@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Text, TouchableOpacity, Animated } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { pickWeatherIcon } from './utils';
-import { weatherIconMapping } from './constants';
+import { weatherIconMapping } from '../constants';
 import { Feather } from '@expo/vector-icons';
 import WeatherCard, { WeatherCardProps } from '../WeatherCard';
 import { useSwipeAnimation } from './hooks';

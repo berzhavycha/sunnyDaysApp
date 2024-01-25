@@ -1,6 +1,6 @@
 import { ListItem } from '@/components';
-import { City } from '@/components/forecast/ForecastHeaderDown/interfaces';
 import { Dispatch, SetStateAction } from 'react';
+import { City } from '../../interfaces';
 
 type UseCitySelectionReturnType = {
     renderCityItem: (args: { item: City }) => JSX.Element;

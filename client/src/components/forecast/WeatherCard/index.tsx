@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import { ForecastDay, ForecastDayProps } from '../ForecastDay';
+import { ForecastDay, ForecastDayProps } from './components/ForecastDay';
 
 export interface WeatherCardProps {
     city: string;

@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
-import { weatherIconMapping } from "../SwipeableWeatherCard/constants";
-import { pickWeatherIcon } from "../SwipeableWeatherCard/utils";
+import { weatherIconMapping } from "../../../SwipeableWeatherCard/constants";
+import { pickWeatherIcon } from "../../../SwipeableWeatherCard/utils";
 import { REACT_APP_MAX_FORECAST_DAYS } from "@env";
 
 export interface ForecastDayProps {
