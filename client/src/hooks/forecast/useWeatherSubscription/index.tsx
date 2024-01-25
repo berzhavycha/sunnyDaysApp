@@ -1,9 +1,9 @@
 import { ApolloError, useMutation } from '@apollo/client';
+import { GET_USER_CITIES_WEATHER } from '@/components/forecast/WeatherCardsList/hooks/useWeatherData/queries';
 import {
     ADD_WEATHER_SUBSCRIPTION,
     DELETE_WEATHER_SUBSCRIPTION,
-    GET_USER_CITIES_WEATHER,
-} from '@/apollo';
+} from '../mutations';
 
 type UseWeatherSubscriptionReturnType = {
     deleteSubscriptionHandler: (city: string) => Promise<void>

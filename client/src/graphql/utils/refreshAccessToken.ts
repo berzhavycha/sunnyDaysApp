@@ -1,5 +1,5 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { REFRESH_TOKEN_MUTATION } from '../mutations';
+import { REFRESH_TOKEN_MUTATION } from '@/hooks';
 import * as SecureStore from 'expo-secure-store';
 
 export const refreshAccessToken = async (

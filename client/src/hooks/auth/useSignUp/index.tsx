@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AuthType } from '../constants';
-import { SIGN_UP_MUTATION } from '@/apollo';
+import { SIGN_UP_MUTATION } from '../mutations';
 import { FieldErrorsState, UserDto, useAuth } from '../useAuth';
 
 export type SignUpHookReturnType = {

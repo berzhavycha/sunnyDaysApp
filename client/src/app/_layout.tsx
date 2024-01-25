@@ -1,4 +1,4 @@
-import { apolloClient } from '@/apollo';
+import { apolloClient } from 'src/graphql';
 import { AuthProvider, useAuthManager } from '@/context';
 import { ApolloProvider } from '@apollo/client';
 import { Slot, useRouter, useSegments } from 'expo-router';

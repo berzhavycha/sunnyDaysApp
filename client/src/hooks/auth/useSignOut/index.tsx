@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useAuthManager } from '@/context';
-import { SIGN_OUT_MUTATION } from '@/apollo';
+import { SIGN_OUT_MUTATION } from '../mutations';
 
 export type SignOutHookReturnType = {
     loading: boolean;

@@ -1,5 +1,5 @@
 import { ApolloError, useQuery } from '@apollo/client';
-import { GET_USER_CITIES_WEATHER, } from '@/apollo';
+import { GET_USER_CITIES_WEATHER, } from 'src/graphql';
 import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_MAX_FORECAST_DAYS } from '@env';
 import { WeatherCardProps } from '@/components/forecast/WeatherCard';
 import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Spinner, AuthForm } from '@/components';
-import { AuthType, useAuth, FieldErrorsState, UserDto } from '@/hooks';
-import { SIGN_IN_MUTATION } from '@/apollo';
+import { AuthType, useAuth, FieldErrorsState, UserDto, SIGN_IN_MUTATION } from '@/hooks';
 
 const SignInScreen = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');
