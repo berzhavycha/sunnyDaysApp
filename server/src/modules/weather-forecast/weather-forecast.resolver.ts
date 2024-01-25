@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { WeatherForecastService } from './weather-forecast.service';
-import { CurrentUser } from '@auth';
-import { User } from '@users';
+import { CurrentUser } from '@modules/auth';
+import { User } from '@modules/users';
 import { Observable } from 'rxjs';
 import { WeatherForecast } from './entities';
 import { ForecastParamsInput } from './types';

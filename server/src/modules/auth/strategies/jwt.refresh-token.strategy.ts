@@ -1,7 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { User, UsersService } from '@users';
+import { User, UsersService } from '@modules/users';
 import { JwtPayload } from './jwt-payload.interface';
 import { JWT_REFRESH_SECRET } from '@global';
 

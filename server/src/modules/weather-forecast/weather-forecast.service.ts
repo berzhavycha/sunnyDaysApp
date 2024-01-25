@@ -1,4 +1,4 @@
-import { SubscriptionsService } from '@subscriptions';
+import { SubscriptionsService } from '@modules/subscriptions';
 import { Injectable } from '@nestjs/common';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

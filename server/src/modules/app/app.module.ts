@@ -5,12 +5,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { AppService } from './app.service';
-import { AppResolver } from './app.resolver';
 import { graphqlConfigAsync, redisOptions, typeOrmOptions } from '@configs';
-import { AuthModule, JwtAuthGuard } from '@auth';
-import { UsersModule } from '@users';
-import { SubscriptionsModule } from '@subscriptions';
-import { WeatherForecastModule } from '@weather-forecast';
+import { AuthModule, JwtAuthGuard } from '@modules/auth';
+import { UsersModule } from '@modules/users';
+import { SubscriptionsModule } from '@modules/subscriptions';
+import { WeatherForecastModule } from '@modules/weather-forecast';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { WeatherForecastModule } from '@weather-forecast';
   ],
   providers: [
     AppService,
-    AppResolver,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

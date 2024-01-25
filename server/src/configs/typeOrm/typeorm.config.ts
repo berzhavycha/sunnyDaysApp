@@ -7,8 +7,8 @@ import {
   TYPEORM_TYPE,
 } from '../../global';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { User } from '../../users/entities/index';
-import { Subscription } from '../../subscriptions/entities/index';
+import { User } from '@modules/users/entities/index';
+import { Subscription } from '@modules/subscriptions/entities/index';
 
 export const typeOrmConfig = {
   type: TYPEORM_TYPE,

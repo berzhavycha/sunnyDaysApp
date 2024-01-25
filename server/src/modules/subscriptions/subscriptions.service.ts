@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@users';
+import { User } from '@modules/users';
 import { Subscription } from './entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';

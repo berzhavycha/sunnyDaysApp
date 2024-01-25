@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { Subscription } from './entities';
-import { CurrentUser } from '@auth';
-import { User } from '@users';
+import { CurrentUser } from '@modules/auth';
+import { User } from '@modules/users';
 import { SubscriptionsService } from './subscriptions.service';
 
 @Resolver()

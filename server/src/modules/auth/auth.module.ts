@@ -5,9 +5,9 @@ import {
   JwtRefreshTokenStrategy,
   JwtStrategy,
   LocalStrategy,
-} from './strategy';
+} from './strategies';
 import { AuthService } from './auth.service';
-import { UsersModule } from '@users';
+import { UsersModule } from '@modules/users';
 import { AuthResolver } from './auth.resolver';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
 import { JWT_ACCESS_SECRET, JWT_ACCESS_TOKEN_TIME } from '@global';

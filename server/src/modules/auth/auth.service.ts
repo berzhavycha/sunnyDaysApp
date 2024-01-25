@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
 import { UserDto } from './dtos';
-import { IUser, User, UsersService } from '@users';
+import { IUser, User, UsersService } from '@modules/users';
 import { AuthType } from './entities';
-import { JwtPayload } from './strategy';
+import { JwtPayload } from './strategies';
 import { JWT_REFRESH_SECRET, JWT_REFRESH_TOKEN_TIME } from '@global';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
 

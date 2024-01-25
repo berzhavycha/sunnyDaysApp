@@ -5,5 +5,5 @@ export * from './dtos';
 export * from './entities';
 export * from './guards';
 export * from './refresh-token-ids.storage';
-export * from './strategy';
+export * from './strategies';
 export * from './decorators';
