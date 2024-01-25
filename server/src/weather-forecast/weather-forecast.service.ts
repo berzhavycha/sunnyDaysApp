@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import { WeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './entities';
 import { WeatherApiRepository } from './weather-forecast.repository';
+import { daysOfWeek } from './constants';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class WeatherForecastService {
     async getUserCitiesWeather(userId: string, citiesLimit: number, forecastDaysAmount: number): Promise<Observable<WeatherForecast[]>> {
         const userSubscriptions = await this.subscriptionsService.getSubscriptionsByUserId(userId, citiesLimit);
 
-        const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount));
+        const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getWeatherApiResponse(subscription.cityName, forecastDaysAmount));
 
         return forkJoin(requests).pipe(
             map((responses: AxiosResponse<WeatherApiResponse>[]) => this.mapResponsesToWeatherForecasts(responses)),
@@ -42,14 +43,18 @@ export class WeatherForecastService {
 
     private mapForecastDays(forecastDays: IForecastDay[]): WeatherDay[] {
         return forecastDays.map(forecast => {
-            const { day } = forecast
+            const { date, day } = forecast;
+            const dateInstance = new Date(date);
+
+            const dayOfWeek = daysOfWeek[dateInstance.getDay()];
 
             return {
                 tempCelsius: day.avgtemp_c,
                 tempFahrenheit: day.avgtemp_f,
                 text: day.condition.text,
                 humidity: day.avghumidity,
-            }
+                dayOfWeek: dayOfWeek,
+            };
         });
     }
 }
