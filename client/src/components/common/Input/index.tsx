@@ -1,5 +1,5 @@
 import { upperCaseFirstLetter } from '@/utils';
-import { Feather } from '@expo/vector-icons';
+import { Feather} from '@expo/vector-icons';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 
@@ -10,9 +10,11 @@ type IProps = {
   icon: 'mail' | 'lock' | 'key' | 'search';
   error: string;
   isSecured?: boolean;
+  onFocus?: () => void
+  onBlur?: () => void
 };
 
-export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured }) => {
+export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
   const toggleShowPassword = (): void => {
@@ -34,6 +36,8 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
         placeholder={placeholder}
         value={value}
         onChangeText={(text) => onChange(text)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       {isSecured && (
         <TouchableOpacity

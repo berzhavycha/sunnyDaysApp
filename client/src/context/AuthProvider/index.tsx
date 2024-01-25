@@ -10,9 +10,12 @@ import {
 } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
+interface ITokens {
+  accessToken: string,
+  refreshToken: string
+}
+
 interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
   isAuthenticated: boolean;
 }
 
@@ -20,11 +23,13 @@ interface AuthContextType {
   authState: AuthState;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
   onSignOut: () => void;
+  tokens: ITokens | null,
+  setTokens: Dispatch<SetStateAction<ITokens | null>>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const useAuthManager = (): AuthContextType => {
+export const useAuth = (): AuthContextType => {
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -35,9 +40,8 @@ export const useAuthManager = (): AuthContextType => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [tokens, setTokens] = useState<ITokens | null>(null);
   const [authState, setAuthState] = useState<AuthState>({
-    accessToken: null,
-    refreshToken: null,
     isAuthenticated: false,
   });
 
@@ -46,32 +50,37 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       const tokens = await SecureStore.getItemAsync('tokens');
 
       if (tokens) {
-        const { accessToken, refreshToken } = JSON.parse(tokens);
-
         setAuthState({
-          accessToken,
-          refreshToken,
           isAuthenticated: true,
         });
+        setTokens(JSON.parse(tokens))
       }
+
     };
 
     loadTokens();
   }, []);
 
   const onSignOut = async (): Promise<void> => {
-    await SecureStore.deleteItemAsync('tokens');
+    const tokens = await SecureStore.getItemAsync('tokens');
+
+    if (tokens) {
+      setTokens(JSON.parse(tokens))
+      await SecureStore.deleteItemAsync('tokens');
+    }
+    
     setAuthState({
-      accessToken: null,
-      refreshToken: null,
       isAuthenticated: false,
     });
   };
+
 
   const contextValue: AuthContextType = {
     authState,
     setAuthState,
     onSignOut,
+    tokens,
+    setTokens
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

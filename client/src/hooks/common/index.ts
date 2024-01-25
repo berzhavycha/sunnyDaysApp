@@ -1,1 +1,1 @@
-export * from './useInputCompleteQuery';
+export * from './useInputCompleteQuery'

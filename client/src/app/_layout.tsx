@@ -1,11 +1,11 @@
 import { apolloClient } from '@/apollo';
-import { AuthProvider, useAuthManager } from '@/context';
+import { AuthProvider, useAuth } from '@/context';
 import { ApolloProvider } from '@apollo/client';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 
 const InitialLayout = (): JSX.Element => {
-  const { authState } = useAuthManager();
+  const { authState } = useAuth();
   const router = useRouter();
   const segments = useSegments();
 

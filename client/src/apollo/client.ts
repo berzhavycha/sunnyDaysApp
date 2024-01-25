@@ -1,4 +1,5 @@
 import { onError } from '@apollo/client/link/error';
+// import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import {
   ApolloClient,
   FetchResult,
@@ -11,16 +12,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { getProperToken, refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
-import {
-  REACT_APP_GRAPHQL_BASE_URL,
-  REACT_APP_GEODB_CITIES_API_KEY,
-  REACT_APP_GEODB_CITIES_HOST,
-  REACT_APP_GEODB_CITIES_URL,
-  REACT_APP_GEODB_CLIENT_NAME,
-} from '@env';
+import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: REACT_APP_GRAPHQL_BASE_URL,
+  uri: "https://e761-194-44-70-13.ngrok-free.app/api/graphql",
 });
 
 const authLink = setContext(async (operation, { headers }) => {
@@ -39,8 +34,8 @@ const citiesHttpLink = new HttpLink({
   headers: {
     'x-rapidapi-key': REACT_APP_GEODB_CITIES_API_KEY,
     'x-rapidapi-host': REACT_APP_GEODB_CITIES_HOST,
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
@@ -48,7 +43,6 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
     for (const err of graphQLErrors) {
       if (err.extensions.code === 'UNAUTHENTICATED') {
         if (operation.operationName === 'RefreshAccess') return;
-
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
           (async () => {
@@ -84,10 +78,10 @@ export const apolloClient = new ApolloClient({
     errorLink,
     authLink,
     split(
-      (operation) => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
+      operation => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
       citiesHttpLink,
-      mainHttpLink,
-    ),
+      mainHttpLink
+    )
   ]),
   cache: new InMemoryCache(),
 });
