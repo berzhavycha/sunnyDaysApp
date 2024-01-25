@@ -13,3 +13,5 @@ export const weatherIconMapping = {
     drizzle: "https://cdn-icons-png.flaticon.com/512/8646/8646881.png",
     mist: "https://cdn-icons-png.flaticon.com/512/11051/11051964.png"
 };
+
+export const DEBOUNCE_DELAY = 300
