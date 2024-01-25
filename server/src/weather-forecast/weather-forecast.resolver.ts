@@ -4,6 +4,7 @@ import { CurrentUser } from '@auth';
 import { User } from '@users';
 import { Observable } from 'rxjs';
 import { WeatherForecast } from './entities';
+import { ForecastParamsInput } from './types';
 
 @Resolver()
 export class WeatherForecastResolver {
@@ -13,10 +14,9 @@ export class WeatherForecastResolver {
 
     @Query(() => [WeatherForecast])
     async getUserCitiesWeather(
-        @Args('citiesLimit') citiesLimit: number,
-        @Args('forecastDaysAmount') forecastDaysAmount: number,
+        @Args('forecastParams') forecastParams: ForecastParamsInput,
         @CurrentUser() user: User
     ): Promise<Observable<WeatherForecast[]>> {
-        return this.weatherForecastService.getUserCitiesWeather(user.userId, citiesLimit, forecastDaysAmount);
+        return this.weatherForecastService.getUserCitiesWeather(user.userId, forecastParams.citiesLimit, forecastParams.forecastDaysAmount);
     }
 }

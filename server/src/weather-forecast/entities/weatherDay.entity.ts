@@ -13,4 +13,7 @@ export class WeatherDay {
 
     @Field(() => Int)
     humidity: number;
+
+    @Field(() => String)
+    dayOfWeek: string;
 }

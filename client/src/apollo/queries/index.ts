@@ -1,1 +1,2 @@
-export * from './getCities';
+export * from './getCities'
+export * from './getForecast'

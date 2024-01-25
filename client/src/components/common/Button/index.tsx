@@ -8,7 +8,7 @@ type IProps = {
 
 export const Button: FC<IProps> = ({ text, onPress }) => {
   return (
-    <Pressable onPress={onPress} className="bg-blue-500 p-3 rounded">
+    <Pressable onPress={onPress} className="bg-blue-600 p-3 rounded">
       <Text className="text-white text-center font-bold">{text}</Text>
     </Pressable>
   );

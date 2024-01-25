@@ -82,7 +82,9 @@ export class AuthService {
   }
 
   async refreshAccessToken(refreshToken: string): Promise<AuthType> {
-    const decoded = await this.jwtService.verifyAsync(refreshToken);
+    const decoded = await this.jwtService.verifyAsync(refreshToken, {
+      secret: JWT_REFRESH_SECRET
+    });
     await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
     const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
     const accessToken = await this.jwtService.signAsync(payload);
@@ -90,6 +92,9 @@ export class AuthService {
       secret: JWT_REFRESH_SECRET,
       expiresIn: JWT_REFRESH_TOKEN_TIME,
     });
+
+    await this.refreshTokenIdsStorage.insert(decoded.sub, newRefreshToken);
+
     return {
       accessToken,
       refreshToken: newRefreshToken,

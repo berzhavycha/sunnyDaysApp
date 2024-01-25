@@ -17,7 +17,7 @@ type Mutation {
 }
 
 type Query {
-  getUserCitiesWeather(citiesLimit: Float!, forecastDaysAmount: Float!): [WeatherForecast!]!
+  getUserCitiesWeather(forecastParams: forecastParams!): [WeatherForecast!]!
 }
 
 type Subscription {
@@ -27,6 +27,7 @@ type Subscription {
 }
 
 type WeatherDay {
+  dayOfWeek: String!
   humidity: Int!
   tempCelsius: Float!
   tempFahrenheit: Float!
@@ -40,6 +41,11 @@ type WeatherForecast {
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!
+}
+
+input forecastParams {
+  citiesLimit: Int!
+  forecastDaysAmount: Int!
 }
 
 input refreshTokenDto {

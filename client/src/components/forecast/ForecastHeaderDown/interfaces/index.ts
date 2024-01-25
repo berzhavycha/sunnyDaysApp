@@ -1,17 +1,17 @@
 export type City = {
-  node: {
-    name: string;
-  };
+    node: {
+        name: string;
+    };
 };
 
 export type CityQuery = {
-  populatedPlaces: {
-    edges: City[];
-  };
-};
+    populatedPlaces: {
+        edges: City[]
+    }
+}
 
 export type QueryVariables = {
-  namePrefix: string;
-  sort: string;
-  first: number;
-};
+    namePrefix: string;
+    sort: string;
+    first: number;
+}
