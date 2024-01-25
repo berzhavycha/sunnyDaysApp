@@ -12,15 +12,15 @@ class GraphQLConfig implements GqlOptionsFactory {
         res,
       }),
       path: '/api/graphql',
-      autoSchemaFile: 'src/configs/graphql/schema.gql',
+      autoSchemaFile: 'src/graphql/schema.gql',
       sortSchema: true,
       introspection: true,
     };
   }
 }
 
-export const graphqlConfigAsync = {
+export const graphqlConfigAsync: GqlModuleAsyncOptions = {
   imports: [ConfigModule],
   driver: ApolloDriver,
   useClass: GraphQLConfig,
-} as GqlModuleAsyncOptions;
+};
