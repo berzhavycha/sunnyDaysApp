@@ -1,10 +1,9 @@
-import { ApolloError, useMutation, useQuery } from '@apollo/client';
-import {
-    DELETE_WEATHER_SUBSCRIPTION,
-    GET_USER_CITIES_WEATHER,
-} from '@/apollo';
+import { ApolloError, useQuery } from '@apollo/client';
+import { GET_USER_CITIES_WEATHER, } from '@/apollo';
 import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_MAX_FORECAST_DAYS } from '@env';
 import { WeatherCardProps } from '@/components/forecast/WeatherCard';
+import { useWeatherSubscription } from '@/hooks';
+import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';
 
 type QueryWeatherData = {
     getUserCitiesWeather: WeatherCardProps[]
@@ -14,10 +13,11 @@ type WeatherData = {
     data: QueryWeatherData | undefined;
     loading: boolean;
     error: ApolloError | undefined;
-    deleteHandler: (city: string) => Promise<void>;
+    renderItem({ item }: { item: WeatherCardProps }): JSX.Element
 }
 
 export const useWeatherData = (): WeatherData => {
+    const { deleteSubscriptionHandler } = useWeatherSubscription()
     const { data, loading, error } = useQuery(GET_USER_CITIES_WEATHER, {
         variables: {
             forecastParams: {
@@ -28,20 +28,14 @@ export const useWeatherData = (): WeatherData => {
         notifyOnNetworkStatusChange: true,
     });
 
-    const [deleteWeatherSubscription] = useMutation(
-        DELETE_WEATHER_SUBSCRIPTION,
-        {
-            refetchQueries: [GET_USER_CITIES_WEATHER],
-        }
-    );
+    function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {
+        return (
+            <SwipeableWeatherCard
+                item={item}
+                onSwipeableRightOpen={() => deleteSubscriptionHandler(item.city)}
+            />
+        );
+    }
 
-    const deleteHandler = async (city: string): Promise<void> => {
-        await deleteWeatherSubscription({
-            variables: {
-                city,
-            },
-        });
-    };
-
-    return { data, loading, error, deleteHandler };
+    return { data, loading, error, renderItem };
 };

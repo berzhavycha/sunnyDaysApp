@@ -1,14 +1,12 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { WeatherCardProps } from '../WeatherCard';
-import { SwipeableWeatherCard } from '../SwipeableWeatherCard';
 import { useWeatherData } from './hooks';
 import { SpinnerView } from '../SpinnerView';
 import { ErrorView } from '../ErrorView';
 import { NoData } from '@/components/common/NoData';
 
 export const WeatherCardsList = (): JSX.Element => {
-  const { data, loading, error, deleteHandler } = useWeatherData();
+  const { data, loading, error, renderItem } = useWeatherData();
 
   if (loading) return <SpinnerView />;
   if (error) return <ErrorView />;
@@ -30,13 +28,4 @@ export const WeatherCardsList = (): JSX.Element => {
       )}
     </>
   );
-
-  function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {
-    return (
-      <SwipeableWeatherCard
-        item={item}
-        onSwipeableRightOpen={() => deleteHandler(item.city)}
-      />
-    );
-  }
 };

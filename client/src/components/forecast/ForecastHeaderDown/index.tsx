@@ -7,7 +7,7 @@ import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { useInputCompleteQuery, useWeatherSubscription } from '@/hooks';
 import { getCitiesQueryVariables, extractData } from './utils';
 import { City, CityQuery, QueryVariables } from './interfaces'
-import { useCitySelection } from '@/hooks/forecast/useCitySelection';
+import { useCitySelection } from './hooks';
 
 export const ForecastHeaderDown = (): JSX.Element => {
     const [city, setCity] = useState<string>('');
