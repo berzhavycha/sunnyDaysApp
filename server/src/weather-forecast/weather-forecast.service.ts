@@ -19,7 +19,7 @@ export class WeatherForecastService {
     async getUserCitiesWeather(userId: string, citiesLimit: number, forecastDaysAmount: number): Promise<Observable<WeatherForecast[]>> {
         const userSubscriptions = await this.subscriptionsService.getSubscriptionsByUserId(userId, citiesLimit);
 
-        const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getWeatherApiResponse(subscription.cityName, forecastDaysAmount));
+        const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount));
 
         return forkJoin(requests).pipe(
             map((responses: AxiosResponse<WeatherApiResponse>[]) => this.mapResponsesToWeatherForecasts(responses)),

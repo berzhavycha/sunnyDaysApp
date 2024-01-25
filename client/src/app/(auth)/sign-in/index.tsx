@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Spinner, AuthForm } from '@/components';
-import { AuthType, useSign, FieldErrorsState, UserDto } from '@/hooks';
+import { AuthType, useAuth, FieldErrorsState, UserDto } from '@/hooks';
 import { SIGN_IN_MUTATION } from '@/apollo';
 
 const SignInScreen = (): JSX.Element => {
@@ -10,15 +10,11 @@ const SignInScreen = (): JSX.Element => {
     email: '',
     password: '',
   });
-  const { loading, handleAuth } = useSign(SIGN_IN_MUTATION, setFieldsError, AuthType.SIGN_IN);
+  const { loading, authHandler } = useAuth(SIGN_IN_MUTATION, setFieldsError, AuthType.SIGN_IN);
 
   if (loading) {
     return <Spinner />;
   }
-
-  const handleSignIn = async (): Promise<void> => {
-    await handleAuth({ email, password });
-  };
 
   const fields = {
     email,
@@ -32,7 +28,7 @@ const SignInScreen = (): JSX.Element => {
     <AuthForm
       title="Welcome Back"
       fields={fields}
-      handleAuth={handleSignIn}
+      handleAuth={async () => await authHandler({ email, password })}
       actionButtonText={AuthType.SIGN_IN}
     />
   );
