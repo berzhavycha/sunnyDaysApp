@@ -3,7 +3,7 @@ import { GET_USER_CITIES_WEATHER } from '@/components/forecast/WeatherCardsList/
 import {
     ADD_WEATHER_SUBSCRIPTION,
     DELETE_WEATHER_SUBSCRIPTION,
-} from '../mutations';
+} from './mutations';
 
 type UseWeatherSubscriptionReturnType = {
     deleteSubscriptionHandler: (city: string) => Promise<void>

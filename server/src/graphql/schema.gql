@@ -2,28 +2,42 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Auth {
+type AuthResponse {
   accessToken: String!
   refreshToken: String!
 }
 
+input ForecastParamsInput {
+  citiesLimit: Int!
+  forecastDaysAmount: Int!
+}
+
 type Mutation {
-  addWeatherSubscriptions(city: String!): Subscription!
-  deleteWeatherSubscriptions(city: String!): Subscription!
-  refreshAccess(refreshTokenDto: refreshTokenDto!): Auth!
-  signIn(userDto: userDto!): Auth!
+  addWeatherSubscription(city: String!): SubscriptionResponse!
+  deleteWeatherSubscription(city: String!): SubscriptionResponse!
+  refreshAccess(RefreshTokenInput: RefreshTokenInput!): AuthResponse!
+  signIn(UserInput: UserInput!): AuthResponse!
   signOut: String
-  signUp(userDto: userDto!): Auth!
+  signUp(UserInput: UserInput!): AuthResponse!
 }
 
 type Query {
-  getUserCitiesWeather(forecastParams: forecastParams!): [WeatherForecast!]!
+  userCitiesWeather(ForecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
 }
 
-type Subscription {
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+type SubscriptionResponse {
   cityName: String!
   id: String!
   userId: String!
+}
+
+input UserInput {
+  email: String!
+  password: String!
 }
 
 type WeatherDay {
@@ -41,18 +55,4 @@ type WeatherForecast {
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!
-}
-
-input forecastParams {
-  citiesLimit: Int!
-  forecastDaysAmount: Int!
-}
-
-input refreshTokenDto {
-  refreshToken: String!
-}
-
-input userDto {
-  email: String!
-  password: String!
 }

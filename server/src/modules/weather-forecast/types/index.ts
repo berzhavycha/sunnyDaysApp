@@ -1,7 +1,7 @@
 import { InputType, Field, Int } from "@nestjs/graphql";
 import { IsNotEmpty } from "class-validator";
 
-@InputType('forecastParams')
+@InputType('ForecastParamsInput')
 export class ForecastParamsInput {
     @Field(() => Int!)
     @IsNotEmpty()

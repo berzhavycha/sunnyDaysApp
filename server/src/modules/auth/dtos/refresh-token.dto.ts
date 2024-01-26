@@ -1,7 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
 
-@InputType('refreshTokenDto')
+@InputType('RefreshTokenInput')
 export class RefreshTokenDto {
   @Field(() => String)
   @IsNotEmpty()

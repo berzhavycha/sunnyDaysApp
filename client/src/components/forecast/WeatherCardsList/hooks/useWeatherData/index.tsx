@@ -1,5 +1,5 @@
 import { ApolloError, useQuery } from '@apollo/client';
-import { GET_USER_CITIES_WEATHER, } from 'src/graphql';
+import { GET_USER_CITIES_WEATHER, } from './queries';
 import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_MAX_FORECAST_DAYS } from '@env';
 import { WeatherCardProps } from '@/components/forecast/WeatherCard';
 import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';
@@ -21,8 +21,8 @@ export const useWeatherData = (): WeatherData => {
     const { data, loading, error } = useQuery(GET_USER_CITIES_WEATHER, {
         variables: {
             forecastParams: {
-                citiesLimit: REACT_APP_FETCH_CITY_AMOUNT,
-                forecastDaysAmount: REACT_APP_MAX_FORECAST_DAYS,
+                citiesLimit: +REACT_APP_FETCH_CITY_AMOUNT,
+                forecastDaysAmount: +REACT_APP_MAX_FORECAST_DAYS,
             },
         },
         notifyOnNetworkStatusChange: true,

@@ -1,2 +1,2 @@
 export * from './useWeatherSubscription'
-export * from './mutations'
+export * from './useWeatherSubscription/mutations'

@@ -9,7 +9,7 @@ export class SubscriptionsResolver {
     constructor(private readonly subscriptionService: SubscriptionsService) { }
 
     @Mutation(() => Subscription)
-    async addWeatherSubscriptions(
+    async addWeatherSubscription(
         @Args('city') city: string,
         @CurrentUser() user: User
     ) {
@@ -17,7 +17,7 @@ export class SubscriptionsResolver {
     }
 
     @Mutation(() => Subscription)
-    async deleteWeatherSubscriptions(
+    async deleteWeatherSubscription(
         @Args('city') city: string,
         @CurrentUser() user: User
     ) {

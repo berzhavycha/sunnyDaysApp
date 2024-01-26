@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 import { AuthType } from '../constants';
 import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
+import { SIGN_IN_MUTATION } from './mutations';
 
 export type UserDto = {
   email: string;
@@ -22,9 +23,9 @@ export type AuthHookReturnType = {
 };
 
 export const useAuth = (
-  mutation: DocumentNode,
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   authType: AuthType,
+  mutation: DocumentNode = SIGN_IN_MUTATION,
 ): AuthHookReturnType => {
   const [signMutation, { loading }] = useMutation(mutation);
   const { setAuthState } = useAuthManager();
@@ -51,6 +52,7 @@ export const useAuth = (
         isAuthenticated: true,
       });
     } catch (error) {
+      console.log(error)
       if (error instanceof ApolloError) {
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
         setFieldsError((prevState) => ({

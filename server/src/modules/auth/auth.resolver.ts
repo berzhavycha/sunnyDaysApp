@@ -13,14 +13,14 @@ export class AuthResolver {
 
   @Public()
   @Mutation(() => AuthType)
-  async signUp(@Args('userDto') userDto: UserDto): Promise<AuthType> {
+  async signUp(@Args('UserInput') userDto: UserDto): Promise<AuthType> {
     return await this.authService.signUp(userDto);
   }
 
   @Public()
   @Mutation(() => AuthType)
   @UseGuards(LocalAuthGuard)
-  async signIn(@Args('userDto') userDto: UserDto, @Context() context) {
+  async signIn(@Args('UserInput') userDto: UserDto, @Context() context) {
     return await this.authService.signIn(context.user);
   }
 
@@ -28,7 +28,7 @@ export class AuthResolver {
   @Mutation(() => AuthType)
   @UseGuards(JwtRefreshTokenGuard)
   public async refreshAccess(
-    @Args('refreshTokenDto') refreshTokenDto: RefreshTokenDto,
+    @Args('RefreshTokenInput') refreshTokenDto: RefreshTokenDto,
   ): Promise<AuthType> {
     return await this.authService.refreshAccessToken(
       refreshTokenDto.refreshToken,

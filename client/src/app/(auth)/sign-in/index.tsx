@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Spinner, AuthForm } from '@/components';
-import { AuthType, useAuth, FieldErrorsState, UserDto, SIGN_IN_MUTATION } from '@/hooks';
+import { AuthType, useAuth, FieldErrorsState, UserDto } from '@/hooks';
 
 const SignInScreen = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');
@@ -9,7 +9,7 @@ const SignInScreen = (): JSX.Element => {
     email: '',
     password: '',
   });
-  const { loading, authHandler } = useAuth(SIGN_IN_MUTATION, setFieldsError, AuthType.SIGN_IN);
+  const { loading, authHandler } = useAuth(setFieldsError, AuthType.SIGN_IN);
 
   if (loading) {
     return <Spinner />;
