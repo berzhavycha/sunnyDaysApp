@@ -12,13 +12,13 @@ export class SubscriptionsService {
     ) { }
 
     async createSubscription(cityName: string, user: User) {
-        const subscriptionEntity = this.subscriptionRepository.create({ cityName, userId: user.userId })
+        const subscriptionEntity = this.subscriptionRepository.create({ cityName, userId: user.id })
         return this.subscriptionRepository.save(subscriptionEntity)
     }
 
     async deleteSubscription(cityName: string, user: User) {
-        const subscription = await this.subscriptionRepository.findOne({ where: { cityName, userId: user.userId } })
-        return this.subscriptionRepository.delete(subscription.subscriptionId)
+        const subscription = await this.subscriptionRepository.findOne({ where: { cityName, userId: user.id } })
+        return this.subscriptionRepository.delete(subscription.id)
     }
 
     async getSubscriptionsByUserId(userId: string, limit: number) {

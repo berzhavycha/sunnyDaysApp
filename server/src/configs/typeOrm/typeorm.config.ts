@@ -15,7 +15,7 @@ export const typeOrmConfig = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   autoLoadEntities: true,
-  migrations: ['../../../typeorm/migrations/*.ts'],
+  migrations: ['dist/typeorm/migrations/*{.ts,.js}'],
   synchronize: false,
 };
 

@@ -22,7 +22,7 @@ type Query {
 
 type Subscription {
   cityName: String!
-  subscriptionId: String!
+  id: String!
   userId: String!
 }
 

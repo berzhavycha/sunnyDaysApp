@@ -26,14 +26,14 @@ export class AuthService {
 
       const user = await this.usersService.createUser(email, hashedPassword);
 
-      const payload: JwtPayload = { sub: user.userId, email: user.email };
+      const payload: JwtPayload = { sub: user.id, email: user.email };
       const accessToken = await this.jwtService.signAsync(payload);
       const refreshToken = await this.jwtService.signAsync(payload, {
         secret: JWT_REFRESH_SECRET,
         expiresIn: JWT_REFRESH_TOKEN_TIME,
       });
 
-      await this.refreshTokenIdsStorage.insert(user.userId, refreshToken);
+      await this.refreshTokenIdsStorage.insert(user.id, refreshToken);
 
       return {
         accessToken,
@@ -49,16 +49,16 @@ export class AuthService {
   }
 
   async signIn(loggedInUser: User): Promise<AuthType> {
-    const { userId, email } = loggedInUser;
+    const { id, email } = loggedInUser;
 
-    const payload: JwtPayload = { sub: userId, email };
+    const payload: JwtPayload = { sub: id, email };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: JWT_REFRESH_SECRET,
       expiresIn: JWT_REFRESH_TOKEN_TIME,
     });
 
-    await this.refreshTokenIdsStorage.insert(userId, refreshToken);
+    await this.refreshTokenIdsStorage.insert(id, refreshToken);
 
     return {
       accessToken,

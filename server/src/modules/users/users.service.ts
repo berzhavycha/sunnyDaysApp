@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async createUser(email: string, passwordHash: string): Promise<User> {
     const user = this.usersRepository.create({ email, passwordHash });
@@ -19,6 +19,6 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User | null> {
-    return this.usersRepository.findOne({ where: { userId: id } });
+    return this.usersRepository.findOne({ where: { id } });
   }
 }

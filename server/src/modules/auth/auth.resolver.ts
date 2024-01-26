@@ -39,7 +39,7 @@ export class AuthResolver {
   public async signOut(
     @CurrentUser() user: User
   ): Promise<string> {
-    await this.authService.invalidateToken(user.userId);
+    await this.authService.invalidateToken(user.id);
 
     return 'Has signed out successfully!';
   }

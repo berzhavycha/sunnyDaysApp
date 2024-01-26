@@ -6,7 +6,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class Subscription {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
-  subscriptionId: string;
+  id: string;
 
   @Field(() => String)
   @Column()
