@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthResponse {
-  accessToken: String!
-  refreshToken: String!
-}
-
 input ForecastParamsInput {
   citiesLimit: Int!
   forecastDaysAmount: Int!
@@ -15,10 +10,10 @@ input ForecastParamsInput {
 type Mutation {
   addWeatherSubscription(city: String!): SubscriptionResponse!
   deleteWeatherSubscription(city: String!): SubscriptionResponse!
-  refreshAccess(RefreshTokenInput: RefreshTokenInput!): AuthResponse!
-  signIn(UserInput: UserInput!): AuthResponse!
+  refreshAccess(RefreshTokenInput: RefreshTokenInput!): String!
+  signIn(UserInput: UserInput!): String!
   signOut: String
-  signUp(UserInput: UserInput!): AuthResponse!
+  signUp(UserInput: UserInput!): String!
 }
 
 type Query {

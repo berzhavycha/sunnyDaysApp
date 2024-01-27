@@ -9,24 +9,13 @@ import {
   ApolloLink,
   split,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { getProperToken, refreshAccessToken } from './utils';
+import { refreshAccessToken } from './utils';
 import { GraphQLError } from 'graphql';
 import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: "https://f816-176-120-105-190.ngrok-free.app/api/graphql",
-});
-
-const authLink = setContext(async (operation, { headers }) => {
-  const token = await getProperToken(operation);
-
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
+  uri: "https://8de8-194-44-70-13.ngrok-free.app/api/graphql",
+  credentials: 'include'
 });
 
 const citiesHttpLink = new HttpLink({
@@ -76,7 +65,6 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 export const apolloClient = new ApolloClient({
   link: ApolloLink.from([
     errorLink,
-    authLink,
     split(
       operation => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
       citiesHttpLink,
