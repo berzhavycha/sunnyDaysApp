@@ -10,7 +10,7 @@ input ForecastParamsInput {
 type Mutation {
   addWeatherSubscription(city: String!): SubscriptionResponse!
   deleteWeatherSubscription(city: String!): SubscriptionResponse!
-  refreshAccess(RefreshTokenInput: RefreshTokenInput!): String!
+  refreshAccess: String!
   signIn(UserInput: UserInput!): String!
   signOut: String
   signUp(UserInput: UserInput!): String!
@@ -18,10 +18,6 @@ type Mutation {
 
 type Query {
   userCitiesWeather(ForecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
-}
-
-input RefreshTokenInput {
-  refreshToken: String!
 }
 
 type SubscriptionResponse {

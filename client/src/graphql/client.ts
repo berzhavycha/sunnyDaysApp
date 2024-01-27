@@ -10,7 +10,6 @@ import {
   split,
 } from '@apollo/client';
 import { refreshAccessToken } from './utils';
-import { GraphQLError } from 'graphql';
 import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
@@ -36,11 +35,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
           (async () => {
             try {
-              const accessToken = await refreshAccessToken(apolloClient);
-
-              if (!accessToken) {
-                throw new GraphQLError('Empty AccessToken');
-              }
+              await refreshAccessToken(apolloClient);
 
               const subscriber = {
                 next: observer.next.bind(observer),

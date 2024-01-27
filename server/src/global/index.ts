@@ -37,3 +37,7 @@ export const WEATHER_API_KEY = configService.get<string>(
   'WEATHER_API_KEY',
 );
 
+export const COOKIE_EXPIRY_TIME = configService.get<number>(
+  'COOKIE_EXPIRY_TIME',
+);
+
