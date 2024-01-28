@@ -4,16 +4,16 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { CacheModule } from '@nestjs/cache-manager';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
-import { AppService } from './app.service';
 import { graphqlConfigAsync, redisConfig, typeOrmConfig } from '@configs';
 import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
+import { validate } from './environment';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env', validate }),
     GraphQLModule.forRootAsync(graphqlConfigAsync),
     CacheModule.registerAsync(redisConfig),
     TypeOrmModule.forRootAsync(typeOrmConfig),
@@ -23,7 +23,6 @@ import { WeatherForecastModule } from '@modules/weather-forecast';
     WeatherForecastModule,
   ],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
