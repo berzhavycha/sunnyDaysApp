@@ -5,7 +5,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { AppService } from './app.service';
-import { graphqlConfigAsync, redisOptions, typeOrmOptions } from '@configs';
+import { graphqlConfigAsync, redisConfig, typeOrmConfig } from '@configs';
 import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
@@ -13,10 +13,10 @@ import { WeatherForecastModule } from '@modules/weather-forecast';
 
 @Module({
   imports: [
-    CacheModule.registerAsync(redisOptions),
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env' }),
     GraphQLModule.forRootAsync(graphqlConfigAsync),
-    TypeOrmModule.forRootAsync(typeOrmOptions),
+    CacheModule.registerAsync(redisConfig),
+    TypeOrmModule.forRootAsync(typeOrmConfig),
     AuthModule,
     UsersModule,
     SubscriptionsModule,
@@ -30,4 +30,4 @@ import { WeatherForecastModule } from '@modules/weather-forecast';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

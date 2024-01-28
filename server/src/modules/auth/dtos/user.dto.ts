@@ -1,4 +1,3 @@
-import { PASSWORD_MIN_LENGTH } from '@global';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
@@ -12,6 +11,6 @@ export class UserDto {
   @Field(() => String)
   @IsNotEmpty()
   @IsString()
-  @MinLength(PASSWORD_MIN_LENGTH)
+  @MinLength(+process.env.PASSWORD_MIN_LENGTH)
   readonly password: string;
 }

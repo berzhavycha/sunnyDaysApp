@@ -7,11 +7,6 @@ class GraphQLConfig implements GqlOptionsFactory {
   public createGqlOptions(): ApolloDriverConfig {
     return {
       driver: ApolloDriver,
-      playground: {
-        settings: {
-          "request.credentials": "include",
-        }
-      },
       context: ({ req, res }): { req: Request, res: Response } => ({
         req,
         res,

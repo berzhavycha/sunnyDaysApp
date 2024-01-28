@@ -1,17 +1,20 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthType } from './entities';
+import { TokensType } from './entities';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
 import { User } from '@modules/users';
 import { CurrentUser, Public } from './decorators';
-import { COOKIE_EXPIRY_TIME } from '@global';
+import { ConfigService } from '@nestjs/config';
 
-@Resolver(() => AuthType)
+@Resolver(() => String)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService
+  ) { }
 
   @Public()
   @Mutation(() => String)
@@ -66,9 +69,9 @@ export class AuthResolver {
     return 'Has signed out successfully!';
   }
 
-  private setCookies(response: ExtendedGraphQLContext['res'], tokens: AuthType): void {
+  private setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + COOKIE_EXPIRY_TIME);
+    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRY_TIME'));
 
     response.cookie('tokens', tokens, {
       httpOnly: true,

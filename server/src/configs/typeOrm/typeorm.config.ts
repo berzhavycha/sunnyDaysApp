@@ -1,30 +1,27 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import {
-  POSTGRES_DB,
-  POSTGRES_HOST,
-  POSTGRES_PASSWORD,
-  POSTGRES_USER,
-  TYPEORM_TYPE,
-} from '../../global';
-import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 
-export const typeOrmConfig = {
-  type: TYPEORM_TYPE,
-  host: POSTGRES_HOST,
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  database: POSTGRES_DB,
-  autoLoadEntities: true,
-  migrations: ['dist/typeorm/migrations/*{.ts,.js}'],
-  synchronize: false,
+export const typeOrmConfigOptions = {
+  useFactory: (configService: ConfigService) => {
+    return {
+      type: "postgres" as const,
+      host: configService.get<string>('POSTGRES_HOST'),
+      username: configService.get<string>('POSTGRES_USER'),
+      password: configService.get<string>('POSTGRES_PASSWORD'),
+      database: configService.get<string>('POSTGRES_DB'),
+      autoLoadEntities: true,
+      migrations: ['dist/typeorm/migrations/*{.ts,.js}'],
+      synchronize: false,
+    }
+  }
 };
 
 export const connectionSource = new DataSource(
-  typeOrmConfig as DataSourceOptions,
+  typeOrmConfigOptions.useFactory(new ConfigService()) as DataSourceOptions,
 );
 
-export const typeOrmOptions: TypeOrmModuleAsyncOptions = {
-  useFactory: async () => ({
-    ...(typeOrmConfig as TypeOrmModuleAsyncOptions),
-  }),
-};
+export const typeOrmConfig = {
+  imports: [ConfigModule],
+  useFactory: typeOrmConfigOptions.useFactory,
+  inject: [ConfigService],
+}

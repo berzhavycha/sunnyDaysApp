@@ -1,10 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('AuthResponse')
-export abstract class AuthType {
+@ObjectType('TokensType')
+export abstract class TokensType {
   @Field(() => String)
   public accessToken: string;
 
   @Field(() => String)
   public refreshToken: string;
 }
+
