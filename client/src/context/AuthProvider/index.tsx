@@ -9,12 +9,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import { IS_USER_SIGNED_IN } from './queries'; 
-
-interface ITokens {
-  accessToken: string,
-  refreshToken: string
-}
+import { IS_USER_SIGNED_IN } from './queries';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -24,8 +19,6 @@ interface AuthContextType {
   authState: AuthState;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
   onSignOut: () => void;
-  tokens: ITokens | null,
-  setTokens: Dispatch<SetStateAction<ITokens | null>>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -41,7 +34,6 @@ export const useAuthManager = (): AuthContextType => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [tokens, setTokens] = useState<ITokens | null>(null);
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
   });
@@ -70,8 +62,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     authState,
     setAuthState,
     onSignOut,
-    tokens,
-    setTokens
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

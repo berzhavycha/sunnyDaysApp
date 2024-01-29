@@ -13,7 +13,7 @@ import { refreshAccessToken } from './utils';
 import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: "https://18c4-194-44-70-13.ngrok-free.app/api/graphql",
+  uri: "https://3424-194-44-70-13.ngrok-free.app/api/graphql",
   credentials: 'include'
 });
 
@@ -30,7 +30,6 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
   if (graphQLErrors) {
     for (const err of graphQLErrors) {
       if (err.extensions.code === 'UNAUTHENTICATED') {
-        console.log(operation.operationName)
         if (operation.operationName === 'RefreshAccess') return;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {

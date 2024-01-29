@@ -100,6 +100,7 @@ export class AuthService {
     });
 
     await this.usersService.updateUser(decoded.sub, { refreshToken: newRefreshToken })
+    
     return {
       accessToken,
       refreshToken: newRefreshToken
