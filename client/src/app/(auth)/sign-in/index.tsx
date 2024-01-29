@@ -9,7 +9,7 @@ const SignInScreen = (): JSX.Element => {
     email: '',
     password: '',
   });
-  const { loading, authHandler } = useAuth(setFieldsError, AuthType.SIGN_IN);
+  const { loading, authHandler } = useAuth(setFieldsError);
 
   if (loading) {
     return <Spinner />;

@@ -11,7 +11,7 @@ export const WeatherCardsList = (): JSX.Element => {
   if (loading) return <SpinnerView />;
   if (error) return <ErrorView />;
 
-  const userCitiesWeather = data?.getUserCitiesWeather || [];
+  const userCitiesWeather = data?.userCitiesWeather || [];
 
   return (
     <>

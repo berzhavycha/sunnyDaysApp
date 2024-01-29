@@ -8,12 +8,8 @@ export type SignOutHookReturnType = {
 };
 
 export const useSignOut = (): SignOutHookReturnType => {
-    const { tokens, onSignOut } = useAuthManager();
-    const [signOutMutation, { loading }] = useMutation(SIGN_OUT_MUTATION, {
-        variables: {
-            authorization: `Bearer ${tokens?.accessToken}`,
-        },
-    });
+    const { onSignOut } = useAuthManager();
+    const [signOutMutation, { loading }] = useMutation(SIGN_OUT_MUTATION);
 
     const signOutHandler = async (): Promise<void> => {
         await signOutMutation();

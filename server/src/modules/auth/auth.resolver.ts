@@ -5,7 +5,7 @@ import { TokensType } from './entities';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
-import { User } from '@modules/users';
+import { IUser } from '@modules/users';
 import { CurrentUser, Public } from './decorators';
 import { ConfigService } from '@nestjs/config';
 
@@ -35,6 +35,7 @@ export class AuthResolver {
     @Args('UserInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
+    console.log(context.user)
     const tokens = await this.authService.signIn(context.user);
     this.setCookies(context.res, tokens);
 
@@ -62,7 +63,7 @@ export class AuthResolver {
   @Public()
   @Mutation(() => String, { nullable: true })
   public async signOut(
-    @CurrentUser() user: User
+    @CurrentUser() user: IUser
   ): Promise<string> {
     await this.authService.invalidateToken(user.id);
 
@@ -75,9 +76,9 @@ export class AuthResolver {
 
     response.cookie('tokens', tokens, {
       httpOnly: true,
+      expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      sameSite: 'none',
       secure: true,
-      expires: expiryDate,
-      sameSite: 'strict'
     });
   }
 }

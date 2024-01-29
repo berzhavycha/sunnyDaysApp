@@ -8,7 +8,6 @@ import { WeatherDay, WeatherForecast } from './entities';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
 
-
 @Injectable()
 export class WeatherForecastService {
     constructor(

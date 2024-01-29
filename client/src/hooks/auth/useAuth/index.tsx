@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 import { useAuthManager } from '@/context';
-import * as SecureStore from 'expo-secure-store';
-import { AuthType } from '../constants';
 import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
 import { SIGN_IN_MUTATION } from './mutations';
@@ -24,7 +22,6 @@ export type AuthHookReturnType = {
 
 export const useAuth = (
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
-  authType: AuthType,
   mutation: DocumentNode = SIGN_IN_MUTATION,
 ): AuthHookReturnType => {
   const [signMutation, { loading }] = useMutation(mutation);
@@ -36,15 +33,11 @@ export const useAuth = (
         return;
       }
 
-      const { data } = await signMutation({
+      await signMutation({
         variables: {
           userDto,
         },
       });
-
-      const { accessToken, refreshToken } = data[authType];
-
-      await SecureStore.setItemAsync('tokens', JSON.stringify({ accessToken, refreshToken }));
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
 
@@ -52,8 +45,8 @@ export const useAuth = (
         isAuthenticated: true,
       });
     } catch (error) {
-      console.log(error)
       if (error instanceof ApolloError) {
+        console.log(error.stack)
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
         setFieldsError((prevState) => ({
           ...prevState,

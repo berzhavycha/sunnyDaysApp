@@ -13,6 +13,7 @@ export class JwtRefreshTokenGuard extends AuthGuard('jwt-refresh') {
 
   getRequest(context: ExecutionContext): Request {
     const ctx = GqlExecutionContext.create(context);
+    console.log(ctx.getContext().req)
     return ctx.getContext().req;
   }
 

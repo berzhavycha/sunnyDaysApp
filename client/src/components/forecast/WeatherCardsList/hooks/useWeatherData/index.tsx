@@ -6,7 +6,7 @@ import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard
 import { useWeatherSubscription } from '@/hooks';
 
 type QueryWeatherData = {
-    getUserCitiesWeather: WeatherCardProps[]
+    userCitiesWeather: WeatherCardProps[]
 }
 
 type WeatherData = {

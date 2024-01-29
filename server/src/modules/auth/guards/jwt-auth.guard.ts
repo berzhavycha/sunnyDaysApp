@@ -4,6 +4,8 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '@modules/auth/decorators';
 import { Observable } from 'rxjs';
+import { Request } from 'express-serve-static-core';
+
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
