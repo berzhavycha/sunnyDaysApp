@@ -16,4 +16,8 @@ export class User implements IUser {
   @Field(() => String)
   @Column()
   passwordHash: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true }) 
+  refreshToken: string | null;
 }

@@ -32,7 +32,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   }
 
   async validate(payload: JwtPayload): Promise<User> {
-    const user = await this.usersService.findOne(payload.sub);
+    const user = await this.usersService.findById(payload.sub);
     if (!user) {
       throw new UnauthorizedException();
     }

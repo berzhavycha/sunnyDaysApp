@@ -5,13 +5,11 @@ import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
 import { CurrentUser, Public } from './decorators';
-import { ConfigService } from '@nestjs/config';
 import { IUser } from '@modules/users';
 
 @Resolver(() => String)
 export class AuthResolver {
   constructor(
-    private readonly configService: ConfigService,
     private readonly authService: AuthService
   ) { }
 
@@ -21,8 +19,7 @@ export class AuthResolver {
     @Args('UserInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    const tokens = await this.authService.signUp(userDto);
-    this.authService.setCookies(context.res, tokens);
+    await this.authService.signUp(userDto, context.res);
 
     return 'Has signed up successfully!';
   }
@@ -34,8 +31,7 @@ export class AuthResolver {
     @Args('UserInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    const tokens = await this.authService.signIn(context.user);
-    this.authService.setCookies(context.res, tokens);
+    await this.authService.signIn(context);
 
     return 'Has signed in successfully!';
   }
@@ -46,14 +42,7 @@ export class AuthResolver {
   async refreshAccess(
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    const refreshToken = context.req.cookies.tokens?.refreshToken;
-
-    if (!refreshToken) {
-      throw new Error('Refresh token not found in cookies.');
-    }
-
-    const tokens = await this.authService.refreshAccessToken(refreshToken);
-    this.authService.setCookies(context.res, tokens);
+    this.authService.refreshAccessToken(context)
 
     return 'Has signed refreshed token successfully!';
   }

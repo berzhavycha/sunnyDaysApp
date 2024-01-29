@@ -1,14 +1,17 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { config as dotenvConfig } from 'dotenv';
+
+dotenvConfig();
 
 export const typeOrmConfigOptions = {
   useFactory: (configService: ConfigService) => {
     return {
       type: "postgres" as const,
-      host: configService.get<string>('POSTGRES_HOST'),
-      username: configService.get<string>('POSTGRES_USER'),
-      password: configService.get<string>('POSTGRES_PASSWORD'),
-      database: configService.get<string>('POSTGRES_DB'),
+      host: configService.get<string>('POSTGRES_HOST') || process.env.POSTGRES_HOST,
+      username: configService.get<string>('POSTGRES_USER') || process.env.POSTGRES_USER,
+      password: configService.get<string>('POSTGRES_PASSWORD') || process.env.POSTGRES_PASSWORD,
+      database: configService.get<string>('POSTGRES_DB') || process.env.POSTGRES_DB,
       autoLoadEntities: true,
       migrations: ['dist/typeorm/migrations/*{.ts,.js}'],
       synchronize: false,
