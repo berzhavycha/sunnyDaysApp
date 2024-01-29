@@ -4,6 +4,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { IS_PUBLIC_KEY } from '../decorators';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express-serve-static-core';
 
 @Injectable()
 export class JwtRefreshTokenGuard extends AuthGuard('jwt-refresh') {
@@ -13,7 +14,6 @@ export class JwtRefreshTokenGuard extends AuthGuard('jwt-refresh') {
 
   getRequest(context: ExecutionContext): Request {
     const ctx = GqlExecutionContext.create(context);
-    console.log(ctx.getContext().req)
     return ctx.getContext().req;
   }
 

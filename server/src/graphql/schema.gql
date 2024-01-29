@@ -12,7 +12,7 @@ type Mutation {
   deleteWeatherSubscription(city: String!): SubscriptionResponse!
   refreshAccess: String!
   signIn(UserInput: UserInput!): String!
-  signOut: String
+  signOut: String!
   signUp(UserInput: UserInput!): String!
 }
 

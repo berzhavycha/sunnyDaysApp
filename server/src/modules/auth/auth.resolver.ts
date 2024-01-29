@@ -5,9 +5,9 @@ import { TokensType } from './entities';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
-import { IUser } from '@modules/users';
 import { CurrentUser, Public } from './decorators';
 import { ConfigService } from '@nestjs/config';
+import { IUser } from '@modules/users';
 
 @Resolver(() => String)
 export class AuthResolver {
@@ -35,7 +35,6 @@ export class AuthResolver {
     @Args('UserInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    console.log(context.user)
     const tokens = await this.authService.signIn(context.user);
     this.setCookies(context.res, tokens);
 
@@ -60,10 +59,9 @@ export class AuthResolver {
     return 'Has signed refreshed token successfully!';
   }
 
-  @Public()
-  @Mutation(() => String, { nullable: true })
+  @Mutation(() => String)
   public async signOut(
-    @CurrentUser() user: IUser
+    @CurrentUser() user: IUser,
   ): Promise<string> {
     await this.authService.invalidateToken(user.id);
 
