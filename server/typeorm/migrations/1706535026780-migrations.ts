@@ -9,5 +9,4 @@ export class AddRefreshTokenColumn1636184098331 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "refresh_token"`);
     }
-
 }

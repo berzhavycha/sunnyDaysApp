@@ -18,7 +18,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) { }
 
-  async signUp(registerUserDto: UserDto, response: ExtendedGraphQLContext['res']): Promise<void> {
+  async signUp(registerUserDto: UserDto): Promise<TokensType> {
     try {
       const { email, password } = registerUserDto;
 
@@ -35,7 +35,11 @@ export class AuthService {
       });
 
       await this.usersService.updateUser(user.id, { refreshToken })
-      this.setCookies(response, { accessToken, refreshToken })
+
+      return {
+        accessToken,
+        refreshToken
+      }
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
         throw new Error('Email is already in use!');
@@ -45,8 +49,8 @@ export class AuthService {
     }
   }
 
-  async signIn(context: ExtendedGraphQLContext): Promise<void> {
-    const { id, email } = context.user;
+  async signIn(signedInUser: IUser): Promise<TokensType> {
+    const { id, email } = signedInUser;
 
     const payload: JwtPayload = { sub: id, email };
     const accessToken = await this.jwtService.signAsync(payload);
@@ -56,7 +60,11 @@ export class AuthService {
     });
 
     await this.usersService.updateUser(id, { refreshToken })
-    this.setCookies(context.res, { accessToken, refreshToken })
+
+    return {
+      accessToken,
+      refreshToken
+    }
   }
 
   async validateUser(email: string, password: string): Promise<IUser | null> {
@@ -79,13 +87,7 @@ export class AuthService {
     this.clearCookies(response);
   }
 
-  async refreshAccessToken(context: ExtendedGraphQLContext): Promise<void> {
-    const refreshToken = context.req.cookies.tokens?.refreshToken;
-
-    if (!refreshToken) {
-      throw new Error('Refresh token not found in cookies.');
-    }
-
+  async refreshAccessToken(refreshToken: string): Promise<TokensType> {
     const decoded = await this.jwtService.verifyAsync(refreshToken, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
     });
@@ -98,7 +100,10 @@ export class AuthService {
     });
 
     await this.usersService.updateUser(decoded.sub, { refreshToken: newRefreshToken })
-    this.setCookies(context.res, { accessToken, refreshToken: newRefreshToken })
+    return {
+      accessToken,
+      refreshToken: newRefreshToken
+    }
   }
 
   setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
