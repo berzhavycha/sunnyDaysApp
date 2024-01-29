@@ -19,17 +19,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@global": ["./src/global"],
-      "@auth": ["./src/auth"],
-      "@auth/*": ["./src/auth/*"],
+      "@modules": ["src/modules"],
+      "@modules/*": ["src/modules/*"],
       "@configs": ["./src/configs"],
       "@configs/*": ["./src/configs/*"],
-      "@users": ["./src/users"],
-      "@users/*": ["./src/users/*"],
-      "@subscriptions": ["./src/subscriptions"],
-      "@subscriptions/*": ["./src/subscriptions/*"],
-      "@weather-forecast": ["./src/weather-forecast"],
-      "@weather-forecast/*": ["./src/weather-forecast/*"]
     }
   }
 }

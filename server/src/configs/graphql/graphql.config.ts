@@ -1,26 +1,26 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { GqlOptionsFactory, GqlModuleAsyncOptions } from '@nestjs/graphql';
-import { IContext } from './context.interface';
+import { Request, Response } from 'express-serve-static-core';
 
 class GraphQLConfig implements GqlOptionsFactory {
   public createGqlOptions(): ApolloDriverConfig {
     return {
       driver: ApolloDriver,
-      context: ({ req, res }): IContext => ({
+      context: ({ req, res }): { req: Request, res: Response } => ({
         req,
         res,
       }),
       path: '/api/graphql',
-      autoSchemaFile: 'src/configs/graphql/schema.gql',
+      autoSchemaFile: 'src/graphql/schema.gql',
       sortSchema: true,
       introspection: true,
     };
   }
 }
 
-export const graphqlConfigAsync = {
+export const graphqlConfigAsync: GqlModuleAsyncOptions = {
   imports: [ConfigModule],
   driver: ApolloDriver,
   useClass: GraphQLConfig,
-} as GqlModuleAsyncOptions;
+};

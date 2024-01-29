@@ -1,11 +1,11 @@
-import { apolloClient } from '@/apollo';
-import { AuthProvider, useAuth } from '@/context';
+import { apolloClient } from 'src/graphql';
+import { AuthProvider, useAuthManager } from '@/context';
 import { ApolloProvider } from '@apollo/client';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 
 const InitialLayout = (): JSX.Element => {
-  const { authState } = useAuth();
+  const { authState } = useAuthManager();
   const router = useRouter();
   const segments = useSegments();
 
@@ -24,11 +24,11 @@ const InitialLayout = (): JSX.Element => {
 
 const RootLayout = (): JSX.Element => {
   return (
-    <AuthProvider>
-      <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient}>
+      <AuthProvider>
         <InitialLayout />
-      </ApolloProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 };
 

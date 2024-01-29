@@ -5,10 +5,10 @@
     "baseUrl": ".",
     "paths": {
       "@/apollo": [
-        "./src/apollo"
+        "src/graphql"
       ],
       "@/apollo/*": [
-        "./src/apollo/*"
+        "src/graphql/*"
       ],
       "@/app": [
         "./src/app"
