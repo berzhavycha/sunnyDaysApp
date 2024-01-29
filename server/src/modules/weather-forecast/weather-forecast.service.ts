@@ -1,18 +1,21 @@
 import { SubscriptionsService } from '@modules/subscriptions';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AxiosResponse } from 'axios';
+import { Cache } from 'cache-manager';
 import { WeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './entities';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class WeatherForecastService {
     constructor(
         private readonly subscriptionsService: SubscriptionsService,
-        private readonly weatherApiRepository: WeatherApiRepository
+        private readonly weatherApiRepository: WeatherApiRepository,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache
     ) { }
 
     async getUserCitiesWeather(userId: string, citiesLimit: number, forecastDaysAmount: number): Promise<Observable<WeatherForecast[]>> {
@@ -25,16 +28,33 @@ export class WeatherForecastService {
             });
         }
 
-        const requests = userSubscriptions.map(subscription => this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount));
+        const cachedForecasts: WeatherForecast[] = [];
 
-        return forkJoin(requests).pipe(
-            map((responses: AxiosResponse<WeatherApiResponse>[]) => this.mapResponsesToWeatherForecasts(responses)),
+        const cachedForecastsObservables = userSubscriptions.map(async subscription => {
+            const cachedForecast = await this.cacheManager.get<WeatherForecast>(`weather_forecast:${subscription.cityName}`);
+            if (cachedForecast) {
+                cachedForecasts.push(cachedForecast);
+                return null; 
+            }
+            return this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount);
+        });
+        
+        return forkJoin(cachedForecastsObservables).pipe(
+            map((responses: AxiosResponse<WeatherApiResponse>[]) => {
+                const validResponses = responses.filter(res => res !== null)
+
+                const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
+                newForecasts.forEach(forecast => {
+                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, 1800);
+                });
+                return [...cachedForecasts, ...newForecasts];
+            })
         );
     }
 
     private mapResponsesToWeatherForecasts(responses: AxiosResponse<WeatherApiResponse>[]): WeatherForecast[] {
         return responses.map(response => {
-            const { data } = response
+            const { data } = response;
 
             return {
                 city: data.location.name,
@@ -43,7 +63,7 @@ export class WeatherForecastService {
                 text: data.current.condition.text,
                 humidity: data.current.humidity,
                 daysForecast: this.mapForecastDays(data.forecast.forecastday),
-            }
+            };
         });
     }
 

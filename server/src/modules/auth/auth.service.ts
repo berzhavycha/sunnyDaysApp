@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
 import { UserDto } from './dtos';
-import { IUser, User, UsersService } from '@modules/users';
+import { IUser, UsersService } from '@modules/users';
 import { TokensType } from './entities';
 import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
 import { ConfigService } from '@nestjs/config';
 import { ExtendedGraphQLContext } from '@configs';
+
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,6 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly refreshTokenIdsStorage: RefreshTokenIdsStorage,
   ) { }
 
   async signUp(registerUserDto: UserDto): Promise<TokensType> {
@@ -26,7 +25,7 @@ export class AuthService {
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      const user = await this.usersService.createUser(email, hashedPassword);
+      const user = await this.usersService.createUser(email, hashedPassword, null);
 
       const payload: JwtPayload = { sub: user.id, email: user.email };
       const accessToken = await this.jwtService.signAsync(payload);
@@ -35,12 +34,12 @@ export class AuthService {
         expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME')
       });
 
-      await this.refreshTokenIdsStorage.insert(user.id, refreshToken);
+      await this.usersService.updateUser(user.id, { refreshToken })
 
       return {
         accessToken,
-        refreshToken,
-      };
+        refreshToken
+      }
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
         throw new Error('Email is already in use!');
@@ -50,8 +49,8 @@ export class AuthService {
     }
   }
 
-  async signIn(loggedInUser: User): Promise<TokensType> {
-    const { id, email } = loggedInUser;
+  async signIn(signedInUser: IUser): Promise<TokensType> {
+    const { id, email } = signedInUser;
 
     const payload: JwtPayload = { sub: id, email };
     const accessToken = await this.jwtService.signAsync(payload);
@@ -60,12 +59,12 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME')
     });
 
-    await this.refreshTokenIdsStorage.insert(id, refreshToken);
+    await this.usersService.updateUser(id, { refreshToken })
 
     return {
       accessToken,
-      refreshToken,
-    };
+      refreshToken
+    }
   }
 
   async validateUser(email: string, password: string): Promise<IUser | null> {
@@ -84,7 +83,7 @@ export class AuthService {
   }
 
   async signOut(userId: string, response: ExtendedGraphQLContext['res']): Promise<void> {
-    await this.invalidateToken(userId)
+    await this.usersService.updateUser(userId, { refreshToken: null })
     this.clearCookies(response);
   }
 
@@ -92,7 +91,7 @@ export class AuthService {
     const decoded = await this.jwtService.verifyAsync(refreshToken, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
     });
-    await this.refreshTokenIdsStorage.validate(decoded.sub, refreshToken);
+    await this.usersService.validateRefreshToken(decoded.sub, refreshToken);
     const payload: JwtPayload = { sub: decoded.sub, email: decoded.email };
     const accessToken = await this.jwtService.signAsync(payload);
     const newRefreshToken = await this.jwtService.signAsync(payload, {
@@ -100,19 +99,11 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME')
     });
 
-    await this.refreshTokenIdsStorage.insert(decoded.sub, newRefreshToken);
-
+    await this.usersService.updateUser(decoded.sub, { refreshToken: newRefreshToken })
+    
     return {
       accessToken,
-      refreshToken: newRefreshToken,
-    };
-  }
-
-  async invalidateToken(userId: string): Promise<void> {
-    try {
-      await this.refreshTokenIdsStorage.invalidate(userId);
-    } catch (error) {
-      throw new UnauthorizedException('Invalid access token');
+      refreshToken: newRefreshToken
     }
   }
 
@@ -129,6 +120,6 @@ export class AuthService {
   }
 
   clearCookies(response: ExtendedGraphQLContext['res']): void {
-    response.clearCookie('tokens'); 
+    response.clearCookie('tokens');
   }
 }

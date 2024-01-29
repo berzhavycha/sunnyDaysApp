@@ -10,7 +10,6 @@ import {
 import { AuthService } from './auth.service';
 import { UsersModule } from '@modules/users';
 import { AuthResolver } from './auth.resolver';
-import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
 
 @Module({
   imports: [
@@ -30,7 +29,6 @@ import { RefreshTokenIdsStorage } from './refresh-token-ids.storage';
     JwtStrategy,
     LocalStrategy,
     AuthResolver,
-    RefreshTokenIdsStorage,
     JwtRefreshTokenStrategy,
   ],
 })
