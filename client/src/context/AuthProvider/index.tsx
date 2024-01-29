@@ -1,3 +1,4 @@
+import { useLazyQuery } from '@apollo/client';
 import {
   FC,
   createContext,
@@ -8,7 +9,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { IS_USER_SIGNED_IN } from './queries'; 
 
 interface ITokens {
   accessToken: string,
@@ -45,35 +46,25 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     isAuthenticated: false,
   });
 
-  useEffect(() => {
-    const loadTokens = async (): Promise<void> => {
-      const tokens = await SecureStore.getItemAsync('tokens');
-
-      if (tokens) {
+  const [fetchUser, { data }] = useLazyQuery(IS_USER_SIGNED_IN, {
+    onCompleted: () => {
+      if (data && data.isUserSignedIn) {
         setAuthState({
           isAuthenticated: true,
         });
-        setTokens(JSON.parse(tokens))
       }
+    },
+  });
 
-    };
-
-    loadTokens();
-  }, []);
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   const onSignOut = async (): Promise<void> => {
-    const tokens = await SecureStore.getItemAsync('tokens');
-
-    if (tokens) {
-      setTokens(JSON.parse(tokens))
-      await SecureStore.deleteItemAsync('tokens');
-    }
-    
     setAuthState({
       isAuthenticated: false,
     });
   };
-
 
   const contextValue: AuthContextType = {
     authState,

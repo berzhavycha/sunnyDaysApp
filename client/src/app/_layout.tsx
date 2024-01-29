@@ -24,11 +24,11 @@ const InitialLayout = (): JSX.Element => {
 
 const RootLayout = (): JSX.Element => {
   return (
-    <AuthProvider>
-      <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient}>
+      <AuthProvider>
         <InitialLayout />
-      </ApolloProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 };
 

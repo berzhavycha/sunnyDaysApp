@@ -8,6 +8,7 @@ import { TokensType } from './entities';
 import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
 import { ConfigService } from '@nestjs/config';
+import { ExtendedGraphQLContext } from '@configs';
 
 @Injectable()
 export class AuthService {
@@ -82,6 +83,11 @@ export class AuthService {
     throw new Error('Invalid password!');
   }
 
+  async signOut(userId: string, response: ExtendedGraphQLContext['res']): Promise<void> {
+    await this.invalidateToken(userId)
+    this.clearCookies(response);
+  }
+
   async refreshAccessToken(refreshToken: string): Promise<TokensType> {
     const decoded = await this.jwtService.verifyAsync(refreshToken, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
@@ -108,5 +114,21 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Invalid access token');
     }
+  }
+
+  setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRY_TIME'));
+
+    response.cookie('tokens', tokens, {
+      httpOnly: true,
+      expires: expiryDate,
+      sameSite: 'none',
+      secure: true,
+    });
+  }
+
+  clearCookies(response: ExtendedGraphQLContext['res']): void {
+    response.clearCookie('tokens'); 
   }
 }

@@ -17,6 +17,7 @@ type Mutation {
 }
 
 type Query {
+  isUserSignedIn: Boolean!
   userCitiesWeather(ForecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
 }
 

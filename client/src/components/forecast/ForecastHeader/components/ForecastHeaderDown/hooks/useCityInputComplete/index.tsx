@@ -1,5 +1,5 @@
 import { City, CityQuery, QueryVariables } from '../../interfaces';
-import { GET_CITIES } from './mutations';
+import { GET_CITIES } from './queries';
 import { useInputCompleteQuery } from '@/hooks';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { getCitiesQueryVariables, extractData } from '../../utils';

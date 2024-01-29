@@ -1,7 +1,6 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { TokensType } from './entities';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
@@ -23,7 +22,7 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signUp(userDto);
-    this.setCookies(context.res, tokens);
+    this.authService.setCookies(context.res, tokens);
 
     return 'Has signed up successfully!';
   }
@@ -36,7 +35,7 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signIn(context.user);
-    this.setCookies(context.res, tokens);
+    this.authService.setCookies(context.res, tokens);
 
     return 'Has signed in successfully!';
   }
@@ -47,14 +46,14 @@ export class AuthResolver {
   async refreshAccess(
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    const refreshToken = context.req.cookies.tokens.refreshToken;
+    const refreshToken = context.req.cookies.tokens?.refreshToken;
 
     if (!refreshToken) {
       throw new Error('Refresh token not found in cookies.');
     }
 
     const tokens = await this.authService.refreshAccessToken(refreshToken);
-    this.setCookies(context.res, tokens);
+    this.authService.setCookies(context.res, tokens);
 
     return 'Has signed refreshed token successfully!';
   }
@@ -62,21 +61,18 @@ export class AuthResolver {
   @Mutation(() => String)
   public async signOut(
     @CurrentUser() user: IUser,
+    @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    await this.authService.invalidateToken(user.id);
+    await this.authService.signOut(user.id, context.res);
 
     return 'Has signed out successfully!';
   }
 
-  private setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRY_TIME'));
-
-    response.cookie('tokens', tokens, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-      sameSite: 'none',
-      secure: true,
-    });
+  @Query(() => Boolean)
+  public async isUserSignedIn(
+    @CurrentUser() user: IUser,
+  ): Promise<boolean> {
+    if (user) return true
+    else return false
   }
 }
