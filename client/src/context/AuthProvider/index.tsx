@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useApolloClient } from '@apollo/client';
 import {
   FC,
   createContext,
@@ -34,6 +34,7 @@ export const useAuthManager = (): AuthContextType => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+  const client = useApolloClient()
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
   });
@@ -56,6 +57,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setAuthState({
       isAuthenticated: false,
     });
+    client.clearStore()
   };
 
   const contextValue: AuthContextType = {

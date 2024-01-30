@@ -27,8 +27,7 @@ export const useWeatherData = (): WeatherData => {
             },
         },
         notifyOnNetworkStatusChange: true,
-        fetchPolicy: 'network-only'
-        // fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
+        fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
     });
 
     function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {
