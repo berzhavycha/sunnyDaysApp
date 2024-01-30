@@ -8,4 +8,5 @@ declare module '@env' {
   export const REACT_APP_FETCH_CITY_SORT: string;
   export const REACT_APP_MAX_CITIES_AMOUNT: number;
   export const REACT_APP_MAX_FORECAST_DAYS: number;
+  export const REACT_APP_WEATHER_FORECAST_CACHE_TIME: number;
 }

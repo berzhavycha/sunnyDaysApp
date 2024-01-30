@@ -9,12 +9,14 @@ import { WeatherDay, WeatherForecast } from './entities';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class WeatherForecastService {
     constructor(
         private readonly subscriptionsService: SubscriptionsService,
         private readonly weatherApiRepository: WeatherApiRepository,
+        private readonly configService: ConfigService,
         @Inject(CACHE_MANAGER) private cacheManager: Cache
     ) { }
 
@@ -34,18 +36,18 @@ export class WeatherForecastService {
             const cachedForecast = await this.cacheManager.get<WeatherForecast>(`weather_forecast:${subscription.cityName}`);
             if (cachedForecast) {
                 cachedForecasts.push(cachedForecast);
-                return null; 
+                return null;
             }
             return this.weatherApiRepository.getCityWeather(subscription.cityName, forecastDaysAmount);
         });
-        
+
         return forkJoin(cachedForecastsObservables).pipe(
             map((responses: AxiosResponse<WeatherApiResponse>[]) => {
                 const validResponses = responses.filter(res => res !== null)
 
                 const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
                 newForecasts.forEach(forecast => {
-                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, 1800);
+                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, this.configService.get<number>('REDIS_WEATHER_RESPONSE_CACHE_TIME'));
                 });
                 return [...cachedForecasts, ...newForecasts];
             })

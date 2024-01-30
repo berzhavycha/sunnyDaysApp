@@ -54,6 +54,10 @@ export class EnvironmentVariables {
     WEATHER_API_KEY: string;
 
     @IsInt({ message: 'COOKIE_EXPIRY_TIME must be a number' })
-    @IsPositive({ message: 'PORT must be a positive integer' })
+    @IsPositive({ message: 'COOKIE_EXPIRY_TIME must be a positive integer' })
     COOKIE_EXPIRY_TIME: number;
+
+    @IsInt({ message: 'REDIS_WEATHER_RESPONSE_CACHE_TIME must be a number' })
+    @IsPositive({ message: 'REDIS_WEATHER_RESPONSE_CACHE_TIME must be a positive integer' })
+    REDIS_WEATHER_RESPONSE_CACHE_TIME: number;
 }
