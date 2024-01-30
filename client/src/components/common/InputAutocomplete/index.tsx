@@ -9,6 +9,7 @@ type Props<TItem> = {
     search: string;
     onSearchChange: Dispatch<SetStateAction<string>>,
     placeholder: string;
+    error: string;
 };
 
 export const InputAutocomplete: <TItem>(
@@ -19,7 +20,8 @@ export const InputAutocomplete: <TItem>(
     onRenderItem,
     search,
     onSearchChange,
-    placeholder
+    placeholder,
+    error
 }) => {
         const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
@@ -30,7 +32,7 @@ export const InputAutocomplete: <TItem>(
                     onChange={onSearchChange}
                     placeholder={placeholder}
                     icon="search"
-                    error=""
+                    error={error}
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
                 />

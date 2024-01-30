@@ -14,6 +14,7 @@ export const redisConfig: CacheModuleAsyncOptions = {
     });
     return {
       store: () => store,
+      ttl: configService.get<number>('REDIS_DEFAULT_TTL'),
     };
   },
   inject: [ConfigService],

@@ -63,7 +63,8 @@ export class AuthResolver {
     @CurrentUser() user: IUser,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    await this.authService.signOut(user.id, context.res);
+    await this.authService.signOut(user.id);
+    this.authService.clearCookies(context.res)
 
     return 'Has signed out successfully!';
   }
