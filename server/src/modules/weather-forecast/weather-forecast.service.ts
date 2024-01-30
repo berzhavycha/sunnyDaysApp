@@ -11,6 +11,7 @@ import { daysOfWeek } from './constants';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 
+
 @Injectable()
 export class WeatherForecastService {
     constructor(
@@ -47,7 +48,7 @@ export class WeatherForecastService {
 
                 const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
                 newForecasts.forEach(forecast => {
-                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, this.configService.get<number>('REDIS_WEATHER_RESPONSE_CACHE_TIME'));
+                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL'));
                 });
                 return [...cachedForecasts, ...newForecasts];
             })
@@ -57,6 +58,12 @@ export class WeatherForecastService {
     private mapResponsesToWeatherForecasts(responses: AxiosResponse<WeatherApiResponse>[]): WeatherForecast[] {
         return responses.map(response => {
             const { data } = response;
+
+            console.log(
+                data.location.name,
+                this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL'),
+                this.configService.get<number>('REDIS_DEFAULT_TTL')
+            )
 
             return {
                 city: data.location.name,

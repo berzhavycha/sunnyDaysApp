@@ -57,7 +57,11 @@ export class EnvironmentVariables {
     @IsPositive({ message: 'COOKIE_EXPIRY_TIME must be a positive integer' })
     COOKIE_EXPIRY_TIME: number;
 
-    @IsInt({ message: 'REDIS_WEATHER_RESPONSE_CACHE_TIME must be a number' })
-    @IsPositive({ message: 'REDIS_WEATHER_RESPONSE_CACHE_TIME must be a positive integer' })
-    REDIS_WEATHER_RESPONSE_CACHE_TIME: number;
+    @IsInt({ message: 'REDIS_WEATHER_RESPONSE_TTL must be a number' })
+    @IsPositive({ message: 'REDIS_WEATHER_RESPONSE_TTL must be a positive integer' })
+    REDIS_WEATHER_RESPONSE_TTL: number;
+
+    @IsInt({ message: 'REDIS_DEFAULT_TTL must be a number' })
+    @IsPositive({ message: 'REDIS_DEFAULT_TTL must be a positive integer' })
+    REDIS_DEFAULT_TTL: number;
 }

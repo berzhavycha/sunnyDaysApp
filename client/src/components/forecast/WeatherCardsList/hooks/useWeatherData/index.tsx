@@ -4,7 +4,7 @@ import { REACT_APP_FETCH_CITY_AMOUNT, REACT_APP_MAX_FORECAST_DAYS, REACT_APP_WEA
 import { WeatherCardProps } from '@/components/forecast/WeatherCard';
 import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';
 import { useWeatherSubscription } from '@/hooks';
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils/getFetchPolicyForKey';
+import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 
 type QueryWeatherData = {
     userCitiesWeather: WeatherCardProps[]
@@ -27,7 +27,8 @@ export const useWeatherData = (): WeatherData => {
             },
         },
         notifyOnNetworkStatusChange: true,
-        fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
+        fetchPolicy: 'network-only'
+        // fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
     });
 
     function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {

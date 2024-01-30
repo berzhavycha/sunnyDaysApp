@@ -14,7 +14,5 @@ export const getFetchPolicyForKey = (key: string, expirationMs: number): WatchQu
         fetchPolicy = "network-only";
     }
 
-    console.log(fetchPolicy)
-
     return fetchPolicy;
 };

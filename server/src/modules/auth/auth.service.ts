@@ -82,9 +82,8 @@ export class AuthService {
     throw new Error('Invalid password!');
   }
 
-  async signOut(userId: string, response: ExtendedGraphQLContext['res']): Promise<void> {
+  async signOut(userId: string): Promise<void> {
     await this.usersService.updateUser(userId, { refreshToken: null })
-    this.clearCookies(response);
   }
 
   async refreshAccessToken(refreshToken: string): Promise<TokensType> {
