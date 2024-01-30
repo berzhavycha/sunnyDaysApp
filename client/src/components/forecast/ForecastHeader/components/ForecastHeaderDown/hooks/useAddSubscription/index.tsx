@@ -28,7 +28,7 @@ export const useAddSubscription = (city: string, setCity: Dispatch<SetStateActio
                 throw new Error('Please enter the city!');
             }
 
-            if (data && data?.userCitiesWeather.length === REACT_APP_MAX_WEATHER_CITIES_AMOUNT) {
+            if (data?.userCitiesWeather.length === +REACT_APP_MAX_WEATHER_CITIES_AMOUNT) {
                 throw new Error(`You cannot have more than ${REACT_APP_MAX_WEATHER_CITIES_AMOUNT} subscriptions. You can delete any subscription by swiping to the left.`);
             }
 
