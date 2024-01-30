@@ -48,7 +48,7 @@ export class WeatherForecastService {
 
                 const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
                 newForecasts.forEach(forecast => {
-                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL'));
+                    this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, {ttl: this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL')} as any);
                 });
                 return [...cachedForecasts, ...newForecasts];
             })
@@ -61,8 +61,7 @@ export class WeatherForecastService {
 
             console.log(
                 data.location.name,
-                this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL'),
-                this.configService.get<number>('REDIS_DEFAULT_TTL')
+                this.configService.get<number>('REDIS_WEATHER_RESPONSE_TTL')
             )
 
             return {
