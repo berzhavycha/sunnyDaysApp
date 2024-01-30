@@ -30,6 +30,8 @@ export const useWeatherData = (): WeatherData => {
         fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
     });
 
+    console.log(data, error)
+
     function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {
         return (
             <SwipeableWeatherCard

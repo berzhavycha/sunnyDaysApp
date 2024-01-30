@@ -2,14 +2,12 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { useWeatherData } from './hooks';
 import { SpinnerView } from '../SpinnerView';
-import { ErrorView } from '../ErrorView';
 import { NoData } from '@/components/common';
 
 export const WeatherCardsList = (): JSX.Element => {
-  const { data, loading, error, renderItem } = useWeatherData();
+  const { data, loading, renderItem } = useWeatherData();
 
   if (loading) return <SpinnerView />;
-  if (error) return <ErrorView />;
 
   const userCitiesWeather = data?.userCitiesWeather || [];
 

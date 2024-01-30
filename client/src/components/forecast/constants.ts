@@ -11,7 +11,8 @@ export const weatherIconMapping = {
     blizzard: "https://cdn-icons-png.flaticon.com/512/6126/6126127.png",
     sleet: "https://cdn-icons-png.flaticon.com/512/6205/6205801.png",
     drizzle: "https://cdn-icons-png.flaticon.com/512/8646/8646881.png",
-    mist: "https://cdn-icons-png.flaticon.com/512/11051/11051964.png"
+    mist: "https://cdn-icons-png.flaticon.com/512/11051/11051964.png",
+    fog: "https://cdn-icons-png.flaticon.com/512/11051/11051964.png"
 };
 
 export const DEBOUNCE_DELAY = 300

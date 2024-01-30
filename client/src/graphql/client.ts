@@ -13,7 +13,7 @@ import { refreshAccessToken } from './utils';
 import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: "https://5bba-194-44-70-13.ngrok-free.app/api/graphql",
+  uri: "https://2994-194-44-70-13.ngrok-free.app/api/graphql",
   credentials: 'include'
 });
 
