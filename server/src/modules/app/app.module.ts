@@ -26,7 +26,7 @@ import { validate } from './environment';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
-    },
+    }
   ],
 })
 export class AppModule { }
