@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, Image } from 'react-native';
-import { SubWeatherForecastDay, SubWeatherForecastDayProps } from '../ForecastDay';
+import { SubWeatherForecastDay, SubWeatherForecastDayProps } from '../SubWeatherForecastDay';
 
 export interface WeatherCardProps {
   city: string;

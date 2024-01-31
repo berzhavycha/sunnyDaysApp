@@ -25,7 +25,7 @@ export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Pro
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
   const onPressOutside = (): void => {
-    setIsInputFocused(true);
+    setIsInputFocused(false);
   };
 
   return (

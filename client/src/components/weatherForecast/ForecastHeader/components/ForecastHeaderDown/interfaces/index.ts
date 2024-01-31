@@ -4,7 +4,7 @@ export type City = {
   };
 };
 
-export type CityQuery = {
+export type CityQueryResponse = {
   populatedPlaces: {
     edges: City[];
   };

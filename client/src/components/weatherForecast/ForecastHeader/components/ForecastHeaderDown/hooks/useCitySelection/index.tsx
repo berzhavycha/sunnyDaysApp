@@ -17,7 +17,7 @@ export const useCitySelection = (
     setCity(selectedCity);
   };
 
-  const MemoizedCityItem = memo(({ item }: { item: City }) => (
+  const MemoizedCityItem = memo(({ item }: RenderCityItemProps) => (
     <ListItem content={item.node.name} onItemClick={handleCitySelect} />
   ));
 

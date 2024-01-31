@@ -14,11 +14,11 @@ import {
   REACT_APP_GEODB_CITIES_HOST,
   REACT_APP_GEODB_CITIES_URL,
   REACT_APP_GEODB_CLIENT_NAME,
-  // REACT_APP_GRAPHQL_BASE_URL,
+  REACT_APP_GRAPHQL_BASE_URL,
 } from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: 'https://9bac-194-44-70-13.ngrok-free.app/api/graphql',
+  uri: REACT_APP_GRAPHQL_BASE_URL,
   credentials: 'include',
 });
 

@@ -24,7 +24,7 @@ export const useAuth = (
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   mutation: DocumentNode = SIGN_IN_MUTATION,
 ): AuthHookReturnType => {
-  const [signMutation, { loading }] = useMutation(mutation);
+  const [authMutation, { loading }] = useMutation(mutation);
   const { setAuthState } = useAuthManager();
 
   const authHandler = async (userDto: UserDto): Promise<void> => {
@@ -33,7 +33,7 @@ export const useAuth = (
         return;
       }
 
-      await signMutation({
+      await authMutation({
         variables: {
           userDto,
         },

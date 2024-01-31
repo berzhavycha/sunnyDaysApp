@@ -1,4 +1,4 @@
-import { City, CityQuery, QueryVariables } from '../../interfaces';
+import { City, CityQueryResponse, QueryVariables } from '../../interfaces';
 import { GET_CITIES } from './queries';
 import { useInputCompleteQuery } from '@/hooks';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
@@ -24,7 +24,7 @@ export const useCityInputComplete = (city: string): UseCityInputCompleteReturn =
     };
   }, [city]);
 
-  const { data, loading } = useInputCompleteQuery<CityQuery, City, QueryVariables>(
+  const { data, loading } = useInputCompleteQuery<CityQueryResponse, City, QueryVariables>(
     GET_CITIES,
     debouncedCity,
     getCitiesQueryVariables(debouncedCity),
