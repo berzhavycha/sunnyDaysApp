@@ -3,6 +3,7 @@ import { Subscription } from './entities';
 import { CurrentUser } from '@modules/auth';
 import { IUser } from '@modules/users';
 import { SubscriptionsService } from './subscriptions.service';
+import { DeleteResult } from 'typeorm';
 
 @Resolver()
 export class SubscriptionsResolver {
@@ -12,7 +13,7 @@ export class SubscriptionsResolver {
     async addWeatherSubscription(
         @Args('city') city: string,
         @CurrentUser() user: IUser
-    ) {
+    ): Promise<Subscription> {
         return this.subscriptionService.createSubscription(city, user)
     }
 
@@ -20,7 +21,7 @@ export class SubscriptionsResolver {
     async deleteWeatherSubscription(
         @Args('city') city: string,
         @CurrentUser() user: IUser
-    ) {
+    ): Promise<DeleteResult> {
         return this.subscriptionService.deleteSubscription(city, user)
     }
 }
