@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, Image } from 'react-native';
 import { ForecastDay, ForecastDayProps } from './components';
 
@@ -11,7 +11,7 @@ export interface WeatherCardProps {
     weatherImageUri: string;
 }
 
-export const WeatherCard: React.FC<WeatherCardProps> = ({ city, tempCelsius, text, humidity, weatherImageUri, daysForecast }) => {
+export const WeatherCard: React.FC<WeatherCardProps> = memo(({ city, tempCelsius, text, humidity, weatherImageUri, daysForecast }) => {
     return (
         <View className='flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl'>
             <View className='w-full flex-row justify-between mb-2'>
@@ -30,6 +30,6 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({ city, tempCelsius, tex
             </View>
         </View>
     );
-};
+});
 
 

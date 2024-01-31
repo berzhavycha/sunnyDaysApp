@@ -29,7 +29,7 @@ export const useAddSubscription = (city: string, setCity: Dispatch<SetStateActio
             }
 
             if (data?.userCitiesWeather.length === +REACT_APP_MAX_WEATHER_CITIES_AMOUNT) {
-                throw new Error(`You cannot have more than ${REACT_APP_MAX_WEATHER_CITIES_AMOUNT} subscriptions.`);
+                throw new Error(`You cannot have more than ${REACT_APP_MAX_WEATHER_CITIES_AMOUNT} cities.`);
             }
 
             const isCityAlreadyExists = data?.userCitiesWeather.some(forecast => forecast.city.includes(city));

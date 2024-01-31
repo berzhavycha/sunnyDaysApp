@@ -2,6 +2,7 @@ import { View, Text, Image } from "react-native";
 import { weatherIconMapping } from "@/components/forecast/constants";
 import { pickWeatherIcon } from "@/components/forecast/SwipeableWeatherCard/utils";
 import { REACT_APP_MAX_FORECAST_DAYS } from "@env";
+import { memo } from "react";
 
 export interface ForecastDayProps {
     text: string;
@@ -10,7 +11,7 @@ export interface ForecastDayProps {
     humidity: number;
 }
 
-export const ForecastDay: React.FC<ForecastDayProps> = ({ text, dayOfWeek, tempCelsius, humidity }) => {
+export const ForecastDay: React.FC<ForecastDayProps> = memo(({ text, dayOfWeek, tempCelsius, humidity }) => {
     const dayWeatherIcon = pickWeatherIcon(text);
 
     return (
@@ -23,4 +24,4 @@ export const ForecastDay: React.FC<ForecastDayProps> = ({ text, dayOfWeek, tempC
             <Text className='text-gray-300 font-bold'>{dayOfWeek}</Text>
         </View>
     );
-};
+});

@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction, memo, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { upperCaseFirstLetter } from '@/utils';
 import { Feather } from '@expo/vector-icons';
@@ -14,7 +14,7 @@ type IProps = {
   onBlur?: () => void
 };
 
-export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
+export const Input: FC<IProps> = memo(({ value, onChange, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
   const toggleShowPassword = (): void => {
@@ -27,7 +27,7 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
         name={icon}
         size={20}
         color="#ccc"
-        className='absolute top-3 right-3 z-100'
+        style={{position: 'absolute', top: 12, left: 12, zIndex: 100}}
       />
       <TextInput
         secureTextEntry={isPasswordShown}
@@ -50,4 +50,4 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
       <Text className="text-xs text-red-500 mb-3">{error && upperCaseFirstLetter(error)}</Text>
     </View>
   );
-};
+});

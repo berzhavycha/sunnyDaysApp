@@ -1,5 +1,5 @@
 import { ListItem } from '@/components/common';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, memo } from 'react';
 import { City } from '../../interfaces';
 
 type RenderCityItemProps = {
@@ -15,8 +15,12 @@ export const useCitySelection = (setCity: Dispatch<SetStateAction<string>>): Use
         setCity(selectedCity)
     };
 
-    const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => (
+    const MemoizedCityItem = memo(({ item }: { item: City }) => (
         <ListItem content={item.node.name} onItemClick={handleCitySelect} />
+    ));
+
+    const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => (
+        <MemoizedCityItem item={item} />
     );
 
     return { renderCityItem };

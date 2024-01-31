@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, memo } from 'react';
 import { Text, TouchableOpacity, Animated } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { pickWeatherIcon } from './utils';
@@ -12,7 +12,7 @@ type IProps = {
     onDelete: () => void;
 }
 
-export const SwipeableWeatherCard: FC<IProps> = ({
+export const SwipeableWeatherCard: FC<IProps> = memo(({
     item,
     onDelete,
 }): JSX.Element => {
@@ -52,4 +52,4 @@ export const SwipeableWeatherCard: FC<IProps> = ({
             </Animated.View>
         </Swipeable>
     );
-};
+});

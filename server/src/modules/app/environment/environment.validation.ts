@@ -33,7 +33,10 @@ export class EnvironmentVariables {
 
     @ValidateProperty('LOGIN_FIELD', true)
     LOGIN_FIELD: string;
-
+    
+    @ValidateProperty('PASSWORD_MIN_LENGTH', false, true, true)
+    PASSWORD_MIN_LENGTH: number;
+    
     @ValidateProperty('WEATHER_API_KEY', true)
     WEATHER_API_KEY: string;
 
@@ -45,4 +48,5 @@ export class EnvironmentVariables {
 
     @ValidateProperty('REDIS_DEFAULT_TTL', false, true, true)
     REDIS_DEFAULT_TTL: number;
+
 }
