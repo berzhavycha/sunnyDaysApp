@@ -1,5 +1,5 @@
 import { plainToClass } from "class-transformer";
-import { validateSync } from "class-validator";
+import { validateSync, ValidationError } from "class-validator";
 import { EnvironmentVariables } from "./environment.validation";
 
 export const validate = (config: Record<string, unknown>) => {
@@ -7,12 +7,17 @@ export const validate = (config: Record<string, unknown>) => {
         enableImplicitConversion: true,
     });
 
-    const errors = validateSync(validatedConfig, {
+    const errors: ValidationError[] = validateSync(validatedConfig, {
         skipMissingProperties: false,
     });
 
     if (errors.length > 0) {
-        throw new Error(errors.toString());
+        const errorMessage = errors.map(error => {
+            const constraints = Object.values(error.constraints || {});
+            return constraints.length > 0 ? constraints.join(', ') : `Validation constraints missing`;
+        }).join('; ');
+
+        throw new Error(`Validation failed: \n ${errorMessage}\n`);
     }
 
     return validatedConfig;
