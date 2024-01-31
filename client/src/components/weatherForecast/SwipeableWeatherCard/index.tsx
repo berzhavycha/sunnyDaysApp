@@ -4,7 +4,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { pickWeatherIcon } from './utils';
 import { weatherIconMapping } from '../constants';
 import { Feather } from '@expo/vector-icons';
-import { WeatherCard, WeatherCardProps } from '../WeatherCard';
+import { WeatherCard, WeatherCardProps } from './components/WeatherCard';
 import { useDeleteAnimation } from './hooks';
 
 type IProps = {

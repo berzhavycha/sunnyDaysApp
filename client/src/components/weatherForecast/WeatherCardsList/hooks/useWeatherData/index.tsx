@@ -5,8 +5,8 @@ import {
   REACT_APP_MAX_FORECAST_DAYS,
   REACT_APP_WEATHER_FORECAST_CACHE_TIME,
 } from '@env';
-import { WeatherCardProps } from '@/components/forecast/WeatherCard';
-import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard';
+import { WeatherCardProps } from '@/components/weatherForecast/SwipeableWeatherCard/components/WeatherCard';
+import { SwipeableWeatherCard } from '@/components/weatherForecast/SwipeableWeatherCard';
 import { useWeatherSubscription } from '@/hooks';
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 

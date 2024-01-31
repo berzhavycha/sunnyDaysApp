@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useWeatherSubscription } from '@/hooks';
-import { useWeatherData } from '@/components/forecast/WeatherCardsList/hooks';
+import { useWeatherData } from '@/components/weatherForecast/WeatherCardsList/hooks';
 import { REACT_APP_MAX_WEATHER_CITIES_AMOUNT } from '@env';
 
 type UseAddWeatherSubscription = {

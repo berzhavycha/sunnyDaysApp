@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, InputAutocomplete } from '@/components/common';
-import { SpinnerView } from '@/components/forecast/SpinnerView';
-import { ADD_CITY_BTN_TEXT } from '@/components/forecast/constants';
+import { SpinnerView } from '@/components/weatherForecast/SpinnerView';
+import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { City } from './interfaces';
 import { useCitySelection, useCityInputComplete, useAddSubscription } from './hooks';
 

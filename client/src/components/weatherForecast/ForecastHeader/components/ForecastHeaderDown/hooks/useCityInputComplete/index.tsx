@@ -4,7 +4,7 @@ import { useInputCompleteQuery } from '@/hooks';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { getCitiesQueryVariables, extractData } from '../../utils';
 import { useState, useEffect } from 'react';
-import { DEBOUNCE_DELAY } from '@/components/forecast/constants';
+import { DEBOUNCE_DELAY } from '@/components/weatherForecast/constants';
 
 type UseCityInputCompleteReturn = {
   data: City[];

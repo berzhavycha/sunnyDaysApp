@@ -1,5 +1,5 @@
 import { ApolloError, useMutation } from '@apollo/client';
-import { GET_USER_CITIES_WEATHER } from '@/components/forecast/WeatherCardsList/hooks/useWeatherData/queries';
+import { GET_USER_CITIES_WEATHER } from '@/components/weatherForecast/WeatherCardsList/hooks/useWeatherData/queries';
 import { ADD_WEATHER_SUBSCRIPTION, DELETE_WEATHER_SUBSCRIPTION } from './mutations';
 
 type UseWeatherSubscriptionReturnType = {

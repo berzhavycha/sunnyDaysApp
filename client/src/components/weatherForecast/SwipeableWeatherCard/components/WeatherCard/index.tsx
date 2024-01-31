@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { View, Text, Image } from 'react-native';
-import { ForecastDay, ForecastDayProps } from './components';
+import { SubWeatherForecastDay, SubWeatherForecastDayProps } from '../ForecastDay';
 
 export interface WeatherCardProps {
   city: string;
   tempCelsius: string;
   humidity: string;
   text: string;
-  daysForecast: ForecastDayProps[];
+  daysForecast: SubWeatherForecastDayProps[];
   weatherImageUri: string;
 }
 
@@ -26,7 +26,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = memo(
         </View>
         <View className="w-full mt-2 flex-row justify-between">
           {daysForecast.map((dayForecast, index) => {
-            return <ForecastDay key={index} {...dayForecast} />;
+            return <SubWeatherForecastDay key={index} {...dayForecast} />;
           })}
         </View>
       </View>
