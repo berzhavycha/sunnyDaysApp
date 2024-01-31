@@ -51,7 +51,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         />
         {confirmPassword !== undefined && (
           <Input
-            value={confirmPassword ?? ''}
+            value={confirmPassword}
             onChange={setConfirmPassword as Dispatch<SetStateAction<string>>}
             placeholder="Confirm Password"
             icon="key"

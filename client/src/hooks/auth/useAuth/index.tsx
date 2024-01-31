@@ -46,7 +46,6 @@ export const useAuth = (
       });
     } catch (error) {
       if (error instanceof ApolloError) {
-        console.log(error.stack)
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
         setFieldsError((prevState) => ({
           ...prevState,
