@@ -11,14 +11,14 @@ type Mutation {
   addWeatherSubscription(city: String!): Subscription!
   deleteWeatherSubscription(city: String!): Subscription!
   refreshAccess: String!
-  signIn(UserInput: UserInput!): String!
+  signIn(userInput: UserInput!): String!
   signOut: String!
-  signUp(UserInput: UserInput!): String!
+  signUp(userInput: UserInput!): String!
 }
 
 type Query {
   isUserSignedIn: Boolean!
-  userCitiesWeather(ForecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
+  userCitiesWeather(forecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
 }
 
 type Subscription {
