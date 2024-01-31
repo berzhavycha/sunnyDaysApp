@@ -1,13 +1,12 @@
 import { IsString, IsNotEmpty, IsInt, IsPositive } from 'class-validator';
 
-export function ValidateProperty(
+export function ValidateProperty<T>(
   variable: string,
   isString: boolean,
   isNumber?: boolean,
   isPositive?: boolean,
 ): PropertyDecorator {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function (target: any, propertyKey: string) {
+  return function (target: T, propertyKey: string) {
     const decorators: PropertyDecorator[] = [
       IsNotEmpty({ message: `${variable} is required` }),
     ];

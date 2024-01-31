@@ -3,7 +3,7 @@ import { WeatherForecastService } from './weather-forecast.service';
 import { Observable } from 'rxjs';
 import { CurrentUser } from '@modules/auth';
 import { IUser } from '@modules/users';
-import { WeatherForecast } from './entities';
+import { WeatherForecast } from './types';
 import { ForecastParamsInput } from './dtos';
 
 @Resolver()

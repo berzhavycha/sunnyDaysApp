@@ -7,7 +7,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
 import { WeatherApiResponse, IForecastDay } from './interfaces';
-import { WeatherDay, WeatherForecast } from './entities';
+import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
 import { IUser } from '@modules/users';

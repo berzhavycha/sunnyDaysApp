@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { IUser, UsersService } from '@modules/users';
-import { TokensType } from './entities';
+import { TokensType } from './types';
 import { UserDto } from './dtos';
 import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';

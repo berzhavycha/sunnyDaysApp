@@ -1,10 +1,11 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ObjectType } from '@nestjs/graphql';
+import { IsString } from 'class-validator';
 
 @ObjectType('TokensType')
 export abstract class TokensType {
-  @Field(() => String)
+  @IsString()
   public accessToken: string;
 
-  @Field(() => String)
+  @IsString()
   public refreshToken: string;
 }

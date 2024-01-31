@@ -9,13 +9,13 @@ import {
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { UsersModule } from '@modules/users';
-import { JWTConfig } from '@configs';
+import { JwtConfig } from '@configs';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.registerAsync(JWTConfig),
+    JwtModule.registerAsync(JwtConfig),
   ],
   providers: [
     AuthService,
