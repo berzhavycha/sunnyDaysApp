@@ -11,7 +11,7 @@ export interface WeatherCardProps {
     weatherImageUri: string;
 }
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ city, tempCelsius, text, humidity, weatherImageUri, daysForecast }) => {
+export const WeatherCard: React.FC<WeatherCardProps> = ({ city, tempCelsius, text, humidity, weatherImageUri, daysForecast }) => {
     return (
         <View className='flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl'>
             <View className='w-full flex-row justify-between mb-2'>
@@ -33,4 +33,3 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city, tempCelsius, text, humi
 };
 
 
-export default WeatherCard;

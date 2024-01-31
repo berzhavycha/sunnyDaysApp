@@ -6,6 +6,10 @@ import { SwipeableWeatherCard } from '@/components/forecast/SwipeableWeatherCard
 import { useWeatherSubscription } from '@/hooks';
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 
+type RenderItemProps = {
+    item: WeatherCardProps
+}
+
 type QueryWeatherData = {
     userCitiesWeather: WeatherCardProps[]
 }
@@ -14,7 +18,7 @@ type WeatherData = {
     data: QueryWeatherData | undefined;
     loading: boolean;
     error: ApolloError | undefined;
-    renderItem({ item }: { item: WeatherCardProps }): JSX.Element
+    renderItem(props: RenderItemProps): JSX.Element
 }
 
 export const useWeatherData = (): WeatherData => {
@@ -30,7 +34,7 @@ export const useWeatherData = (): WeatherData => {
         fetchPolicy: getFetchPolicyForKey("weatherData", ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME)
     });
 
-    function renderItem({ item }: { item: WeatherCardProps }): JSX.Element {
+    function renderItem({ item }: RenderItemProps): JSX.Element {
         return (
             <SwipeableWeatherCard
                 item={item}

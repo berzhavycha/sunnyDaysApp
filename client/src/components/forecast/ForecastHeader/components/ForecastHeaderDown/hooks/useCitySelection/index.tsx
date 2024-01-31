@@ -2,8 +2,12 @@ import { ListItem } from '@/components/common';
 import { Dispatch, SetStateAction } from 'react';
 import { City } from '../../interfaces';
 
+type RenderCityItemProps = {
+    item: City
+}
+
 type UseCitySelectionReturnType = {
-    renderCityItem: (args: { item: City }) => JSX.Element;
+    renderCityItem: (args: RenderCityItemProps) => JSX.Element;
 };
 
 export const useCitySelection = (setCity: Dispatch<SetStateAction<string>>): UseCitySelectionReturnType => {
@@ -11,7 +15,7 @@ export const useCitySelection = (setCity: Dispatch<SetStateAction<string>>): Use
         setCity(selectedCity)
     };
 
-    const renderCityItem = ({ item }: { item: City }): JSX.Element => (
+    const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => (
         <ListItem content={item.node.name} onItemClick={handleCitySelect} />
     );
 

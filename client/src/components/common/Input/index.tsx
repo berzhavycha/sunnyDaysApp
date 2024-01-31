@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { upperCaseFirstLetter } from '@/utils';
-import { Feather} from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 type IProps = {
   value: string;
@@ -27,7 +27,7 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
         name={icon}
         size={20}
         color="#ccc"
-        style={{ position: 'absolute', top: 12, left: 12, zIndex: 100 }}
+        className='absolute top-3 right-3 z-100'
       />
       <TextInput
         secureTextEntry={isPasswordShown}
@@ -41,7 +41,7 @@ export const Input: FC<IProps> = ({ value, onChange, placeholder, icon, error, i
       />
       {isSecured && (
         <TouchableOpacity
-          style={{ position: 'absolute', top: 12, right: 12, zIndex: 100 }}
+          className='absolute top-3 right-3 z-100'
           onPress={toggleShowPassword}
         >
           <Feather name={isPasswordShown ? 'eye' : 'eye-off'} size={20} color="#ccc" />

@@ -4,7 +4,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { pickWeatherIcon } from './utils';
 import { weatherIconMapping } from '../constants';
 import { Feather } from '@expo/vector-icons';
-import WeatherCard, { WeatherCardProps } from '../WeatherCard';
+import { WeatherCard, WeatherCardProps } from '../WeatherCard';
 import { useDeleteAnimation } from './hooks';
 
 type IProps = {
@@ -28,10 +28,10 @@ export const SwipeableWeatherCard: FC<IProps> = ({
             renderRightActions={() => (
                 <Animated.View style={[{ opacity: opacityAnimatedValue }, { backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 }]}>
                     <TouchableOpacity
-                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                        className='flex-1 justify-center items-center'
                         onPress={animateOnDelete}
                     >
-                        <Text style={{ color: 'white' }}>
+                        <Text className='text-white'>
                             <Feather name="trash-2" size={30} color="#ccc" />
                         </Text>
                     </TouchableOpacity>
