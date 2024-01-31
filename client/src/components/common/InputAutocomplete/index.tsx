@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction, ReactElement, useState } from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { Dispatch, SetStateAction, ReactElement, useState } from 'react';
+import { View, FlatList } from 'react-native';
 import { Input } from '../Input';
+import OutsidePressHandler from 'react-native-outside-press';
 
 type Props<TItem> = {
   loading: boolean;
@@ -23,8 +24,15 @@ export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Pro
 }) => {
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
+  const onPressOutside = (): void => {
+    setIsInputFocused(true);
+  };
+
   return (
-    <View className="relative">
+    <OutsidePressHandler
+      onOutsidePress={onPressOutside}
+      style={{ position: 'relative', zIndex: 65000 }}
+    >
       <Input
         value={search}
         onChange={onSearchChange}
@@ -32,20 +40,15 @@ export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Pro
         icon="search"
         error={error}
         onFocus={() => setIsInputFocused(true)}
-        onBlur={() => setIsInputFocused(false)}
       />
       {!loading && data && isInputFocused && (
-        <View className="absolute top-14 bg-gray-800 rounded w-full z-10 shadow-xl">
+        <View className='absolute top-14 bg-gray-800 rounded w-full z-10 shadow-xl'>
           <FlatList
             data={data}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => setIsInputFocused(true)}>
-                {onRenderItem({ item })}
-              </TouchableOpacity>
-            )}
+            renderItem={({ item }) => onRenderItem({ item })}
           />
         </View>
       )}
-    </View>
+    </OutsidePressHandler >
   );
 };
