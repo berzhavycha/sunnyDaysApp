@@ -37,11 +37,11 @@ export class EnvironmentVariables {
     @ValidateProperty('WEATHER_API_KEY', true)
     WEATHER_API_KEY: string;
 
-    @ValidateProperty('COOKIE_EXPIRY_TIME', false, true, true)
-    COOKIE_EXPIRY_TIME: number;
+    @ValidateProperty('COOKIE_EXPIRATION_TIME', false, true, true)
+    COOKIE_EXPIRATION_TIME: number;
 
-    @ValidateProperty('REDIS_WEATHER_RESPONSE_TTL', false, true, true)
-    REDIS_WEATHER_RESPONSE_TTL: number;
+    @ValidateProperty('REDIS_WEATHER_DATA_TTL', false, true, true)
+    REDIS_WEATHER_DATA_TTL: number;
 
     @ValidateProperty('REDIS_DEFAULT_TTL', false, true, true)
     REDIS_DEFAULT_TTL: number;

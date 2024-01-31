@@ -16,7 +16,7 @@ export class WeatherForecastResolver {
     async userCitiesWeather(
         @Args('ForecastParamsInput') forecastParams: ForecastParamsInput,
         @CurrentUser() user: IUser,
-    ): Promise<Observable<WeatherForecast[] | string>> {
+    ): Promise<Observable<WeatherForecast[]>> {
         return this.weatherForecastService.getUserCitiesWeather(user, forecastParams.citiesLimit, forecastParams.forecastDaysAmount);
     }
 }

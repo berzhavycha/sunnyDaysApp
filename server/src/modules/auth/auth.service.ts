@@ -71,7 +71,7 @@ export class AuthService {
 
   setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRY_TIME'));
+    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRATION_TIME'));
 
     response.cookie('tokens', tokens, {
       httpOnly: true,
