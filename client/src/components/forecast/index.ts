@@ -1,2 +1,2 @@
-export * from './ForecastHeader'
-export * from './WeatherCardsList'
+export * from './ForecastHeader';
+export * from './WeatherCardsList';

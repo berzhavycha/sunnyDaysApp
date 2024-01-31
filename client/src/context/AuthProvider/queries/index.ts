@@ -1,1 +1,1 @@
-export * from './isUserSignedIn'
+export * from './isUserSignedIn';

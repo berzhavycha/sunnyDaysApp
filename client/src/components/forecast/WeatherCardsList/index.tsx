@@ -14,10 +14,10 @@ export const WeatherCardsList = (): JSX.Element => {
   return (
     <>
       {!userCitiesWeather.length ? (
-        <NoData message='No weather information available' />
+        <NoData message="No weather information available" />
       ) : (
         <FlatList
-          className='w-full'
+          className="w-full"
           data={userCitiesWeather}
           keyExtractor={(item) => item.city}
           renderItem={renderItem}

@@ -1,3 +1,3 @@
-import { City, CityQuery } from "../interfaces";
+import { City, CityQuery } from '../interfaces';
 
-export const extractData = (data: CityQuery): City[] => data && data.populatedPlaces.edges
+export const extractData = (data: CityQuery): City[] => data && data.populatedPlaces.edges;

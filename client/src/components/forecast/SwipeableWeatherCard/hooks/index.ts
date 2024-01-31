@@ -1,1 +1,1 @@
-export * from './useDeleteAnimation'
+export * from './useDeleteAnimation';

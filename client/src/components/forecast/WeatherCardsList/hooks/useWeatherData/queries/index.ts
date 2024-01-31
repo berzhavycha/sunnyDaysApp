@@ -1,1 +1,1 @@
-export * from './getWeatherForecast'
+export * from './getWeatherForecast';

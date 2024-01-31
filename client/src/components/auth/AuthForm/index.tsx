@@ -60,7 +60,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           />
         )}
         <Button text={convertPascalCaseToSpaced(actionButtonText)} onPress={handleAuth} />
-        <View className='justify-center items-center'>
+        <View className="justify-center items-center">
           {actionButtonText === AuthType.SIGN_IN ? (
             <Text className="text-gray-400 mt-8">
               Don`t have an account?{' '}

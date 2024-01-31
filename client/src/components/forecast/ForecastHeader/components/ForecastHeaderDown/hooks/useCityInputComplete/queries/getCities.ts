@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_CITIES = gql`
   query Cities($namePrefix: String, $sort: String, $first: Int) {
     populatedPlaces(namePrefix: $namePrefix, sort: $sort, first: $first) {
-      edges { 
+      edges {
         node {
           id
           name

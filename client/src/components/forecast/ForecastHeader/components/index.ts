@@ -1,2 +1,2 @@
-export * from './ForecastHeaderDown'
-export * from './ForecastHeaderTop'
+export * from './ForecastHeaderDown';
+export * from './ForecastHeaderTop';

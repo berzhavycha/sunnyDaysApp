@@ -2,15 +2,14 @@ import { FC, memo } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 type Props = {
-    content: string,
-    onItemClick: (text: string) => void
-}
+  content: string;
+  onItemClick: (text: string) => void;
+};
 
 export const ListItem: FC<Props> = memo(({ content, onItemClick }): JSX.Element => {
-    return (
-        <TouchableOpacity className='w-full p-2' onPress={() => onItemClick(content)}>
-            <Text className='w-full text-white'>{content}</Text>
-        </TouchableOpacity>
-    );
+  return (
+    <TouchableOpacity className="w-full p-2" onPress={() => onItemClick(content)}>
+      <Text className="w-full text-white">{content}</Text>
+    </TouchableOpacity>
+  );
 });
-

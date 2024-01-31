@@ -6,7 +6,7 @@ const SignUpScreen = (): JSX.Element => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const { loading, signUpHandler, fieldsError } = useSignUp()
+  const { loading, signUpHandler, fieldsError } = useSignUp();
 
   if (loading) {
     return <Spinner />;

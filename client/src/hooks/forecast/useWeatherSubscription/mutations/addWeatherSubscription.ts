@@ -5,6 +5,5 @@ export const ADD_WEATHER_SUBSCRIPTION = gql`
     addWeatherSubscription(city: $city) {
       id
     }
-}
+  }
 `;
-
