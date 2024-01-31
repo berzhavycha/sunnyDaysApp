@@ -4,10 +4,10 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/apollo": [
+      "@/graphql": [
         "src/graphql"
       ],
-      "@/apollo/*": [
+      "@/graphql/*": [
         "src/graphql/*"
       ],
       "@/app": [
@@ -39,9 +39,6 @@
       ],
       "@/hooks/*": [
         "./src/hooks/*"
-      ],
-      "@/global": [
-        "./src/global"
       ],
       "@/regex/*": [
         "./src/regex/*"

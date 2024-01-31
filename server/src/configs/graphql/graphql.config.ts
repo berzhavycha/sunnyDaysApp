@@ -7,7 +7,7 @@ class GraphQLConfig implements GqlOptionsFactory {
   public createGqlOptions(): ApolloDriverConfig {
     return {
       driver: ApolloDriver,
-      context: ({ req, res }): { req: Request, res: Response } => ({
+      context: ({ req, res }): { req: Request; res: Response } => ({
         req,
         res,
       }),

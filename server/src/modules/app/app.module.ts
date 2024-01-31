@@ -10,6 +10,8 @@ import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
 import { validate } from './environment';
+import { AppService } from './app.service';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { validate } from './environment';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    AppService,
+    AppResolver,
   ],
 })
-export class AppModule { }
+export class AppModule {}

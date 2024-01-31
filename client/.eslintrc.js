@@ -7,7 +7,7 @@ module.exports = {
     "no-duplicate-imports": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-vars": ["error", { vars: "all", args: "after-used", ignoreRestSiblings: false }],
-    "@typescript-eslint/explicit-function-return-type": ["error", { allowExpressions: true }],
+    "@typescript-eslint/explicit-function-return-type": "error",
     "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": ["error", { allowArgumentsExplicitlyTypedAsAny: true }],
     "prettier/prettier": "off",

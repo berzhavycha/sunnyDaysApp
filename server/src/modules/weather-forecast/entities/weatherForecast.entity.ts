@@ -3,21 +3,21 @@ import { WeatherDay } from './weatherDay.entity';
 
 @ObjectType()
 export class WeatherForecast {
-    @Field(() => String)
-    city: string;
+  @Field(() => String)
+  city: string;
 
-    @Field(() => Float)
-    tempCelsius: number
+  @Field(() => Float)
+  tempCelsius: number;
 
-    @Field(() => Float)
-    tempFahrenheit: number
+  @Field(() => Float)
+  tempFahrenheit: number;
 
-    @Field(() => String)
-    text: string;
+  @Field(() => String)
+  text: string;
 
-    @Field(() => Int)
-    humidity: number;
+  @Field(() => Int)
+  humidity: number;
 
-    @Field(() => [WeatherDay])
-    daysForecast: WeatherDay[]
+  @Field(() => [WeatherDay])
+  daysForecast: WeatherDay[];
 }

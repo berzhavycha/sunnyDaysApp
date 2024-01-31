@@ -5,20 +5,16 @@ import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
 import { CurrentUser, Public } from './decorators';
-import { ConfigService } from '@nestjs/config';
 import { IUser } from '@modules/users';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly authService: AuthService
-  ) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Mutation(() => String)
   async signUp(
-    @Args('UserInput') userDto: UserDto,
+    @Args('userInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signUp(userDto);
@@ -31,7 +27,7 @@ export class AuthResolver {
   @Mutation(() => String)
   @UseGuards(LocalAuthGuard)
   async signIn(
-    @Args('UserInput') userDto: UserDto,
+    @Args('userInput') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signIn(context.user);
@@ -64,16 +60,14 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     await this.authService.signOut(user.id);
-    this.authService.clearCookies(context.res)
+    this.authService.clearCookies(context.res);
 
     return 'Has signed out successfully!';
   }
 
   @Query(() => Boolean)
-  public async isUserSignedIn(
-    @CurrentUser() user: IUser,
-  ): Promise<boolean> {
-    if (user) return true
-    else return false
+  public async isUserSignedIn(@CurrentUser() user: IUser): Promise<boolean> {
+    if (user) return true;
+    else return false;
   }
 }

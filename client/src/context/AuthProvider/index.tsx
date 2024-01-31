@@ -34,7 +34,7 @@ export const useAuthManager = (): AuthContextType => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const client = useApolloClient()
+  const client = useApolloClient();
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
   });
@@ -57,7 +57,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setAuthState({
       isAuthenticated: false,
     });
-    client.clearStore()
+    client.clearStore();
   };
 
   const contextValue: AuthContextType = {

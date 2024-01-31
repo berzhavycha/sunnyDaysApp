@@ -1,18 +1,18 @@
-import { IForecastDay } from "./forecastDay";
+import { IForecastDay } from './forecastDay';
 
 export interface WeatherApiResponse {
-    location: {
-        name: string;
+  location: {
+    name: string;
+  };
+  current: {
+    temp_c: number;
+    temp_f: number;
+    condition: {
+      text: string;
     };
-    current: {
-        temp_c: number,
-        temp_f: number,
-        condition: {
-            text: string
-        }
-        humidity: number,
-    }
-    forecast: {
-        forecastday: IForecastDay[]
-    }
+    humidity: number;
+  };
+  forecast: {
+    forecastday: IForecastDay[];
+  };
 }

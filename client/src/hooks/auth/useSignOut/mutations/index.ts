@@ -1,1 +1,1 @@
-export * from './signOut'
+export * from './signOut';

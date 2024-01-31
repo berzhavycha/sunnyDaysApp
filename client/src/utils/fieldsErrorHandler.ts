@@ -1,4 +1,4 @@
-import { FieldErrorsState } from '@/utils';
+import { FieldErrorsState } from '@/hooks';
 import { ApolloError } from '@apollo/client';
 
 export const fieldsErrorHandler = <T>(

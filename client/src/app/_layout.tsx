@@ -1,8 +1,9 @@
-import { apolloClient } from 'src/graphql';
 import { AuthProvider, useAuthManager } from '@/context';
 import { ApolloProvider } from '@apollo/client';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
+import { apolloClient } from '@/graphql';
+import { EventProvider } from 'react-native-outside-press';
 
 const InitialLayout = (): JSX.Element => {
   const { authState } = useAuthManager();
@@ -26,7 +27,9 @@ const RootLayout = (): JSX.Element => {
   return (
     <ApolloProvider client={apolloClient}>
       <AuthProvider>
-        <InitialLayout />
+        <EventProvider>
+          <InitialLayout />
+        </EventProvider>
       </AuthProvider>
     </ApolloProvider>
   );

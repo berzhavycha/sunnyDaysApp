@@ -51,7 +51,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         />
         {confirmPassword !== undefined && (
           <Input
-            value={confirmPassword ?? ''}
+            value={confirmPassword}
             onChange={setConfirmPassword as Dispatch<SetStateAction<string>>}
             placeholder="Confirm Password"
             icon="key"
@@ -60,7 +60,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           />
         )}
         <Button text={convertPascalCaseToSpaced(actionButtonText)} onPress={handleAuth} />
-        <View className='justify-center items-center'>
+        <View className="justify-center items-center">
           {actionButtonText === AuthType.SIGN_IN ? (
             <Text className="text-gray-400 mt-8">
               Don`t have an account?{' '}

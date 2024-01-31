@@ -1,5 +1,4 @@
 import { onError } from '@apollo/client/link/error';
-// import { REACT_APP_GRAPHQL_BASE_URL } from "@env";
 import {
   ApolloClient,
   FetchResult,
@@ -9,12 +8,18 @@ import {
   ApolloLink,
   split,
 } from '@apollo/client';
-import { refreshAccessToken } from './utils';
-import { REACT_APP_GEODB_CITIES_API_KEY, REACT_APP_GEODB_CITIES_HOST, REACT_APP_GEODB_CITIES_URL, REACT_APP_GEODB_CLIENT_NAME } from '@env';
+import { isRefreshOperation, refreshAccessToken } from './utils';
+import {
+  REACT_APP_GEODB_CITIES_API_KEY,
+  REACT_APP_GEODB_CITIES_HOST,
+  REACT_APP_GEODB_CITIES_URL,
+  REACT_APP_GEODB_CLIENT_NAME,
+  // REACT_APP_GRAPHQL_BASE_URL,
+} from '@env';
 
 const mainHttpLink = new HttpLink({
-  uri: "https://2994-194-44-70-13.ngrok-free.app/api/graphql",
-  credentials: 'include'
+  uri: 'https://9bac-194-44-70-13.ngrok-free.app/api/graphql',
+  credentials: 'include',
 });
 
 const citiesHttpLink = new HttpLink({
@@ -22,18 +27,18 @@ const citiesHttpLink = new HttpLink({
   headers: {
     'x-rapidapi-key': REACT_APP_GEODB_CITIES_API_KEY,
     'x-rapidapi-host': REACT_APP_GEODB_CITIES_HOST,
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
   if (graphQLErrors) {
     for (const err of graphQLErrors) {
       if (err.extensions.code === 'UNAUTHENTICATED') {
-        if (operation.operationName === 'RefreshAccess') return;
+        if (isRefreshOperation(operation)) return;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
-          (async () => {
+          (async (): Promise<void> => {
             try {
               await refreshAccessToken(apolloClient);
 
@@ -61,10 +66,10 @@ export const apolloClient = new ApolloClient({
   link: ApolloLink.from([
     errorLink,
     split(
-      operation => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
+      (operation) => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
       citiesHttpLink,
-      mainHttpLink
-    )
+      mainHttpLink,
+    ),
   ]),
   cache: new InMemoryCache(),
 });

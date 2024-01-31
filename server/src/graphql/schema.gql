@@ -8,20 +8,20 @@ input ForecastParamsInput {
 }
 
 type Mutation {
-  addWeatherSubscription(city: String!): SubscriptionResponse!
-  deleteWeatherSubscription(city: String!): SubscriptionResponse!
+  addWeatherSubscription(city: String!): Subscription!
+  deleteWeatherSubscription(city: String!): Subscription!
   refreshAccess: String!
-  signIn(UserInput: UserInput!): String!
+  signIn(userInput: UserInput!): String!
   signOut: String!
-  signUp(UserInput: UserInput!): String!
+  signUp(userInput: UserInput!): String!
 }
 
 type Query {
   isUserSignedIn: Boolean!
-  userCitiesWeather(ForecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
+  userCitiesWeather(forecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
 }
 
-type SubscriptionResponse {
+type Subscription {
   cityName: String!
   id: String!
   userId: String!
