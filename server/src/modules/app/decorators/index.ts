@@ -1,1 +1,1 @@
-export * from './validateProperty.decorator'
+export * from './validateProperty.decorator';

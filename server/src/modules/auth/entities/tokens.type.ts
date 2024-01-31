@@ -8,4 +8,3 @@ export abstract class TokensType {
   @Field(() => String)
   public refreshToken: string;
 }
-

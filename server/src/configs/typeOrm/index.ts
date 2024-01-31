@@ -7,7 +7,7 @@ dotenvConfig();
 export const typeOrmConfigOptions = {
   useFactory: (configService: ConfigService) => {
     return {
-      type: "postgres" as const,
+      type: 'postgres' as const,
       host: configService.get<string>('POSTGRES_HOST'),
       username: configService.get<string>('POSTGRES_USER'),
       password: configService.get<string>('POSTGRES_PASSWORD'),
@@ -15,8 +15,8 @@ export const typeOrmConfigOptions = {
       autoLoadEntities: true,
       migrations: ['dist/src/migrations/*{.ts,.js}'],
       synchronize: false,
-    }
-  }
+    };
+  },
 };
 
 export const connectionSource = new DataSource(
@@ -27,4 +27,4 @@ export const typeOrmConfig = {
   imports: [ConfigModule],
   useFactory: typeOrmConfigOptions.useFactory,
   inject: [ConfigService],
-}
+};

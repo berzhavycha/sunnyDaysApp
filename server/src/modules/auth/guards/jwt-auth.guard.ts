@@ -6,7 +6,6 @@ import { IS_PUBLIC_KEY } from '@modules/auth/decorators';
 import { Observable } from 'rxjs';
 import { Request } from 'express-serve-static-core';
 
-
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   constructor(private readonly reflector: Reflector) {

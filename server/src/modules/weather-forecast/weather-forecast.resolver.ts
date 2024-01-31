@@ -8,15 +8,19 @@ import { ForecastParamsInput } from './dtos';
 
 @Resolver()
 export class WeatherForecastResolver {
-    constructor(
-        private readonly weatherForecastService: WeatherForecastService
-    ) { }
+  constructor(
+    private readonly weatherForecastService: WeatherForecastService,
+  ) {}
 
-    @Query(() => [WeatherForecast])
-    async userCitiesWeather(
-        @Args('ForecastParamsInput') forecastParams: ForecastParamsInput,
-        @CurrentUser() user: IUser,
-    ): Promise<Observable<WeatherForecast[]>> {
-        return this.weatherForecastService.getUserCitiesWeather(user, forecastParams.citiesLimit, forecastParams.forecastDaysAmount);
-    }
+  @Query(() => [WeatherForecast])
+  async userCitiesWeather(
+    @Args('ForecastParamsInput') forecastParams: ForecastParamsInput,
+    @CurrentUser() user: IUser,
+  ): Promise<Observable<WeatherForecast[]>> {
+    return this.weatherForecastService.getUserCitiesWeather(
+      user,
+      forecastParams.citiesLimit,
+      forecastParams.forecastDaysAmount,
+    );
+  }
 }

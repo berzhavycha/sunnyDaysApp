@@ -1,1 +1,1 @@
-export * from './forecastParamsInput.dto'
+export * from './forecastParamsInput.dto';

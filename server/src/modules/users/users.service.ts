@@ -7,10 +7,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
-  async createUser(email: string, passwordHash: string, refreshToken: string | null): Promise<User> {
-    const user = this.usersRepository.create({ email, passwordHash, refreshToken });
+  async createUser(
+    email: string,
+    passwordHash: string,
+    refreshToken: string | null,
+  ): Promise<User> {
+    const user = this.usersRepository.create({
+      email,
+      passwordHash,
+      refreshToken,
+    });
     return this.usersRepository.save(user);
   }
 
@@ -22,7 +30,10 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
-  async updateUser(id: string, updateUserDto: Partial<User>): Promise<User | null> {
+  async updateUser(
+    id: string,
+    updateUserDto: Partial<User>,
+  ): Promise<User | null> {
     const user = await this.findById(id);
     if (!user) {
       return null;
@@ -32,5 +43,4 @@ export class UsersService {
 
     return this.usersRepository.save(user);
   }
-
 }

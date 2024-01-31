@@ -9,9 +9,7 @@ import { IUser } from '@modules/users';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(
-    private readonly authService: AuthService
-  ) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Mutation(() => String)
@@ -62,16 +60,14 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     await this.authService.signOut(user.id);
-    this.authService.clearCookies(context.res)
+    this.authService.clearCookies(context.res);
 
     return 'Has signed out successfully!';
   }
 
   @Query(() => Boolean)
-  public async isUserSignedIn(
-    @CurrentUser() user: IUser,
-  ): Promise<boolean> {
-    if (user) return true
-    else return false
+  public async isUserSignedIn(@CurrentUser() user: IUser): Promise<boolean> {
+    if (user) return true;
+    else return false;
   }
 }

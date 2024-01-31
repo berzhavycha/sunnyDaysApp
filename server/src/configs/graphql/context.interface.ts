@@ -5,5 +5,5 @@ import { IUser } from '@modules/users';
 export interface ExtendedGraphQLContext extends GraphQLExecutionContext {
   req: Request;
   res: Response;
-  user: IUser
+  user: IUser;
 }

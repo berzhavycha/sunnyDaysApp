@@ -7,6 +7,10 @@ import { WeatherApiRepository } from './weather-forecast.repository';
 
 @Module({
   imports: [SubscriptionsModule, HttpModule],
-  providers: [WeatherForecastService, WeatherForecastResolver, WeatherApiRepository]
+  providers: [
+    WeatherForecastService,
+    WeatherForecastResolver,
+    WeatherApiRepository,
+  ],
 })
-export class WeatherForecastModule { }
+export class WeatherForecastModule {}

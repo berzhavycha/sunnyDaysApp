@@ -7,21 +7,21 @@ import { DeleteResult } from 'typeorm';
 
 @Resolver()
 export class SubscriptionsResolver {
-    constructor(private readonly subscriptionService: SubscriptionsService) { }
+  constructor(private readonly subscriptionService: SubscriptionsService) {}
 
-    @Mutation(() => Subscription)
-    async addWeatherSubscription(
-        @Args('city') city: string,
-        @CurrentUser() user: IUser
-    ): Promise<Subscription> {
-        return this.subscriptionService.createSubscription(city, user)
-    }
+  @Mutation(() => Subscription)
+  async addWeatherSubscription(
+    @Args('city') city: string,
+    @CurrentUser() user: IUser,
+  ): Promise<Subscription> {
+    return this.subscriptionService.createSubscription(city, user);
+  }
 
-    @Mutation(() => Subscription)
-    async deleteWeatherSubscription(
-        @Args('city') city: string,
-        @CurrentUser() user: IUser
-    ): Promise<DeleteResult> {
-        return this.subscriptionService.deleteSubscription(city, user)
-    }
+  @Mutation(() => Subscription)
+  async deleteWeatherSubscription(
+    @Args('city') city: string,
+    @CurrentUser() user: IUser,
+  ): Promise<DeleteResult> {
+    return this.subscriptionService.deleteSubscription(city, user);
+  }
 }

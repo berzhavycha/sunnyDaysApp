@@ -9,21 +9,24 @@ import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
 import { ExtendedGraphQLContext } from '@configs';
 
-
 @Injectable()
 export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<TokensType> {
     try {
       const { email, password } = registerUserDto;
 
       const hashedPassword = await this.hashPassword(password);
-      const user = await this.usersService.createUser(email, hashedPassword, null);
+      const user = await this.usersService.createUser(
+        email,
+        hashedPassword,
+        null,
+      );
 
       return this.generateTokens(user.id, user.email);
     } catch (error) {
@@ -56,7 +59,7 @@ export class AuthService {
   }
 
   async signOut(userId: string): Promise<void> {
-    await this.usersService.updateUser(userId, { refreshToken: null })
+    await this.usersService.updateUser(userId, { refreshToken: null });
   }
 
   async refreshAccessToken(refreshToken: string): Promise<TokensType> {
@@ -69,9 +72,15 @@ export class AuthService {
     return this.generateTokens(decoded.sub, decoded.email);
   }
 
-  setCookies(response: ExtendedGraphQLContext['res'], tokens: TokensType): void {
+  setCookies(
+    response: ExtendedGraphQLContext['res'],
+    tokens: TokensType,
+  ): void {
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + this.configService.get<number>('COOKIE_EXPIRATION_TIME'));
+    expiryDate.setDate(
+      expiryDate.getDate() +
+        this.configService.get<number>('COOKIE_EXPIRATION_TIME'),
+    );
 
     response.cookie('tokens', tokens, {
       httpOnly: true,
@@ -86,14 +95,17 @@ export class AuthService {
   }
 
   async validateRefreshToken(userId: string, token: string): Promise<boolean> {
-    const { refreshToken } = await this.usersService.findById(userId)
+    const { refreshToken } = await this.usersService.findById(userId);
     if (refreshToken !== token) {
       throw new UnauthorizedException('Invalid refresh token');
     }
     return refreshToken === token;
   }
 
-  private async generateTokens(userId: string, email: string): Promise<TokensType> {
+  private async generateTokens(
+    userId: string,
+    email: string,
+  ): Promise<TokensType> {
     const payload: JwtPayload = { sub: userId, email };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {

@@ -30,7 +30,7 @@ import { AppResolver } from './app.resolver';
       useClass: JwtAuthGuard,
     },
     AppService,
-    AppResolver
+    AppResolver,
   ],
 })
-export class AppModule { }
+export class AppModule {}
