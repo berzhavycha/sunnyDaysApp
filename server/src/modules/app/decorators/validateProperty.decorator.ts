@@ -6,6 +6,7 @@ export function ValidateProperty(
   isNumber?: boolean,
   isPositive?: boolean,
 ): PropertyDecorator {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function (target: any, propertyKey: string) {
     const decorators: PropertyDecorator[] = [
       IsNotEmpty({ message: `${variable} is required` }),

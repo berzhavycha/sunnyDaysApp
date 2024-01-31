@@ -38,7 +38,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
         if (operation.operationName === 'RefreshAccess') return;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
-          (async () => {
+          (async (): Promise<void> => {
             try {
               await refreshAccessToken(apolloClient);
 

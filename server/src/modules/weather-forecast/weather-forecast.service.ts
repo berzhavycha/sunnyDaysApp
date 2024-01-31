@@ -70,6 +70,7 @@ export class WeatherForecastService {
         newForecasts.forEach((forecast) => {
           this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, {
             ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any);
         });
         return [...cachedForecasts, ...newForecasts];

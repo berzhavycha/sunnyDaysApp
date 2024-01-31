@@ -5,14 +5,13 @@ import { config as dotenvConfig } from 'dotenv';
 dotenvConfig();
 
 export const typeOrmConfigOptions = {
-  useFactory: (configService: ConfigService) => {
+  useFactory: (configService: ConfigService): DataSourceOptions => {
     return {
       type: 'postgres' as const,
       host: configService.get<string>('POSTGRES_HOST'),
       username: configService.get<string>('POSTGRES_USER'),
       password: configService.get<string>('POSTGRES_PASSWORD'),
       database: configService.get<string>('POSTGRES_DB'),
-      autoLoadEntities: true,
       migrations: ['dist/src/migrations/*{.ts,.js}'],
       synchronize: false,
     };

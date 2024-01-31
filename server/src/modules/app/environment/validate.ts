@@ -2,7 +2,9 @@ import { plainToClass } from 'class-transformer';
 import { validateSync, ValidationError } from 'class-validator';
 import { EnvironmentVariables } from './environment.validation';
 
-export const validate = (config: Record<string, unknown>) => {
+export const validate = (
+  config: Record<string, unknown>,
+): EnvironmentVariables => {
   const validatedConfig = plainToClass(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
