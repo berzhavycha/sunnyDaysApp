@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from './entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,14 +31,6 @@ export class UsersService {
     Object.assign(user, updateUserDto);
 
     return this.usersRepository.save(user);
-  }
-
-  async validateRefreshToken(userId: string, token: string): Promise<boolean> {
-    const { refreshToken } = await this.findById(userId)
-    if (refreshToken !== token) {
-      throw new UnauthorizedException('Invalid refresh token');
-    }
-    return refreshToken === token;
   }
 
 }

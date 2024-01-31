@@ -5,13 +5,11 @@ import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
 import { CurrentUser, Public } from './decorators';
-import { ConfigService } from '@nestjs/config';
 import { IUser } from '@modules/users';
 
 @Resolver(() => String)
 export class AuthResolver {
   constructor(
-    private readonly configService: ConfigService,
     private readonly authService: AuthService
   ) { }
 
