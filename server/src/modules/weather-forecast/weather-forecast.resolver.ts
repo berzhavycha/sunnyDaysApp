@@ -1,10 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { WeatherForecastService } from './weather-forecast.service';
+import { Observable } from 'rxjs';
 import { CurrentUser } from '@modules/auth';
 import { IUser } from '@modules/users';
-import { Observable } from 'rxjs';
 import { WeatherForecast } from './entities';
-import { ForecastParamsInput } from './types';
+import { ForecastParamsInput } from './dtos';
 
 @Resolver()
 export class WeatherForecastResolver {
