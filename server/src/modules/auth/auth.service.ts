@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -15,7 +15,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<TokensType> {
     try {
@@ -31,7 +31,7 @@ export class AuthService {
       return this.generateTokens(user.id, user.email);
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
-        throw new Error('Email is already in use!');
+        throw new ConflictException('Email is already in use!');
       } else {
         throw error;
       }
@@ -46,7 +46,7 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<IUser | null> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
-      throw new Error('Invalid email!');
+      throw new UnauthorizedException('Invalid email!');
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
@@ -55,7 +55,7 @@ export class AuthService {
       return result;
     }
 
-    throw new Error('Invalid password!');
+    throw new UnauthorizedException('Invalid password!');
   }
 
   async signOut(userId: string): Promise<void> {
@@ -79,7 +79,7 @@ export class AuthService {
     const expiryDate = new Date();
     expiryDate.setDate(
       expiryDate.getDate() +
-        this.configService.get<number>('COOKIE_EXPIRATION_TIME'),
+      this.configService.get<number>('COOKIE_EXPIRATION_TIME'),
     );
 
     response.cookie('tokens', tokens, {
