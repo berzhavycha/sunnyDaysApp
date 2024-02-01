@@ -1,6 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { WeatherForecastService } from './weather-forecast.service';
-import { Observable } from 'rxjs';
 import { CurrentUser } from '@modules/auth';
 import { IUser } from '@modules/users';
 import { WeatherForecast } from './types';
@@ -16,7 +15,7 @@ export class WeatherForecastResolver {
   async userCitiesWeather(
     @Args('forecastParamsInput') forecastParams: ForecastParamsInput,
     @CurrentUser() user: IUser,
-  ): Promise<Observable<WeatherForecast[]>> {
+  ): Promise<WeatherForecast[]> {
     return this.weatherForecastService.getUserCitiesWeather(
       user,
       forecastParams.citiesLimit,
