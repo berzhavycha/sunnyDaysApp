@@ -36,7 +36,7 @@ export const useAddSubscription = (
       }
 
       const isCityAlreadyExists = data?.userCitiesWeather.some((forecast) =>
-        forecast.city.includes(city),
+        forecast.city === city,
       );
       if (isCityAlreadyExists) {
         throw new Error(`You already have a subscription to ${city}.`);
