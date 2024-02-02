@@ -9,10 +9,10 @@ import { ForecastParamsInput } from './dtos';
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,
-  ) {}
+  ) { }
 
-  @Query(() => [WeatherForecast])
-  async userCitiesWeather(
+  @Query(() => [WeatherForecast], { name: 'userCitiesWeather' })
+  async getUserCitiesWeather(
     @Args('forecastParamsInput') forecastParams: ForecastParamsInput,
     @CurrentUser() user: IUser,
   ): Promise<WeatherForecast[]> {
