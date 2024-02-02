@@ -11,7 +11,7 @@ export const WeatherCardsList = (): JSX.Element => {
 
   return (
     <>
-      {!data.userCitiesWeather.length ? (
+      {!data?.userCitiesWeather.length ? (
         <NoData message="No weather information available" />
       ) : (
         <FlatList
