@@ -19,7 +19,7 @@ type QueryWeatherData = {
 };
 
 type WeatherData = {
-  data: QueryWeatherData | undefined;
+  data: QueryWeatherData;
   loading: boolean;
   error: ApolloError | undefined;
   renderItem(props: RenderItemProps): JSX.Element;

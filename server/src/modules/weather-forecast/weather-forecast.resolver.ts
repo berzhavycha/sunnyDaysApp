@@ -11,7 +11,7 @@ export class WeatherForecastResolver {
     private readonly weatherForecastService: WeatherForecastService,
   ) { }
 
-  @Query(() => [WeatherForecast], { name: 'userCitiesWeather' })
+  @Query(() => [WeatherForecast]!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(
     @Args('forecastParamsInput') forecastParams: ForecastParamsInput,
     @CurrentUser() user: IUser,

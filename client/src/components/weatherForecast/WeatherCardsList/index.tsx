@@ -9,16 +9,14 @@ export const WeatherCardsList = (): JSX.Element => {
 
   if (loading) return <SpinnerView />;
 
-  const userCitiesWeather = data?.userCitiesWeather || [];
-
   return (
     <>
-      {!userCitiesWeather.length ? (
+      {!data.userCitiesWeather.length ? (
         <NoData message="No weather information available" />
       ) : (
         <FlatList
           className="w-full"
-          data={userCitiesWeather}
+          data={data.userCitiesWeather}
           keyExtractor={(item) => item.city}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
