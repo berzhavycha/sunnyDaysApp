@@ -56,10 +56,10 @@ export class AuthResolver {
 
   @Mutation(() => String)
   public async signOut(
-    @CurrentUser() user: IUser,
+    @CurrentUser('id') id: string,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
-    await this.authService.signOut(user.id);
+    await this.authService.signOut(id);
     this.authService.clearCookies(context.res);
 
     return 'Has signed out successfully!';

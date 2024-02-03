@@ -8,7 +8,6 @@ import { WeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
-import { IUser } from '@modules/users';
 
 @Injectable()
 export class WeatherForecastService {
@@ -20,14 +19,14 @@ export class WeatherForecastService {
   ) { }
 
   async getUserCitiesWeather(
-    user: IUser,
+    userId: string,
     citiesLimit: number,
     forecastDaysAmount: number,
   ): Promise<WeatherForecast[]> {
     let problematicSubscription: string;
     const userSubscriptions =
       await this.subscriptionsService.getSubscriptionsByUserId(
-        user.id,
+        userId,
         citiesLimit,
       );
 
@@ -73,7 +72,7 @@ export class WeatherForecastService {
     } catch (error) {
       this.subscriptionsService.deleteSubscription(
         problematicSubscription,
-        user,
+        userId,
       );
       throw new HttpException(
         error.response.data.error.message,

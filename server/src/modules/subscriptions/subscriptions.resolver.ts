@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { Subscription } from './entities';
 import { CurrentUser } from '@modules/auth';
-import { IUser } from '@modules/users';
 import { SubscriptionsService } from './subscriptions.service';
 import { DeleteResult } from 'typeorm';
 
@@ -12,16 +11,16 @@ export class SubscriptionsResolver {
   @Mutation(() => Subscription)
   async addWeatherSubscription(
     @Args('city') city: string,
-    @CurrentUser() user: IUser,
+    @CurrentUser('id') id: string,
   ): Promise<Subscription> {
-    return this.subscriptionService.createSubscription(city, user);
+    return this.subscriptionService.createSubscription(city, id);
   }
 
   @Mutation(() => Subscription)
   async deleteWeatherSubscription(
     @Args('city') city: string,
-    @CurrentUser() user: IUser,
+    @CurrentUser('id') id: string,
   ): Promise<DeleteResult> {
-    return this.subscriptionService.deleteSubscription(city, user);
+    return this.subscriptionService.deleteSubscription(city, id);
   }
 }
