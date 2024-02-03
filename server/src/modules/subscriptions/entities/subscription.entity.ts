@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('Subscription')
+@ObjectType()
 @Entity({ name: 'subscriptions' })
 export class Subscription {
   @Field(() => String)
