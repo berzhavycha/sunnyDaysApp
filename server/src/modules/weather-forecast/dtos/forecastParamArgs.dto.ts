@@ -1,8 +1,8 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 
-@InputType('ForecastParamsInput')
-export class ForecastParamsInput {
+@ArgsType()
+export class ForecastParamArgs {
   @Field(() => Int!)
   @IsNotEmpty()
   citiesLimit: number;

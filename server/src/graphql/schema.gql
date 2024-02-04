@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input ForecastParamsInput {
-  citiesLimit: Int!
-  forecastDaysAmount: Int!
-}
-
 type Mutation {
   addWeatherSubscription(city: String!): Subscription!
   deleteWeatherSubscription(city: String!): Subscription!
@@ -18,7 +13,7 @@ type Mutation {
 
 type Query {
   isUserSignedIn: Boolean!
-  userCitiesWeather(forecastParamsInput: ForecastParamsInput!): [WeatherForecast!]!
+  userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
 }
 
 type Subscription {
