@@ -3,7 +3,7 @@ import { useWeatherSubscription } from '@/hooks';
 import { useWeatherData } from '@/components/weatherForecast/WeatherCardsList/hooks';
 import { REACT_APP_MAX_WEATHER_CITIES_AMOUNT } from '@env';
 
-type UseAddWeatherSubscription = {
+type UseAddSubscriptionReturn = {
   addSubscription: () => Promise<void>;
   additionLoading: boolean;
   error: string;
@@ -12,7 +12,7 @@ type UseAddWeatherSubscription = {
 export const useAddSubscription = (
   city: string,
   setCity: Dispatch<SetStateAction<string>>,
-): UseAddWeatherSubscription => {
+): UseAddSubscriptionReturn => {
   const [error, setError] = useState<string>('');
   const { addSubscriptionHandler, additionLoading } = useWeatherSubscription();
   const { data, error: weatherRequestError } = useWeatherData();

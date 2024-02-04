@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { SIGN_UP_MUTATION } from './mutations';
 import { FieldErrorsState, UserDto, useAuth } from '../useAuth';
 
-export type SignUpHookReturnType = {
+export type SignUpHookReturn = {
   loading: boolean;
   signUpHandler: (email: string, password: string, confirmPassword: string) => Promise<void>;
   fieldsError: FieldErrorsState<UserDto>;
 };
 
-export const useSignUp = (): SignUpHookReturnType => {
+export const useSignUp = (): SignUpHookReturn => {
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
     email: '',
     password: '',

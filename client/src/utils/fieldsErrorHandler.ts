@@ -16,6 +16,7 @@ export const fieldsErrorHandler = <T>(
       fieldsError = pickErrorsCallback(inputErrorMessages);
     } else if (
       graphQLError.extensions?.code === 'INTERNAL_SERVER_ERROR' ||
+      graphQLError.extensions?.code === 'UNAUTHENTICATED' ||
       (graphQLError.extensions?.code === 'BAD_USER_INPUT' && graphQLError.message)
     ) {
       const inputErrorMessage = graphQLError.message;

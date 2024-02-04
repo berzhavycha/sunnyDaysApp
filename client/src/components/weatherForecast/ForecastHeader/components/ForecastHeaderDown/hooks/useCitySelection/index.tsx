@@ -6,13 +6,13 @@ type RenderCityItemProps = {
   item: City;
 };
 
-type UseCitySelectionReturnType = {
+type UseCitySelectionReturn = {
   renderCityItem: (args: RenderCityItemProps) => JSX.Element;
 };
 
 export const useCitySelection = (
   setCity: Dispatch<SetStateAction<string>>,
-): UseCitySelectionReturnType => {
+): UseCitySelectionReturn => {
   const handleCitySelect = (selectedCity: string): void => {
     setCity(selectedCity);
   };
