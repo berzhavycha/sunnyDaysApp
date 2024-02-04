@@ -1,6 +1,6 @@
 import { IForecastDay } from './forecastDay';
 
-export interface WeatherApiResponse {
+export interface IWeatherApiResponse {
   location: {
     name: string;
   };

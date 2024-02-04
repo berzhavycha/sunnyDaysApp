@@ -2,7 +2,7 @@ import {
   REACT_APP_FETCH_CITY_AUTOCOMPLETE_AMOUNT,
   REACT_APP_FETCH_CITY_AUTOCOMPLETE_SORT,
 } from '@env';
-import { QueryVariables } from '../interfaces';
+import { QueryVariables } from '../types';
 
 export const getCitiesQueryVariables = (city: string): QueryVariables => ({
   namePrefix: city,

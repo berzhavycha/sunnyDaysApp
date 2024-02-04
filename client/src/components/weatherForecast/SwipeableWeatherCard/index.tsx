@@ -7,12 +7,12 @@ import { Feather } from '@expo/vector-icons';
 import { WeatherCard, WeatherCardProps } from './components/WeatherCard';
 import { useDeleteAnimation } from './hooks';
 
-type IProps = {
+type Props = {
   item: WeatherCardProps;
   onDelete: () => void;
 };
 
-export const SwipeableWeatherCard: FC<IProps> = memo(({ item, onDelete }): JSX.Element => {
+export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.Element => {
   const weatherIcon = pickWeatherIcon(item.text);
   const { opacityAnimatedValue, animateOnDelete } = useDeleteAnimation(onDelete);
 

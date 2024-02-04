@@ -1,4 +1,4 @@
-import { City, CityQueryResponse, QueryVariables } from '../../interfaces';
+import { City, CityQueryResponse, QueryVariables } from '../../types';
 import { GET_CITIES } from './queries';
 import { useInputCompleteQuery } from '@/hooks';
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';

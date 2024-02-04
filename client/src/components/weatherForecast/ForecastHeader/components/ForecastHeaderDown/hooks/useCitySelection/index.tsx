@@ -1,6 +1,6 @@
 import { ListItem } from '@/components/common';
 import { Dispatch, SetStateAction, memo } from 'react';
-import { City } from '../../interfaces';
+import { City } from '../../types';
 
 type RenderCityItemProps = {
   item: City;

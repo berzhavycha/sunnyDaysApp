@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSignOut } from '@/hooks';
 import { FontAwesome } from '@expo/vector-icons';

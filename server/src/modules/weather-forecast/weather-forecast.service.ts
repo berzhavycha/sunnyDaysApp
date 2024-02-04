@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
-import { WeatherApiResponse, IForecastDay } from './interfaces';
+import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
@@ -82,7 +82,7 @@ export class WeatherForecastService {
   }
 
   private mapResponsesToWeatherForecasts(
-    responses: AxiosResponse<WeatherApiResponse>[],
+    responses: AxiosResponse<IWeatherApiResponse>[],
   ): WeatherForecast[] {
     return responses.map((response) => {
       const { data } = response;

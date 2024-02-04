@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import { memo, FC } from 'react';
 import { View, Text, Image } from 'react-native';
 import { SubWeatherForecastDay, SubWeatherForecastDayProps } from '../SubWeatherForecastDay';
 
-export interface WeatherCardProps {
+export type WeatherCardProps = {
   city: string;
   tempCelsius: string;
   humidity: string;
@@ -11,7 +11,7 @@ export interface WeatherCardProps {
   weatherImageUri: string;
 }
 
-export const WeatherCard: React.FC<WeatherCardProps> = memo(
+export const WeatherCard: FC<WeatherCardProps> = memo(
   ({ city, tempCelsius, text, humidity, weatherImageUri, daysForecast }) => {
     return (
       <View className="flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl">

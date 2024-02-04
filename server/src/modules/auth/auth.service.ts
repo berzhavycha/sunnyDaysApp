@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { IUser, UsersService } from '@modules/users';
-import { TokensType } from './types';
+import { ITokens } from './interfaces';
 import { UserDto } from './dtos';
 import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
@@ -17,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) { }
 
-  async signUp(registerUserDto: UserDto): Promise<TokensType> {
+  async signUp(registerUserDto: UserDto): Promise<ITokens> {
     try {
       const { email, password } = registerUserDto;
 
@@ -38,7 +38,7 @@ export class AuthService {
     }
   }
 
-  async signIn(signedInUser: IUser): Promise<TokensType> {
+  async signIn(signedInUser: IUser): Promise<ITokens> {
     const { id, email } = signedInUser;
     return this.generateTokens(id, email);
   }
@@ -62,7 +62,7 @@ export class AuthService {
     await this.usersService.updateUser(userId, { refreshToken: null });
   }
 
-  async refreshAccessToken(refreshToken: string): Promise<TokensType> {
+  async refreshAccessToken(refreshToken: string): Promise<ITokens> {
     const decoded = await this.jwtService.verifyAsync(refreshToken, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
     });
@@ -74,7 +74,7 @@ export class AuthService {
 
   setCookies(
     response: ExtendedGraphQLContext['res'],
-    tokens: TokensType,
+    tokens: ITokens,
   ): void {
     const expiryDate = new Date();
     expiryDate.setDate(
@@ -105,7 +105,7 @@ export class AuthService {
   private async generateTokens(
     userId: string,
     email: string,
-  ): Promise<TokensType> {
+  ): Promise<ITokens> {
     const payload: JwtPayload = { sub: userId, email };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {

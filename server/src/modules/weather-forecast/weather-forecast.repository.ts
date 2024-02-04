@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { ConfigService } from '@nestjs/config';
-import { WeatherApiResponse } from './interfaces';
+import { IWeatherApiResponse } from './interfaces';
 
 @Injectable()
 export class WeatherApiRepository {
@@ -14,7 +14,7 @@ export class WeatherApiRepository {
   async getCityWeather(
     cityName: string,
     forecastDays: number,
-  ): Promise<AxiosResponse<WeatherApiResponse>> {
+  ): Promise<AxiosResponse<IWeatherApiResponse>> {
     const weatherApiKey = this.configService.get<string>('WEATHER_API_KEY');
     const apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${cityName}&days=${forecastDays}`;
     return this.httpService

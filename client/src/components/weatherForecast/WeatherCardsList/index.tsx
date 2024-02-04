@@ -1,4 +1,3 @@
-import React from 'react';
 import { FlatList } from 'react-native';
 import { useWeatherData } from './hooks';
 import { SpinnerView } from '../SpinnerView';

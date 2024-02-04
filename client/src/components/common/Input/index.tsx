@@ -3,7 +3,7 @@ import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { upperCaseFirstLetter } from '@/utils';
 import { Feather } from '@expo/vector-icons';
 
-type IProps = {
+type Props = {
   value: string;
   onChange: Dispatch<SetStateAction<string>>;
   placeholder: string;
@@ -14,7 +14,7 @@ type IProps = {
   onBlur?: () => void;
 };
 
-export const Input: FC<IProps> = memo(
+export const Input: FC<Props> = memo(
   ({ value, onChange, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, FC } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { Button, Input } from '@/components/common';
-import { AuthFormProps } from './authForm.interface';
+import { AuthFormProps } from './types';
 import { AuthType } from '@/hooks';
 import { convertPascalCaseToSpaced } from '@/utils';
 

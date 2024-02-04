@@ -1,7 +1,7 @@
 import { AuthType, FieldErrorsState, UserDto } from '@/hooks';
 import { Dispatch, SetStateAction } from 'react';
 
-export interface AuthFormProps {
+export type AuthFormProps = {
   title: string;
   subTitle?: string;
   fields: {

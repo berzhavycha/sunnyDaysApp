@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 import { Button, InputAutocomplete } from '@/components/common';
 import { SpinnerView } from '@/components/weatherForecast/SpinnerView';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
-import { City } from './interfaces';
+import { City } from './types';
 import { useCitySelection, useCityInputComplete, useAddSubscription } from './hooks';
 
 export const ForecastHeaderDown = (): JSX.Element => {

@@ -1,17 +1,17 @@
+import { memo, FC } from 'react';
 import { View, Text, Image } from 'react-native';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/SwipeableWeatherCard/utils';
 import { REACT_APP_MAX_FORECAST_DAYS } from '@env';
-import { memo } from 'react';
 
-export interface SubWeatherForecastDayProps {
+export type SubWeatherForecastDayProps = {
   text: string;
   dayOfWeek: string;
   tempCelsius: number;
   humidity: number;
 }
 
-export const SubWeatherForecastDay: React.FC<SubWeatherForecastDayProps> = memo(
+export const SubWeatherForecastDay: FC<SubWeatherForecastDayProps> = memo(
   ({ text, dayOfWeek, tempCelsius, humidity }) => {
     const dayWeatherIcon = pickWeatherIcon(text);
 
