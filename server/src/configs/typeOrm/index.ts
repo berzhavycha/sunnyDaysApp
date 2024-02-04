@@ -13,6 +13,7 @@ export const typeOrmConfigOptions = {
       username: configService.get<string>('POSTGRES_USER'),
       password: configService.get<string>('POSTGRES_PASSWORD'),
       database: configService.get<string>('POSTGRES_DB'),
+      entities: ["dist/**/*.entity{.js,.ts}"],
       autoLoadEntities: true,
       migrations: ['dist/src/migrations/*{.ts,.js}'],
       synchronize: false,

@@ -8,7 +8,7 @@ export class SubscriptionsService {
   constructor(
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
@@ -16,7 +16,7 @@ export class SubscriptionsService {
   ): Promise<Subscription> {
     const subscriptionEntity = this.subscriptionRepository.create({
       cityName,
-      userId: userId,
+      userId
     });
     return this.subscriptionRepository.save(subscriptionEntity);
   }
@@ -26,7 +26,7 @@ export class SubscriptionsService {
     userId: string,
   ): Promise<DeleteResult> {
     const subscription = await this.subscriptionRepository.findOne({
-      where: { cityName, userId: userId },
+      where: { cityName, userId },
     });
     return this.subscriptionRepository.delete(subscription.id);
   }
