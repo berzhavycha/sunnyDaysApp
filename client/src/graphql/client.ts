@@ -8,7 +8,7 @@ import {
   ApolloLink,
   split,
 } from '@apollo/client';
-import { isRefreshOperation, refreshAccessToken } from './utils';
+import { refreshAccessToken } from './utils';
 import {
   REACT_APP_GEODB_CITIES_API_KEY,
   REACT_APP_GEODB_CITIES_HOST,
@@ -35,7 +35,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
   if (graphQLErrors) {
     for (const err of graphQLErrors) {
       if (err.extensions.code === 'UNAUTHENTICATED') {
-        if (isRefreshOperation(operation) || operation.operationName === 'SignIn') return;
+        if (operation.operationName === 'RefreshAccess' || operation.operationName === 'SignIn') return;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const observable = new Observable<FetchResult<Record<string, any>>>((observer) => {
           (async (): Promise<void> => {
