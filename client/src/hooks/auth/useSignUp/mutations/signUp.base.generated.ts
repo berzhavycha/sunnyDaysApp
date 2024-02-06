@@ -2,10 +2,13 @@ import * as Types from '@/graphql/__generated__/types';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type SignUpMutationVariables = Types.Exact<{
-  userDto: Types.UserInput;
+  userDto: Types.Credentials;
 }>;
 
-export type SignUpMutation = { __typename?: 'Mutation'; signUp: string };
+export type SignUpMutation = {
+  __typename?: 'Mutation';
+  signUp: { __typename?: 'Message'; message: string };
+};
 
 export const SignUpDocument = {
   kind: 'Document',
@@ -20,7 +23,7 @@ export const SignUpDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'userDto' } },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserInput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Credentials' } },
           },
         },
       ],
@@ -33,10 +36,14 @@ export const SignUpDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'userInput' },
+                name: { kind: 'Name', value: 'input' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'userDto' } },
               },
             ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'message' } }],
+            },
           },
         ],
       },

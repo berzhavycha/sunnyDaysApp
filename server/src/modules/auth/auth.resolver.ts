@@ -6,18 +6,18 @@ import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { CurrentUser, Public } from './decorators';
 import { IUser } from '@modules/users';
-import { IMessage } from './interfaces';
+import { Message } from './interfaces';
 
 @Resolver(() => String)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) { }
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   async signUp(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<IMessage> {
+  ): Promise<Message> {
     const tokens = await this.authService.signUp(userDto);
     this.authService.setCookies(context.res, tokens);
 
@@ -25,12 +25,12 @@ export class AuthResolver {
   }
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   @UseGuards(LocalAuthGuard)
   async signIn(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<IMessage> {
+  ): Promise<Message> {
     const tokens = await this.authService.signIn(context.user);
     this.authService.setCookies(context.res, tokens);
 
@@ -38,11 +38,11 @@ export class AuthResolver {
   }
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   @UseGuards(JwtRefreshTokenGuard)
   async refreshAccess(
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<IMessage> {
+  ): Promise<Message> {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
 
     if (!refreshToken) {
@@ -55,11 +55,11 @@ export class AuthResolver {
     return { message: 'Has signed refreshed token successfully!' };
   }
 
-  @Mutation(() => String)
+  @Mutation(() => Message)
   public async signOut(
     @CurrentUser('id') id: string,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<IMessage> {
+  ): Promise<Message> {
     await this.authService.signOut(id);
     this.authService.clearCookies(context.res);
 

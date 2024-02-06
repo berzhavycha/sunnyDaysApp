@@ -21,23 +21,29 @@ export const useWeatherSubscription = (): UseWeatherSubscriptionReturn => {
     },
   );
 
+  console.log(additionError);
+
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
     useMutation(DeleteWeatherSubscriptionDocument, {
       refetchQueries,
     });
 
-  const deleteSubscriptionHandler = async (city: string): Promise<void> => {
+  const deleteSubscriptionHandler = async (cityName: string): Promise<void> => {
     await deleteWeatherSubscription({
       variables: {
-        city,
+        city: {
+          name: cityName,
+        },
       },
     });
   };
 
-  const addSubscriptionHandler = async (city: string): Promise<void> => {
+  const addSubscriptionHandler = async (cityName: string): Promise<void> => {
     await addWeatherSubscription({
       variables: {
-        city,
+        city: {
+          name: cityName,
+        },
       },
     });
   };

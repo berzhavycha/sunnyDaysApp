@@ -74,6 +74,7 @@ export class WeatherForecastService {
 
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
+      console.log(error)
       this.subscriptionsService.deleteSubscription(
         problematicSubscriptionId,
         userId,

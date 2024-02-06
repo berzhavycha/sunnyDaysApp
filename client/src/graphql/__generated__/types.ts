@@ -18,6 +18,10 @@ export type Scalars = {
   Float: { input: number; output: number };
 };
 
+export type CityInput = {
+  name: Scalars['String']['input'];
+};
+
 /** Info about the current connection page slice */
 export type ConnectionPageInfo = {
   __typename?: 'ConnectionPageInfo';
@@ -180,6 +184,11 @@ export type CountryRegionsConnection = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type Credentials = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
 /** A pageable view into currency results */
 export type CurrenciesConnection = {
   __typename?: 'CurrenciesConnection';
@@ -291,30 +300,35 @@ export type Location = {
   longitude: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  message: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addWeatherSubscription: Subscription;
   deleteWeatherSubscription: Subscription;
-  refreshAccess: Scalars['String']['output'];
-  signIn: Scalars['String']['output'];
-  signOut: Scalars['String']['output'];
-  signUp: Scalars['String']['output'];
+  refreshAccess: Message;
+  signIn: Message;
+  signOut: Message;
+  signUp: Message;
 };
 
 export type MutationAddWeatherSubscriptionArgs = {
-  city: Scalars['String']['input'];
+  input: CityInput;
 };
 
 export type MutationDeleteWeatherSubscriptionArgs = {
-  city: Scalars['String']['input'];
+  input: CityInput;
 };
 
 export type MutationSignInArgs = {
-  userInput: UserInput;
+  input: Credentials;
 };
 
 export type MutationSignUpArgs = {
-  userInput: UserInput;
+  input: Credentials;
 };
 
 /** A pageable view into nearby populated-place results */
@@ -552,7 +566,7 @@ export type RegionPopulatedPlacesConnection = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  cityName: Scalars['String']['output'];
+  cityId: Scalars['String']['output'];
   id: Scalars['String']['output'];
   userId: Scalars['String']['output'];
 };
@@ -585,11 +599,6 @@ export type TimeZonesConnection = {
   pageInfo: ConnectionPageInfo;
   /** The total number of results */
   totalCount: Scalars['Int']['output'];
-};
-
-export type UserInput = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
 };
 
 export type WeatherDay = {

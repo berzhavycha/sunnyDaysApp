@@ -11,13 +11,17 @@ input Credentials {
   password: String!
 }
 
+type Message {
+  message: String!
+}
+
 type Mutation {
   addWeatherSubscription(input: CityInput!): Subscription!
   deleteWeatherSubscription(input: CityInput!): Subscription!
-  refreshAccess: String!
-  signIn(input: Credentials!): String!
-  signOut: String!
-  signUp(input: Credentials!): String!
+  refreshAccess: Message!
+  signIn(input: Credentials!): Message!
+  signOut: Message!
+  signUp(input: Credentials!): Message!
 }
 
 type Query {
