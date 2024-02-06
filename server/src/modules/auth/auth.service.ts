@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { IUser, UsersService } from '@modules/users';
-import { ITokens, JwtPayload  } from './interfaces';
+import { ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
 import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
 import { ExtendedGraphQLContext } from '@configs';
@@ -20,7 +20,7 @@ export class AuthService {
     try {
       const { email, password } = registerUserDto;
 
-      const hashedPassword = await this.hashPassword(password);
+      const hashedPassword = await this.hashValue(password);
       const user = await this.usersService.createUser(
         email,
         hashedPassword,
@@ -106,13 +106,14 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME'),
     });
 
-    await this.usersService.updateUser(userId, { refreshToken });
+    const hashedRefreshToken = await this.hashValue(refreshToken)
+    await this.usersService.updateUser(userId, { refreshToken: hashedRefreshToken });
 
     return { accessToken, refreshToken };
   }
 
-  private async hashPassword(password: string): Promise<string> {
+  private async hashValue(value: string): Promise<string> {
     const salt = await bcrypt.genSalt();
-    return bcrypt.hash(password, salt);
+    return bcrypt.hash(value, salt);
   }
 }

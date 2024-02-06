@@ -8,6 +8,7 @@ import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
+import { CitiesService } from '@modules/cities/cities.service';
 
 @Injectable()
 export class WeatherForecastService {
@@ -15,6 +16,7 @@ export class WeatherForecastService {
     private readonly subscriptionsService: SubscriptionsService,
     private readonly weatherApiRepository: WeatherApiRepository,
     private readonly configService: ConfigService,
+    private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) { }
 
@@ -23,7 +25,7 @@ export class WeatherForecastService {
     citiesLimit: number,
     forecastDaysAmount: number,
   ): Promise<WeatherForecast[]> {
-    let problematicSubscription: string;
+    let problematicSubscriptionId: string;
     const userSubscriptions =
       await this.subscriptionsService.getSubscriptionsByUserId(
         userId,
@@ -38,8 +40,10 @@ export class WeatherForecastService {
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
+        const { id, name } = await this.citiesService.findById(subscription.cityId)
+
         const cachedForecast = await this.cacheManager.get<WeatherForecast>(
-          `weather_forecast:${subscription.cityName}`,
+          `weather_forecast:${name}`,
         );
         if (cachedForecast) {
           cachedForecasts.push(cachedForecast);
@@ -47,9 +51,9 @@ export class WeatherForecastService {
         }
 
         return this.weatherApiRepository
-          .getCityWeather(subscription.cityName, forecastDaysAmount)
+          .getCityWeather(name, forecastDaysAmount)
           .catch((error) => {
-            problematicSubscription = subscription.cityName;
+            problematicSubscriptionId = id;
             throw error;
           });
       },
@@ -71,7 +75,7 @@ export class WeatherForecastService {
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
       this.subscriptionsService.deleteSubscription(
-        problematicSubscription,
+        problematicSubscriptionId,
         userId,
       );
       throw new HttpException(

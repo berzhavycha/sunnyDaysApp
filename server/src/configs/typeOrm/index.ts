@@ -15,7 +15,7 @@ export const typeOrmConfigOptions = {
       database: configService.get<string>('POSTGRES_DB'),
       entities: ["dist/**/*.entity{.js,.ts}"],
       autoLoadEntities: true,
-      migrations: ['dist/src/migrations/*{.ts,.js}'],
+      migrations: ['dist/migrations/*{.ts,.js}'],
       synchronize: false,
     };
   },
