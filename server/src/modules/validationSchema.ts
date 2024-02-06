@@ -15,6 +15,7 @@ export const validationSchema = Joi.object({
   PORT: Joi.number().default(4000),
   PASSWORD_MIN_LENGTH: Joi.number().default(8),
   WEATHER_API_KEY: Joi.string().required(),
+  WEATHER_API_BASE_URL: Joi.string().required(),
   COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(30),
   REDIS_WEATHER_DATA_TTL_SECONDS: Joi.number().default(1800),
   REDIS_DEFAULT_TTL_SECONDS: Joi.number().default(1800)
