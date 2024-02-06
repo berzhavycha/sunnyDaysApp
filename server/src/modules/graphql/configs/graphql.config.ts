@@ -12,7 +12,7 @@ class GraphQLConfig implements GqlOptionsFactory {
         res,
       }),
       path: '/api/graphql',
-      autoSchemaFile: 'src/configs/graphql/schema.gql',
+      autoSchemaFile: 'src/modules/graphql/configs/schema.gql',
       sortSchema: true,
       introspection: true,
     };
