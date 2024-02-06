@@ -3,7 +3,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
-import { ExtendedGraphQLContext } from '@configs';
+import { ExtendedGraphQLContext } from '@modules/graphql';
 import { CurrentUser, Public } from './decorators';
 import { IUser } from '@modules/users';
 import { IMessage } from './interfaces';

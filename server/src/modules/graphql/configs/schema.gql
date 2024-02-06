@@ -1,0 +1,49 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CityInput {
+  name: String!
+}
+
+input Credentials {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  addWeatherSubscription(input: CityInput!): Subscription!
+  deleteWeatherSubscription(input: CityInput!): Subscription!
+  refreshAccess: String!
+  signIn(input: Credentials!): String!
+  signOut: String!
+  signUp(input: Credentials!): String!
+}
+
+type Query {
+  isUserSignedIn: Boolean!
+  userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
+}
+
+type Subscription {
+  cityId: String!
+  id: String!
+  userId: String!
+}
+
+type WeatherDay {
+  dayOfWeek: String!
+  humidity: Int!
+  tempCelsius: Float!
+  tempFahrenheit: Float!
+  text: String!
+}
+
+type WeatherForecast {
+  city: String!
+  daysForecast: [WeatherDay!]!
+  humidity: Int!
+  tempCelsius: Float!
+  tempFahrenheit: Float!
+  text: String!
+}

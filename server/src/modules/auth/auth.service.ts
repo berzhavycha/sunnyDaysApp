@@ -6,7 +6,7 @@ import { IUser, UsersService } from '@modules/users';
 import { ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
 import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
-import { ExtendedGraphQLContext } from '@configs';
+import { ExtendedGraphQLContext } from '@modules/graphql';
 
 @Injectable()
 export class AuthService {

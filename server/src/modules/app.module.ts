@@ -1,26 +1,25 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
-import { CacheModule } from '@nestjs/cache-manager';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
-import { graphqlConfigAsync, redisConfig, typeOrmConfig } from '@configs';
 import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
-import { validationSchema } from './validationSchema';
+import { EnvConfigModule } from '@modules/env-config';
+import { TypeormModule } from '@modules/typeorm';
+import { GraphqlModule } from '@modules/graphql';
+import { RedisModule } from '@modules/redis';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env', validationSchema }),
-    GraphQLModule.forRootAsync(graphqlConfigAsync),
-    CacheModule.registerAsync(redisConfig),
-    TypeOrmModule.forRootAsync(typeOrmConfig),
+    EnvConfigModule,
     AuthModule,
     UsersModule,
     SubscriptionsModule,
     WeatherForecastModule,
+    EnvConfigModule,
+    TypeormModule,
+    GraphqlModule,
+    RedisModule,
   ],
   providers: [
     {

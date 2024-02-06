@@ -9,7 +9,8 @@ import {
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { UsersModule } from '@modules/users';
-import { JwtConfig } from '@configs';
+import { JwtConfig } from './jwt';
+
 
 @Module({
   imports: [
