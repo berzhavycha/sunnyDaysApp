@@ -1,6 +1,6 @@
 import { ApolloError, useMutation } from '@apollo/client';
-import { GET_USER_CITIES_WEATHER } from '@/components/weatherForecast/WeatherCardsList/hooks/useWeatherData/queries';
-import { ADD_WEATHER_SUBSCRIPTION, DELETE_WEATHER_SUBSCRIPTION } from './mutations';
+import { UserCitiesWeatherDocument } from '@/components/weatherForecast/WeatherCardsList/hooks/useWeatherData/queries';
+import { AddWeatherSubscriptionDocument, DeleteWeatherSubscriptionDocument } from './mutations';
 
 type UseWeatherSubscriptionReturn = {
   deleteSubscriptionHandler: (city: string) => Promise<void>;
@@ -12,15 +12,15 @@ type UseWeatherSubscriptionReturn = {
 };
 
 export const useWeatherSubscription = (): UseWeatherSubscriptionReturn => {
-  const refetchQueries = [GET_USER_CITIES_WEATHER];
+  const refetchQueries = [UserCitiesWeatherDocument];
 
   const [addWeatherSubscription, { loading: additionLoading, error: additionError }] = useMutation(
-    ADD_WEATHER_SUBSCRIPTION, {
+    AddWeatherSubscriptionDocument, {
     refetchQueries,
   },);
 
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
-    useMutation(DELETE_WEATHER_SUBSCRIPTION, {
+    useMutation(DeleteWeatherSubscriptionDocument, {
       refetchQueries,
     });
 

@@ -9,7 +9,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import { IS_USER_SIGNED_IN } from './queries';
+import { IsUserSignedInDocument } from './queries';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -39,7 +39,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     isAuthenticated: false,
   });
 
-  const [fetchUser, { data }] = useLazyQuery(IS_USER_SIGNED_IN, {
+  const [fetchUser, { data }] = useLazyQuery(IsUserSignedInDocument, {
     onCompleted: () => {
       if (data && data.isUserSignedIn) {
         setAuthState({

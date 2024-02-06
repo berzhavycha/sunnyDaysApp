@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { SIGN_UP_MUTATION } from './mutations';
 import { FieldErrorsState, UserDto, useAuth } from '../useAuth';
+import { SignUpDocument } from './mutations';
 
 export type SignUpHookReturn = {
   loading: boolean;
@@ -15,7 +15,7 @@ export const useSignUp = (): SignUpHookReturn => {
     confirmPassword: '',
   });
 
-  const { loading, authHandler } = useAuth(setFieldsError, SIGN_UP_MUTATION);
+  const { loading, authHandler } = useAuth(setFieldsError, SignUpDocument);
 
   const signUpHandler = async (
     email: string,

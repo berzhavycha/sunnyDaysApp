@@ -3,7 +3,7 @@ import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 import { useAuthManager } from '@/context';
 import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
-import { SIGN_IN_MUTATION } from './mutations';
+import { SignInDocument } from './mutations';
 
 export type UserDto = {
   email: string;
@@ -22,7 +22,7 @@ export type AuthHookReturnType = {
 
 export const useAuth = (
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
-  mutation: DocumentNode = SIGN_IN_MUTATION,
+  mutation: DocumentNode = SignInDocument,
 ): AuthHookReturnType => {
   const [authMutation, { loading }] = useMutation(mutation);
   const { setAuthState } = useAuthManager();
