@@ -1,8 +1,6 @@
 import { FC, memo } from 'react';
 import { Text, TouchableOpacity, Animated } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { pickWeatherIcon } from './utils';
-import { weatherIconMapping } from '../constants';
 import { Feather } from '@expo/vector-icons';
 import { WeatherCard, WeatherCardProps } from './components/WeatherCard';
 import { useDeleteAnimation } from './hooks';
@@ -13,7 +11,6 @@ type Props = {
 };
 
 export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.Element => {
-  const weatherIcon = pickWeatherIcon(item.text);
   const { opacityAnimatedValue, animateOnDelete } = useDeleteAnimation(onDelete);
 
   const cardStyle = {
@@ -45,11 +42,10 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
         <WeatherCard
           key={item.city}
           city={item.city}
-          tempCelsius={`${item.tempCelsius}°C`}
+          tempCelsius={item.tempCelsius}
           text={item.text}
-          humidity={`${item.humidity}%`}
+          humidity={item.humidity}
           daysForecast={item.daysForecast}
-          weatherImageUri={weatherIconMapping[weatherIcon]}
         />
       </Animated.View>
     </Swipeable>
