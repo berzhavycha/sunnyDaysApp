@@ -14,7 +14,7 @@ export class AuthResolver {
   @Public()
   @Mutation(() => String)
   async signUp(
-    @Args('userInput') userDto: UserDto,
+    @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signUp(userDto);
@@ -27,7 +27,7 @@ export class AuthResolver {
   @Mutation(() => String)
   @UseGuards(LocalAuthGuard)
   async signIn(
-    @Args('userInput') userDto: UserDto,
+    @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
   ): Promise<string> {
     const tokens = await this.authService.signIn(context.user);

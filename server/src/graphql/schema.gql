@@ -2,13 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CityInput {
+  name: String!
+}
+
+input Credentials {
+  email: String!
+  password: String!
+}
+
 type Mutation {
-  addWeatherSubscription(city: String!): Subscription!
-  deleteWeatherSubscription(city: String!): Subscription!
+  addWeatherSubscription(input: CityInput!): Subscription!
+  deleteWeatherSubscription(input: CityInput!): Subscription!
   refreshAccess: String!
-  signIn(userInput: UserInput!): String!
+  signIn(input: Credentials!): String!
   signOut: String!
-  signUp(userInput: UserInput!): String!
+  signUp(input: Credentials!): String!
 }
 
 type Query {
@@ -20,11 +29,6 @@ type Subscription {
   cityName: String!
   id: String!
   userId: String!
-}
-
-input UserInput {
-  email: String!
-  password: String!
 }
 
 type WeatherDay {
