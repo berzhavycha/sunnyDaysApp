@@ -15,9 +15,11 @@ export const useWeatherSubscription = (): UseWeatherSubscriptionReturn => {
   const refetchQueries = [UserCitiesWeatherDocument];
 
   const [addWeatherSubscription, { loading: additionLoading, error: additionError }] = useMutation(
-    AddWeatherSubscriptionDocument, {
-    refetchQueries,
-  },);
+    AddWeatherSubscriptionDocument,
+    {
+      refetchQueries,
+    },
+  );
 
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
     useMutation(DeleteWeatherSubscriptionDocument, {

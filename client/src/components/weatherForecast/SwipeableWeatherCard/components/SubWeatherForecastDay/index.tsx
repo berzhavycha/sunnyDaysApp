@@ -9,7 +9,7 @@ export type SubWeatherForecastDayProps = {
   dayOfWeek: string;
   tempCelsius: number;
   humidity: number;
-}
+};
 
 export const SubWeatherForecastDay: FC<SubWeatherForecastDayProps> = memo(
   ({ text, dayOfWeek, tempCelsius, humidity }) => {

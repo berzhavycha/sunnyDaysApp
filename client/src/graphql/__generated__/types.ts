@@ -3,15 +3,19 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
 };
 
 /** Info about the current connection page slice */
@@ -65,7 +69,6 @@ export type Country = {
   wikiDataId: Scalars['ID']['output'];
 };
 
-
 /** A country */
 export type CountryPopulatedPlacesArgs = {
   after: InputMaybe<Scalars['String']['input']>;
@@ -82,12 +85,10 @@ export type CountryPopulatedPlacesArgs = {
   types: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-
 /** A country */
 export type CountryRegionArgs = {
   code: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 /** A country */
 export type CountryRegionsArgs = {
@@ -142,7 +143,6 @@ export type CountryRegion = {
   /** The region WikiData id */
   wikiDataId: Maybe<Scalars['ID']['output']>;
 };
-
 
 /** A region in a country. This could be a state, province, district, or otherwise major political division. */
 export type CountryRegionPopulatedPlacesArgs = {
@@ -221,7 +221,7 @@ export enum DistanceUnit {
   /** Kilometers */
   Km = 'KM',
   /** Miles */
-  Mi = 'MI'
+  Mi = 'MI',
 }
 
 /** What level of stale data is ok to pull */
@@ -233,7 +233,7 @@ export enum IncludeDeletedFilterType {
   /** Only data not marked deleted before last week */
   SinceLastWeek = 'SINCE_LAST_WEEK',
   /** Only data not marked deleted before yesterday */
-  SinceYesterday = 'SINCE_YESTERDAY'
+  SinceYesterday = 'SINCE_YESTERDAY',
 }
 
 /** The languages currently supported */
@@ -253,7 +253,7 @@ export enum Language {
   /** Portuguese (Brazil) */
   PtBr = 'PT_BR',
   /** Russian */
-  Ru = 'RU'
+  Ru = 'RU',
 }
 
 /** A regional locale representing some country/language combination */
@@ -301,21 +301,17 @@ export type Mutation = {
   signUp: Scalars['String']['output'];
 };
 
-
 export type MutationAddWeatherSubscriptionArgs = {
   city: Scalars['String']['input'];
 };
-
 
 export type MutationDeleteWeatherSubscriptionArgs = {
   city: Scalars['String']['input'];
 };
 
-
 export type MutationSignInArgs = {
   userInput: UserInput;
 };
-
 
 export type MutationSignUpArgs = {
   userInput: UserInput;
@@ -372,13 +368,11 @@ export type PopulatedPlace = {
   wikiDataId: Maybe<Scalars['ID']['output']>;
 };
 
-
 /** A place with some population of inhabitants */
 export type PopulatedPlaceDistanceArgs = {
   distanceUnit?: InputMaybe<DistanceUnit>;
   toPlaceId: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 /** A place with some population of inhabitants */
 export type PopulatedPlaceNearbyPopulatedPlacesArgs = {
@@ -416,7 +410,7 @@ export enum PopulatedPlaceType {
   /** A city, town, or village */
   City = 'CITY',
   /** An island */
-  Island = 'ISLAND'
+  Island = 'ISLAND',
 }
 
 /** A pageable view into populated-place results */
@@ -455,7 +449,6 @@ export type Query = {
   userCitiesWeather: Array<WeatherForecast>;
 };
 
-
 /** The set of possible top-level queries */
 export type QueryCountriesArgs = {
   after: InputMaybe<Scalars['String']['input']>;
@@ -469,13 +462,11 @@ export type QueryCountriesArgs = {
   sort: InputMaybe<Scalars['String']['input']>;
 };
 
-
 /** The set of possible top-level queries */
 export type QueryCountryArgs = {
   displayOptions: InputMaybe<DisplayOptions>;
   id: Scalars['ID']['input'];
 };
-
 
 /** The set of possible top-level queries */
 export type QueryCurrenciesArgs = {
@@ -486,14 +477,12 @@ export type QueryCurrenciesArgs = {
   last: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The set of possible top-level queries */
 export type QueryDistanceBetweenArgs = {
   distanceUnit?: InputMaybe<DistanceUnit>;
   fromPlaceId: Scalars['ID']['input'];
   toPlaceId: Scalars['ID']['input'];
 };
-
 
 /** The set of possible top-level queries */
 export type QueryLocalesArgs = {
@@ -503,13 +492,11 @@ export type QueryLocalesArgs = {
   last: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The set of possible top-level queries */
 export type QueryPopulatedPlaceArgs = {
   displayOptions: InputMaybe<DisplayOptions>;
   id: Scalars['ID']['input'];
 };
-
 
 /** The set of possible top-level queries */
 export type QueryPopulatedPlacesArgs = {
@@ -533,12 +520,10 @@ export type QueryPopulatedPlacesArgs = {
   types: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-
 /** The set of possible top-level queries */
 export type QueryTimeZoneArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 /** The set of possible top-level queries */
 export type QueryTimeZonesArgs = {
@@ -547,7 +532,6 @@ export type QueryTimeZonesArgs = {
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The set of possible top-level queries */
 export type QueryUserCitiesWeatherArgs = {

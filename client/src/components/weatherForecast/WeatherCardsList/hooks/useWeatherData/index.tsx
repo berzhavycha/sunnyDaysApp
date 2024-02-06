@@ -11,7 +11,7 @@ import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
 type RenderItemProps = {
-  item: WeatherCardProps
+  item: WeatherCardProps;
 };
 
 type WeatherData = {

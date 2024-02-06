@@ -15,4 +15,4 @@ export type AuthFormProps = {
   };
   handleAuth: () => Promise<void>;
   actionButtonText: AuthType;
-}
+};

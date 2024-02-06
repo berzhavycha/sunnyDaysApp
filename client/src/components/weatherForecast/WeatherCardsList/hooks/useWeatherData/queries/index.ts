@@ -1,2 +1,2 @@
 export * from './getWeatherForecast.base';
-export * from './getWeatherForecast.base.generated'
+export * from './getWeatherForecast.base.generated';

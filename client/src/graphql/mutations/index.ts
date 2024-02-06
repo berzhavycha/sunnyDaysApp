@@ -1,2 +1,2 @@
 export * from './refreshToken.base';
-export * from './refreshToken.base.generated'
+export * from './refreshToken.base.generated';

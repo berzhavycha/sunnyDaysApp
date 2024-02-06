@@ -1,2 +1,2 @@
 export * from './signOut.base';
-export * from './signOut.base.generated'
+export * from './signOut.base.generated';

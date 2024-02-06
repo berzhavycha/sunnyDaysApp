@@ -35,8 +35,8 @@ export const useAddSubscription = (
         throw new Error(`You cannot have more than ${REACT_APP_MAX_WEATHER_CITIES_AMOUNT} cities.`);
       }
 
-      const isCityAlreadyExists = data?.userCitiesWeather.some((forecast) =>
-        forecast.city === city,
+      const isCityAlreadyExists = data?.userCitiesWeather.some(
+        (forecast) => forecast.city === city,
       );
       if (isCityAlreadyExists) {
         throw new Error(`You already have a subscription to ${city}.`);

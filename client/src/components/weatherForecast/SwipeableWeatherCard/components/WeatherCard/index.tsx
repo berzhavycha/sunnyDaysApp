@@ -10,7 +10,7 @@ export type WeatherCardProps = {
   humidity: number;
   text: string;
   daysForecast: SubWeatherForecastDayProps[];
-}
+};
 
 export const WeatherCard: FC<WeatherCardProps> = memo(
   ({ city, tempCelsius, text, humidity, daysForecast }) => {
@@ -25,7 +25,10 @@ export const WeatherCard: FC<WeatherCardProps> = memo(
             <Text className="text-xs text-white mb-2">Precipitation: {humidity} %</Text>
             <Text className="text-[20px] font-bold text-white">{city}</Text>
           </View>
-          <Image source={{ uri: weatherIconMapping[weatherIcon] }} style={{ width: 112, height: 112 }} />
+          <Image
+            source={{ uri: weatherIconMapping[weatherIcon] }}
+            style={{ width: 112, height: 112 }}
+          />
         </View>
         <View className="w-full mt-2 flex-row justify-between">
           {daysForecast.map((dayForecast, index) => {

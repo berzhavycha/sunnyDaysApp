@@ -1,2 +1,2 @@
 export * from './getCities.geodb';
-export * from './getCities.geodb.generated'
+export * from './getCities.geodb.generated';
