@@ -9,13 +9,11 @@ import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
-import { validate } from './environment';
-import { AppService } from './app.service';
-import { AppResolver } from './app.resolver';
+import { validationSchema } from './validationSchema';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env', validate }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env', validationSchema }),
     GraphQLModule.forRootAsync(graphqlConfigAsync),
     CacheModule.registerAsync(redisConfig),
     TypeOrmModule.forRootAsync(typeOrmConfig),
@@ -29,8 +27,6 @@ import { AppResolver } from './app.resolver';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
-    AppService,
-    AppResolver,
   ],
 })
-export class AppModule {}
+export class AppModule { }
