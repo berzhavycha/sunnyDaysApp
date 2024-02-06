@@ -51,7 +51,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+  }, []);
 
   const onSignOut = async (): Promise<void> => {
     setAuthState({
