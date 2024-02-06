@@ -89,10 +89,10 @@ export class AuthService {
 
   async validateRefreshToken(userId: string, token: string): Promise<boolean> {
     const { refreshToken } = await this.usersService.findById(userId);
-    if (refreshToken !== token) {
-      throw new UnauthorizedException('Invalid refresh token');
+    if (await bcrypt.compare(token, refreshToken)) {
+      return refreshToken === token;
     }
-    return refreshToken === token;
+    throw new UnauthorizedException('Invalid refresh token');
   }
 
   private async generateTokens(
