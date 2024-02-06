@@ -3,9 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { IUser, UsersService } from '@modules/users';
-import { ITokens } from './interfaces';
+import { ITokens, JwtPayload  } from './interfaces';
 import { UserDto } from './dtos';
-import { JwtPayload } from './strategies';
 import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
 import { ExtendedGraphQLContext } from '@configs';
 

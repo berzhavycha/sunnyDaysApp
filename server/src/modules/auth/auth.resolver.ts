@@ -6,21 +6,22 @@ import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { ExtendedGraphQLContext } from '@configs';
 import { CurrentUser, Public } from './decorators';
 import { IUser } from '@modules/users';
+import { IMessage } from './interfaces';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Public()
   @Mutation(() => String)
   async signUp(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<IMessage> {
     const tokens = await this.authService.signUp(userDto);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed up successfully!';
+    return { message: 'Has signed up successfully!' };
   }
 
   @Public()
@@ -29,11 +30,11 @@ export class AuthResolver {
   async signIn(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<IMessage> {
     const tokens = await this.authService.signIn(context.user);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed in successfully!';
+    return { message: 'Has signed in successfully!' };
   }
 
   @Public()
@@ -41,7 +42,7 @@ export class AuthResolver {
   @UseGuards(JwtRefreshTokenGuard)
   async refreshAccess(
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<IMessage> {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
 
     if (!refreshToken) {
@@ -51,18 +52,18 @@ export class AuthResolver {
     const tokens = await this.authService.refreshAccessToken(refreshToken);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed refreshed token successfully!';
+    return { message: 'Has signed refreshed token successfully!' };
   }
 
   @Mutation(() => String)
   public async signOut(
     @CurrentUser('id') id: string,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<IMessage> {
     await this.authService.signOut(id);
     this.authService.clearCookies(context.res);
 
-    return 'Has signed out successfully!';
+    return { message: 'Has signed out successfully!' };
   }
 
   @Query(() => Boolean)
