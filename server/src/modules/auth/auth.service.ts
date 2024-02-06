@@ -6,7 +6,7 @@ import { IUser, UsersService } from '@modules/users';
 import { ITokens } from './interfaces';
 import { UserDto } from './dtos';
 import { JwtPayload } from './strategies';
-import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
+import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
 import { ExtendedGraphQLContext } from '@configs';
 
 @Injectable()
@@ -76,15 +76,9 @@ export class AuthService {
     response: ExtendedGraphQLContext['res'],
     tokens: ITokens,
   ): void {
-    const expiryDate = new Date();
-    expiryDate.setDate(
-      expiryDate.getDate() +
-      this.configService.get<number>('COOKIE_EXPIRATION_TIME'),
-    );
-
     response.cookie('tokens', tokens, {
       httpOnly: true,
-      expires: expiryDate,
+      maxAge: ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
       secure: true,
     });
