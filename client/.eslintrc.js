@@ -12,4 +12,5 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": ["error", { allowArgumentsExplicitlyTypedAsAny: true }],
     "prettier/prettier": "off",
   },
+  ignorePatterns: ["**/*.generated.ts"]
 };
