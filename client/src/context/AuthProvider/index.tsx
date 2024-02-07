@@ -18,7 +18,7 @@ interface AuthState {
 interface AuthContextType {
   authState: AuthState;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
-  onSignOut: () => void;
+  onSignOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
