@@ -1,11 +1,11 @@
-import { Dispatch, FC, SetStateAction, memo, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { upperCaseFirstLetter } from '@/utils';
 import { Feather } from '@expo/vector-icons';
 
 type Props = {
   value: string;
-  onChange: Dispatch<SetStateAction<string>>;
+  onChange: (text: string) => void;
   placeholder: string;
   icon: 'mail' | 'lock' | 'key' | 'search';
   error: string;
