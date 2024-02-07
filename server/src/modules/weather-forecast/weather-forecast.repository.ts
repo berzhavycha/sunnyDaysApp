@@ -18,7 +18,7 @@ export class WeatherApiRepository {
     const weatherApiKey = this.configService.get<string>('WEATHER_API_KEY');
     const weatherApiBaseUrl = this.configService.get<string>('WEATHER_API_BASE_URL');
     
-    const apiUrl = `${weatherApiBaseUrl}/forecast.json?key=${weatherApiKey}&q=${cityName}&days=${forecastDays}`;
+    const apiUrl = `${weatherApiBaseUrl}?key=${weatherApiKey}&q=${cityName}&days=${forecastDays}`;
     
     return this.httpService
       .get(apiUrl, {

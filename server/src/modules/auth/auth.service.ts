@@ -20,7 +20,7 @@ export class AuthService {
     try {
       const { email, password } = registerUserDto;
 
-      const hashedPassword = await this.hashValue(password);
+      const hashedPassword = await this.hash(password);
       const user = await this.usersService.createUser(
         email,
         hashedPassword,
@@ -106,13 +106,13 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME'),
     });
 
-    const hashedRefreshToken = await this.hashValue(refreshToken)
+    const hashedRefreshToken = await this.hash(refreshToken)
     await this.usersService.updateUser(userId, { refreshToken: hashedRefreshToken });
 
     return { accessToken, refreshToken };
   }
 
-  private async hashValue(value: string): Promise<string> {
+  private async hash(value: string): Promise<string> {
     const salt = await bcrypt.genSalt();
     return bcrypt.hash(value, salt);
   }

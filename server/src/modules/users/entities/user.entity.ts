@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 import { IUser } from '../interfaces';
-import { City } from '@modules/cities/entities';
+import { City } from '@modules/cities';
 
 @Entity({ name: 'users' })
 export class User implements IUser {
