@@ -1,14 +1,15 @@
-import { SubscriptionsService } from '@modules/subscriptions';
 import { Injectable, Inject, HttpException } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
+import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
+
+import { SubscriptionsService } from '@modules/subscriptions';
+import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
-import { CitiesService } from '@modules/cities';
 
 @Injectable()
 export class WeatherForecastService {
@@ -18,7 +19,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(
     userId: string,
@@ -33,14 +34,16 @@ export class WeatherForecastService {
       );
 
     if (userSubscriptions.length === 0) {
-      return []
+      return [];
     }
 
     const cachedForecasts: WeatherForecast[] = [];
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
-        const { id, name } = await this.citiesService.findById(subscription.cityId)
+        const { id, name } = await this.citiesService.findById(
+          subscription.cityId,
+        );
 
         const cachedForecast = await this.cacheManager.get<WeatherForecast>(
           `weather_forecast:${name}`,
@@ -66,15 +69,19 @@ export class WeatherForecastService {
       const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
 
       for (const forecast of newForecasts) {
-        await this.cacheManager.set(`weather_forecast:${forecast.city}`, forecast, {
-          ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any);
+        await this.cacheManager.set(
+          `weather_forecast:${forecast.city}`,
+          forecast,
+          {
+            ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
+        );
       }
 
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
-      console.log(error)
+      console.log(error);
       this.subscriptionsService.deleteSubscription(
         problematicSubscriptionId,
         userId,

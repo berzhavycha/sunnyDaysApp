@@ -1,6 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { WeatherForecastService } from './weather-forecast.service';
+
 import { CurrentUser } from '@modules/auth';
+import { WeatherForecastService } from './weather-forecast.service';
 import { WeatherForecast } from './types';
 import { ForecastParamArgs } from './dtos';
 
@@ -8,7 +9,7 @@ import { ForecastParamArgs } from './dtos';
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,
-  ) { }
+  ) {}
 
   @Query(() => [WeatherForecast]!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(

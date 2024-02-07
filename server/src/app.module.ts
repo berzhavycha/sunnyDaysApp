@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+
 import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
@@ -20,7 +21,7 @@ import { CitiesModule } from '@modules/cities';
     TypeormModule,
     GraphqlModule,
     RedisModule,
-    CitiesModule
+    CitiesModule,
   ],
   providers: [
     {
@@ -29,4 +30,4 @@ import { CitiesModule } from '@modules/cities';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

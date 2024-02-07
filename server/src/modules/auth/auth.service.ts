@@ -1,12 +1,17 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+
 import { IUser, UsersService } from '@modules/users';
+import { ExtendedGraphQLContext } from '@modules/graphql';
 import { ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
 import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
-import { ExtendedGraphQLContext } from '@modules/graphql';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<ITokens> {
     try {
@@ -71,13 +76,11 @@ export class AuthService {
     return this.generateTokens(decoded.sub, decoded.email);
   }
 
-  setCookies(
-    response: ExtendedGraphQLContext['res'],
-    tokens: ITokens,
-  ): void {
+  setCookies(response: ExtendedGraphQLContext['res'], tokens: ITokens): void {
     response.cookie('tokens', tokens, {
       httpOnly: true,
-      maxAge: ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
+      maxAge:
+        ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
       secure: true,
     });
@@ -106,7 +109,7 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME'),
     });
 
-    const refreshTokenHash = await this.hash(refreshToken)
+    const refreshTokenHash = await this.hash(refreshToken);
     await this.usersService.updateUser(userId, { refreshTokenHash });
 
     return { accessToken, refreshToken };

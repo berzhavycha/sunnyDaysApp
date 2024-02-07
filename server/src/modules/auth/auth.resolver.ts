@@ -1,16 +1,17 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
+
+import { ExtendedGraphQLContext } from '@modules/graphql';
+import { IUser } from '@modules/users';
 import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
-import { ExtendedGraphQLContext } from '@modules/graphql';
 import { CurrentUser, Public } from './decorators';
-import { IUser } from '@modules/users';
 import { Message } from './interfaces';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Mutation(() => Message)

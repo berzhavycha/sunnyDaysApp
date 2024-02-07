@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
-import { IUser } from '../interfaces';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
+
 import { City } from '@modules/cities';
 import { Subscription } from '@modules/subscriptions';
+import { IUser } from '../interfaces';
 
 @Entity({ name: 'users' })
 export class User implements IUser {
@@ -29,8 +37,8 @@ export class User implements IUser {
       referencedColumnName: 'id',
     },
   })
-  cities: City[]
+  cities: City[];
 
-  @OneToMany(() => Subscription, subscription => subscription.user)
-  subscriptions: Subscription[]
+  @OneToMany(() => Subscription, (subscription) => subscription.user)
+  subscriptions: Subscription[];
 }

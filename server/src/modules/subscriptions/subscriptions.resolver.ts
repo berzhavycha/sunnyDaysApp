@@ -1,8 +1,9 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { Subscription } from './entities';
+import { DeleteResult } from 'typeorm';
+
 import { CurrentUser } from '@modules/auth';
 import { SubscriptionsService } from './subscriptions.service';
-import { DeleteResult } from 'typeorm';
+import { Subscription } from './entities';
 import { CityDto } from './dtos';
 
 @Resolver()

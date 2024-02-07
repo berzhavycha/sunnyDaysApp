@@ -1,2 +1,2 @@
-export * from './graphql.module'
-export * from './interfaces'
+export * from './graphql.module';
+export * from './interfaces';

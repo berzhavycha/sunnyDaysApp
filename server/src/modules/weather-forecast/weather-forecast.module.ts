@@ -1,21 +1,18 @@
 import { Module } from '@nestjs/common';
-import { SubscriptionsModule } from '@modules/subscriptions';
 import { HttpModule } from '@nestjs/axios';
+
+import { SubscriptionsModule } from '@modules/subscriptions';
+import { CitiesModule } from '@modules/cities';
 import { WeatherForecastService } from './weather-forecast.service';
 import { WeatherForecastResolver } from './weather-forecast.resolver';
 import { WeatherApiRepository } from './weather-forecast.repository';
-import { CitiesModule } from '@modules/cities';
 
 @Module({
-  imports: [
-    SubscriptionsModule,
-    CitiesModule,
-    HttpModule
-  ],
+  imports: [SubscriptionsModule, CitiesModule, HttpModule],
   providers: [
     WeatherForecastService,
     WeatherForecastResolver,
     WeatherApiRepository,
   ],
 })
-export class WeatherForecastModule { }
+export class WeatherForecastModule {}

@@ -1,6 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddConsistentPrimeryKeys1706257683565 implements MigrationInterface {
+export class AddConsistentPrimeryKeys1706257683565
+  implements MigrationInterface
+{
   name = 'AddConsistentPrimaryKeys1706257683565';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

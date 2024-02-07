@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+
 import { User } from '@modules/users';
-import { City } from '@modules/cities/entities';
+import { City } from '@modules/cities';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
