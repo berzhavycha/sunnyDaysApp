@@ -1,12 +1,9 @@
 import { FC, memo, useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, TextInputProps } from 'react-native';
 import { upperCaseFirstLetter } from '@/utils';
 import { Feather } from '@expo/vector-icons';
 
-type Props = {
-  value: string;
-  onChange: (text: string) => void;
-  placeholder: string;
+export interface InputProps extends TextInputProps {
   icon: 'mail' | 'lock' | 'key' | 'search';
   error: string;
   isSecured?: boolean;
@@ -14,8 +11,8 @@ type Props = {
   onBlur?: () => void;
 };
 
-export const Input: FC<Props> = memo(
-  ({ value, onChange, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
+export const Input: FC<InputProps> = memo(
+  ({ value, onChangeText, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
     const toggleShowPassword = (): void => {
@@ -36,7 +33,7 @@ export const Input: FC<Props> = memo(
           placeholderTextColor="#ccc"
           placeholder={placeholder}
           value={value}
-          onChangeText={(text) => onChange(text)}
+          onChangeText={onChangeText}
           onFocus={onFocus}
           onBlur={onBlur}
         />

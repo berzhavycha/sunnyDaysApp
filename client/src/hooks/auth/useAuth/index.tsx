@@ -12,7 +12,7 @@ export type UserDto = {
 };
 
 export type FieldErrorsState<T> = {
-  [key in keyof T]?: string;
+  [key in keyof T]: string;
 };
 
 export type AuthHookReturnType = {

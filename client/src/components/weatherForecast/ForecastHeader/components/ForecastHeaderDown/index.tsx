@@ -10,9 +10,9 @@ export const ForecastHeaderDown = (): JSX.Element => {
   const [city, setCity] = useState<string>('');
   const { renderCityItem } = useCitySelection(setCity);
   const { data, loading } = useCityInputComplete(city);
-  const { addSubscription, additionLoading, error } = useAddSubscription(city, setCity);
+  const { addSubscription, loading: addingLoading, error } = useAddSubscription(city, setCity);
 
-  if (additionLoading) return <SpinnerView />;
+  if (addingLoading) return <SpinnerView />;
 
   return (
     <View className="w-full flex-row justify-between">

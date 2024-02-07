@@ -4,7 +4,7 @@ import { SignUpDocument } from './mutations';
 
 export type SignUpHookReturn = {
   loading: boolean;
-  signUpHandler: (email: string, password: string, confirmPassword: string) => Promise<void>;
+  signUpHandler: (userDto: UserDto) => Promise<void>;
   fieldsError: FieldErrorsState<UserDto>;
 };
 
@@ -17,11 +17,9 @@ export const useSignUp = (): SignUpHookReturn => {
 
   const { loading, authHandler } = useAuth(setFieldsError, SignUpDocument);
 
-  const signUpHandler = async (
-    email: string,
-    password: string,
-    confirmPassword: string,
-  ): Promise<void> => {
+  const signUpHandler = async (userDto: UserDto): Promise<void> => {
+    const { email, password, confirmPassword } = userDto
+
     if (confirmPassword !== password) {
       setFieldsError((prevState) => ({
         ...prevState,

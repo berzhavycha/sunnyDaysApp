@@ -35,7 +35,7 @@ export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Pro
     >
       <Input
         value={search}
-        onChange={onSearchChange}
+        onChangeText={onSearchChange}
         placeholder={placeholder}
         icon="search"
         error={error}
