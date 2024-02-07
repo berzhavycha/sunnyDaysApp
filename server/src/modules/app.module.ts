@@ -4,19 +4,18 @@ import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
-import { EnvConfigModule } from '@modules/env-config';
+import { CustomConfigModule } from '@modules/config';
 import { TypeormModule } from '@modules/typeorm';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 
 @Module({
   imports: [
-    EnvConfigModule,
+    CustomConfigModule,
     AuthModule,
     UsersModule,
     SubscriptionsModule,
     WeatherForecastModule,
-    EnvConfigModule,
     TypeormModule,
     GraphqlModule,
     RedisModule,
