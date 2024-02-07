@@ -3,7 +3,7 @@ import { Subscription } from './entities';
 import { CurrentUser } from '@modules/auth';
 import { SubscriptionsService } from './subscriptions.service';
 import { DeleteResult } from 'typeorm';
-import { CityDto } from './dtos/cityInput.dto';
+import { CityDto } from './dtos';
 
 @Resolver()
 export class SubscriptionsResolver {

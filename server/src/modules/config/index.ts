@@ -1,1 +1,1 @@
-export * from './customConfig.module'
+export * from './config.module'

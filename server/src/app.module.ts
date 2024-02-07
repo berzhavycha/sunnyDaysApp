@@ -4,14 +4,15 @@ import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
-import { CustomConfigModule } from '@modules/config';
+import { ConfigModule } from '@modules/config';
 import { TypeormModule } from '@modules/typeorm';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
+import { CitiesModule } from '@modules/cities';
 
 @Module({
   imports: [
-    CustomConfigModule,
+    ConfigModule,
     AuthModule,
     UsersModule,
     SubscriptionsModule,
@@ -19,6 +20,7 @@ import { RedisModule } from '@modules/redis';
     TypeormModule,
     GraphqlModule,
     RedisModule,
+    CitiesModule
   ],
   providers: [
     {

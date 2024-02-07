@@ -8,7 +8,7 @@ import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { daysOfWeek } from './constants';
-import { CitiesService } from '@modules/cities/cities.service';
+import { CitiesService } from '@modules/cities';
 
 @Injectable()
 export class WeatherForecastService {

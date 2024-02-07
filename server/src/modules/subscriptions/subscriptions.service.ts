@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Subscription } from './entities';
-import { CitiesService } from '@modules/cities/cities.service';
+import { CitiesService } from '@modules/cities';
 
 @Injectable()
 export class SubscriptionsService {
