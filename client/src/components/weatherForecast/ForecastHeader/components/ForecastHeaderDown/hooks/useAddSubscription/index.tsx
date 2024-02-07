@@ -1,11 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useWeatherSubscription } from '@/hooks';
 import { useWeatherData } from '@/components/weatherForecast/WeatherCardsList/hooks';
 import { REACT_APP_MAX_WEATHER_CITIES_AMOUNT } from '@env';
+import { useMutation } from '@apollo/client';
+import { AddWeatherSubscriptionDocument } from './mutations';
+import { UserCitiesWeatherDocument } from '@/components/weatherForecast/WeatherCardsList/hooks/useWeatherData/queries';
 
 type UseAddSubscriptionReturn = {
   addSubscription: () => Promise<void>;
-  additionLoading: boolean;
+  loading: boolean;
   error: string;
 };
 
@@ -14,14 +16,20 @@ export const useAddSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): UseAddSubscriptionReturn => {
   const [error, setError] = useState<string>('');
-  const { addSubscriptionHandler, additionLoading } = useWeatherSubscription();
+  const [addWeatherSubscription, { loading, error: addingSubscriptionError }] = useMutation(
+    AddWeatherSubscriptionDocument,
+    {
+      refetchQueries: [UserCitiesWeatherDocument],
+    },
+  );
+
   const { data, error: weatherRequestError } = useWeatherData();
 
   useEffect(() => {
     if (weatherRequestError?.message) {
       setError(weatherRequestError?.message);
     }
-  }, [weatherRequestError, data]);
+  }, [weatherRequestError, addingSubscriptionError, data]);
 
   const addSubscription = async (): Promise<void> => {
     try {
@@ -42,7 +50,14 @@ export const useAddSubscription = (
         throw new Error(`You already have a subscription to ${city}.`);
       }
 
-      await addSubscriptionHandler(city);
+      await addWeatherSubscription({
+        variables: {
+          city: {
+            name: city,
+          },
+        },
+      });
+      
       setCity('');
     } catch (err) {
       if (err instanceof Error) {
@@ -52,7 +67,7 @@ export const useAddSubscription = (
   };
 
   return {
-    additionLoading,
+    loading,
     addSubscription,
     error,
   };

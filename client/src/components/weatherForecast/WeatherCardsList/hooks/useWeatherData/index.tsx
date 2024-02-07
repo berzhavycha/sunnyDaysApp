@@ -6,9 +6,9 @@ import {
 } from '@env';
 import { WeatherCardProps } from '@/components/weatherForecast/SwipeableWeatherCard/components/WeatherCard';
 import { SwipeableWeatherCard } from '@/components/weatherForecast/SwipeableWeatherCard';
-import { useWeatherSubscription } from '@/hooks';
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { useDeleteWeatherSubscription } from '../useDeleteWeatherSubscription'
 
 type RenderItemProps = {
   item: WeatherCardProps;
@@ -22,7 +22,7 @@ type WeatherData = {
 };
 
 export const useWeatherData = (): WeatherData => {
-  const { deleteSubscriptionHandler } = useWeatherSubscription();
+  const { deleteSubscriptionHandler } = useDeleteWeatherSubscription();
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       citiesLimit: +REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
