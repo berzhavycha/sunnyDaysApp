@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field } from '@nestjs/graphql';
+import { Subscription } from '@modules/subscriptions';
 
 @Entity({ name: 'cities' })
 export class City {
@@ -9,5 +10,8 @@ export class City {
 
     @Field(() => String)
     @Column()
-    name: string
+    name: string;
+
+    @OneToMany(() => Subscription, subscription => subscription.city)
+    subscriptions: Subscription[]
 }

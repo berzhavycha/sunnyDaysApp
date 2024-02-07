@@ -18,11 +18,11 @@ export class Subscription {
   @PrimaryColumn({ name: 'city_id' })
   cityId: string;
 
-  @ManyToOne(() => User, (user) => user.cities)
+  @ManyToOne(() => User, (user) => user.subscriptions)
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
-  users: User[];
+  user: User;
 
-  @ManyToOne(() => City)
+  @ManyToOne(() => City, (city) => city.subscriptions)
   @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
-  cities: City[];
+  city: City;
 }
