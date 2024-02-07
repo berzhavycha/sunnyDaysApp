@@ -13,15 +13,15 @@ import { CitiesModule } from '@modules/cities';
 
 @Module({
   imports: [
-    ConfigModule,
-    AuthModule,
-    UsersModule,
-    SubscriptionsModule,
-    WeatherForecastModule,
     TypeormModule,
+    ConfigModule,
     GraphqlModule,
     RedisModule,
+    AuthModule,
+    UsersModule,
     CitiesModule,
+    WeatherForecastModule,
+    SubscriptionsModule,
   ],
   providers: [
     {

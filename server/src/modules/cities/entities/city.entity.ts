@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field } from '@nestjs/graphql';
 
-import { Subscription } from '@modules/subscriptions';
+import { Subscription } from '@modules/subscriptions/entities';
 
 @Entity({ name: 'cities' })
 export class City {
