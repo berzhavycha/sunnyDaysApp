@@ -12,12 +12,12 @@ export class UsersService {
   async createUser(
     email: string,
     passwordHash: string,
-    refreshToken: string | null,
+    refreshTokenHash: string | null,
   ): Promise<User> {
     const user = this.usersRepository.create({
       email,
       passwordHash,
-      refreshToken,
+      refreshTokenHash,
     });
     return this.usersRepository.save(user);
   }

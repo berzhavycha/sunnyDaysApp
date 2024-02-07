@@ -13,8 +13,8 @@ export class User implements IUser {
   @Column({ name: 'password_hash' })
   passwordHash: string;
 
-  @Column({ name: 'refresh_token', nullable: true })
-  refreshToken: string | null;
+  @Column({ name: 'refresh_token_hash', nullable: true })
+  refreshTokenHash: string | null;
 
   @ManyToMany(() => City)
   @JoinTable({

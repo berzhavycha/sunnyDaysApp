@@ -50,7 +50,7 @@ export class AuthService {
 
     if (await bcrypt.compare(password, user.passwordHash)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { passwordHash, refreshToken, ...result } = user;
+      const { passwordHash, refreshTokenHash, ...result } = user;
       return result;
     }
 
@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   async signOut(userId: string): Promise<void> {
-    await this.usersService.updateUser(userId, { refreshToken: null });
+    await this.usersService.updateUser(userId, { refreshTokenHash: null });
   }
 
   async refreshAccessToken(refreshToken: string): Promise<ITokens> {
@@ -88,9 +88,9 @@ export class AuthService {
   }
 
   async validateRefreshToken(userId: string, token: string): Promise<boolean> {
-    const { refreshToken } = await this.usersService.findById(userId);
-    if (await bcrypt.compare(token, refreshToken)) {
-      return refreshToken === token;
+    const { refreshTokenHash } = await this.usersService.findById(userId);
+    if (await bcrypt.compare(token, refreshTokenHash)) {
+      return refreshTokenHash === token;
     }
     throw new UnauthorizedException('Invalid refresh token');
   }
@@ -106,8 +106,8 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME'),
     });
 
-    const hashedRefreshToken = await this.hash(refreshToken)
-    await this.usersService.updateUser(userId, { refreshToken: hashedRefreshToken });
+    const refreshTokenHash = await this.hash(refreshToken)
+    await this.usersService.updateUser(userId, { refreshTokenHash });
 
     return { accessToken, refreshToken };
   }
