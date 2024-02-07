@@ -1,7 +1,7 @@
 import { SignUp } from '@/components';
 
 const SignUpScreen = (): JSX.Element => {
-  return <SignUp />
+  return <SignUp />;
 };
 
 export default SignUpScreen;

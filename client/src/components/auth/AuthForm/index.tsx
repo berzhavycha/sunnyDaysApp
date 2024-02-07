@@ -1,27 +1,29 @@
 import { FC } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Link } from 'expo-router';
-import { Button } from '@/components/common';
-import { AuthFormProps } from './types';
-import { AuthType, UserDto } from '@/hooks';
-import { convertPascalCaseToSpaced } from '@/utils';
-import { ControlledInput } from './components/ControlledInput';
-import { useForm } from 'react-hook-form'
-import { joiResolver } from '@hookform/resolvers/joi'
-import { userSchema } from './constants';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
-export const AuthForm: FC<AuthFormProps> = ({
-  title,
-  subTitle,
-  onAuth,
-  fieldsError,
-  authType,
-}) => {
+import { Button, ControlledInput } from '@/components/common';
+import { AuthType, FieldErrorsState, UserDto } from '@/hooks';
+import { convertPascalCaseToSpaced } from '@/utils';
+import { userSchema } from './validation';
+
+
+export type AuthFormProps = {
+  title: string;
+  subTitle?: string;
+  fieldsError: FieldErrorsState<UserDto>;
+  onAuth: (userDto: UserDto) => Promise<void>;
+  authType: AuthType;
+};
+
+
+export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, onAuth, fieldsError, authType }) => {
   const { control, handleSubmit } = useForm<UserDto>({
     mode: 'onSubmit',
-    resolver: joiResolver(userSchema(authType))
-  })
-
+    resolver: joiResolver(userSchema(authType)),
+  });
 
   return (
     <View className="flex-1 justify-center items-center bg-gray-900">
@@ -36,16 +38,16 @@ export const AuthForm: FC<AuthFormProps> = ({
       <View className="w-64">
         <ControlledInput
           control={control}
-          name='email'
-          placeholder='Email'
-          icon='mail'
+          name="email"
+          placeholder="Email"
+          icon="mail"
           error={fieldsError.email}
         />
         <ControlledInput
           control={control}
-          name='password'
-          placeholder='Password'
-          icon='lock'
+          name="password"
+          placeholder="Password"
+          icon="lock"
           error={fieldsError.password}
           isSecured
         />
@@ -53,14 +55,17 @@ export const AuthForm: FC<AuthFormProps> = ({
           <ControlledInput
             control={control}
             rules={{ required: true }}
-            name='confirmPassword'
+            name="confirmPassword"
             placeholder="Confirm Password"
             icon="key"
             isSecured
             error={fieldsError.confirmPassword ?? ''}
           />
         )}
-        <Button text={convertPascalCaseToSpaced(authType)} onPress={handleSubmit(async data => await onAuth(data))} />
+        <Button
+          text={convertPascalCaseToSpaced(authType)}
+          onPress={handleSubmit(async (data) => await onAuth(data))}
+        />
         <View className="justify-center items-center">
           {authType === AuthType.SIGN_IN ? (
             <Text className="text-gray-400 mt-8">

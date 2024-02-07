@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, ReactElement, useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Input } from '../Input';
 import OutsidePressHandler from 'react-native-outside-press';
+
+import { Input } from '../Input';
 
 type Props<TItem> = {
   loading: boolean;

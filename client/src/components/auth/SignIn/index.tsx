@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Spinner, AuthForm } from '@/components';
 import { AuthType, useAuth, FieldErrorsState, UserDto } from '@/hooks';
 
@@ -11,17 +12,16 @@ export const SignIn = (): JSX.Element => {
 
   return (
     <>
-      {
-        loading ?
-          <Spinner />
-          :
-          <AuthForm
-            title="Welcome Back"
-            fieldsError={fieldsError}
-            onAuth={authHandler}
-            authType={AuthType.SIGN_IN}
-          />
-      }
+      {loading ? (
+        <Spinner />
+      ) : (
+        <AuthForm
+          title="Welcome Back"
+          fieldsError={fieldsError}
+          onAuth={authHandler}
+          authType={AuthType.SIGN_IN}
+        />
+      )}
     </>
   );
 };

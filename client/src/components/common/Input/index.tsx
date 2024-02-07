@@ -1,7 +1,8 @@
 import { FC, memo, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, TextInputProps } from 'react-native';
-import { upperCaseFirstLetter } from '@/utils';
 import { Feather } from '@expo/vector-icons';
+
+import { upperCaseFirstLetter } from '@/utils';
 
 export interface InputProps extends TextInputProps {
   icon: 'mail' | 'lock' | 'key' | 'search';
@@ -9,7 +10,7 @@ export interface InputProps extends TextInputProps {
   isSecured?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
-};
+}
 
 export const Input: FC<InputProps> = memo(
   ({ value, onChangeText, placeholder, icon, error, isSecured, onFocus, onBlur }) => {

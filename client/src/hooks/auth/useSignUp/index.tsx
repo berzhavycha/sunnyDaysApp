@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { FieldErrorsState, UserDto, useAuth } from '../useAuth';
 import { SignUpDocument } from './mutations';
 
@@ -18,7 +19,7 @@ export const useSignUp = (): SignUpHookReturn => {
   const { loading, authHandler } = useAuth(setFieldsError, SignUpDocument);
 
   const signUpHandler = async (userDto: UserDto): Promise<void> => {
-    const { email, password, confirmPassword } = userDto
+    const { email, password, confirmPassword } = userDto;
 
     if (confirmPassword !== password) {
       setFieldsError((prevState) => ({

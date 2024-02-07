@@ -1,7 +1,7 @@
 import { SignIn } from '@/components';
 
 const SignInScreen = (): JSX.Element => {
-  return <SignIn />
+  return <SignIn />;
 };
 
 export default SignInScreen;

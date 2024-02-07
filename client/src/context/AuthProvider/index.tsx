@@ -9,6 +9,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
+
 import { IsUserSignedInDocument } from './queries';
 
 interface AuthState {

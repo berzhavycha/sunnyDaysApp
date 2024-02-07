@@ -1,9 +1,10 @@
-import { AuthProvider, useAuthManager } from '@/context';
+import { useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { Slot, useRouter, useSegments } from 'expo-router';
-import { useEffect } from 'react';
-import { apolloClient } from '@/graphql';
 import { EventProvider } from 'react-native-outside-press';
+
+import { AuthProvider, useAuthManager } from '@/context';
+import { apolloClient } from '@/graphql';
 
 const InitialLayout = (): JSX.Element => {
   const { authState } = useAuthManager();
