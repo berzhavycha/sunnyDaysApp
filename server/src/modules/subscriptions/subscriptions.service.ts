@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
+
+import { CitiesService } from '@modules/cities';
 import { Subscription } from './entities';
 
 @Injectable()
@@ -8,15 +10,22 @@ export class SubscriptionsService {
   constructor(
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
-  ) { }
+    private readonly citiesService: CitiesService,
+  ) {}
 
   async createSubscription(
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
+    let city = await this.citiesService.findByName(cityName);
+
+    if (!city) {
+      city = await this.citiesService.createCity(cityName);
+    }
+
     const subscriptionEntity = this.subscriptionRepository.create({
-      cityName,
-      userId
+      cityId: city.id,
+      userId,
     });
     return this.subscriptionRepository.save(subscriptionEntity);
   }
@@ -25,10 +34,16 @@ export class SubscriptionsService {
     cityName: string,
     userId: string,
   ): Promise<DeleteResult> {
+    const city = await this.citiesService.findByName(cityName);
+
+    if (!city) {
+      throw new Error('There is no subscription with such city!');
+    }
+
     const subscription = await this.subscriptionRepository.findOne({
-      where: { cityName, userId },
+      where: { cityId: city.id, userId },
     });
-    return this.subscriptionRepository.delete(subscription.id);
+    return this.subscriptionRepository.delete(subscription);
   }
 
   async getSubscriptionsByUserId(

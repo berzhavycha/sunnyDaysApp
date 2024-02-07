@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { User } from './entities';
 
 @Injectable()
 export class UsersService {
@@ -12,12 +13,12 @@ export class UsersService {
   async createUser(
     email: string,
     passwordHash: string,
-    refreshToken: string | null,
+    refreshTokenHash: string | null,
   ): Promise<User> {
     const user = this.usersRepository.create({
       email,
       passwordHash,
-      refreshToken,
+      refreshTokenHash,
     });
     return this.usersRepository.save(user);
   }

@@ -1,6 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
+
+import { City } from '@modules/cities';
+import { Subscription } from '@modules/subscriptions';
 import { IUser } from '../interfaces';
-import { Subscription } from '@modules/subscriptions/entities/subscription.entity';
 
 @Entity({ name: 'users' })
 export class User implements IUser {
@@ -10,11 +19,25 @@ export class User implements IUser {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ name: 'password_hash' })
   passwordHash: string;
 
-  @Column({ nullable: true })
-  refreshToken: string | null;
+  @Column({ name: 'refresh_token_hash', nullable: true })
+  refreshTokenHash: string | null;
+
+  @ManyToMany(() => City)
+  @JoinTable({
+    name: 'subscriptions',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'city_id',
+      referencedColumnName: 'id',
+    },
+  })
+  cities: City[];
 
   @OneToMany(() => Subscription, (subscription) => subscription.user)
   subscriptions: Subscription[];

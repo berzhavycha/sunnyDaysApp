@@ -1,47 +1,49 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
+
+import { ExtendedGraphQLContext } from '@modules/graphql';
+import { IUser } from '@modules/users';
 import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
-import { ExtendedGraphQLContext } from '@configs';
 import { CurrentUser, Public } from './decorators';
-import { IUser } from '@modules/users';
+import { Message } from './interfaces';
 
 @Resolver(() => String)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   async signUp(
-    @Args('userInput') userDto: UserDto,
+    @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<Message> {
     const tokens = await this.authService.signUp(userDto);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed up successfully!';
+    return { message: 'Has signed up successfully!' };
   }
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   @UseGuards(LocalAuthGuard)
   async signIn(
-    @Args('userInput') userDto: UserDto,
+    @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<Message> {
     const tokens = await this.authService.signIn(context.user);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed in successfully!';
+    return { message: 'Has signed in successfully!' };
   }
 
   @Public()
-  @Mutation(() => String)
+  @Mutation(() => Message)
   @UseGuards(JwtRefreshTokenGuard)
   async refreshAccess(
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<Message> {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
 
     if (!refreshToken) {
@@ -51,18 +53,18 @@ export class AuthResolver {
     const tokens = await this.authService.refreshAccessToken(refreshToken);
     this.authService.setCookies(context.res, tokens);
 
-    return 'Has signed refreshed token successfully!';
+    return { message: 'Has signed refreshed token successfully!' };
   }
 
-  @Mutation(() => String)
+  @Mutation(() => Message)
   public async signOut(
     @CurrentUser('id') id: string,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<string> {
+  ): Promise<Message> {
     await this.authService.signOut(id);
     this.authService.clearCookies(context.res);
 
-    return 'Has signed out successfully!';
+    return { message: 'Has signed out successfully!' };
   }
 
   @Query(() => Boolean)

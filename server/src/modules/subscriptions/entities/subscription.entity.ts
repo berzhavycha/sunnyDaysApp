@@ -1,6 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '@modules/users/entities/user.entity';
+
+import { User } from '@modules/users';
+import { City } from '@modules/cities';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
@@ -10,14 +18,18 @@ export class Subscription {
   id: string;
 
   @Field(() => String)
-  @Column()
+  @PrimaryColumn({ name: 'user_id' })
   userId: string;
 
   @Field(() => String)
-  @Column()
-  cityName: string;
+  @PrimaryColumn({ name: 'city_id' })
+  cityId: string;
 
   @ManyToOne(() => User, (user) => user.subscriptions)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
   user: User;
+
+  @ManyToOne(() => City, (city) => city.subscriptions)
+  @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
+  city: City;
 }

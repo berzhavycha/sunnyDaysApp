@@ -1,13 +1,17 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+
 import { IUser, UsersService } from '@modules/users';
-import { ITokens } from './interfaces';
+import { ExtendedGraphQLContext } from '@modules/graphql';
+import { ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
-import { JwtPayload } from './strategies';
-import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
-import { ExtendedGraphQLContext } from '@configs';
+import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -15,13 +19,13 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<ITokens> {
     try {
       const { email, password } = registerUserDto;
 
-      const hashedPassword = await this.hashPassword(password);
+      const hashedPassword = await this.hash(password);
       const user = await this.usersService.createUser(
         email,
         hashedPassword,
@@ -51,7 +55,7 @@ export class AuthService {
 
     if (await bcrypt.compare(password, user.passwordHash)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { passwordHash, refreshToken, ...result } = user;
+      const { passwordHash, refreshTokenHash, ...result } = user;
       return result;
     }
 
@@ -59,7 +63,7 @@ export class AuthService {
   }
 
   async signOut(userId: string): Promise<void> {
-    await this.usersService.updateUser(userId, { refreshToken: null });
+    await this.usersService.updateUser(userId, { refreshTokenHash: null });
   }
 
   async refreshAccessToken(refreshToken: string): Promise<ITokens> {
@@ -72,19 +76,11 @@ export class AuthService {
     return this.generateTokens(decoded.sub, decoded.email);
   }
 
-  setCookies(
-    response: ExtendedGraphQLContext['res'],
-    tokens: ITokens,
-  ): void {
-    const expiryDate = new Date();
-    expiryDate.setDate(
-      expiryDate.getDate() +
-      this.configService.get<number>('COOKIE_EXPIRATION_TIME'),
-    );
-
+  setCookies(response: ExtendedGraphQLContext['res'], tokens: ITokens): void {
     response.cookie('tokens', tokens, {
       httpOnly: true,
-      expires: expiryDate,
+      maxAge:
+        ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
       secure: true,
     });
@@ -95,11 +91,11 @@ export class AuthService {
   }
 
   async validateRefreshToken(userId: string, token: string): Promise<boolean> {
-    const { refreshToken } = await this.usersService.findById(userId);
-    if (refreshToken !== token) {
-      throw new UnauthorizedException('Invalid refresh token');
+    const { refreshTokenHash } = await this.usersService.findById(userId);
+    if (await bcrypt.compare(token, refreshTokenHash)) {
+      return refreshTokenHash === token;
     }
-    return refreshToken === token;
+    throw new UnauthorizedException('Invalid refresh token');
   }
 
   private async generateTokens(
@@ -113,13 +109,14 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_TIME'),
     });
 
-    await this.usersService.updateUser(userId, { refreshToken });
+    const refreshTokenHash = await this.hash(refreshToken);
+    await this.usersService.updateUser(userId, { refreshTokenHash });
 
     return { accessToken, refreshToken };
   }
 
-  private async hashPassword(password: string): Promise<string> {
+  private async hash(value: string): Promise<string> {
     const salt = await bcrypt.genSalt();
-    return bcrypt.hash(password, salt);
+    return bcrypt.hash(value, salt);
   }
 }

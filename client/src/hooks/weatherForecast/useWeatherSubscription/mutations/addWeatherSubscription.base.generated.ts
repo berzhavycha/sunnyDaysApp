@@ -2,7 +2,7 @@ import * as Types from '@/graphql/__generated__/types';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type AddWeatherSubscriptionMutationVariables = Types.Exact<{
-  city: Types.Scalars['String']['input'];
+  city: Types.CityInput;
 }>;
 
 export type AddWeatherSubscriptionMutation = {
@@ -23,7 +23,7 @@ export const AddWeatherSubscriptionDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'city' } },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CityInput' } },
           },
         },
       ],
@@ -36,7 +36,7 @@ export const AddWeatherSubscriptionDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'city' },
+                name: { kind: 'Name', value: 'input' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'city' } },
               },
             ],

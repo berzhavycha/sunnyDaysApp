@@ -39,6 +39,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     isAuthenticated: false,
   });
 
+  console.log(authState);
+
   const [fetchUser, { data }] = useLazyQuery(IsUserSignedInDocument, {
     onCompleted: () => {
       if (data && data.isUserSignedIn) {
@@ -51,7 +53,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   const onSignOut = async (): Promise<void> => {
     setAuthState({

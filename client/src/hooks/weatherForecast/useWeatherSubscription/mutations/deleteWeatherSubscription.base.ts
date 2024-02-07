@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const DELETE_WEATHER_SUBSCRIPTION = gql`
-  mutation DeleteWeatherSubscription($city: String!) {
-    deleteWeatherSubscription(city: $city) {
+  mutation DeleteWeatherSubscription($city: CityInput!) {
+    deleteWeatherSubscription(input: $city) {
       __typename
     }
   }
