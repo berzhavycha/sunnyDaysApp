@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-import { Spinner, AuthForm } from '@/components';
+import { Spinner } from '@/components/common';
 import { AuthType, useAuth, FieldErrorsState, UserDto } from '@/hooks';
+import { AuthForm } from '../AuthForm'
 
 export const SignIn = (): JSX.Element => {
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({

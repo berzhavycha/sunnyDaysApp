@@ -40,8 +40,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     isAuthenticated: false,
   });
 
-  console.log(authState);
-
   const [fetchUser, { data }] = useLazyQuery(IsUserSignedInDocument, {
     onCompleted: () => {
       if (data && data.isUserSignedIn) {
