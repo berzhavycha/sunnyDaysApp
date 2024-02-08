@@ -1,6 +1,6 @@
-import { AuthForm } from "@/components";
-import { AuthType } from "@/hooks";
-import { SignInDocument } from "@/hooks/auth/useAuth/mutations";
+import { AuthForm } from '@/components';
+import { AuthType } from '@/hooks';
+import { SignInDocument } from '@/hooks/auth/useAuth/mutations';
 
 const SignInScreen = (): JSX.Element => {
   return (

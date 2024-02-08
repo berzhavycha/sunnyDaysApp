@@ -1,9 +1,4 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  InMemoryCache,
-  split,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache, split } from '@apollo/client';
 
 import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { geodbHttpLink, errorLink, mainHttpLink, refreshTokenLink } from './links';
@@ -22,4 +17,4 @@ export const apolloLinks = ApolloLink.from([
   ),
 ]);
 
-apolloClient.setLink(apolloLinks)
+apolloClient.setLink(apolloLinks);

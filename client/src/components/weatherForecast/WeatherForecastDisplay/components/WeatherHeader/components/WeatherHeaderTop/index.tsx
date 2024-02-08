@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 export const WeatherHeaderTop = (): JSX.Element => {
   const { signOutHandler } = useSignOut();
 
-  const onSignOut = async (): Promise<void> => await signOutHandler()
+  const onSignOut = async (): Promise<void> => await signOutHandler();
 
   return (
     <View className="w-full flex-row items-center mb-4 justify-between">

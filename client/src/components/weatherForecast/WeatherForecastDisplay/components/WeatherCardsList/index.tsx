@@ -9,21 +9,19 @@ export const WeatherCardsList = (): JSX.Element => {
 
   return (
     <>
-      {
-        loading ?
-          <SpinnerView />
-          :
-          !data?.userCitiesWeather.length ?
-            <NoData message="No weather information available" />
-            : (
-              <FlatList
-                className="w-full"
-                data={data.userCitiesWeather}
-                keyExtractor={(item) => item.city}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-              />
-            )}
+      {loading ? (
+        <SpinnerView />
+      ) : !data?.userCitiesWeather.length ? (
+        <NoData message="No weather information available" />
+      ) : (
+        <FlatList
+          className="w-full"
+          data={data.userCitiesWeather}
+          keyExtractor={(item) => item.city}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </>
   );
 };

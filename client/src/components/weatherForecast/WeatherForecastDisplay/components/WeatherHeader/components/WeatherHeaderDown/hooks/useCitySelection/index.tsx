@@ -11,9 +11,7 @@ type UseCitySelectionReturn = {
   renderCityItem: (args: RenderCityItemProps) => JSX.Element;
 };
 
-export const useCitySelection = (
-  onCitySelect: (text: string) => void,
-): UseCitySelectionReturn => {
+export const useCitySelection = (onCitySelect: (text: string) => void): UseCitySelectionReturn => {
   const handleCitySelect = (selectedCity: string): void => {
     onCitySelect(selectedCity);
   };

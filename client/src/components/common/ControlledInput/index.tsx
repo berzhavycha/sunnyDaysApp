@@ -24,4 +24,3 @@ export function ControlledInput<FormType extends FieldValues>({
     />
   );
 }
-

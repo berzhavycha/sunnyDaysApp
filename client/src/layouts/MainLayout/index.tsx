@@ -16,4 +16,3 @@ export const MainLayout = (): JSX.Element => {
     </ApolloProvider>
   );
 };
-
