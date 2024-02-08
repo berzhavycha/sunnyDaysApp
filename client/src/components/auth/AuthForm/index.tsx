@@ -25,6 +25,8 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, onAuth, fieldsErr
     resolver: joiResolver(userSchema(authType)),
   });
 
+  const onSubmit = (): Function => handleSubmit(async (data) => await onAuth(data))
+
   return (
     <View className="flex-1 justify-center items-center bg-gray-900">
       <Image
@@ -54,7 +56,6 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, onAuth, fieldsErr
         {authType === AuthType.SIGN_UP && (
           <ControlledInput
             control={control}
-            rules={{ required: true }}
             name="confirmPassword"
             placeholder="Confirm Password"
             icon="key"
@@ -64,7 +65,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, onAuth, fieldsErr
         )}
         <Button
           text={convertPascalCaseToSpaced(authType)}
-          onPress={handleSubmit(async (data) => await onAuth(data))}
+          onPress={onSubmit}
         />
         <View className="justify-center items-center">
           {authType === AuthType.SIGN_IN ? (

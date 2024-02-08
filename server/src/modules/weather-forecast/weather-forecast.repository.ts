@@ -27,7 +27,10 @@ export class WeatherApiRepository {
     return this.httpService
       .get(apiUrl, {
         validateStatus: function (status) {
-          return status >= HttpStatusCode.SUCCESS && status < HttpStatusCode.REDIRECTION;
+          return (
+            status >= HttpStatusCode.SUCCESS &&
+            status < HttpStatusCode.REDIRECTION
+          );
         },
       })
       .toPromise();

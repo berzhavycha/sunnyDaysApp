@@ -5,4 +5,4 @@ export * from './interfaces';
 export * from './guards';
 export * from './strategies';
 export * from './decorators';
-export * from './types'
+export * from './types';

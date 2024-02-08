@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import OutsidePressHandler from 'react-native-outside-press';
 
@@ -9,12 +9,12 @@ type Props<TItem> = {
   data: TItem[];
   onRenderItem: ({ item }: { item: TItem }) => JSX.Element;
   search: string;
-  onSearchChange: Dispatch<SetStateAction<string>>;
+  onSearchChange: (text: string) => void;
   placeholder: string;
   error: string;
 };
 
-export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Props<TItem>> = ({
+export const InputAutocomplete: <TItem>(props: Props<TItem>) => JSX.Element = ({
   loading,
   data,
   onRenderItem,

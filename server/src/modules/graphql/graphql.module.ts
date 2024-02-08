@@ -7,5 +7,4 @@ import { graphqlConfigAsync } from './configs';
   imports: [GraphQLModule.forRootAsync(graphqlConfigAsync)],
   exports: [GraphQLModule],
 })
-
 export class GraphqlModule {}

@@ -9,9 +9,9 @@ export const daysOfWeek = [
 ];
 
 export enum HttpStatusCode {
-  INFO=100,
-  SUCCESS=200,
-  REDIRECTION=300,
-  CLIENT_ERROR=400,
-  SERVER_ERROR=500
+  INFO = 100,
+  SUCCESS = 200,
+  REDIRECTION = 300,
+  CLIENT_ERROR = 400,
+  SERVER_ERROR = 500,
 }

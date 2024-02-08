@@ -18,9 +18,10 @@ export function ControlledInput<FormType extends FieldValues>({
           value={field.value}
           onChangeText={field.onChange}
           {...inputProps}
-          error={fieldState.error?.message || inputProps.error || ''}
+          error={fieldState.error?.message ?? inputProps.error ?? ''}
         />
       )}
     />
   );
 }
+
