@@ -29,8 +29,6 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
     resolver: joiResolver(userSchema(authType)),
   });
 
-  const onSubmit = (): Function => handleSubmit(async (data) => await authHandler(data));
-
   return (
     <>
       {loading ? (
@@ -73,7 +71,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
                 error={fieldsError.confirmPassword ?? ''}
               />
             )}
-            <Button text={convertPascalCaseToSpaced(authType)} onPress={onSubmit} />
+            <Button text={convertPascalCaseToSpaced(authType)} onPress={handleSubmit(async (data) => await authHandler(data))} />
             <View className="justify-center items-center">
               {authType === AuthType.SIGN_IN ? (
                 <Text className="text-gray-400 mt-8">

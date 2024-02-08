@@ -32,7 +32,10 @@ export const useAuth = (
     try {
       await authMutation({
         variables: {
-          userDto,
+          userDto: {
+            email: userDto.email,
+            password: userDto.password
+          },
         },
       });
 

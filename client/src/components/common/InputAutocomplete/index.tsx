@@ -13,7 +13,7 @@ type Props<TItem> = {
   error: string;
 };
 
-const InputAutocomplete = <TItem,>({
+export const InputAutocomplete = <TItem,>({
   loading,
   data,
   onRenderItem,
@@ -50,4 +50,3 @@ const InputAutocomplete = <TItem,>({
   );
 };
 
-export default InputAutocomplete;

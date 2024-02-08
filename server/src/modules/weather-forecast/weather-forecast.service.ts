@@ -26,7 +26,7 @@ export class WeatherForecastService {
     citiesLimit: number,
     forecastDaysAmount: number,
   ): Promise<WeatherForecast[]> {
-    let problematicSubscriptionId: string;
+    let problematicSubscription: string;
     const userSubscriptions =
       await this.subscriptionsService.getSubscriptionsByUserId(
         userId,
@@ -41,7 +41,7 @@ export class WeatherForecastService {
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
-        const { id, name } = await this.citiesService.findById(
+        const { name } = await this.citiesService.findById(
           subscription.cityId,
         );
 
@@ -56,7 +56,7 @@ export class WeatherForecastService {
         return this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
           .catch((error) => {
-            problematicSubscriptionId = id;
+            problematicSubscription = name;
             throw error;
           });
       },
@@ -82,7 +82,7 @@ export class WeatherForecastService {
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
       this.subscriptionsService.deleteSubscription(
-        problematicSubscriptionId,
+        problematicSubscription,
         userId,
       );
       throw new HttpException(
