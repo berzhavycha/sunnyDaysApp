@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
+
 import { useAuthManager } from '@/context';
 import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
@@ -12,7 +13,7 @@ export type UserDto = {
 };
 
 export type FieldErrorsState<T> = {
-  [key in keyof T]?: string;
+  [key in keyof T]: string;
 };
 
 export type AuthHookReturnType = {

@@ -1,27 +1,29 @@
-import { Dispatch, SetStateAction, FC } from 'react';
+import { FC } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Link } from 'expo-router';
-import { Button, Input } from '@/components/common';
-import { AuthFormProps } from './types';
-import { AuthType } from '@/hooks';
-import { convertPascalCaseToSpaced } from '@/utils';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
-export const AuthForm: FC<AuthFormProps> = ({
-  title,
-  subTitle,
-  fields,
-  handleAuth,
-  actionButtonText,
-}) => {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    confirmPassword,
-    setConfirmPassword,
-    fieldsError,
-  } = fields;
+import { Button, ControlledInput } from '@/components/common';
+import { AuthType, FieldErrorsState, UserDto } from '@/hooks';
+import { convertPascalCaseToSpaced } from '@/utils';
+import { userSchema } from './validation';
+
+
+export type AuthFormProps = {
+  title: string;
+  subTitle?: string;
+  fieldsError: FieldErrorsState<UserDto>;
+  onAuth: (userDto: UserDto) => Promise<void>;
+  authType: AuthType;
+};
+
+
+export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, onAuth, fieldsError, authType }) => {
+  const { control, handleSubmit } = useForm<UserDto>({
+    mode: 'onSubmit',
+    resolver: joiResolver(userSchema(authType)),
+  });
 
   return (
     <View className="flex-1 justify-center items-center bg-gray-900">
@@ -34,34 +36,38 @@ export const AuthForm: FC<AuthFormProps> = ({
       </Text>
       {subTitle && <Text className="text-xs mb-8 font-light text-gray-400">{subTitle}</Text>}
       <View className="w-64">
-        <Input
-          value={email}
-          onChange={setEmail}
+        <ControlledInput
+          control={control}
+          name="email"
           placeholder="Email"
           icon="mail"
-          error={fieldsError.email ?? ''}
+          error={fieldsError.email}
         />
-        <Input
-          value={password}
-          onChange={setPassword}
+        <ControlledInput
+          control={control}
+          name="password"
           placeholder="Password"
           icon="lock"
-          error={fieldsError.password ?? ''}
+          error={fieldsError.password}
           isSecured
         />
-        {confirmPassword !== undefined && (
-          <Input
-            value={confirmPassword}
-            onChange={setConfirmPassword as Dispatch<SetStateAction<string>>}
+        {authType === AuthType.SIGN_UP && (
+          <ControlledInput
+            control={control}
+            rules={{ required: true }}
+            name="confirmPassword"
             placeholder="Confirm Password"
             icon="key"
-            error={fieldsError.confirmPassword ?? ''}
             isSecured
+            error={fieldsError.confirmPassword ?? ''}
           />
         )}
-        <Button text={convertPascalCaseToSpaced(actionButtonText)} onPress={handleAuth} />
+        <Button
+          text={convertPascalCaseToSpaced(authType)}
+          onPress={handleSubmit(async (data) => await onAuth(data))}
+        />
         <View className="justify-center items-center">
-          {actionButtonText === AuthType.SIGN_IN ? (
+          {authType === AuthType.SIGN_IN ? (
             <Text className="text-gray-400 mt-8">
               Don`t have an account?{' '}
               <Link href="/sign-up/" className="font-bold text-blue-500">

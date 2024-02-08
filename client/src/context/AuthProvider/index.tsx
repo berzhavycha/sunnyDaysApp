@@ -9,6 +9,7 @@ import {
   useContext,
   useEffect,
 } from 'react';
+
 import { IsUserSignedInDocument } from './queries';
 
 interface AuthState {
@@ -18,7 +19,7 @@ interface AuthState {
 interface AuthContextType {
   authState: AuthState;
   setAuthState: Dispatch<SetStateAction<AuthState>>;
-  onSignOut: () => void;
+  onSignOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -38,8 +39,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
   });
-
-  console.log(authState);
 
   const [fetchUser, { data }] = useLazyQuery(IsUserSignedInDocument, {
     onCompleted: () => {

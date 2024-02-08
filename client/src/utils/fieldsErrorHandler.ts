@@ -1,11 +1,12 @@
-import { FieldErrorsState } from '@/hooks';
 import { ApolloError } from '@apollo/client';
+
+import { FieldErrorsState } from '@/hooks';
 
 export const fieldsErrorHandler = <T>(
   errors: ApolloError,
   pickErrorsCallback: (messages: string[]) => FieldErrorsState<T>,
-): FieldErrorsState<T> => {
-  let fieldsError: FieldErrorsState<T> = {};
+): FieldErrorsState<T> | null => {
+  let fieldsError: FieldErrorsState<T> | null = null; 
 
   errors.graphQLErrors.forEach((graphQLError) => {
     if (

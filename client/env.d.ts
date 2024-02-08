@@ -9,4 +9,5 @@ declare module '@env' {
   export const REACT_APP_MAX_WEATHER_CITIES_AMOUNT: number;
   export const REACT_APP_MAX_FORECAST_DAYS: number;
   export const REACT_APP_WEATHER_FORECAST_CACHE_TIME: number;
+  export const REACT_APP_PASSWORD_MIN_LENGTH: number;
 }

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { upperCaseFirstLetter } from './upperCaseFirstLetter';
+
 import { FieldErrorsState } from '@/hooks';
+import { upperCaseFirstLetter } from './upperCaseFirstLetter';
 
 export const catchEmptyFields = <T>(
   data: T,

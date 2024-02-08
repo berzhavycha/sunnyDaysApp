@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+
 import { useAuthManager } from '@/context';
 import { SignOutDocument } from './mutations';
 

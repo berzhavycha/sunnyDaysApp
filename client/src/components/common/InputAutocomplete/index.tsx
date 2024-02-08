@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, ReactElement, useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Input } from '../Input';
 import OutsidePressHandler from 'react-native-outside-press';
+
+import { Input } from '../Input';
 
 type Props<TItem> = {
   loading: boolean;
@@ -35,7 +36,7 @@ export const InputAutocomplete: <TItem>(props: Props<TItem>) => ReactElement<Pro
     >
       <Input
         value={search}
-        onChange={onSearchChange}
+        onChangeText={onSearchChange}
         placeholder={placeholder}
         icon="search"
         error={error}
