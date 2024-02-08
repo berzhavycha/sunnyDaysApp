@@ -13,4 +13,5 @@ import { configValidationSchema } from './validation';
   ],
   exports: [ConfigModule],
 })
+
 export class ConfigModule {}
