@@ -51,6 +51,12 @@
       ],
       "@/utils": [
         "./src/utils"
+      ],
+      "@/layouts/*": [
+        "./src/layouts/*"
+      ],
+      "@/layouts": [
+        "./src/layouts"
       ]
     }
   },
