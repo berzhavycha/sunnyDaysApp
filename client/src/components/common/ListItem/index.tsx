@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ListItem: FC<Props> = memo(({ content, onItemClick }): JSX.Element => {
-  const onPress = (): void => onItemClick(content)
+  const onPress = (): void => onItemClick(content);
 
   return (
     <TouchableOpacity className="w-full" onPress={onPress}>

@@ -26,7 +26,7 @@ const InputAutocomplete = <TItem,>({
 
   const onPressOutside = (): void => setIsInputFocused(false);
   const onInputFocus = (): void => setIsInputFocused(true);
-  const renderItem = ({ item }: { item: TItem }): JSX.Element => onRenderItem({ item })
+  const renderItem = ({ item }: { item: TItem }): JSX.Element => onRenderItem({ item });
 
   return (
     <OutsidePressHandler
