@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { CurrentUser, Public } from './decorators';
-import { Message } from './interfaces';
+import { Message } from './types';
 
 @Resolver(() => String)
 export class AuthResolver {

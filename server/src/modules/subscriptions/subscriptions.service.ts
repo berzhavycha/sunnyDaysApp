@@ -36,10 +36,6 @@ export class SubscriptionsService {
   ): Promise<DeleteResult> {
     const city = await this.citiesService.findByName(cityName);
 
-    if (!city) {
-      throw new Error('There is no subscription with such city!');
-    }
-
     const subscription = await this.subscriptionRepository.findOne({
       where: { cityId: city.id, userId },
     });

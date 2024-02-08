@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 
 import { useAuthManager } from '@/context';
-import { catchEmptyFields, fieldsErrorHandler } from '@/utils';
+import { fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
 import { SignInDocument } from './mutations';
 
@@ -30,13 +30,12 @@ export const useAuth = (
 
   const authHandler = async (userDto: UserDto): Promise<void> => {
     try {
-      if (catchEmptyFields(userDto, Object.keys(userDto) as (keyof UserDto)[], setFieldsError)) {
-        return;
-      }
-
       await authMutation({
         variables: {
-          userDto,
+          userDto: {
+            email: userDto.email,
+            password: userDto.password
+          },
         },
       });
 

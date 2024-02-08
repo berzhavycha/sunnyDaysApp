@@ -7,8 +7,10 @@ type Props = {
 };
 
 export const ListItem: FC<Props> = memo(({ content, onItemClick }): JSX.Element => {
+  const onPress = (): void => onItemClick(content);
+
   return (
-    <TouchableOpacity className="w-full" onPress={() => onItemClick(content)}>
+    <TouchableOpacity className="w-full" onPress={onPress}>
       <View className="w-full p-2">
         <Text className="w-full text-white">{content}</Text>
       </View>

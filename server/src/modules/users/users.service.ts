@@ -36,6 +36,7 @@ export class UsersService {
     updateUserDto: Partial<User>,
   ): Promise<User | null> {
     const user = await this.findById(id);
+
     if (!user) {
       return null;
     }

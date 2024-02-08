@@ -90,12 +90,11 @@ export class AuthService {
     response.clearCookie('tokens');
   }
 
-  async validateRefreshToken(userId: string, token: string): Promise<boolean> {
+  async validateRefreshToken(userId: string, token: string): Promise<void> {
     const { refreshTokenHash } = await this.usersService.findById(userId);
-    if (await bcrypt.compare(token, refreshTokenHash)) {
-      return refreshTokenHash === token;
+    if (!(await bcrypt.compare(token, refreshTokenHash))) {
+      throw new UnauthorizedException('Invalid refresh token');
     }
-    throw new UnauthorizedException('Invalid refresh token');
   }
 
   private async generateTokens(

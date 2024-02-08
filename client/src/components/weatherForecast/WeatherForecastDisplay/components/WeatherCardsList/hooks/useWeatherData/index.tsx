@@ -37,9 +37,9 @@ export const useWeatherData = (): WeatherData => {
   });
 
   function renderItem({ item }: RenderItemProps): JSX.Element {
-    return (
-      <SwipeableWeatherCard item={item} onDelete={() => deleteSubscriptionHandler(item.city)} />
-    );
+    const onDelete = async (): Promise<void> => await deleteSubscriptionHandler(item.city);
+
+    return <SwipeableWeatherCard item={item} onDelete={onDelete} />;
   }
 
   return { data, loading, error, renderItem };

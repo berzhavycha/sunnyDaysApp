@@ -6,7 +6,7 @@ export const fieldsErrorHandler = <T>(
   errors: ApolloError,
   pickErrorsCallback: (messages: string[]) => FieldErrorsState<T>,
 ): FieldErrorsState<T> | null => {
-  let fieldsError: FieldErrorsState<T> | null = null; 
+  let fieldsError: FieldErrorsState<T> | null = null;
 
   errors.graphQLErrors.forEach((graphQLError) => {
     if (

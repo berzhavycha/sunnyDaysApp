@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, memo } from 'react';
+import { memo } from 'react';
 
 import { ListItem } from '@/components/common';
 import { City } from '../../types';
@@ -11,11 +11,9 @@ type UseCitySelectionReturn = {
   renderCityItem: (args: RenderCityItemProps) => JSX.Element;
 };
 
-export const useCitySelection = (
-  setCity: Dispatch<SetStateAction<string>>,
-): UseCitySelectionReturn => {
+export const useCitySelection = (onCitySelect: (text: string) => void): UseCitySelectionReturn => {
   const handleCitySelect = (selectedCity: string): void => {
-    setCity(selectedCity);
+    onCitySelect(selectedCity);
   };
 
   const MemoizedCityItem = memo(({ item }: RenderCityItemProps) => (

@@ -17,14 +17,13 @@ export const useAddSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): UseAddSubscriptionReturn => {
   const [error, setError] = useState<string>('');
+  const { data, error: weatherRequestError } = useWeatherData();
   const [addWeatherSubscription, { loading, error: addingSubscriptionError }] = useMutation(
     AddWeatherSubscriptionDocument,
     {
       refetchQueries: [UserCitiesWeatherDocument],
     },
   );
-
-  const { data, error: weatherRequestError } = useWeatherData();
 
   useEffect(() => {
     if (weatherRequestError?.message) {

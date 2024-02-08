@@ -8,10 +8,9 @@ export const errorLink = onError(({ graphQLErrors, networkError, operation, forw
           return;
         }
         operation.setContext({ unauthenticated: true });
-        return forward(operation)
+        return forward(operation);
       }
     }
   }
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
-
