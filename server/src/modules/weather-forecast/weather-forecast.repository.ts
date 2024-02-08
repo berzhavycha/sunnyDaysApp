@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { ConfigService } from '@nestjs/config';
 
 import { IWeatherApiResponse } from './interfaces';
+import { HttpStatusCode } from './constants';
 
 @Injectable()
 export class WeatherApiRepository {
@@ -26,7 +27,7 @@ export class WeatherApiRepository {
     return this.httpService
       .get(apiUrl, {
         validateStatus: function (status) {
-          return status >= 200 && status < 300;
+          return status >= HttpStatusCode.SUCCESS && status < HttpStatusCode.REDIRECTION;
         },
       })
       .toPromise();

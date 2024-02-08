@@ -3,7 +3,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from '@modules/auth';
 import { WeatherForecastService } from './weather-forecast.service';
 import { WeatherForecast } from './types';
-import { ForecastParamArgs } from './dtos';
+import { ForecastParamArgsDto } from './dtos';
 
 @Resolver()
 export class WeatherForecastResolver {
@@ -13,7 +13,7 @@ export class WeatherForecastResolver {
 
   @Query(() => [WeatherForecast]!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(
-    @Args() forecastParams: ForecastParamArgs,
+    @Args() forecastParams: ForecastParamArgsDto,
     @CurrentUser('id') id: string,
   ): Promise<WeatherForecast[]> {
     return this.weatherForecastService.getUserCitiesWeather(
