@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { DocumentNode } from 'graphql';
 import { View, Text, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
@@ -8,7 +9,6 @@ import { Button, ControlledInput, Spinner } from '@/components/common';
 import { AuthType, FieldErrorsState, UserDto, useAuth } from '@/hooks';
 import { convertPascalCaseToSpaced } from '@/utils';
 import { userSchema } from './validation';
-import { DocumentNode } from 'graphql';
 
 export type AuthFormProps = {
   title: string;

@@ -17,26 +17,27 @@ export const WeatherHeaderDown = (): JSX.Element => {
 
   return (
     <>
-      {addingLoading ? (
-        <SpinnerView />
-      ) : (
-        <View className="w-full flex-row justify-between">
-          <View className="w-60">
-            <InputAutocomplete<City>
-              loading={loading}
-              onRenderItem={renderCityItem}
-              placeholder="Search City"
-              search={city}
-              onSearchChange={setCity}
-              data={data}
-              error={error}
-            />
+      {
+        addingLoading ? (
+          <SpinnerView />
+        ) : (
+          <View className="w-full flex-row justify-between">
+            <View className="w-60">
+              <InputAutocomplete<City>
+                loading={loading}
+                onRenderItem={renderCityItem}
+                placeholder="Search City"
+                search={city}
+                onSearchChange={setCity}
+                data={data}
+                error={error}
+              />
+            </View>
+            <View className="w-14">
+              <Button text={ADD_CITY_BTN_TEXT} onPress={onAddSubscription} />
+            </View>
           </View>
-          <View className="w-14">
-            <Button text={ADD_CITY_BTN_TEXT} onPress={onAddSubscription} />
-          </View>
-        </View>
-      )}
+        )}
     </>
   );
 };
