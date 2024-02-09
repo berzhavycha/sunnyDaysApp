@@ -3,7 +3,6 @@ import { refreshAccessToken } from '../utils';
 
 export const refreshTokenLink = (apolloClient: ApolloClient<NormalizedCacheObject>): ApolloLink =>
   new ApolloLink((operation, forward) => {
-    console.log("We are refreshing")
     return new Observable((observer) => {
       (async (): Promise<void> => {
         try {
