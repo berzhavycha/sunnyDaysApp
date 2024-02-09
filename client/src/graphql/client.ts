@@ -1,20 +1,17 @@
-import { ApolloClient, ApolloLink, InMemoryCache, split } from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
-import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
-import { geodbHttpLink, errorLink, mainHttpLink, refreshTokenLink } from './links';
+import { errorLink, refreshTokenLink, baseLink } from './links';
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
 export const apolloLinks = ApolloLink.from([
-  errorLink,
-  refreshTokenLink(apolloClient),
-  split(
-    (operation) => operation.getContext().clientName === REACT_APP_GEODB_CLIENT_NAME,
-    geodbHttpLink,
-    mainHttpLink,
+  errorLink.split(
+    (operation) => operation.getContext().unauthenticated,
+    refreshTokenLink(apolloClient),
   ),
+  baseLink
 ]);
 
 apolloClient.setLink(apolloLinks);
