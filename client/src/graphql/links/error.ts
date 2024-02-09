@@ -1,3 +1,4 @@
+import { Observable } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 
 export const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
@@ -7,8 +8,24 @@ export const errorLink = onError(({ graphQLErrors, networkError, operation, forw
         if (operation.operationName === 'RefreshAccess' || operation.operationName === 'SignIn') {
           return;
         }
-        operation.setContext({ unauthenticated: true });
-        return forward(operation);
+
+        return new Observable((observer) => {
+          (async (): Promise<void> => {
+            try {
+              operation.setContext({ unauthenticated: true });
+
+              const subscriber = {
+                next: observer.next.bind(observer),
+                error: observer.error.bind(observer),
+                complete: observer.complete.bind(observer),
+              };
+              
+              forward(operation).subscribe(subscriber);
+            } catch (err) {
+              observer.error(err);
+            }
+          })();
+        });
       }
     }
   }
