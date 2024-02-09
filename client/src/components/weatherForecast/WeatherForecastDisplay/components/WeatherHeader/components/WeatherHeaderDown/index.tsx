@@ -13,8 +13,6 @@ export const WeatherHeaderDown = (): JSX.Element => {
   const { data, loading } = useCityInputComplete(city);
   const { addSubscription, loading: addingLoading, error } = useAddSubscription(city, setCity);
 
-  const onAddSubscription = async (): Promise<void> => await addSubscription();
-
   return (
     <>
       {addingLoading ? (
@@ -33,7 +31,7 @@ export const WeatherHeaderDown = (): JSX.Element => {
             />
           </View>
           <View className="w-14">
-            <Button text={ADD_CITY_BTN_TEXT} onPress={onAddSubscription} />
+            <Button text={ADD_CITY_BTN_TEXT} onPress={addSubscription} />
           </View>
         </View>
       )}

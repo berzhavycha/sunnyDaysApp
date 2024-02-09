@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import { AuthType } from '@/hooks';
 import { REACT_APP_PASSWORD_MIN_LENGTH } from '@env';
 
-export const userSchema = (actionType: string): Joi.Schema => {
+export const userSchema = (actionType: AuthType): Joi.Schema => {
   let schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })

@@ -8,8 +8,6 @@ export interface InputProps extends TextInputProps {
   icon: 'mail' | 'lock' | 'key' | 'search';
   error: string;
   isSecured?: boolean;
-  onFocus?: () => void;
-  onBlur?: () => void;
 }
 
 export const Input: FC<InputProps> = memo(
