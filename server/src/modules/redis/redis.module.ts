@@ -5,6 +5,5 @@ import { redisConfig } from './configs';
 
 @Module({
   imports: [CacheModule.registerAsync(redisConfig)],
-  exports: [CacheModule],
 })
 export class RedisModule {}

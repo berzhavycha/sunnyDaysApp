@@ -11,6 +11,5 @@ import { configValidationSchema } from './validation';
       validationSchema: configValidationSchema,
     }),
   ],
-  exports: [ConfigModule],
 })
 export class ConfigModule {}

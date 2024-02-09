@@ -5,6 +5,5 @@ import { typeOrmConfig } from './configs';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync(typeOrmConfig)],
-  exports: [TypeOrmModule],
 })
 export class TypeormModule {}
