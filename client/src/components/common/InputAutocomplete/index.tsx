@@ -49,4 +49,3 @@ export const InputAutocomplete = <TItem,>({
     </OutsidePressHandler>
   );
 };
-

@@ -7,6 +7,8 @@ import { SpinnerView } from '../SpinnerView';
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading, renderItem } = useWeatherData();
 
+  const keyExtractor = (item: { city: string }): string => item.city;
+
   return (
     <>
       {loading ? (
@@ -17,7 +19,7 @@ export const WeatherCardsList = (): JSX.Element => {
         <FlatList
           className="w-full"
           data={data.userCitiesWeather}
-          keyExtractor={(item) => item.city}
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
         />

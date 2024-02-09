@@ -7,7 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { Button, ControlledInput, Spinner } from '@/components/common';
 import { AuthType, FieldErrorsState, UserDto, useAuth } from '@/hooks';
-import { convertPascalCaseToSpaced } from '@/utils';
+import { convertCamelToSpacedPascal } from '@/utils';
 import { userSchema } from './validation';
 
 export type AuthFormProps = {
@@ -71,20 +71,23 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
                 error={fieldsError.confirmPassword ?? ''}
               />
             )}
-            <Button text={convertPascalCaseToSpaced(authType)} onPress={handleSubmit(async (data) => await authHandler(data))} />
+            <Button
+              text={convertCamelToSpacedPascal(authType)}
+              onPress={handleSubmit(async (data) => await authHandler(data))}
+            />
             <View className="justify-center items-center">
               {authType === AuthType.SIGN_IN ? (
                 <Text className="text-gray-400 mt-8">
                   Don`t have an account?{' '}
                   <Link href="/sign-up/" className="font-bold text-blue-500">
-                    {convertPascalCaseToSpaced(AuthType.SIGN_UP)}
+                    {convertCamelToSpacedPascal(AuthType.SIGN_UP)}
                   </Link>
                 </Text>
               ) : (
                 <Text className="text-gray-400 mt-8">
                   Have an account?{' '}
                   <Link href="/sign-in/" className="font-bold text-blue-500">
-                    {convertPascalCaseToSpaced(AuthType.SIGN_IN)}
+                    {convertCamelToSpacedPascal(AuthType.SIGN_IN)}
                   </Link>
                 </Text>
               )}

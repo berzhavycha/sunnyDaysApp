@@ -1,4 +1,5 @@
 import { Observable, ApolloLink, ApolloClient, NormalizedCacheObject } from '@apollo/client';
+
 import { refreshAccessToken } from '../utils';
 
 export const refreshTokenLink = (apolloClient: ApolloClient<NormalizedCacheObject>): ApolloLink =>

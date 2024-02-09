@@ -34,7 +34,7 @@ export const useAuth = (
         variables: {
           userDto: {
             email: userDto.email,
-            password: userDto.password
+            password: userDto.password,
           },
         },
       });

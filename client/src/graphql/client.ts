@@ -11,7 +11,7 @@ export const apolloLinks = ApolloLink.from([
     (operation) => operation.getContext().unauthenticated,
     refreshTokenLink(apolloClient),
   ),
-  baseLink
+  baseLink,
 ]);
 
 apolloClient.setLink(apolloLinks);

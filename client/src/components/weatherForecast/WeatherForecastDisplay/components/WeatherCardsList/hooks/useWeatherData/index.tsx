@@ -4,7 +4,7 @@ import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { WeatherCardProps } from '../../../SwipeableWeatherCard/components';
 import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { useDeleteWeatherSubscription } from '../useDeleteWeatherSubscription';
+import { useDeleteSubscription } from '../useDeleteWeatherSubscription';
 import {
   REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
   REACT_APP_MAX_FORECAST_DAYS,
@@ -15,15 +15,15 @@ type RenderItemProps = {
   item: WeatherCardProps;
 };
 
-type WeatherData = {
+type WeatherDataReturn = {
   data: UserCitiesWeatherQuery | undefined;
   loading: boolean;
   error: ApolloError | undefined;
   renderItem(props: RenderItemProps): JSX.Element;
 };
 
-export const useWeatherData = (): WeatherData => {
-  const { deleteSubscriptionHandler } = useDeleteWeatherSubscription();
+export const useWeatherData = (): WeatherDataReturn => {
+  const { deleteSubscriptionHandler } = useDeleteSubscription();
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       citiesLimit: +REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
@@ -37,7 +37,7 @@ export const useWeatherData = (): WeatherData => {
   });
 
   function renderItem({ item }: RenderItemProps): JSX.Element {
-    const onDelete = async (): Promise<void> => await deleteSubscriptionHandler(item.city);
+    const onDelete = async (): Promise<void> => deleteSubscriptionHandler(item.city);
 
     return <SwipeableWeatherCard item={item} onDelete={onDelete} />;
   }

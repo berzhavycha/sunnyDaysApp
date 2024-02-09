@@ -13,4 +13,4 @@ export const errorLink = onError(({ graphQLErrors, networkError, operation, forw
     }
   }
   if (networkError) console.log(`[Network error]: ${networkError}`);
-})
+});
