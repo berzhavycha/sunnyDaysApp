@@ -25,7 +25,7 @@ export class User implements IUser {
   @Column({ name: 'refresh_token_hash', nullable: true })
   refreshTokenHash: string | null;
 
-  @ManyToMany(() => City)
+  @ManyToMany(() => City, { cascade: true })
   @JoinTable({
     name: 'subscriptions',
     joinColumn: {
