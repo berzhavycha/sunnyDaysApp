@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 
-import { useAuthManager } from '@/context';
+import { useCurrentUser } from '@/context';
 import { fieldsErrorHandler } from '@/utils';
 import { pickUserErrorMessages } from '../utils';
 import { SignInDocument } from './mutations';
@@ -25,8 +25,8 @@ export const useAuth = (
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   mutation: DocumentNode = SignInDocument,
 ): AuthHookReturnType => {
-  const [authMutation, { loading }] = useMutation(mutation);
-  const { setAuthState } = useAuthManager();
+  const [authMutation, { data, loading }] = useMutation(mutation);
+  const { setCurrentUser } = useCurrentUser();
 
   const authHandler = async (userDto: UserDto): Promise<void> => {
     try {
@@ -41,9 +41,7 @@ export const useAuth = (
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
 
-      setAuthState({
-        isAuthenticated: true,
-      });
+      setCurrentUser(data)
     } catch (error) {
       if (error instanceof ApolloError) {
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
