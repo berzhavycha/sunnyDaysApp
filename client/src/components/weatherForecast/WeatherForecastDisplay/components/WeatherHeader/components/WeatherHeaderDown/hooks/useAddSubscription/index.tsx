@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { useWeatherData } from '../../../../../WeatherCardsList/hooks';
-import { UserCitiesWeatherDocument } from '../../../../../WeatherCardsList/hooks/useWeatherData/queries';
+import { useWeatherData } from '@/hooks';
+import { UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries'
 import { REACT_APP_MAX_WEATHER_CITIES_AMOUNT } from '@env';
 import { AddWeatherSubscriptionDocument } from './mutations';
 

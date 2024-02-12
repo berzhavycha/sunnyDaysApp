@@ -1,10 +1,10 @@
 import { ApolloError, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { WeatherCardProps } from '../../../SwipeableWeatherCard/components';
-import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
+import { WeatherCardProps } from '@/components/weatherForecast/WeatherForecastDisplay/components/SwipeableWeatherCard/components/WeatherCard';
+import { SwipeableWeatherCard } from '@/components/weatherForecast/WeatherForecastDisplay/components/SwipeableWeatherCard';
+import { useDeleteSubscription } from '@/components/weatherForecast/WeatherForecastDisplay/components/WeatherCardsList/hooks';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { useDeleteSubscription } from '../useDeleteWeatherSubscription';
 import {
   REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
   REACT_APP_MAX_FORECAST_DAYS,

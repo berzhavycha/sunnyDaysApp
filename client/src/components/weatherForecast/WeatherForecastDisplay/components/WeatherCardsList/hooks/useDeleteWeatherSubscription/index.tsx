@@ -1,6 +1,6 @@
 import { ApolloError, useMutation } from '@apollo/client';
 
-import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
+import { UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
 type UseDeleteSubscriptionReturn = {

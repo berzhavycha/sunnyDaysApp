@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native';
 
 import { NoData } from '@/components/common';
-import { useWeatherData } from './hooks';
+import { useWeatherData } from '@/hooks';
 import { SpinnerView } from '../SpinnerView';
 
 export const WeatherCardsList = (): JSX.Element => {
