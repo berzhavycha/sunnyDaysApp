@@ -11,7 +11,7 @@ export interface InputProps extends TextInputProps {
 }
 
 export const Input: FC<InputProps> = memo(
-  ({ value, onChangeText, placeholder, icon, error, isSecured, onFocus, onBlur }) => {
+  ({ value, onChangeText, placeholder, icon, error, isSecured, onFocus, onBlur, ...rest }) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
     const toggleShowPassword = (): void => {
@@ -35,6 +35,7 @@ export const Input: FC<InputProps> = memo(
           onChangeText={onChangeText}
           onFocus={onFocus}
           onBlur={onBlur}
+          {...rest}
         />
         {isSecured && (
           <TouchableOpacity className="absolute top-3 right-3 z-100" onPress={toggleShowPassword}>
