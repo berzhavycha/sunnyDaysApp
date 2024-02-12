@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+
 import { GeodbService } from './geodb.service';
 import { GeodbResolver } from './geodb.resolver';
 import { GeodbRepository } from './geodb.repository';
 
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [

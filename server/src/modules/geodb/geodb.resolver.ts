@@ -16,7 +16,6 @@ export class GeodbResolver {
     async getCitiesByPrefix(
         @Args() cityPrefixArgs: CityPrefixArgsDto
     ): Promise<GeodbCity[]> {
-        const res = await this.geodbService.getCitiesByPrefix(cityPrefixArgs)
-        return res
+        return this.geodbService.getCitiesByPrefix(cityPrefixArgs)
     }
 }
