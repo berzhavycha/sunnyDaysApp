@@ -19,9 +19,9 @@ type Mutation {
   addWeatherSubscription(input: CityInput!): Subscription!
   deleteWeatherSubscription(input: CityInput!): Subscription!
   refreshAccess: Message!
-  signIn(input: Credentials!): Message!
+  signIn(input: Credentials!): UserPayload!
   signOut: Message!
-  signUp(input: Credentials!): Message!
+  signUp(input: Credentials!): UserPayload!
 }
 
 type Query {
@@ -33,6 +33,10 @@ type Subscription {
   cityId: String!
   id: String!
   userId: String!
+}
+
+type UserPayload {
+  email: String!
 }
 
 type WeatherDay {

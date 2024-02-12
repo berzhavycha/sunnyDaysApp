@@ -1,22 +1,22 @@
 import { useEffect } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
 
-import { useAuthManager } from '@/context';
+import { useCurrentUser } from '@/context';
 
 export const InitialLayout = (): JSX.Element => {
-  const { authState } = useAuthManager();
+  const { currentUser } = useCurrentUser();
   const router = useRouter();
   const segments = useSegments();
 
   const inAppSegment = segments[0] === '(app)';
 
   useEffect(() => {
-    if (authState.isAuthenticated && !inAppSegment) {
+    if (currentUser && !inAppSegment) {
       router.replace('/weather-forecast/');
-    } else if (!authState.isAuthenticated) {
+    } else if (!currentUser) {
       router.replace('/sign-in/');
     }
-  }, [authState]);
+  }, [currentUser]);
 
   return <Slot />;
 };

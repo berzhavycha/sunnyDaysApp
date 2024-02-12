@@ -7,35 +7,35 @@ import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { CurrentUser, Public } from './decorators';
-import { Message } from './types';
+import { Message, UserPayload } from './types';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Public()
-  @Mutation(() => Message)
+  @Mutation(() => UserPayload)
   async signUp(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<Message> {
-    const tokens = await this.authService.signUp(userDto);
+  ): Promise<UserPayload> {
+    const { user, tokens } = await this.authService.signUp(userDto);
     this.authService.setCookies(context.res, tokens);
 
-    return { message: 'Has signed up successfully!' };
+    return user;
   }
 
   @Public()
-  @Mutation(() => Message)
+  @Mutation(() => UserPayload)
   @UseGuards(LocalAuthGuard)
   async signIn(
     @Args('input') userDto: UserDto,
     @Context() context: ExtendedGraphQLContext,
-  ): Promise<Message> {
-    const tokens = await this.authService.signIn(context.user);
+  ): Promise<UserPayload> {
+    const { user, tokens } = await this.authService.signIn(context.user);
     this.authService.setCookies(context.res, tokens);
 
-    return { message: 'Has signed in successfully!' };
+    return user;
   }
 
   @Public()

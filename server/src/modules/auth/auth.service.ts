@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 
 import { IUser, UsersService } from '@modules/users';
 import { ExtendedGraphQLContext } from '@modules/graphql';
-import { ITokens, JwtPayload } from './interfaces';
+import { AuthResult, ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
 import { DUPLICATE_EMAIL_ERROR_CODE, ONE_DAY } from './constants';
 
@@ -19,9 +19,9 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async signUp(registerUserDto: UserDto): Promise<ITokens> {
+  async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
       const { email, password } = registerUserDto;
 
@@ -32,7 +32,10 @@ export class AuthService {
         null,
       );
 
-      return this.generateTokens(user.id, user.email);
+      return {
+        user,
+        tokens: await this.generateTokens(user.id, user.email)
+      };
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
         throw new ConflictException('Email is already in use!');
@@ -42,9 +45,11 @@ export class AuthService {
     }
   }
 
-  async signIn(signedInUser: IUser): Promise<ITokens> {
-    const { id, email } = signedInUser;
-    return this.generateTokens(id, email);
+  async signIn(signedInUser: IUser): Promise<AuthResult> {
+    return {
+      user: signedInUser,
+      tokens: await this.generateTokens(signedInUser.id, signedInUser.email)
+    };
   }
 
   async validateUser(email: string, password: string): Promise<IUser | null> {
