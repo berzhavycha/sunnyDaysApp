@@ -5,3 +5,4 @@ export * from './Spinner';
 export * from './ListItem';
 export * from './NoData';
 export * from './ControlledInput';
+export * from './Touchable'
