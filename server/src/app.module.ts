@@ -6,14 +6,14 @@ import { UsersModule } from '@modules/users';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { WeatherForecastModule } from '@modules/weather-forecast';
 import { ConfigModule } from '@modules/config';
-import { TypeormModule } from '@modules/typeorm';
+import { DatabaseModule } from '@modules/database';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 import { CitiesModule } from '@modules/cities';
 
 @Module({
   imports: [
-    TypeormModule,
+    DatabaseModule,
     ConfigModule,
     GraphqlModule,
     RedisModule,
