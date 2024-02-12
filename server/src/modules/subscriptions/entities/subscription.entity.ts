@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { User } from '@modules/users';
 import { City } from '@modules/cities';
+import { User } from '@modules/users';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })

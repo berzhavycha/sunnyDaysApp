@@ -1,5 +1,3 @@
 export type City = {
-  node: {
-    name: string;
-  };
+  name: string;
 };

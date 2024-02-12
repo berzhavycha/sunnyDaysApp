@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
-import { errorLink, refreshTokenLink, baseLink } from './links';
+import { errorLink, refreshTokenLink, mainHttpLink } from './links';
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -11,7 +11,7 @@ export const apolloLinks = ApolloLink.from([
     (operation) => operation.getContext().unauthenticated,
     refreshTokenLink(apolloClient),
   ),
-  baseLink,
+  mainHttpLink,
 ]);
 
 apolloClient.setLink(apolloLinks);

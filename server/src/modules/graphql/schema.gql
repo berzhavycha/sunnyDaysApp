@@ -30,7 +30,7 @@ type Mutation {
 
 type Query {
   citiesByPrefix(limit: Int!, offset: Int!, prefix: String!, sort: String!): [GeodbCity!]!
-  isUserSignedIn: Boolean!
+  isUserSignedIn: UserPayload
   userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
 }
 

@@ -1,5 +1,8 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { config as dotenvConfig } from 'dotenv';
+
+dotenvConfig();
 
 export const typeOrmConfigOptions = {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

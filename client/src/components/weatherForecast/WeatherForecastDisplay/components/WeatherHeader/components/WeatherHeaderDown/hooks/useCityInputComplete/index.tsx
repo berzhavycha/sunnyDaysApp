@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import { useInputCompleteQuery } from '@/hooks';
-import { REACT_APP_GEODB_CLIENT_NAME } from '@env';
 import { City } from '../../types';
 import { getCitiesQueryVariables, extractData } from '../../utils';
 import { DEBOUNCE_DELAY } from '@/components/weatherForecast/constants';
@@ -29,8 +28,7 @@ export const useCityInputComplete = (city: string): UseCityInputCompleteReturn =
     CitiesDocument,
     debouncedCity,
     getCitiesQueryVariables(debouncedCity),
-    { clientName: REACT_APP_GEODB_CLIENT_NAME },
-    extractData,
+    extractData
   );
 
   return { data, loading };

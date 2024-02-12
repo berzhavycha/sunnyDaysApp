@@ -15,7 +15,7 @@ export const useCitySelection = (onCitySelect: (text: string) => void): UseCityS
   };
 
   const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => (
-    <ListItem content={item.node.name} onItemClick={handleCitySelect} />
+    <ListItem content={item.name} onItemClick={handleCitySelect} />
   );
 
   return { renderCityItem };

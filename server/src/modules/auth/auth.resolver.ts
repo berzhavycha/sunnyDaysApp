@@ -67,9 +67,9 @@ export class AuthResolver {
     return { message: 'Has signed out successfully!' };
   }
 
-  @Query(() => Boolean)
-  public async isUserSignedIn(@CurrentUser() user: IUser): Promise<boolean> {
-    if (user) return true;
-    else return false;
+  @Query(() => UserPayload, { nullable: true })
+  public async isUserSignedIn(@CurrentUser() user: IUser): Promise<UserPayload | null> {
+    if (user) return user;
+    else return null;
   }
 }

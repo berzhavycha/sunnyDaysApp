@@ -28,6 +28,7 @@ export const InputAutocomplete = <TItem,>({
   const onPressOutside = (): void => setIsInputFocused(false);
   const onInputFocus = (): void => setIsInputFocused(true);
 
+
   return (
     <OutsidePressHandler
       onOutsidePress={onPressOutside}

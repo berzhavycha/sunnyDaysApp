@@ -15,8 +15,7 @@ export const useInputCompleteQuery = <
   query: DocumentNode,
   searchInput: string,
   variables: TVariables,
-  context: { clientName: string },
-  extractData: (data: TData) => TItem[],
+  extractData: (data: TData) => TItem[]
 ): UseInputCompleteQueryResult<TItem> => {
   const [getItems, { loading, data, error }] = useLazyQuery(query);
 
@@ -24,14 +23,13 @@ export const useInputCompleteQuery = <
     if (searchInput.trim() !== '') {
       getItems({
         variables,
-        context,
       });
     }
   }, [searchInput, getItems]);
 
   return {
     loading,
-    data: extractData(data) ?? [],
+    data: extractData(data),
     error,
   };
 };

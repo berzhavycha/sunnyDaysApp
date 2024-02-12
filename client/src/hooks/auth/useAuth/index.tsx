@@ -25,12 +25,12 @@ export const useAuth = (
   setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   mutation: DocumentNode = SignInDocument,
 ): AuthHookReturnType => {
-  const [authMutation, { data, loading }] = useMutation(mutation);
+  const [authMutation, { loading }] = useMutation(mutation);
   const { setCurrentUser } = useCurrentUser();
 
   const authHandler = async (userDto: UserDto): Promise<void> => {
     try {
-      await authMutation({
+      const { data } = await authMutation({
         variables: {
           userDto: {
             email: userDto.email,
