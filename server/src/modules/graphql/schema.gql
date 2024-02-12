@@ -11,6 +11,10 @@ input Credentials {
   password: String!
 }
 
+type GeodbCity {
+  name: String!
+}
+
 type Message {
   message: String!
 }
@@ -25,6 +29,7 @@ type Mutation {
 }
 
 type Query {
+  citiesByPrefix(limit: Int!, offset: Int!, prefix: String!, sort: String!): [GeodbCity!]!
   isUserSignedIn: Boolean!
   userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
 }
