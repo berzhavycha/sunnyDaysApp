@@ -10,7 +10,7 @@ import {
   useEffect,
 } from 'react';
 
-import { CURRENT_USER, IsUserSignedInDocument } from './queries';
+import { CurrentUserDocument } from './queries';
 
 interface CurrentUserState {
   email: string;
@@ -38,10 +38,10 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const client = useApolloClient();
   const [currentUser, setCurrentUser] = useState<CurrentUserState | null>(null);
 
-  const [fetchUser, { data }] = useLazyQuery(CURRENT_USER, {
+  const [fetchUser, { data }] = useLazyQuery(CurrentUserDocument, {
     onCompleted: () => {
-      if (data && data.isUserSignedIn) {
-        setCurrentUser(data.isUserSignedIn)
+      if (data && data.currentUser) {
+        setCurrentUser(data.currentUser)
       }
     },
   });
