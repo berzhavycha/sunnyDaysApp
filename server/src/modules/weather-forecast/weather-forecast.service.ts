@@ -26,7 +26,7 @@ export class WeatherForecastService {
     citiesLimit: number,
     forecastDaysAmount: number,
   ): Promise<WeatherForecast[]> {
-    let problematicSubscription: string;
+    let problematicCity: string;
     const userSubscriptions =
       await this.subscriptionsService.getSubscriptionsByUserId(
         userId,
@@ -54,7 +54,7 @@ export class WeatherForecastService {
         return this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
           .catch((error) => {
-            problematicSubscription = name;
+            problematicCity = name;
             throw error;
           });
       },
@@ -68,7 +68,7 @@ export class WeatherForecastService {
 
       for (const forecast of newForecasts) {
         await this.cacheManager.set(
-          `weather_forecast:${forecast.city}`,
+          `weather_forecast:${forecast.city.toLowerCase()}`,
           forecast,
           {
             ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
@@ -79,7 +79,7 @@ export class WeatherForecastService {
 
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
-      this.citiesService.deleteCity(problematicSubscription);
+      this.citiesService.deleteCity(problematicCity);
       throw new HttpException(
         error.response.data.error.message,
         error.response.status,
