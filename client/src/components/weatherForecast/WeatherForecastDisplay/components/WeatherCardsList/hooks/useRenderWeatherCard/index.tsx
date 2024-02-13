@@ -1,6 +1,6 @@
 import { WeatherCardProps } from '../../../SwipeableWeatherCard/components';
 import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
-import { useDeleteSubscription } from '..';
+import { useDeleteSubscription } from '../useDeleteWeatherSubscription';
 
 type RenderItemProps = {
     item: WeatherCardProps;

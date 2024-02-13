@@ -1,2 +1,2 @@
-export * from './isUserSignedIn.base';
+export * from './currentUser.base';
 export * from './isUserSignedIn.base.generated';

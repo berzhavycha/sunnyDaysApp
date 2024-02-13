@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 
 import { useWeatherData } from '@/hooks';
 import { UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries'
-import { REACT_APP_MAX_WEATHER_CITIES_AMOUNT } from '@env';
+import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';
 
 type UseAddSubscriptionReturn = {
@@ -39,8 +39,8 @@ export const useAddSubscription = (
         throw new Error('Please enter the city!');
       }
 
-      if (data?.userCitiesWeather.length === +REACT_APP_MAX_WEATHER_CITIES_AMOUNT) {
-        throw new Error(`You cannot have more than ${REACT_APP_MAX_WEATHER_CITIES_AMOUNT} cities.`);
+      if (data?.userCitiesWeather.length === Env.MAX_WEATHER_CITIES_AMOUNT) {
+        throw new Error(`You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.`);
       }
 
       const isCityAlreadyExists = data?.userCitiesWeather.some(
