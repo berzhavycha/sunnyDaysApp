@@ -3,7 +3,12 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
+    "checkJs": true,
+    "esModuleInterop": true,
     "paths": {
+      "@/env": [
+        "src/core/env.js"
+      ],
       "@/graphql": [
         "src/graphql"
       ],
@@ -63,5 +68,5 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-, "index.tsx"  ]
+, "index.tsx", "envValidation.js", "src/core/env.js"  ]
 }
