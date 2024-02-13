@@ -5,10 +5,8 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "cities" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), CONSTRAINT "PK_4762ffb6e5d198cfec5606bc11e" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "cities" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, CONSTRAINT "PK_4762ffb6e5d198cfec5606bc11e" PRIMARY KEY ("id"))`,
     );
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "passwordHash"`);
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "refreshToken"`);
     await queryRunner.query(`ALTER TABLE "subscriptions" DROP COLUMN "userId"`);
     await queryRunner.query(
       `ALTER TABLE "subscriptions" DROP COLUMN "cityName"`,
@@ -17,12 +15,6 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
       `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_06ba17ac2e047b1ef52051edf09"`,
     );
     await queryRunner.query(`ALTER TABLE "subscriptions" DROP COLUMN "id"`);
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "password_hash" character varying NOT NULL`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "refresh_token" character varying`,
-    );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`,
     );
@@ -108,8 +100,6 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
       `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_a87248d73155605cf782be9ee5e"`,
     );
     await queryRunner.query(`ALTER TABLE "subscriptions" DROP COLUMN "id"`);
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "refresh_token"`);
-    await queryRunner.query(`ALTER TABLE "users" DROP COLUMN "password_hash"`);
     await queryRunner.query(
       `ALTER TABLE "subscriptions" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`,
     );
@@ -121,12 +111,6 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" ADD "userId" character varying NOT NULL`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "refreshToken" character varying`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "users" ADD "passwordHash" character varying NOT NULL`,
     );
     await queryRunner.query(`DROP TABLE "cities"`);
   }

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddConsistentPrimeryKeys1706257683565
+export class AddConsistentPrimaryKeys1706257683565
   implements MigrationInterface
 {
   name = 'AddConsistentPrimaryKeys1706257683565';
@@ -10,7 +10,7 @@ export class AddConsistentPrimeryKeys1706257683565
       `ALTER TABLE "users" RENAME COLUMN "userId" TO "id"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "subscriptions" RENAME COLUMN "subscriptionsId" TO "id"`,
+      `ALTER TABLE "subscriptions" RENAME COLUMN "subscriptionId" TO "id"`,
     );
   }
 
