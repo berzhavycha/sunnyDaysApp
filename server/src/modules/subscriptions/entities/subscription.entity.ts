@@ -7,12 +7,13 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { City } from '@modules/cities';
-import { User } from '@modules/users';
+import { ICity } from '@modules/cities/interfaces';
+import { IUser } from '@modules/users/interfaces';
+import { ISubscription } from '../interfaces';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
-export class Subscription {
+export class Subscription implements ISubscription{
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -25,11 +26,11 @@ export class Subscription {
   @PrimaryColumn({ name: 'city_id' })
   cityId: string;
 
-  @ManyToOne(() => User, (user) => user.subscriptions)
+  @ManyToOne('User', 'subscriptions')
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
-  user: User;
+  user: IUser;
 
-  @ManyToOne(() => City, (city) => city.subscriptions)
+  @ManyToOne('City', 'subscriptions')
   @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
-  city: City;
+  city: ICity;
 }

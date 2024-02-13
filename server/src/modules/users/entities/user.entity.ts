@@ -7,8 +7,8 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { City } from '@modules/cities';
-import { Subscription } from '@modules/subscriptions';
+import { ICity } from '@modules/cities/interfaces';
+import { ISubscription } from '@modules/subscriptions/interfaces';
 import { IUser } from '../interfaces';
 
 @Entity({ name: 'users' })
@@ -25,7 +25,7 @@ export class User implements IUser {
   @Column({ name: 'refresh_token_hash', nullable: true })
   refreshTokenHash: string | null;
 
-  @ManyToMany(() => City, { cascade: true })
+  @ManyToMany('City', { cascade: true })
   @JoinTable({
     name: 'subscriptions',
     joinColumn: {
@@ -37,8 +37,8 @@ export class User implements IUser {
       referencedColumnName: 'id',
     },
   })
-  cities: City[];
+  cities: ICity[];
 
-  @OneToMany(() => Subscription, (subscription) => subscription.user)
-  subscriptions: Subscription[];
+  @OneToMany('Subscription', 'user')
+  subscriptions: ISubscription[];
 }
