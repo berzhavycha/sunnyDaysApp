@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { useSignOut } from '@/hooks';
-import { CustomTouchable } from '@/components/common'
+import { CustomTouchable } from '@/components/common';
 
 export const WeatherHeaderTop = (): JSX.Element => {
   const { signOutHandler } = useSignOut();

@@ -1,2 +1,2 @@
 export * from './currentUser.base';
-export * from './currentUser.base.generated'
+export * from './currentUser.base.generated';

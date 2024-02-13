@@ -4,11 +4,7 @@ import { SignInDocument } from '@/hooks/auth/useAuth/mutations';
 
 const SignInScreen = (): JSX.Element => {
   return (
-    <AuthForm
-      title="Welcome Back!"
-      authType={AuthType.SIGN_IN}
-      authMutation={SignInDocument}
-    />
+    <AuthForm title="Welcome Back!" authType={AuthType.SIGN_IN} authMutation={SignInDocument} />
   );
 };
 

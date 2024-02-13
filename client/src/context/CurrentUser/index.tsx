@@ -41,7 +41,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [fetchUser, { data }] = useLazyQuery(CurrentUserDocument, {
     onCompleted: () => {
       if (data && data.currentUser) {
-        setCurrentUser(data.currentUser)
+        setCurrentUser(data.currentUser);
       }
     },
   });
@@ -51,7 +51,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const onSignOut = async (): Promise<void> => {
-    setCurrentUser(null)
+    setCurrentUser(null);
     client.clearStore();
   };
 

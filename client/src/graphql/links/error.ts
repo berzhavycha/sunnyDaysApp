@@ -19,7 +19,7 @@ export const errorLink = onError(({ graphQLErrors, networkError, operation, forw
                 error: observer.error.bind(observer),
                 complete: observer.complete.bind(observer),
               };
-              
+
               forward(operation).subscribe(subscriber);
             } catch (err) {
               observer.error(err);

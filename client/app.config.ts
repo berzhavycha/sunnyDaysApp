@@ -5,50 +5,48 @@ import { ClientEnv } from './envValidation';
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   experiments: {
-    tsconfigPaths: true
+    tsconfigPaths: true,
   },
-  name: "client",
-  slug: "client",
-  version: "1.0.0",
-  orientation: "portrait",
-  scheme: "myapp",
-  userInterfaceStyle: "automatic",
+  name: 'client',
+  slug: 'client',
+  version: '1.0.0',
+  orientation: 'portrait',
+  scheme: 'myapp',
+  userInterfaceStyle: 'automatic',
   splash: {
-    resizeMode: "contain",
-    backgroundColor: "#ffffff"
+    resizeMode: 'contain',
+    backgroundColor: '#ffffff',
   },
-  assetBundlePatterns: [
-    "**/*"
-  ],
+  assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
     config: {
-      usesNonExemptEncryption: false
-    }
+      usesNonExemptEncryption: false,
+    },
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: "#ffffff"
-    }
+      backgroundColor: '#ffffff',
+    },
   },
   web: {
-    bundler: "metro",
-    output: "static",
-    favicon: "./assets/images/favicon.png"
+    bundler: 'metro',
+    output: 'static',
+    favicon: './assets/images/favicon.png',
   },
   plugins: [
     [
-      "expo-router",
+      'expo-router',
       {
-        unstable_src: "./src/app"
-      }
-    ]
+        unstable_src: './src/app',
+      },
+    ],
   ],
   extra: {
     ...ClientEnv,
     router: {
       origin: false,
-      unstable_src: "./src/app"
-    }
-  }
-})
+      unstable_src: './src/app',
+    },
+  },
+});

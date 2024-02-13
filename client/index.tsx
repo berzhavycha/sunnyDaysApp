@@ -9,4 +9,4 @@ export function App() {
   return <ExpoRoot context={ctx} />;
 }
 
-registerRootComponent(App );
+registerRootComponent(App);

@@ -30,7 +30,12 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
         >
           <CustomTouchable
             activeOpacity={0.5}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
             onPress={animateOnDelete}
           >
             <Text className="text-white">

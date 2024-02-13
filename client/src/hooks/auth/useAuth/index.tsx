@@ -41,7 +41,7 @@ export const useAuth = (
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
 
-      setCurrentUser(data)
+      setCurrentUser(data);
     } catch (error) {
       if (error instanceof ApolloError) {
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);

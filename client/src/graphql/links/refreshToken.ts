@@ -6,5 +6,5 @@ import { refreshAccessToken } from '../utils';
 export const refreshTokenLink = (apolloClient: ApolloClient<NormalizedCacheObject>): ApolloLink => {
   return setContext(async () => {
     await refreshAccessToken(apolloClient);
-  })
-}
+  });
+};

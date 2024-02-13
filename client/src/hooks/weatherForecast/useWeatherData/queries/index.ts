@@ -1,2 +1,2 @@
-export * from './getUserCitiesWeather.base'
-export * from './getUserCitiesWeather.base.generated'
+export * from './getUserCitiesWeather.base';
+export * from './getUserCitiesWeather.base.generated';

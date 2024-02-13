@@ -28,7 +28,7 @@ export const useCityInputComplete = (city: string): UseCityInputCompleteReturn =
     CitiesDocument,
     debouncedCity,
     getCitiesQueryVariables(debouncedCity),
-    extractData
+    extractData,
   );
 
   return { data, loading };

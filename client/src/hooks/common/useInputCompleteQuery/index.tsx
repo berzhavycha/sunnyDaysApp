@@ -15,7 +15,7 @@ export const useInputCompleteQuery = <
   query: DocumentNode,
   searchInput: string,
   variables: TVariables,
-  extractData: (data: TData) => TItem[]
+  extractData: (data: TData) => TItem[],
 ): UseInputCompleteQueryResult<TItem> => {
   const [getItems, { loading, data, error }] = useLazyQuery(query);
 

@@ -7,7 +7,7 @@ import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading } = useWeatherData();
-  const {renderItem} = useRenderWeatherCard()
+  const { renderItem } = useRenderWeatherCard();
 
   const keyExtractor = (item: { city: string }): string => item.city;
 

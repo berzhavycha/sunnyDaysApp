@@ -1,2 +1,2 @@
 export * from './getCities.base';
-export * from './getCities.base.generated'
+export * from './getCities.base.generated';
