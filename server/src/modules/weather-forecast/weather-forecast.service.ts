@@ -79,10 +79,7 @@ export class WeatherForecastService {
 
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
-      this.subscriptionsService.deleteSubscription(
-        problematicSubscription,
-        userId,
-      );
+      this.citiesService.deleteCity(problematicSubscription)
       throw new HttpException(
         error.response.data.error.message,
         error.response.status,

@@ -26,11 +26,11 @@ export class Subscription implements ISubscription {
   @PrimaryColumn({ name: 'city_id' })
   cityId: string;
 
-  @ManyToOne('User', 'subscriptions')
+  @ManyToOne('User', 'subscriptions', { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
   user: IUser;
 
-  @ManyToOne('City', 'subscriptions')
+  @ManyToOne('City', 'subscriptions', { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
   city: ICity;
 }

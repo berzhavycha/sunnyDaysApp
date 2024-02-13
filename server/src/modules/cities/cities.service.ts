@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 
 import { City } from './entities';
 
@@ -8,7 +8,7 @@ import { City } from './entities';
 export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
-  ) {}
+  ) { }
 
   async createCity(cityName: string): Promise<City> {
     const city = this.citiesRepository.create({ name: cityName });
@@ -21,5 +21,10 @@ export class CitiesService {
 
   async findById(id: string): Promise<City> {
     return this.citiesRepository.findOne({ where: { id } });
+  }
+
+  async deleteCity(name: string): Promise<DeleteResult> {
+    const city = await this.findByName(name)
+    return this.citiesRepository.delete(city.id);
   }
 }
