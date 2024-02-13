@@ -66,7 +66,7 @@ export type MutationSignUpArgs = {
 export type Query = {
   __typename?: 'Query';
   citiesByPrefix: Array<GeodbCity>;
-  isUserSignedIn: Maybe<UserPayload>;
+  currentUser: Maybe<UserPayload>;
   userCitiesWeather: Array<WeatherForecast>;
 };
 
