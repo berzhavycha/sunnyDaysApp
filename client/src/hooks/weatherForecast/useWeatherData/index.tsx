@@ -5,11 +5,7 @@ import { WeatherCardProps } from '@/components/weatherForecast/WeatherForecastDi
 import { SwipeableWeatherCard } from '@/components/weatherForecast/WeatherForecastDisplay/components/SwipeableWeatherCard';
 import { useDeleteSubscription } from '@/components/weatherForecast/WeatherForecastDisplay/components/WeatherCardsList/hooks';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import {
-  REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
-  REACT_APP_MAX_FORECAST_DAYS,
-  REACT_APP_WEATHER_FORECAST_CACHE_TIME,
-} from '@env';
+import { Env } from '@/env';
 
 type RenderItemProps = {
   item: WeatherCardProps;
@@ -26,13 +22,13 @@ export const useWeatherData = (): WeatherDataReturn => {
   const { deleteSubscriptionHandler } = useDeleteSubscription();
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {
-      citiesLimit: +REACT_APP_MAX_WEATHER_CITIES_AMOUNT,
-      forecastDaysAmount: +REACT_APP_MAX_FORECAST_DAYS,
+      citiesLimit: Env.MAX_WEATHER_CITIES_AMOUNT,
+      forecastDaysAmount: Env.MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: getFetchPolicyForKey(
       'weatherData',
-      ONE_MINUTE * REACT_APP_WEATHER_FORECAST_CACHE_TIME,
+      ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_TIME,
     ),
   });
 

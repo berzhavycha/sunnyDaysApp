@@ -8,25 +8,25 @@ require("dotenv").config({
 });
 
 const client = Joi.object({
-    REACT_APP_GRAPHQL_BASE_URL: Joi.string().required(),
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_AMOUNT: Joi.number().default(5),
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_SORT: Joi.string().default("population"),
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_OFFSET: Joi.number().default(0),
-    REACT_APP_MAX_WEATHER_CITIES_AMOUNT: Joi.number().default(10),
-    REACT_APP_MAX_FORECAST_DAYS: Joi.number().default(10),
-    REACT_APP_WEATHER_FORECAST_CACHE_TIME: Joi.number().default(1800),
-    REACT_APP_PASSWORD_MIN_LENGTH: Joi.number().default(8),
+    GRAPHQL_BASE_URL: Joi.string().required(),
+    FETCH_CITY_AUTOCOMPLETE_AMOUNT: Joi.number().default(5),
+    FETCH_CITY_AUTOCOMPLETE_SORT: Joi.string().default("population"),
+    FETCH_CITY_AUTOCOMPLETE_OFFSET: Joi.number().default(0),
+    MAX_WEATHER_CITIES_AMOUNT: Joi.number().default(10),
+    MAX_FORECAST_DAYS: Joi.number().default(10),
+    WEATHER_FORECAST_CACHE_TIME: Joi.number().default(1800),
+    PASSWORD_MIN_LENGTH: Joi.number().default(8),
 })
 
 const _clientEnv = {
-    REACT_APP_GRAPHQL_BASE_URL: process.env.REACT_APP_GRAPHQL_BASE_URL,
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_AMOUNT: parseInt(process.env.REACT_APP_FETCH_CITY_AUTOCOMPLETE_AMOUNT ?? '', 10),
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_SORT: process.env.REACT_APP_FETCH_CITY_AUTOCOMPLETE_SORT,
-    REACT_APP_FETCH_CITY_AUTOCOMPLETE_OFFSET: parseInt(process.env.REACT_APP_FETCH_CITY_AUTOCOMPLETE_OFFSET ?? '', 10),
-    REACT_APP_MAX_WEATHER_CITIES_AMOUNT: parseInt(process.env.REACT_APP_MAX_WEATHER_CITIES_AMOUNT ?? '', 10),
-    REACT_APP_MAX_FORECAST_DAYS: parseInt(process.env.REACT_APP_MAX_FORECAST_DAYS ?? '', 10),
-    REACT_APP_WEATHER_FORECAST_CACHE_TIME: parseInt(process.env.REACT_APP_WEATHER_FORECAST_CACHE_TIME ?? '', 10),
-    REACT_APP_PASSWORD_MIN_LENGTH: parseInt(process.env.REACT_APP_PASSWORD_MIN_LENGTH ?? '', 10),
+    GRAPHQL_BASE_URL: process.env.GRAPHQL_BASE_URL,
+    FETCH_CITY_AUTOCOMPLETE_AMOUNT: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_AMOUNT ?? '', 10),
+    FETCH_CITY_AUTOCOMPLETE_SORT: process.env.FETCH_CITY_AUTOCOMPLETE_SORT,
+    FETCH_CITY_AUTOCOMPLETE_OFFSET: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_OFFSET ?? '', 10),
+    MAX_WEATHER_CITIES_AMOUNT: parseInt(process.env.MAX_WEATHER_CITIES_AMOUNT ?? '', 10),
+    MAX_FORECAST_DAYS: parseInt(process.env.MAX_FORECAST_DAYS ?? '', 10),
+    WEATHER_FORECAST_CACHE_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_TIME ?? '', 10),
+    PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH ?? '', 10),
 };
 
 const { error, value } = client.validate(_clientEnv);

@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 import { AuthType } from '@/hooks';
-import { REACT_APP_PASSWORD_MIN_LENGTH } from '@env';
+import { Env } from '@/env';
 
 export const userSchema = (actionType: AuthType): Joi.Schema => {
   let schema = Joi.object({
@@ -13,10 +13,10 @@ export const userSchema = (actionType: AuthType): Joi.Schema => {
         'any.required': 'Email is required',
       }),
     password: Joi.string()
-      .min(+REACT_APP_PASSWORD_MIN_LENGTH)
+      .min(+Env.PASSWORD_MIN_LENGTH)
       .required()
       .messages({
-        'string.min': `Password must be at least ${REACT_APP_PASSWORD_MIN_LENGTH} characters long`,
+        'string.min': `Password must be at least ${Env.PASSWORD_MIN_LENGTH} characters long`,
         'any.required': 'Password is required',
       }),
   });
