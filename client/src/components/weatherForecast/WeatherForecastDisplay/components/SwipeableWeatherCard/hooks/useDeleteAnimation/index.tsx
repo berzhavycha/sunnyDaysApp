@@ -12,7 +12,7 @@ export const useDeleteAnimation = (onSwipeRight: () => void): SwipeAnimationHook
   const animateOnDelete = (): void => {
     Animated.timing(opacityAnimatedValue, {
       toValue: 0,
-      duration: 100,
+      duration: 50,
       useNativeDriver: false,
     }).start(() => {
       onSwipeRight();

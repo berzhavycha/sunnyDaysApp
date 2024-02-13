@@ -1,8 +1,9 @@
 import { FC, memo } from 'react';
-import { Text, TouchableOpacity, Animated } from 'react-native';
+import { Text, Animated } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
+import { CustomTouchable } from '@/components/common';
 import { WeatherCard, WeatherCardProps } from './components/WeatherCard';
 import { useDeleteAnimation } from './hooks';
 
@@ -27,14 +28,15 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
             { backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 },
           ]}
         >
-          <TouchableOpacity
-            className="flex-1 justify-center items-center"
+          <CustomTouchable
+            activeOpacity={0.5}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
             onPress={animateOnDelete}
           >
             <Text className="text-white">
               <Feather name="trash-2" size={30} color="#ccc" />
             </Text>
-          </TouchableOpacity>
+          </CustomTouchable>
         </Animated.View>
       )}
       overshootRight={false}

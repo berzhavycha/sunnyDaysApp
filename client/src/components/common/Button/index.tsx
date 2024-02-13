@@ -1,5 +1,7 @@
 import { FC, memo } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Text } from 'react-native';
+
+import { CustomTouchable } from '../CustomTouchable';
 
 type Props = {
   text: string;
@@ -8,8 +10,8 @@ type Props = {
 
 export const Button: FC<Props> = memo(({ text, onPress }) => {
   return (
-    <Pressable onPress={onPress} className="bg-blue-600 p-3 rounded">
+    <CustomTouchable onPress={onPress} style={{ backgroundColor: '#2563eb', padding: 12, borderRadius: 5 }} activeOpacity={0.5}>
       <Text className="text-white text-center font-bold">{text}</Text>
-    </Pressable>
+    </CustomTouchable>
   );
 });
