@@ -8,7 +8,7 @@ import { City } from './entities';
 export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
-  ) { }
+  ) {}
 
   async createCity(cityName: string): Promise<City> {
     const city = this.citiesRepository.create({ name: cityName });
@@ -24,7 +24,7 @@ export class CitiesService {
   }
 
   async deleteCity(name: string): Promise<DeleteResult> {
-    const city = await this.findByName(name)
+    const city = await this.findByName(name);
     return this.citiesRepository.delete(city.id);
   }
 }

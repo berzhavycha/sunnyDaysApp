@@ -9,7 +9,7 @@ import { useAddSubscription } from '../WeatherHeader/components/WeatherHeaderDow
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { loading: additionLoading } = useAddSubscription()
+  const { loading: additionLoading } = useAddSubscription();
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
