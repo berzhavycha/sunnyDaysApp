@@ -7,15 +7,13 @@ import { CityPrefixArgsDto } from './dtos';
 
 @Resolver()
 export class GeodbResolver {
-    constructor(
-        private readonly geodbService: GeodbService,
-    ) { }
+  constructor(private readonly geodbService: GeodbService) {}
 
-    @Public()
-    @Query(() => [GeodbCity]!, { name: 'citiesByPrefix' })
-    async getCitiesByPrefix(
-        @Args() cityPrefixArgs: CityPrefixArgsDto
-    ): Promise<GeodbCity[]> {
-        return this.geodbService.getCitiesByPrefix(cityPrefixArgs)
-    }
+  @Public()
+  @Query(() => [GeodbCity]!, { name: 'citiesByPrefix' })
+  async getCitiesByPrefix(
+    @Args() cityPrefixArgs: CityPrefixArgsDto,
+  ): Promise<GeodbCity[]> {
+    return this.geodbService.getCitiesByPrefix(cityPrefixArgs);
+  }
 }

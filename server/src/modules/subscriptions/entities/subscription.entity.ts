@@ -13,7 +13,7 @@ import { ISubscription } from '../interfaces';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
-export class Subscription implements ISubscription{
+export class Subscription implements ISubscription {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;

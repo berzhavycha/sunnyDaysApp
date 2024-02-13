@@ -1,1 +1,1 @@
-export * from './geodbResponse.interface'
+export * from './geodbResponse.interface';

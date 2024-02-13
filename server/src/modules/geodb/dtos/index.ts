@@ -1,1 +1,1 @@
-export * from './cityPrefixArgs.dto'
+export * from './cityPrefixArgs.dto';

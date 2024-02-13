@@ -1,6 +1,6 @@
 export interface GeodbResponse {
-    data: {
-        name: string,
-        population: number;
-    }[]
+  data: {
+    name: string;
+    population: number;
+  }[];
 }

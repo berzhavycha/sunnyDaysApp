@@ -1,9 +1,8 @@
-import { ITokens } from "./tokens.interface"
+import { ITokens } from './tokens.interface';
 
 export interface AuthResult {
-    user: {
-        email: string
-    },
-    tokens: ITokens
+  user: {
+    email: string;
+  };
+  tokens: ITokens;
 }
-

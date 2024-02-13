@@ -41,9 +41,7 @@ export class WeatherForecastService {
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
-        const { name } = await this.citiesService.findById(
-          subscription.cityId,
-        );
+        const { name } = await this.citiesService.findById(subscription.cityId);
 
         const cachedForecast = await this.cacheManager.get<WeatherForecast>(
           `weather_forecast:${name}`,

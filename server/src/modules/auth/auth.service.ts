@@ -19,7 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -34,7 +34,7 @@ export class AuthService {
 
       return {
         user,
-        tokens: await this.generateTokens(user.id, user.email)
+        tokens: await this.generateTokens(user.id, user.email),
       };
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
@@ -48,7 +48,7 @@ export class AuthService {
   async signIn(signedInUser: IUser): Promise<AuthResult> {
     return {
       user: signedInUser,
-      tokens: await this.generateTokens(signedInUser.id, signedInUser.email)
+      tokens: await this.generateTokens(signedInUser.id, signedInUser.email),
     };
   }
 

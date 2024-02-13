@@ -1,5 +1,5 @@
 export interface ISubscription {
-    id: string;
-    userId: string;
-    cityId: string;
+  id: string;
+  userId: string;
+  cityId: string;
 }

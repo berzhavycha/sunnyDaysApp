@@ -9,13 +9,13 @@ export class CityPrefixArgsDto {
 
   @Field(() => String!)
   @IsNotEmpty()
-  sort: string
+  sort: string;
 
   @Field(() => Int!)
   @IsNotEmpty()
-  offset: number
+  offset: number;
 
   @Field(() => Int!)
   @IsNotEmpty()
-  limit: number
+  limit: number;
 }

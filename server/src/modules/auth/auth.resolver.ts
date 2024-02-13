@@ -11,7 +11,7 @@ import { Message, UserPayload } from './types';
 
 @Resolver(() => String)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Mutation(() => UserPayload)
@@ -68,7 +68,9 @@ export class AuthResolver {
   }
 
   @Query(() => UserPayload, { name: 'currentUser', nullable: true })
-  public async getCurrentUser(@CurrentUser() user: IUser): Promise<UserPayload | null> {
+  public async getCurrentUser(
+    @CurrentUser() user: IUser,
+  ): Promise<UserPayload | null> {
     if (user) return user;
     else return null;
   }
