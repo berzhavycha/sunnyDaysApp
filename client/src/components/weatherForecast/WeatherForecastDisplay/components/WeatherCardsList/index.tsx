@@ -3,9 +3,11 @@ import { FlatList } from 'react-native';
 import { NoData } from '@/components/common';
 import { useWeatherData } from '@/hooks';
 import { SpinnerView } from '../SpinnerView';
+import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardsList = (): JSX.Element => {
-  const { data, loading, renderItem } = useWeatherData();
+  const { data, loading } = useWeatherData();
+  const {renderItem} = useRenderWeatherCard()
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
