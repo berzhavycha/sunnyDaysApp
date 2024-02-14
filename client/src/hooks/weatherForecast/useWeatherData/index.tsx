@@ -17,7 +17,10 @@ export const useWeatherData = (): WeatherDataReturn => {
       forecastDaysAmount: Env.MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
-    fetchPolicy: getFetchPolicyForKey('weatherData', ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME),
+    fetchPolicy: getFetchPolicyForKey(
+      'weatherData',
+      ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
+    ),
   });
 
   return { data, loading, error };
