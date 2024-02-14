@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import {  AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 import { HttpStatusCode } from '@modules/weather-forecast';
 import { CityPrefixArgsDto } from './dtos';
 import { GeodbResponse } from './interfaces';
-
 
 @Injectable()
 export class GeodbRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -36,7 +35,7 @@ export class GeodbRepository {
             status >= HttpStatusCode.SUCCESS &&
             status < HttpStatusCode.REDIRECTION
           );
-        }
+        },
       })
       .toPromise();
   }

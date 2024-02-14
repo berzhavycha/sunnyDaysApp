@@ -1,1 +1,1 @@
-export * from './geodbCity.type'
+export * from './geodbCity.type';

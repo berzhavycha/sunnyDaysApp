@@ -15,7 +15,7 @@ export class GeodbService {
     private readonly geodbRepository: GeodbRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -29,7 +29,8 @@ export class GeodbService {
         return cachedCities;
       }
 
-      const cities = await this.geodbRepository.getCitiesByPrefix(cityPrefixArgs);
+      const cities =
+        await this.geodbRepository.getCitiesByPrefix(cityPrefixArgs);
 
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
@@ -51,10 +52,13 @@ export class GeodbService {
 
       return resultCitiesList;
     } catch (error) {
-      if (error instanceof AxiosError && error.response.status === TOO_MANY_REQUESTS_ERROR_CODE) {
-        console.log('Too many requests in a small period of time!')
+      if (
+        error instanceof AxiosError &&
+        error.response.status === TOO_MANY_REQUESTS_ERROR_CODE
+      ) {
+        console.log('Too many requests in a small period of time!');
       } else {
-        throw error
+        throw error;
       }
     }
   }

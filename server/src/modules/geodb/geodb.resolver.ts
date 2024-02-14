@@ -7,7 +7,7 @@ import { CityPrefixArgsDto } from './dtos';
 
 @Resolver()
 export class GeodbResolver {
-  constructor(private readonly geodbService: GeodbService) { }
+  constructor(private readonly geodbService: GeodbService) {}
 
   @Public()
   @Query(() => [GeodbCity]!, { name: 'citiesByPrefix' })
