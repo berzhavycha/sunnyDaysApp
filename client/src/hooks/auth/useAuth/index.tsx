@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 
 import { useCurrentUser } from '@/context';
@@ -17,14 +17,20 @@ export type FieldErrorsState<T> = {
 };
 
 export type AuthHookReturnType = {
-  loading: boolean;
   authHandler: (userDto: UserDto) => Promise<void>;
+  loading: boolean;
+  fieldsError: FieldErrorsState<UserDto>
 };
 
 export const useAuth = (
-  setFieldsError: Dispatch<SetStateAction<FieldErrorsState<UserDto>>>,
   mutation: DocumentNode = SignInDocument,
 ): AuthHookReturnType => {
+  const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const [authMutation, { loading }] = useMutation(mutation);
   const { setCurrentUser } = useCurrentUser();
 
@@ -56,5 +62,6 @@ export const useAuth = (
   return {
     loading,
     authHandler,
+    fieldsError
   };
 };

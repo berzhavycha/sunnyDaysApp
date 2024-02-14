@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { DocumentNode } from 'graphql';
 import { View, Text, Image } from 'react-native';
 import { Link } from 'expo-router';
@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { Button, ControlledInput, Spinner } from '@/components/common';
-import { AuthType, FieldErrorsState, UserDto, useAuth } from '@/hooks';
+import { AuthType, UserDto, useAuth } from '@/hooks';
 import { convertCamelToSpacedPascal } from '@/utils';
 import { userSchema } from './validation';
 
@@ -18,12 +18,7 @@ export type AuthFormProps = {
 };
 
 export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMutation }) => {
-  const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const { loading, authHandler } = useAuth(setFieldsError, authMutation);
+  const { loading, authHandler, fieldsError } = useAuth(authMutation);
   const { control, handleSubmit } = useForm<UserDto>({
     mode: 'onSubmit',
     resolver: joiResolver(userSchema(authType)),
