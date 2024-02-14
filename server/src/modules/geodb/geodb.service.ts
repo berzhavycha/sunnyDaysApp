@@ -2,11 +2,11 @@ import { Injectable, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { ConfigService } from '@nestjs/config';
+import { AxiosError } from 'axios';
 
 import { GeodbRepository } from './geodb.repository';
-import { GeodbCity } from './types/geodb-city.type';
+import { GeodbCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
-import { AxiosError } from 'axios';
 import { TOO_MANY_REQUESTS_ERROR_CODE } from './constants';
 
 @Injectable()
