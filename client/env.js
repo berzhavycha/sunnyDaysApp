@@ -14,7 +14,7 @@ const _clientEnv = {
     FETCH_CITY_AUTOCOMPLETE_OFFSET: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_OFFSET ?? '', 10),
     MAX_WEATHER_CITIES_AMOUNT: parseInt(process.env.MAX_WEATHER_CITIES_AMOUNT ?? '', 10),
     MAX_FORECAST_DAYS: parseInt(process.env.MAX_FORECAST_DAYS ?? '', 10),
-    WEATHER_FORECAST_CACHE_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_TIME ?? '', 10),
+    WEATHER_FORECAST_CACHE_MINUTES_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_MINUTES_TIME ?? '', 10),
     PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH ?? '', 10),
 };
 
