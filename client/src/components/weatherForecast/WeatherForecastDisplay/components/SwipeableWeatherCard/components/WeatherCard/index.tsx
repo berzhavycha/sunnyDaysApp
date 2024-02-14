@@ -23,7 +23,7 @@ export const WeatherCard: FC<WeatherCardProps> = memo(
           <View className="flex">
             <Text className="text-[38px] mb-2 font-bold text-white">{tempCelsius} °C</Text>
             <Text className="text-xs mb-1 text-white">{text}</Text>
-            <Text className="text-xs text-white mb-2">Precipitation: {humidity} %</Text>
+            <Text className="text-xs text-white mb-2">Precipitation: {humidity}%</Text>
             <Text className="text-[20px] font-bold text-white">{city}</Text>
           </View>
           <Image

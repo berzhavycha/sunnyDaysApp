@@ -1,0 +1,1 @@
+export const TOO_MANY_REQUESTS_ERROR_CODE = '429'
