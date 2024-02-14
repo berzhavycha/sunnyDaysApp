@@ -17,15 +17,12 @@ export class GeodbRepository {
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
   ): Promise<AxiosResponse<GeodbResponse>> {
-    const { prefix, sort, offset } = cityPrefixArgs;
+    const { prefix, sort, offset, limit } = cityPrefixArgs;
 
     const geodbApiBaseUrl =
       this.configService.get<string>('GEODB_API_BASE_URL');
-    const geodbMaxCitiesLimit = this.configService.get<string>(
-      'GEODB_MAX_CITIES_LIMIT',
-    );
 
-    const apiUrl = `${geodbApiBaseUrl}?namePrefix=${prefix}&sort=${sort}&offset=${offset}&limit=${geodbMaxCitiesLimit}`;
+    const apiUrl = `${geodbApiBaseUrl}?namePrefix=${prefix}&sort=${sort}&offset=${offset}&limit=${limit}`;
 
     return this.httpService
       .get(apiUrl, {
