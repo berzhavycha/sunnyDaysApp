@@ -52,7 +52,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const onSignOut = async (): Promise<void> => {
     setCurrentUser(null);
-    client.clearStore();
+    await client.clearStore();
   };
 
   const contextValue: CurrentUserContextType = {
