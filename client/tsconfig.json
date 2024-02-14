@@ -68,5 +68,5 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-, "index.tsx", "envValidation.js", "src/core/env.js"  ]
+, "index.tsx", "env.js", "src/core/env.js"  ]
 }

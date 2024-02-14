@@ -1,6 +1,6 @@
 import type { ConfigContext, ExpoConfig } from '@expo/config';
 
-import { ClientEnv } from './envValidation';
+import { ClientEnv } from './env';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
