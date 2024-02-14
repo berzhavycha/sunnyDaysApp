@@ -10,7 +10,7 @@ import { DatabaseModule } from '@modules/database';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 import { CitiesModule } from '@modules/cities';
-import { GeodbModule } from './modules/geodb/geodb.module';
+import { GeodbModule } from '@modules/geodb';
 
 @Module({
   imports: [
@@ -32,4 +32,4 @@ import { GeodbModule } from './modules/geodb/geodb.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
