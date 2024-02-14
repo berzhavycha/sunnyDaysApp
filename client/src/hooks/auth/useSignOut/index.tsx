@@ -13,8 +13,8 @@ export const useSignOut = (): SignOutHookReturn => {
   const [signOutMutation, { loading }] = useMutation(SignOutDocument);
 
   const signOutHandler = async (): Promise<void> => {
-    await signOutMutation();
     await onSignOut();
+    await signOutMutation();
   };
 
   return {

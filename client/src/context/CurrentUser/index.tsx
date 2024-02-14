@@ -28,13 +28,13 @@ export const useCurrentUser = (): CurrentUserContextType => {
   const userContext = useContext(CurrentUserContext);
 
   if (!userContext) {
-    throw new Error('useCurrentUser must be used within an AuthProvider');
+    throw new Error('useCurrentUser must be used within an CurrentUserProvider');
   }
 
   return userContext;
 };
 
-export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
   const client = useApolloClient();
   const [currentUser, setCurrentUser] = useState<CurrentUserState | null>(null);
 
