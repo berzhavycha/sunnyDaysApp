@@ -5,10 +5,10 @@ import { AxiosResponse } from 'axios';
 
 import { HttpStatusCode } from '@modules/weather-forecast';
 import { CityPrefixArgsDto } from './dtos';
-import { GeodbResponse } from './interfaces';
+import { CitySearchResponse } from './interfaces';
 
 @Injectable()
-export class GeodbRepository {
+export class CitySearchRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
@@ -16,7 +16,7 @@ export class GeodbRepository {
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
-  ): Promise<AxiosResponse<GeodbResponse>> {
+  ): Promise<AxiosResponse<CitySearchResponse>> {
     const { prefix, sort, offset, limit } = cityPrefixArgs;
 
     const geodbApiBaseUrl =

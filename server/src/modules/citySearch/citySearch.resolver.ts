@@ -1,19 +1,19 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { Public } from '@modules/auth';
-import { GeodbService } from './geodb.service';
-import { GeodbCity } from './types';
+import { CitySearchService } from './citySearch.service';
+import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
 
 @Resolver()
-export class GeodbResolver {
-  constructor(private readonly geodbService: GeodbService) {}
+export class CitySearchResolver {
+  constructor(private readonly geodbService: CitySearchService) { }
 
   @Public()
-  @Query(() => [GeodbCity]!, { name: 'citiesByPrefix' })
+  @Query(() => [SearchedCity]!, { name: 'citiesByPrefix' })
   async getCitiesByPrefix(
     @Args() cityPrefixArgs: CityPrefixArgsDto,
-  ): Promise<GeodbCity[]> {
+  ): Promise<SearchedCity[]> {
     return this.geodbService.getCitiesByPrefix(cityPrefixArgs);
   }
 }

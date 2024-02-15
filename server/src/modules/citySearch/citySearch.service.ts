@@ -4,24 +4,24 @@ import { Cache } from 'cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
-import { GeodbRepository } from './geodb.repository';
-import { GeodbCity } from './types';
+import { CitySearchRepository } from './citySearch.repository';
+import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
 import { TOO_MANY_REQUESTS_ERROR_CODE } from './constants';
 
 @Injectable()
-export class GeodbService {
+export class CitySearchService {
   constructor(
-    private readonly geodbRepository: GeodbRepository,
+    private readonly geodbRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
-  ): Promise<GeodbCity[]> {
+  ): Promise<SearchedCity[]> {
     try {
-      const cachedCities = await this.cacheManager.get<GeodbCity[]>(
+      const cachedCities = await this.cacheManager.get<SearchedCity[]>(
         `cities:${cityPrefixArgs.limit}:${cityPrefixArgs.prefix}`,
       );
 

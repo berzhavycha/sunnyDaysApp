@@ -10,7 +10,7 @@ import { DatabaseModule } from '@modules/database';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 import { CitiesModule } from '@modules/cities';
-import { GeodbModule } from '@modules/geodb';
+import { CitySearchModule } from '@modules/citySearch';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { GeodbModule } from '@modules/geodb';
     CitiesModule,
     WeatherForecastModule,
     SubscriptionsModule,
-    GeodbModule,
+    CitySearchModule,
   ],
   providers: [
     {

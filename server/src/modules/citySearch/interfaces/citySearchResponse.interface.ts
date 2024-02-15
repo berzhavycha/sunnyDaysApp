@@ -1,4 +1,4 @@
-export interface GeodbResponse {
+export interface CitySearchResponse {
   data: {
     name: string;
     population: number;
