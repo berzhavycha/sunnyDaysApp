@@ -19,7 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -92,12 +92,18 @@ export class AuthService {
   }
 
   clearCookies(response: ExtendedGraphQLContext['res']): void {
-    response.clearCookie('tokens');
+    response.clearCookie('tokens', {
+      httpOnly: true,
+      maxAge:
+        ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
+      sameSite: 'none',
+      secure: true,
+    });
   }
 
   async validateRefreshToken(userId: string, token: string): Promise<void> {
     const { refreshTokenHash } = await this.usersService.findById(userId);
-    if (!(await bcrypt.compare(token, refreshTokenHash))) {
+    if (refreshTokenHash && !(await bcrypt.compare(token, refreshTokenHash))) {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }
