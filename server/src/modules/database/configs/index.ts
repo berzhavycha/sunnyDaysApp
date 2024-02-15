@@ -1,11 +1,12 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { config as dotenvConfig } from 'dotenv';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 dotenvConfig();
 
 interface TypeOrmConfigOptions {
-  useFactory: (configService: ConfigService) => DataSourceOptions;
+  useFactory: (configService: ConfigService) => TypeOrmModuleOptions;
 }
 
 export const typeOrmConfigOptions: TypeOrmConfigOptions = {
@@ -13,6 +14,7 @@ export const typeOrmConfigOptions: TypeOrmConfigOptions = {
     return {
       type: 'postgres' as const,
       host: configService.get<string>('POSTGRES_HOST'),
+      port: configService.get<number>('POSTGRES_PORT'),
       username: configService.get<string>('POSTGRES_USER'),
       password: configService.get<string>('POSTGRES_PASSWORD'),
       database: configService.get<string>('POSTGRES_DB'),
