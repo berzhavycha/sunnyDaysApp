@@ -24,6 +24,8 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
     resolver: joiResolver(userSchema(authType)),
   });
 
+  const onSubmit = async (data: UserDto): Promise<void> => await authHandler(data)
+
   return (
     <>
       {loading ? (
@@ -68,7 +70,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
             )}
             <Button
               text={convertCamelToSpacedPascal(authType)}
-              onPress={handleSubmit(async (data) => await authHandler(data))}
+              onPress={handleSubmit(onSubmit)}
             />
             <View className="justify-center items-center">
               {authType === AuthType.SIGN_IN ? (
