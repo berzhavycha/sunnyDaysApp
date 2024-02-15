@@ -94,8 +94,6 @@ export class AuthService {
   clearCookies(response: ExtendedGraphQLContext['res']): void {
     response.clearCookie('tokens', {
       httpOnly: true,
-      maxAge:
-        ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
       secure: true,
     });
