@@ -1,14 +1,14 @@
 import { FlatList } from 'react-native';
 
 import { NoData } from '@/components/common';
-import { useWeatherData, useAddSubscription } from '@/hooks';
+import { useWeatherData, useAddWeatherSubscription } from '@/hooks';
 import { SpinnerView } from '../SpinnerView';
 import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { loading: additionLoading } = useAddSubscription();
+  const { loading: additionLoading } = useAddWeatherSubscription();
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
