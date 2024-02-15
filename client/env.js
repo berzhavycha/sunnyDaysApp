@@ -8,7 +8,7 @@ require("dotenv").config({
 });
 
 const _clientEnv = {
-    GRAPHQL_BASE_URL: process.env.GRAPHQL_BASE_URL,
+    BASE_URL: process.env.BASE_URL,
     FETCH_CITY_AUTOCOMPLETE_LIMIT: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_LIMIT ?? '', 10),
     FETCH_CITY_AUTOCOMPLETE_SORT: process.env.FETCH_CITY_AUTOCOMPLETE_SORT,
     FETCH_CITY_AUTOCOMPLETE_OFFSET: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_OFFSET ?? '', 10),
