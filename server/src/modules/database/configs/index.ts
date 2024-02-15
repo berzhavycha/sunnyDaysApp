@@ -4,8 +4,11 @@ import { config as dotenvConfig } from 'dotenv';
 
 dotenvConfig();
 
-export const typeOrmConfigOptions = {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+interface TypeOrmConfigOptions {
+  useFactory: (configService: ConfigService) => DataSourceOptions;
+}
+
+export const typeOrmConfigOptions: TypeOrmConfigOptions = {
   useFactory: (configService: ConfigService) => {
     return {
       type: 'postgres' as const,
