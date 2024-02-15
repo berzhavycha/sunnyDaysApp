@@ -1,10 +1,9 @@
 import { FlatList } from 'react-native';
 
 import { NoData } from '@/components/common';
-import { useWeatherData } from '@/hooks';
+import { useWeatherData, useAddSubscription } from '@/hooks';
 import { SpinnerView } from '../SpinnerView';
 import { useRenderWeatherCard } from './hooks';
-import { useAddSubscription } from '../WeatherHeader/components/WeatherHeaderDown/hooks';
 
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading } = useWeatherData();

@@ -1,5 +1,5 @@
 import { ListItem } from '@/components/common';
-import { City } from '../../types';
+import { City } from '@/hooks';
 
 type RenderCityItemProps = {
   item: City;

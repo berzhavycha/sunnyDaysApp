@@ -1,15 +1,15 @@
 import { ApolloError, useMutation } from '@apollo/client';
 
-import { UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
-type UseDeleteSubscriptionReturn = {
+type UseDeleteWeatherSubscriptionReturn = {
   deleteSubscriptionHandler: (city: string) => Promise<void>;
   deletionLoading: boolean;
   deletionError?: ApolloError | undefined;
 };
 
-export const useDeleteSubscription = (): UseDeleteSubscriptionReturn => {
+export const useDeleteWeatherSubscription = (): UseDeleteWeatherSubscriptionReturn => {
   const refetchQueries = [UserCitiesWeatherDocument];
 
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =

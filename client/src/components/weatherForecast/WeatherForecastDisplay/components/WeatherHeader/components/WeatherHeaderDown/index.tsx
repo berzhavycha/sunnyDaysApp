@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 
+import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
-import { City } from './types';
-import { useCitySelection, useCityInputComplete, useAddSubscription } from './hooks';
+import { useCitySelection } from './hooks';
 
 export const WeatherHeaderDown = (): JSX.Element => {
-  const { setCity, city, addSubscription, error } = useAddSubscription();
+  const { setCity, city, addSubscription, error } = useAddWeatherSubscription();
   const { renderCityItem } = useCitySelection(setCity);
   const { data, loading } = useCityInputComplete(city);
 

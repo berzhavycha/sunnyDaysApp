@@ -2,11 +2,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { useWeatherData } from '@/hooks';
-import { UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';
 
-type UseAddSubscriptionReturn = {
+type UseAddWeatherSubscriptionReturn = {
   city: string;
   setCity: Dispatch<SetStateAction<string>>;
   addSubscription: () => Promise<void>;
@@ -14,7 +14,7 @@ type UseAddSubscriptionReturn = {
   error: string;
 };
 
-export const useAddSubscription = (): UseAddSubscriptionReturn => {
+export const useAddWeatherSubscription = (): UseAddWeatherSubscriptionReturn => {
   const [city, setCity] = useState<string>('');
   const [error, setError] = useState<string>('');
   const { data, error: weatherRequestError } = useWeatherData();

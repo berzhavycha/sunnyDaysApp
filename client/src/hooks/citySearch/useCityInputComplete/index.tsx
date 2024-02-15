@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 
-import { useInputCompleteQuery } from '@/hooks';
-import { City } from '../../types';
-import { getCitiesQueryVariables, extractData } from '../../utils';
+import { useInputCompleteQuery } from '@/hooks/common';
 import { DEBOUNCE_DELAY } from '@/components/weatherForecast/constants';
+import { getCitiesQueryVariables, extractData } from './utils';
 import { CitiesDocument, CitiesQuery, CitiesQueryVariables } from './queries';
+
+export type City = {
+  name: string;
+};
 
 type UseCityInputCompleteReturn = {
   data: City[];

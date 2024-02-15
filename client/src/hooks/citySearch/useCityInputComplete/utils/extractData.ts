@@ -1,5 +1,5 @@
-import { CitiesQuery } from '../hooks/useCityInputComplete/queries';
-import { City } from '../types';
+import { CitiesQuery } from '../queries';
+import { City } from '../';
 
 export const extractData = (data: CitiesQuery): City[] => {
   if (!data || !data.citiesByPrefix) {
