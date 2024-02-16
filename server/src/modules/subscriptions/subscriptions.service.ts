@@ -11,17 +11,13 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
-    let city = await this.citiesService.findByName(cityName);
-
-    if (!city) {
-      city = await this.citiesService.createCity(cityName);
-    }
+    const city = await this.citiesService.createCity(cityName);
 
     const subscriptionEntity = this.subscriptionRepository.create({
       cityId: city.id,
