@@ -5,12 +5,14 @@ import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { useCitySelection } from './hooks';
+import { useSubscriptionError } from '@/context';
 
 export const WeatherHeaderDown = (): JSX.Element => {
   const [city, setCity] = useState<string>('');
-  const { addSubscription, error } = useAddWeatherSubscription(setCity);
+  const { addSubscription } = useAddWeatherSubscription(setCity);
   const { data, loading } = useCityInputComplete(city);
   const { renderCityItem } = useCitySelection(addSubscription);
+  const { error } = useSubscriptionError()
 
   const onPressAddSubscription = async (): Promise<void> => await addSubscription(city)
 
@@ -25,7 +27,7 @@ export const WeatherHeaderDown = (): JSX.Element => {
             search={city}
             onSearchChange={setCity}
             data={data}
-            error={error}
+            error={error.message}
           />
         </View>
         <View className="w-14">

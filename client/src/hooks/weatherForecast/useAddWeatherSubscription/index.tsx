@@ -1,19 +1,19 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';
+import { useSubscriptionError } from '@/context';
 
 type UseAddWeatherSubscriptionReturn = {
   addSubscription: (city: string) => Promise<void>;
   loading: boolean;
-  error: string;
 };
 
 export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): UseAddWeatherSubscriptionReturn => {
-  const [error, setError] = useState<string>('');
+  const { setError } = useSubscriptionError()
   const { data, error: weatherRequestError } = useWeatherData();
   const [addWeatherSubscription, { loading, error: addingSubscriptionError }] = useMutation(
     AddWeatherSubscriptionDocument,
@@ -24,13 +24,13 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
 
   useEffect(() => {
     if (weatherRequestError?.message) {
-      setError(weatherRequestError?.message);
+      setError({ message: weatherRequestError?.message });
     }
   }, [weatherRequestError, addingSubscriptionError, data]);
 
   const addSubscription = async (city: string): Promise<void> => {
     try {
-      setError('');
+      setError({ message: '' });
 
       if (!city) {
         throw new Error('Please enter the city!');
@@ -58,7 +58,7 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
       setCity('');
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        setError({ message: err.message });
       }
     }
   };
@@ -66,6 +66,5 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
   return {
     loading,
     addSubscription,
-    error,
   };
 };

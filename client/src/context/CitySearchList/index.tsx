@@ -19,13 +19,13 @@ interface CitySearchListContextType {
 const CitySearchListContext = createContext<CitySearchListContextType | null>(null);
 
 export const useCitySearchList = (): CitySearchListContextType => {
-  const userContext = useContext(CitySearchListContext);
+  const citySearchContext = useContext(CitySearchListContext);
 
-  if (!userContext) {
+  if (!citySearchContext) {
     throw new Error('useCitySearchList must be used within an CitySearchListProvider');
   }
 
-  return userContext;
+  return citySearchContext;
 };
 
 export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
