@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { useWeatherData } from '@/hooks';
+import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';

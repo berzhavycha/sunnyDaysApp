@@ -6,9 +6,15 @@ import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { useCitySelection } from './hooks';
 
 export const WeatherHeaderDown = (): JSX.Element => {
-  const { setCity, city, addSubscription, error } = useAddWeatherSubscription();
-  const { renderCityItem } = useCitySelection(setCity);
+  const { city, setCity, addSubscription, error } = useAddWeatherSubscription();
   const { data, loading } = useCityInputComplete(city);
+
+  const addSubscriptionOnCityPress = async (selectedCity: string): Promise<void> => {
+    setCity(selectedCity);
+    await addSubscription();
+  }
+
+  const { renderCityItem } = useCitySelection(addSubscriptionOnCityPress);
 
   return (
     <>
