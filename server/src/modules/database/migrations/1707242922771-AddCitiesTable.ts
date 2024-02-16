@@ -64,7 +64,7 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
       `DROP INDEX "public"."IDX_d0a95ef8a28188364c546eb65c"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "subscriptions" ADD CONSTRAINT "PK_cab773148119c55639e2cc4eb0b" PRIMARY KEY ("id", "user_id", "city_id")`,
+      `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_cab773148119c55639e2cc4eb0b" PRIMARY KEY ("id", "user_id", "city_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_cab773148119c55639e2cc4eb0b"`,

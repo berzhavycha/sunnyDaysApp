@@ -12,7 +12,7 @@ import { TOO_MANY_REQUESTS_ERROR_CODE } from './constants';
 @Injectable()
 export class CitySearchService {
   constructor(
-    private readonly geodbRepository: CitySearchRepository,
+    private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) { }
@@ -30,7 +30,7 @@ export class CitySearchService {
       }
 
       const cities =
-        await this.geodbRepository.getCitiesByPrefix(cityPrefixArgs);
+        await this.citySearchRepository.getCitiesByPrefix(cityPrefixArgs);
 
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
