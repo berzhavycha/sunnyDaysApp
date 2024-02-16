@@ -11,15 +11,15 @@ type HookReturn = {
 };
 
 export const useCitySelection = (onCitySelect: (text: string) => Promise<void>): HookReturn => {
-  const { onPressOutside } = useCitySearchList()
+  const { onPressOutside } = useCitySearchList();
 
   const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => {
     const handleCitySelect = async (): Promise<void> => {
       await onCitySelect(item.name);
-      onPressOutside()
+      onPressOutside();
     };
 
-    return <ListItem content={item.name} onItemClick={handleCitySelect} />
+    return <ListItem content={item.name} onItemClick={handleCitySelect} />;
   };
 
   return { renderCityItem };

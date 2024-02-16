@@ -13,7 +13,7 @@ type HookReturn = {
 };
 
 export const useWeatherData = (): HookReturn => {
-  const { setError } = useSubscriptionError()
+  const { setError } = useSubscriptionError();
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       citiesLimit: Env.MAX_WEATHER_CITIES_AMOUNT,
@@ -28,9 +28,9 @@ export const useWeatherData = (): HookReturn => {
 
   useEffect(() => {
     if (loading) {
-      setError({ message: '' })
+      setError({ message: '' });
     }
-  }, [data, loading, error])
+  }, [data, loading, error]);
 
   return { data, loading, error };
 };

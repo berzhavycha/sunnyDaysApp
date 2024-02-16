@@ -12,10 +12,10 @@ export const WeatherHeaderDown = (): JSX.Element => {
   const { addSubscription } = useAddWeatherSubscription(setCity);
   const { data, loading } = useCityInputComplete(city);
   const { renderCityItem } = useCitySelection(addSubscription);
-  const { error } = useSubscriptionError()
-  const { listState, onInputFocus, onPressOutside } = useCitySearchList()
+  const { error } = useSubscriptionError();
+  const { listState, onInputFocus, onPressOutside } = useCitySearchList();
 
-  const onPressAddSubscription = async (): Promise<void> => await addSubscription(city)
+  const onPressAddSubscription = async (): Promise<void> => await addSubscription(city);
 
   return (
     <View className="w-full flex-row justify-between">

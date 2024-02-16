@@ -8,17 +8,15 @@ import { CurrentUserProvider } from '../CurrentUser';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <ApolloProvider client={apolloClient}>
-            <CurrentUserProvider>
-                <CitySearchListProvider>
-                    <SubscriptionErrorProvider>
-                        <EventProvider>
-                            {children}
-                        </EventProvider>
-                    </SubscriptionErrorProvider>
-                </CitySearchListProvider>
-            </CurrentUserProvider>
-        </ApolloProvider>
-    );
+  return (
+    <ApolloProvider client={apolloClient}>
+      <CurrentUserProvider>
+        <CitySearchListProvider>
+          <SubscriptionErrorProvider>
+            <EventProvider>{children}</EventProvider>
+          </SubscriptionErrorProvider>
+        </CitySearchListProvider>
+      </CurrentUserProvider>
+    </ApolloProvider>
+  );
 };

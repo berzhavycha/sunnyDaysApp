@@ -39,7 +39,11 @@ export const Input: FC<InputProps> = memo(
           {...rest}
         />
         {isSecured && (
-          <CustomTouchable style={{ position: 'absolute', top: 12, right: 12, zIndex: 100 }} onPress={toggleShowPassword} activeOpacity={0.5}>
+          <CustomTouchable
+            style={{ position: 'absolute', top: 12, right: 12, zIndex: 100 }}
+            onPress={toggleShowPassword}
+            activeOpacity={0.5}
+          >
             <Feather name={isPasswordShown ? 'eye' : 'eye-off'} size={20} color="#ccc" />
           </CustomTouchable>
         )}

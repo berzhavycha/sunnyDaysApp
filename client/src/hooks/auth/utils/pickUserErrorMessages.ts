@@ -5,7 +5,7 @@ export const pickUserErrorMessages = (inputErrorMessages: string[]): FieldErrors
   const fieldErrors = {
     email: '',
     password: '',
-    unexpectedError: ''
+    unexpectedError: '',
   };
 
   inputErrorMessages.forEach((error) => {
@@ -14,7 +14,7 @@ export const pickUserErrorMessages = (inputErrorMessages: string[]): FieldErrors
     } else if (error.toLocaleLowerCase().includes('password') && !fieldErrors.password) {
       fieldErrors.password = error;
     } else {
-      fieldErrors.unexpectedError = error
+      fieldErrors.unexpectedError = error;
     }
   });
 

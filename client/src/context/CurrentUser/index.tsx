@@ -14,13 +14,13 @@ import { CurrentUserDocument } from './queries';
 
 type CurrentUserState = {
   email: string;
-}
+};
 
 type ContextType = {
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
   onSignOut: () => Promise<void>;
-}
+};
 
 const CurrentUserContext = createContext<ContextType | null>(null);
 

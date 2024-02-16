@@ -1,20 +1,14 @@
-import {
-  FC,
-  createContext,
-  PropsWithChildren,
-  useState,
-  useContext,
-} from 'react';
+import { FC, createContext, PropsWithChildren, useState, useContext } from 'react';
 
 type CitySearchListState = {
-  isShown: boolean
-}
+  isShown: boolean;
+};
 
 type ContextType = {
   listState: CitySearchListState;
-  onPressOutside: () => void
-  onInputFocus: () => void
-}
+  onPressOutside: () => void;
+  onInputFocus: () => void;
+};
 
 const CitySearchListContext = createContext<ContextType | null>(null);
 
@@ -30,28 +24,30 @@ export const useCitySearchList = (): ContextType => {
 
 export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
   const [listState, setListState] = useState<CitySearchListState>({
-    isShown: false
-  })
+    isShown: false,
+  });
 
   const onPressOutside = (): void => {
-    setListState(prevState => ({
+    setListState((prevState) => ({
       ...prevState,
-      isShown: false
-    }))
+      isShown: false,
+    }));
   };
 
   const onInputFocus = (): void => {
-    setListState(prevState => ({
+    setListState((prevState) => ({
       ...prevState,
-      isShown: true
-    }))
+      isShown: true,
+    }));
   };
 
   const contextValue: ContextType = {
     listState,
     onPressOutside,
-    onInputFocus
+    onInputFocus,
   };
 
-  return <CitySearchListContext.Provider value={contextValue}>{children}</CitySearchListContext.Provider>;
+  return (
+    <CitySearchListContext.Provider value={contextValue}>{children}</CitySearchListContext.Provider>
+  );
 };

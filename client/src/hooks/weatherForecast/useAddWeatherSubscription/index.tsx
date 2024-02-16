@@ -12,8 +12,10 @@ type HookReturn = {
   loading: boolean;
 };
 
-export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): HookReturn => {
-  const { setError } = useSubscriptionError()
+export const useAddWeatherSubscription = (
+  setCity: Dispatch<SetStateAction<string>>,
+): HookReturn => {
+  const { setError } = useSubscriptionError();
   const { data, error: weatherRequestError } = useWeatherData();
   const [addWeatherSubscription, { loading, error: additionSubscriptionError }] = useMutation(
     AddWeatherSubscriptionDocument,
@@ -26,7 +28,7 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
     if (weatherRequestError?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
       setError({ message: weatherRequestError?.message });
     } else if (weatherRequestError || additionSubscriptionError) {
-      setError({ message: 'Oops...Something went wrong!' })
+      setError({ message: 'Oops...Something went wrong!' });
     }
   }, [weatherRequestError, additionSubscriptionError]);
 

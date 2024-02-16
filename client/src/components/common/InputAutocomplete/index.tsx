@@ -11,9 +11,9 @@ type Props<TItem> = {
   onSearchChange: (text: string) => void;
   placeholder: string;
   error: string;
-  onPressOutside: () => void
-  onInputFocus: () => void
-  isAutocompleteShown: boolean
+  onPressOutside: () => void;
+  onInputFocus: () => void;
+  isAutocompleteShown: boolean;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -26,7 +26,7 @@ export const InputAutocomplete = <TItem,>({
   error,
   onPressOutside,
   onInputFocus,
-  isAutocompleteShown
+  isAutocompleteShown,
 }: Props<TItem>): JSX.Element => {
   return (
     <OutsidePressHandler

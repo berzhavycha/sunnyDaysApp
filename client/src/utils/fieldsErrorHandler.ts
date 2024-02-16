@@ -22,7 +22,7 @@ export const fieldsErrorHandler = <T>(
     ) {
       const inputErrorMessage = graphQLError.message;
       fieldsError = pickErrorsCallback([inputErrorMessage]);
-    } 
+    }
   });
 
   return fieldsError;

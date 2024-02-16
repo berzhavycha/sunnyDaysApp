@@ -12,7 +12,7 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
     useMutation(DeleteWeatherSubscriptionDocument, {
-      refetchQueries: [UserCitiesWeatherDocument]
+      refetchQueries: [UserCitiesWeatherDocument],
     });
 
   const deleteSubscription = async (cityName: string): Promise<void> => {
