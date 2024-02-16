@@ -6,19 +6,19 @@ import {
   useContext,
 } from 'react';
 
-interface CitySearchListState {
+type CitySearchListState = {
   isShown: boolean
 }
 
-interface CitySearchListContextType {
-  citySearchList: CitySearchListState;
+type ContextType = {
+  listState: CitySearchListState;
   onPressOutside: () => void
   onInputFocus: () => void
 }
 
-const CitySearchListContext = createContext<CitySearchListContextType | null>(null);
+const CitySearchListContext = createContext<ContextType | null>(null);
 
-export const useCitySearchList = (): CitySearchListContextType => {
+export const useCitySearchList = (): ContextType => {
   const citySearchContext = useContext(CitySearchListContext);
 
   if (!citySearchContext) {
@@ -29,26 +29,26 @@ export const useCitySearchList = (): CitySearchListContextType => {
 };
 
 export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [citySearchList, setCitySearchList] = useState<CitySearchListState>({
+  const [listState, setListState] = useState<CitySearchListState>({
     isShown: false
   })
 
   const onPressOutside = (): void => {
-    setCitySearchList(prevState => ({
+    setListState(prevState => ({
       ...prevState,
       isShown: false
     }))
   };
 
   const onInputFocus = (): void => {
-    setCitySearchList(prevState => ({
+    setListState(prevState => ({
       ...prevState,
       isShown: true
     }))
   };
 
-  const contextValue: CitySearchListContextType = {
-    citySearchList,
+  const contextValue: ContextType = {
+    listState,
     onPressOutside,
     onInputFocus
   };

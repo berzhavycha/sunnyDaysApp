@@ -6,11 +6,11 @@ type RenderCityItemProps = {
   item: City;
 };
 
-type UseCitySelectionReturn = {
+type HookReturn = {
   renderCityItem: (args: RenderCityItemProps) => JSX.Element;
 };
 
-export const useCitySelection = (onCitySelect: (text: string) => Promise<void>): UseCitySelectionReturn => {
+export const useCitySelection = (onCitySelect: (text: string) => Promise<void>): HookReturn => {
   const { onPressOutside } = useCitySearchList()
 
   const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => {

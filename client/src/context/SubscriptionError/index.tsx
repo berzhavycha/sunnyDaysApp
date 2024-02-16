@@ -8,18 +8,18 @@ import {
     SetStateAction,
 } from 'react';
 
-interface SubscriptionErrorState {
+type SubscriptionErrorState = {
     message: string
 }
 
-interface SubscriptionErrorContextType {
+type ContextType = {
     error: SubscriptionErrorState;
     setError: Dispatch<SetStateAction<SubscriptionErrorState>>
 }
 
-const SubscriptionErrorContext = createContext<SubscriptionErrorContextType | null>(null);
+const SubscriptionErrorContext = createContext<ContextType | null>(null);
 
-export const useSubscriptionError = (): SubscriptionErrorContextType => {
+export const useSubscriptionError = (): ContextType => {
     const subscriptionErrorContext = useContext(SubscriptionErrorContext);
 
     if (!subscriptionErrorContext) {
@@ -34,7 +34,7 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
         message: ''
     })
 
-    const contextValue: SubscriptionErrorContextType = {
+    const contextValue: ContextType = {
         error,
         setError
     };
