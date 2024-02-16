@@ -3,19 +3,15 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-  [_ in K]?: never;
-};
-export type Incremental<T> =
-  | T
-  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type CityInput = {
@@ -25,11 +21,6 @@ export type CityInput = {
 export type Credentials = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
-};
-
-export type GeodbCity = {
-  __typename?: 'GeodbCity';
-  name: Scalars['String']['output'];
 };
 
 export type Message = {
@@ -47,17 +38,21 @@ export type Mutation = {
   signUp: UserPayload;
 };
 
+
 export type MutationAddWeatherSubscriptionArgs = {
   input: CityInput;
 };
+
 
 export type MutationDeleteWeatherSubscriptionArgs = {
   input: CityInput;
 };
 
+
 export type MutationSignInArgs = {
   input: Credentials;
 };
+
 
 export type MutationSignUpArgs = {
   input: Credentials;
@@ -65,21 +60,29 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  citiesByPrefix: Array<GeodbCity>;
+  citiesByPrefix: Array<SearchedCity>;
   currentUser: Maybe<UserPayload>;
   userCitiesWeather: Array<WeatherForecast>;
 };
 
+
 export type QueryCitiesByPrefixArgs = {
   limit: Scalars['Int']['input'];
+  minPopulation: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
   prefix: Scalars['String']['input'];
   sort: Scalars['String']['input'];
 };
 
+
 export type QueryUserCitiesWeatherArgs = {
   citiesLimit: Scalars['Int']['input'];
   forecastDaysAmount: Scalars['Int']['input'];
+};
+
+export type SearchedCity = {
+  __typename?: 'SearchedCity';
+  name: Scalars['String']['output'];
 };
 
 export type Subscription = {

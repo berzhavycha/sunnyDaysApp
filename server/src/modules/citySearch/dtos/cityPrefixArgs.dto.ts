@@ -22,4 +22,9 @@ export class CityPrefixArgsDto {
   @IsNotEmpty()
   @IsInt()
   limit: number;
+
+  @Field(() => Int!)
+  @IsNotEmpty()
+  @IsInt()
+  minPopulation: number;
 }

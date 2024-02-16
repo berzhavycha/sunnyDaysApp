@@ -17,18 +17,18 @@ export class CitySearchRepository {
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
   ): Promise<AxiosResponse<CitySearchResponse>> {
-    const { prefix, sort, offset, limit } = cityPrefixArgs;
+    const { prefix, sort, offset, limit, minPopulation } = cityPrefixArgs;
 
-    const geodbApiBaseUrl =
-      this.configService.get<string>('GEODB_API_BASE_URL');
+    const searchCityApiBaseUrl =
+      this.configService.get<string>('SEARCH_CITIES_API_BASE_URL');
 
-    const apiUrl = `${geodbApiBaseUrl}?namePrefix=${prefix}&sort=${sort}&offset=${offset}&limit=${limit}`;
+    const apiUrl = `${searchCityApiBaseUrl}?namePrefix=${prefix}&sort=${sort}&offset=${offset}&limit=${limit}&minPopulation=${minPopulation}`;
 
     return this.httpService
       .get(apiUrl, {
         headers: {
-          'X-RapidAPI-Key': this.configService.get<string>('GEODB_API_KEY'),
-          'X-RapidAPI-Host': this.configService.get<string>('GEODB_API_HOST'),
+          'X-RapidAPI-Key': this.configService.get<string>('SEARCH_CITIES_API_KEY'),
+          'X-RapidAPI-Host': this.configService.get<string>('SEARCH_CITIES_API_HOST'),
         },
         validateStatus: function (status) {
           return (

@@ -44,7 +44,7 @@ export class CitySearchService {
         resultCitiesList,
         {
           ttl: this.configService.get<number>(
-            'REDIS_GEODB_CITIES_DATA_TTL_SECONDS',
+            'REDIS_SEARCH_CITIES_DATA_TTL_SECONDS',
           ),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,

@@ -25,7 +25,7 @@ type Mutation {
 }
 
 type Query {
-  citiesByPrefix(limit: Int!, offset: Int!, prefix: String!, sort: String!): [SearchedCity!]!
+  citiesByPrefix(limit: Int!, minPopulation: Int!, offset: Int!, prefix: String!, sort: String!): [SearchedCity!]!
   currentUser: UserPayload
   userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
 }

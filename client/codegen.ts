@@ -10,11 +10,11 @@ const config: CodegenConfig = {
   },
   generates: {
     'src/graphql/__generated__/types.ts': {
-      schema: [process.env.GRAPHQL_BASE_URL as string],
+      schema: [process.env.BASE_URL as string],
       plugins: ['typescript'],
     },
     baseUrl: {
-      schema: [process.env.GRAPHQL_BASE_URL as string],
+      schema: [process.env.BASE_URL as string],
       documents: ['src/**/*.base.{ts,tsx}'],
       plugins: ['typescript-operations', 'typed-document-node'],
       preset: 'near-operation-file',
