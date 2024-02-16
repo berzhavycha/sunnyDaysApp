@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import OutsidePressHandler from 'react-native-outside-press';
 
+import { useCitySearchList } from '@/context';
 import { Input } from '../Input';
 
 type Props<TItem> = {
@@ -23,10 +23,7 @@ export const InputAutocomplete = <TItem,>({
   placeholder,
   error,
 }: Props<TItem>): JSX.Element => {
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-
-  const onPressOutside = (): void => setIsInputFocused(false);
-  const onInputFocus = (): void => setIsInputFocused(true);
+  const { citySearchList, onPressOutside, onInputFocus } = useCitySearchList()
 
   return (
     <OutsidePressHandler
@@ -41,7 +38,7 @@ export const InputAutocomplete = <TItem,>({
         error={error}
         onFocus={onInputFocus}
       />
-      {!loading && data && isInputFocused && (
+      {!loading && data && citySearchList.isShown && (
         <View className="absolute top-14 bg-gray-800 rounded w-full z-10 shadow-xl">
           <FlatList data={data} renderItem={onRenderItem} />
         </View>

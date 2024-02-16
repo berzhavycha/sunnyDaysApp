@@ -7,15 +7,12 @@ import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';
 
 type UseAddWeatherSubscriptionReturn = {
-  city: string;
-  setCity: Dispatch<SetStateAction<string>>;
-  addSubscription: () => Promise<void>;
+  addSubscription: (city: string) => Promise<void>;
   loading: boolean;
   error: string;
 };
 
-export const useAddWeatherSubscription = (): UseAddWeatherSubscriptionReturn => {
-  const [city, setCity] = useState<string>('');
+export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): UseAddWeatherSubscriptionReturn => {
   const [error, setError] = useState<string>('');
   const { data, error: weatherRequestError } = useWeatherData();
   const [addWeatherSubscription, { loading, error: addingSubscriptionError }] = useMutation(
@@ -31,7 +28,7 @@ export const useAddWeatherSubscription = (): UseAddWeatherSubscriptionReturn => 
     }
   }, [weatherRequestError, addingSubscriptionError, data]);
 
-  const addSubscription = async (): Promise<void> => {
+  const addSubscription = async (city: string): Promise<void> => {
     try {
       setError('');
 
@@ -67,8 +64,6 @@ export const useAddWeatherSubscription = (): UseAddWeatherSubscriptionReturn => 
   };
 
   return {
-    city,
-    setCity,
     loading,
     addSubscription,
     error,

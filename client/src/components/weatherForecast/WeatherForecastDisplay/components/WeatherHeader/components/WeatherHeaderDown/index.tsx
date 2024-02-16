@@ -1,4 +1,5 @@
 import { View } from 'react-native';
+import { useState } from 'react';
 
 import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
@@ -6,15 +7,12 @@ import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { useCitySelection } from './hooks';
 
 export const WeatherHeaderDown = (): JSX.Element => {
-  const { city, setCity, addSubscription, error } = useAddWeatherSubscription();
+  const [city, setCity] = useState<string>('');
+  const { addSubscription, error } = useAddWeatherSubscription(setCity);
   const { data, loading } = useCityInputComplete(city);
+  const { renderCityItem } = useCitySelection(addSubscription);
 
-  const addSubscriptionOnCityPress = async (selectedCity: string): Promise<void> => {
-    setCity(selectedCity);
-    await addSubscription();
-  }
-
-  const { renderCityItem } = useCitySelection(addSubscriptionOnCityPress);
+  const onPressAddSubscription = async (): Promise<void> => await addSubscription(city)
 
   return (
     <>
@@ -31,7 +29,7 @@ export const WeatherHeaderDown = (): JSX.Element => {
           />
         </View>
         <View className="w-14">
-          <Button text={ADD_CITY_BTN_TEXT} onPress={addSubscription} />
+          <Button text={ADD_CITY_BTN_TEXT} onPress={onPressAddSubscription} />
         </View>
       </View>
     </>
