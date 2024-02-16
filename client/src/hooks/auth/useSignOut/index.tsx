@@ -3,12 +3,12 @@ import { useMutation } from '@apollo/client';
 import { useCurrentUser } from '@/context';
 import { SignOutDocument } from './mutations';
 
-export type SignOutHookReturn = {
+type HookReturn = {
   loading: boolean;
   signOutHandler: () => Promise<void>;
 };
 
-export const useSignOut = (): SignOutHookReturn => {
+export const useSignOut = (): HookReturn => {
   const { onSignOut } = useCurrentUser();
   const [signOutMutation, { loading }] = useMutation(SignOutDocument);
 

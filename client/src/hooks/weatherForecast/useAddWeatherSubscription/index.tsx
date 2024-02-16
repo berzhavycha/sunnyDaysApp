@@ -7,12 +7,12 @@ import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { AddWeatherSubscriptionDocument } from './mutations';
 
-type UseAddWeatherSubscriptionReturn = {
+type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
   loading: boolean;
 };
 
-export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): UseAddWeatherSubscriptionReturn => {
+export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): HookReturn => {
   const { setError } = useSubscriptionError()
   const { data, error: weatherRequestError } = useWeatherData();
   const [addWeatherSubscription, { loading, error: additionSubscriptionError }] = useMutation(

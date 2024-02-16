@@ -6,13 +6,13 @@ import { Env } from '@/env';
 import { useSubscriptionError } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
-type UseWeatherDataReturn = {
+type HookReturn = {
   data?: UserCitiesWeatherQuery;
   loading: boolean;
   error?: ApolloError;
 };
 
-export const useWeatherData = (): UseWeatherDataReturn => {
+export const useWeatherData = (): HookReturn => {
   const { setError } = useSubscriptionError()
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {

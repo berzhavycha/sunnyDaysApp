@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 
 import { useInputCompleteQuery } from '@/hooks/common';
-import { DEBOUNCE_DELAY } from './constants';
-import { getCitiesQueryVariables, extractData } from './utils';
+import { DEBOUNCE_DELAY } from '../constants';
+import { getCitiesQueryVariables, extractData } from '../utils';
 import { CitiesDocument, CitiesQuery, CitiesQueryVariables } from './queries';
 
 export type City = {
   name: string;
 };
 
-type UseCityInputCompleteReturn = {
+type HookReturn = {
   data: City[];
   loading: boolean;
 };
 
-export const useCityInputComplete = (city: string): UseCityInputCompleteReturn => {
+export const useCityInputComplete = (city: string): HookReturn => {
   const [debouncedCity, setDebouncedCity] = useState<string>(city);
 
   useEffect(() => {

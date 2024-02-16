@@ -3,13 +3,13 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
-type UseDeleteWeatherSubscriptionReturn = {
+type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
   deletionLoading: boolean;
   deletionError?: ApolloError;
 };
 
-export const useDeleteWeatherSubscription = (): UseDeleteWeatherSubscriptionReturn => {
+export const useDeleteWeatherSubscription = (): HookReturn => {
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
     useMutation(DeleteWeatherSubscriptionDocument, {
       refetchQueries: [UserCitiesWeatherDocument]

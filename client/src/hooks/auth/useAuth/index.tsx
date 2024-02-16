@@ -15,10 +15,10 @@ export type UserDto = {
 export type FieldErrorsState<T> = {
   [key in keyof T]: string;
 } & {
-  unexpectedError?: string; 
+  unexpectedError?: string;
 };
 
-export type AuthHookReturnType = {
+type HookReturn = {
   authHandler: (userDto: UserDto) => Promise<void>;
   loading: boolean;
   fieldsError: FieldErrorsState<UserDto>
@@ -26,7 +26,7 @@ export type AuthHookReturnType = {
 
 export const useAuth = (
   mutation: DocumentNode = SignInDocument,
-): AuthHookReturnType => {
+): HookReturn => {
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
     email: '',
     password: '',

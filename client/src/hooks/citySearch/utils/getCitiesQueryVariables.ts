@@ -1,5 +1,5 @@
 import { Env } from '@/env';
-import { CitiesQueryVariables } from '../queries';
+import { CitiesQueryVariables } from '../useCityInputComplete/queries';
 
 export const getCitiesQueryVariables = (city: string): CitiesQueryVariables => ({
   prefix: city,

@@ -1,4 +1,4 @@
-import { CitiesQuery } from '../queries';
+import { CitiesQuery } from '../useCityInputComplete/queries';
 import { City } from '../';
 
 export const extractData = (data: CitiesQuery): City[] => {
