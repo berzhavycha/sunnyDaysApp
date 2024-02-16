@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 type UseInputCompleteQueryResult<TItem> = {
   loading: boolean;
   data: TItem[];
-  error?: ApolloError | undefined;
+  error?: ApolloError;
 };
 
 export const useInputCompleteQuery = <

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useInputCompleteQuery } from '@/hooks/common';
-import { DEBOUNCE_DELAY } from '@/components/weatherForecast/constants';
+import { DEBOUNCE_DELAY } from './constants';
 import { getCitiesQueryVariables, extractData } from './utils';
 import { CitiesDocument, CitiesQuery, CitiesQueryVariables } from './queries';
 

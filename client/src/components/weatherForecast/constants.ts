@@ -17,4 +17,3 @@ export const weatherIconMapping = {
   fog: 'https://cdn-icons-png.flaticon.com/512/11051/11051964.png',
 };
 
-export const DEBOUNCE_DELAY = 300;
