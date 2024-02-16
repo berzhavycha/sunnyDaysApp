@@ -9,7 +9,6 @@ export const fieldsErrorHandler = <T>(
   let fieldsError: FieldErrorsState<T> | null = null;
 
   errors.graphQLErrors.forEach((graphQLError) => {
-    console.log(graphQLError)
     if (
       graphQLError.extensions?.code === 'BAD_REQUEST' &&
       graphQLError.extensions?.originalError?.message

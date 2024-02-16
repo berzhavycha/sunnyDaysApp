@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
@@ -9,7 +9,7 @@ import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
-import { daysOfWeek } from './constants';
+import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE, daysOfWeek } from './constants';
 
 @Injectable()
 export class WeatherForecastService {
@@ -19,7 +19,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getUserCitiesWeather(
     userId: string,
@@ -80,10 +80,14 @@ export class WeatherForecastService {
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);
-      throw new HttpException(
-        error.response.data.error.message,
-        error.response.status,
-      );
+      if (error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE) {
+        throw new BadRequestException(
+          error.response.data.error.message,
+          error.response.status,
+        );
+      } else {
+        throw error
+      }
     }
   }
 

@@ -23,8 +23,10 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
   );
 
   useEffect(() => {
-    if (weatherRequestError?.message) {
+    if (weatherRequestError?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
       setError({ message: weatherRequestError?.message });
+    } else {
+      setError({ message: 'Oops...Something went wrong!' })
     }
   }, [weatherRequestError, addingSubscriptionError, data]);
 

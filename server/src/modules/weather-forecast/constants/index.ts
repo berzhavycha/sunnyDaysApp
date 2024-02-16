@@ -15,3 +15,5 @@ export enum HttpStatusCode {
   CLIENT_ERROR = 400,
   SERVER_ERROR = 500,
 }
+
+export const NO_MATCHING_LOCATION_FOUND_ERROR_CODE = 1006
