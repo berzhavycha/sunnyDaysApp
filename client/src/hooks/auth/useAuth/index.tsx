@@ -14,6 +14,8 @@ export type UserDto = {
 
 export type FieldErrorsState<T> = {
   [key in keyof T]: string;
+} & {
+  unexpectedError?: string; 
 };
 
 export type AuthHookReturnType = {
@@ -29,6 +31,7 @@ export const useAuth = (
     email: '',
     password: '',
     confirmPassword: '',
+    unexpectedError: ''
   });
 
   const [authMutation, { loading }] = useMutation(mutation);

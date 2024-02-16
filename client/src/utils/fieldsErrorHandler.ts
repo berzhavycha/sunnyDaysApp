@@ -9,6 +9,7 @@ export const fieldsErrorHandler = <T>(
   let fieldsError: FieldErrorsState<T> | null = null;
 
   errors.graphQLErrors.forEach((graphQLError) => {
+    console.log(graphQLError)
     if (
       graphQLError.extensions?.code === 'BAD_REQUEST' &&
       graphQLError.extensions?.originalError?.message
@@ -22,7 +23,7 @@ export const fieldsErrorHandler = <T>(
     ) {
       const inputErrorMessage = graphQLError.message;
       fieldsError = pickErrorsCallback([inputErrorMessage]);
-    }
+    } 
   });
 
   return fieldsError;

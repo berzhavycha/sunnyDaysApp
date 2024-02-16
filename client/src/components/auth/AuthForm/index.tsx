@@ -37,11 +37,14 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
             className="w-[80px] h-[80px] mb-8"
           />
           <Text
-            className={`text-2xl mb-${subTitle !== undefined ? '2' : '8'} text-white font-bold`}
+            className="text-2xl mb-2 text-white font-bold"
           >
             {title}
           </Text>
-          {subTitle && <Text className="text-xs mb-8 font-light text-gray-400">{subTitle}</Text>}
+          {subTitle && <Text className="text-xs mb-2 font-light text-gray-400">{subTitle}</Text>}
+          <View className='h-8'>
+            {fieldsError.unexpectedError && <Text className='text-red-500 text-[12px]'>Oops...Something went wrong! Please try again later!</Text>}
+          </View>
           <View className="w-64">
             <ControlledInput
               control={control}
