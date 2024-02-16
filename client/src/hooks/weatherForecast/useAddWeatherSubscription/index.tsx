@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
+import { useSubscriptionError } from '@/context';
+import { Env } from '@/env';
 import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
-import { Env } from '@/env';
 import { AddWeatherSubscriptionDocument } from './mutations';
-import { useSubscriptionError } from '@/context';
 
 type UseAddWeatherSubscriptionReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -15,7 +15,7 @@ type UseAddWeatherSubscriptionReturn = {
 export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<string>>): UseAddWeatherSubscriptionReturn => {
   const { setError } = useSubscriptionError()
   const { data, error: weatherRequestError } = useWeatherData();
-  const [addWeatherSubscription, { loading, error: addingSubscriptionError }] = useMutation(
+  const [addWeatherSubscription, { loading, error: additionSubscriptionError }] = useMutation(
     AddWeatherSubscriptionDocument,
     {
       refetchQueries: [UserCitiesWeatherDocument],
@@ -25,10 +25,10 @@ export const useAddWeatherSubscription = (setCity: Dispatch<SetStateAction<strin
   useEffect(() => {
     if (weatherRequestError?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
       setError({ message: weatherRequestError?.message });
-    } else if (weatherRequestError || addingSubscriptionError) {
+    } else if (weatherRequestError || additionSubscriptionError) {
       setError({ message: 'Oops...Something went wrong!' })
     }
-  }, [weatherRequestError, addingSubscriptionError, data]);
+  }, [weatherRequestError, additionSubscriptionError]);
 
   const addSubscription = async (city: string): Promise<void> => {
     try {

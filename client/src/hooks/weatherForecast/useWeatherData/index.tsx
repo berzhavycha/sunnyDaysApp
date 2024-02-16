@@ -1,18 +1,18 @@
+import { useEffect } from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 import { Env } from '@/env';
-import { useEffect } from 'react';
 import { useSubscriptionError } from '@/context';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
-type WeatherDataReturn = {
-  data: UserCitiesWeatherQuery | undefined;
+type UseWeatherDataReturn = {
+  data?: UserCitiesWeatherQuery;
   loading: boolean;
-  error: ApolloError | undefined;
+  error?: ApolloError;
 };
 
-export const useWeatherData = (): WeatherDataReturn => {
+export const useWeatherData = (): UseWeatherDataReturn => {
   const { setError } = useSubscriptionError()
   const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
     variables: {

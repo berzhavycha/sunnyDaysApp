@@ -4,20 +4,18 @@ import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
 type UseDeleteWeatherSubscriptionReturn = {
-  deleteSubscriptionHandler: (city: string) => Promise<void>;
+  deleteSubscription: (city: string) => Promise<void>;
   deletionLoading: boolean;
-  deletionError?: ApolloError | undefined;
+  deletionError?: ApolloError;
 };
 
 export const useDeleteWeatherSubscription = (): UseDeleteWeatherSubscriptionReturn => {
-  const refetchQueries = [UserCitiesWeatherDocument];
-
   const [deleteWeatherSubscription, { loading: deletionLoading, error: deletionError }] =
     useMutation(DeleteWeatherSubscriptionDocument, {
-      refetchQueries,
+      refetchQueries: [UserCitiesWeatherDocument]
     });
 
-  const deleteSubscriptionHandler = async (cityName: string): Promise<void> => {
+  const deleteSubscription = async (cityName: string): Promise<void> => {
     await deleteWeatherSubscription({
       variables: {
         city: {
@@ -28,7 +26,7 @@ export const useDeleteWeatherSubscription = (): UseDeleteWeatherSubscriptionRetu
   };
 
   return {
-    deleteSubscriptionHandler,
+    deleteSubscription,
     deletionLoading,
     deletionError,
   };
