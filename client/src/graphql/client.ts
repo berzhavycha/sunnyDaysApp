@@ -1,23 +1,11 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
 import { errorLink, refreshTokenLink, mainHttpLink } from './links';
-
-type WeatherData = {
-};
+import { typePolicies } from './typePolicies';
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          userCitiesWeather: {
-            merge: (existing: WeatherData[] | undefined, incoming: WeatherData[]): WeatherData[] => {
-              return incoming;
-            }
-          }
-        },
-      },
-    },
+    typePolicies
   }),
 });
 

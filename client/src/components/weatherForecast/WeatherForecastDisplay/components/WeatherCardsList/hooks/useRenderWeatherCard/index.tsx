@@ -1,9 +1,8 @@
-import { useDeleteWeatherSubscription } from '@/hooks';
-import { WeatherCardProps } from '../../../SwipeableWeatherCard/components';
+import { WeatherForecast, useDeleteWeatherSubscription } from '@/hooks';
 import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
 
 type RenderItemProps = {
-  item: WeatherCardProps;
+  item: WeatherForecast;
 };
 
 type HookReturn = {
