@@ -25,12 +25,19 @@ export const useWeatherData = (): HookReturn => {
       ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
-
+  
   useEffect(() => {
     if (loading) {
       setError({ message: '' });
     }
+
+    if (error?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
+      setError({ message: error?.message ?? ''});
+    } else if (error) {
+      setError({ message: 'Oops...Something went wrong!' });
+    }
   }, [data, loading, error]);
+
 
   return { data, loading, error };
 };

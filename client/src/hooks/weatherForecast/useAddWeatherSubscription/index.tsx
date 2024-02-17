@@ -16,8 +16,8 @@ export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
   const { setError } = useSubscriptionError();
-  const { data, error: weatherRequestError } = useWeatherData();
-  const [addWeatherSubscription, { loading, error: additionSubscriptionError }] = useMutation(
+  const { data } = useWeatherData();
+  const [addWeatherSubscription, { loading, error }] = useMutation(
     AddWeatherSubscriptionDocument,
     {
       refetchQueries: [UserCitiesWeatherDocument],
@@ -25,12 +25,13 @@ export const useAddWeatherSubscription = (
   );
 
   useEffect(() => {
-    if (weatherRequestError?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
-      setError({ message: weatherRequestError?.message });
-    } else if (weatherRequestError || additionSubscriptionError) {
+    if (error?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
+      setError({ message: error?.message ?? '' });
+    } else if (error) {
       setError({ message: 'Oops...Something went wrong!' });
     }
-  }, [weatherRequestError, additionSubscriptionError]);
+  }, [data, loading, error]);
+
 
   const addSubscription = async (city: string): Promise<void> => {
     try {

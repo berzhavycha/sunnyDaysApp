@@ -3,6 +3,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
+import { v4 as uuidv4 } from 'uuid';
 
 import { SubscriptionsService } from '@modules/subscriptions';
 import { CitiesService } from '@modules/cities';
@@ -96,8 +97,8 @@ export class WeatherForecastService {
   ): WeatherForecast[] {
     return responses.map((response) => {
       const { data } = response;
-
       return {
+        id: uuidv4(),
         city: data.location.name,
         tempCelsius: data.current.temp_c,
         tempFahrenheit: data.current.temp_f,
@@ -115,7 +116,9 @@ export class WeatherForecastService {
 
       const dayOfWeek = daysOfWeek[dateInstance.getDay()];
 
+
       return {
+        id: uuidv4(),
         tempCelsius: day.avgtemp_c,
         tempFahrenheit: day.avgtemp_f,
         text: day.condition.text,

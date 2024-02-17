@@ -47,6 +47,7 @@ type UserPayload {
 type WeatherDay {
   dayOfWeek: String!
   humidity: Int!
+  id: ID!
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!
@@ -56,6 +57,7 @@ type WeatherForecast {
   city: String!
   daysForecast: [WeatherDay!]!
   humidity: Int!
+  id: ID!
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!

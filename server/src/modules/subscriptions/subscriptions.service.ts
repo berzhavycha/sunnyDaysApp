@@ -29,13 +29,14 @@ export class SubscriptionsService {
   async deleteSubscription(
     cityName: string,
     userId: string,
-  ): Promise<DeleteResult> {
+  ): Promise<Subscription> {
     const city = await this.citiesService.findByName(cityName);
 
     const subscription = await this.subscriptionRepository.findOne({
       where: { cityId: city.id, userId },
     });
-    return this.subscriptionRepository.delete(subscription);
+    await this.subscriptionRepository.delete(subscription);
+    return subscription
   }
 
   async getSubscriptionsByUserId(

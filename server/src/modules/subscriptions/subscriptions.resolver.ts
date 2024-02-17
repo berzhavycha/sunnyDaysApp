@@ -22,7 +22,7 @@ export class SubscriptionsResolver {
   async deleteWeatherSubscription(
     @Args('input') cityDto: CityDto,
     @CurrentUser('id') id: string,
-  ): Promise<DeleteResult> {
+  ): Promise<Subscription> {
     return this.subscriptionService.deleteSubscription(cityDto.name, id);
   }
 }
