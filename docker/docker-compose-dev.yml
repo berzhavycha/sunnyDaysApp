@@ -1,6 +1,7 @@
+version: '3.8' 
+
 services:
   server:
-    image: nest-api
     build: 
       context: ../server
       dockerfile: ./Dockerfile
@@ -8,8 +9,8 @@ services:
     ports:
       - "4000:4000"
     volumes: 
-      - ../server:/app
-      - /app/node_modules
+      - ../server:/home/node
+      - /home/node/node_modules
     env_file:
       - ../server/.env
     networks:
@@ -26,10 +27,13 @@ services:
       - 5433:5432
     networks:
       - server_network
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=weather_app_password
     volumes: 
       - 'postgres_data:/var/lib/postgresql/data'
-    environment:
-      - POSTGRES_PASSWORD=weather_app_password
 
   redis:
     image: redis

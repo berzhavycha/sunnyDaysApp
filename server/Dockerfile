@@ -1,13 +1,14 @@
-FROM node:16-alpine AS base 
-WORKDIR /app
-COPY package*.json ./
+FROM node:16-alpine AS base
+WORKDIR /home/node
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node . .
+EXPOSE 4000
+USER node
 
 FROM base AS development
-RUN npm install 
-EXPOSE 4000
+RUN npm install
 
 FROM base AS production
-RUN npm ci
+COPY --chown=node:node --from=development /home/node/node_modules ./node_modules
 RUN npm run build
-EXPOSE 4000
-CMD [ "node", "dist/main.js" ]
+RUN npm ci --omit=dev --omit=optional && npm cache clean --force
