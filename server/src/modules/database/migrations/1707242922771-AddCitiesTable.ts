@@ -25,16 +25,7 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
       `ALTER TABLE "subscriptions" ADD "user_id" uuid NOT NULL`,
     );
     await queryRunner.query(
-      `ALTER TABLE "subscriptions" ADD CONSTRAINT "PK_fa24ccf2934569e3ebc99078db8" PRIMARY KEY ("id", "user_id")`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "subscriptions" ADD "city_id" uuid NOT NULL`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "subscriptions" ADD CONSTRAINT "PK_cab773148119c55639e2cc4eb0b" PRIMARY KEY ("id", "user_id", "city_id")`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "subscriptions" ADD CONSTRAINT "PK_71b51db80abcbe7468f51498b70" PRIMARY KEY ("user_id", "city_id")`,
     );
     await queryRunner.query(
       `CREATE INDEX "IDX_d0a95ef8a28188364c546eb65c" ON "subscriptions" ("user_id") `,
@@ -64,16 +55,7 @@ export class AddCitiesTable1707242922771 implements MigrationInterface {
       `DROP INDEX "public"."IDX_d0a95ef8a28188364c546eb65c"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_cab773148119c55639e2cc4eb0b" PRIMARY KEY ("id", "user_id", "city_id")`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_cab773148119c55639e2cc4eb0b"`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "subscriptions" DROP COLUMN "city_id"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "subscriptions" DROP CONSTRAINT "PK_fa24ccf2934569e3ebc99078db8"`,
     );
     await queryRunner.query(
       `ALTER TABLE "subscriptions" DROP COLUMN "user_id"`,

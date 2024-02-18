@@ -1,0 +1,38 @@
+version: '3.8' 
+
+services:
+  client:
+    build:
+      context: ../client
+      dockerfile: ./Dockerfile
+      target: production 
+    ports:
+      - "3000:80"
+    env_file:
+      - ../client/.env
+
+  server:
+    build:
+      context: ../server
+      dockerfile: ./Dockerfile
+      target: production 
+    ports:
+      - "4000:4000"
+    env_file:
+      - ../server/.env
+    command: sh -c 'if [ -n "$DATABASE" ] && [ "$DATABASE" = "postgreSQL" ]; then echo "Running migrations..." && npx knex migrate:latest --knexfile /app/src/database/options/postgres/knexfile.ts && echo "Migrations complete."; fi && node dist/index.js'
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  postgres:
+    image: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: calculator_user_password
+      POSTGRES_DB: calculator_db
+      POSTGRES_USER: calculator_user
+      
