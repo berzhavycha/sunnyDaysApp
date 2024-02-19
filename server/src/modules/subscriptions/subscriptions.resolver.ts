@@ -1,5 +1,4 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { DeleteResult } from 'typeorm';
 
 import { CurrentUser } from '@modules/auth/decorators';
 import { SubscriptionsService } from './subscriptions.service';

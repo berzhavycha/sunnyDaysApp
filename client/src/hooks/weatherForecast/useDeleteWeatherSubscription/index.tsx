@@ -5,7 +5,7 @@ import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { Env } from '@/env';
 import { useSubscriptionError } from '@/context';
-import { ExtensionsErrorCode } from '@/graphql';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -18,12 +18,10 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   useEffect(() => {
     if (error) {
-      const { code, message } = error?.graphQLErrors[0].extensions
-
-      if (code === ExtensionsErrorCode.BAD_REQUEST) {
-        setError({ message });
+      if (error?.graphQLErrors[0]?.extensions.originalError) {
+        setError({ message: error?.graphQLErrors[0].extensions.originalError.message });
       } else if (error) {
-        setError({ message: 'Oops...Something went wrong!' });
+        setError({ message: UNEXPECTED_ERROR_MESSAGE });
       }
     }
   }, [error]);
@@ -69,7 +67,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
       setError({ message: '' })
     } catch (error) {
-      setError({ message: 'Oops...Something went wrong!' });
+      setError({ message: UNEXPECTED_ERROR_MESSAGE });
     }
   };
 

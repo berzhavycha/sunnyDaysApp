@@ -41,7 +41,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
           <View className="h-8">
             {fieldsError.unexpectedError && (
               <Text className="text-red-500 text-[12px]">
-                Oops...Something went wrong! Please try again later!
+                {fieldsError.unexpectedError} Try again later!
               </Text>
             )}
           </View>

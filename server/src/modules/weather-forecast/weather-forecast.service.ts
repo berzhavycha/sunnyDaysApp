@@ -97,6 +97,7 @@ export class WeatherForecastService {
   ): WeatherForecast[] {
     return responses.map((response) => {
       const { data } = response;
+      
       return {
         id: uuidv4(),
         city: data.location.name,

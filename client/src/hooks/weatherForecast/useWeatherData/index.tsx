@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { Env } from '@/env';
 import { useSubscriptionError } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { ExtensionsErrorCode } from '@/graphql';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
@@ -46,14 +46,12 @@ export const useWeatherData = (): HookReturn => {
     if (loading) {
       setError({ message: '' });
     }
-
+    
     if (error) {
-      const { code, message } = error?.graphQLErrors[0].extensions
-
-      if (code === ExtensionsErrorCode.BAD_REQUEST) {
-        setError({ message });
+      if (error?.graphQLErrors[0]?.extensions.originalError) {
+        setError({ message: error?.graphQLErrors[0].extensions.originalError.message });
       } else if (error) {
-        setError({ message: 'Oops...Something went wrong!' });
+        setError({ message: UNEXPECTED_ERROR_MESSAGE });
       }
     }
   }, [data, loading, error]);

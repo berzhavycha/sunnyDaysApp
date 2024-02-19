@@ -1,3 +1,1 @@
-export enum ExtensionsErrorCode {
-    BAD_REQUEST = 'BAD_REQUEST'
-}
+export const UNEXPECTED_ERROR_MESSAGE = 'Oops...Something went wrong!'

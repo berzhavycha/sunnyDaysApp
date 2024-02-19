@@ -3,10 +3,10 @@ import { useMutation } from '@apollo/client';
 
 import { useSubscriptionError } from '@/context';
 import { Env } from '@/env';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { AddWeatherSubscriptionDocument } from './mutations';
-import { ExtensionsErrorCode } from '@/graphql';
 
 type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -27,12 +27,10 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
-      const { code, message } = error?.graphQLErrors[0].extensions
-
-      if (code === ExtensionsErrorCode.BAD_REQUEST) {
-        setError({ message });
+      if (error?.graphQLErrors[0]?.extensions.originalError) {
+        setError({ message: error?.graphQLErrors[0].extensions.originalError.message });
       } else if (error) {
-        setError({ message: 'Oops...Something went wrong!' });
+        setError({ message: UNEXPECTED_ERROR_MESSAGE });
       }
     }
   }, [data, loading, error]);
@@ -43,18 +41,18 @@ export const useAddWeatherSubscription = (
       setError({ message: '' });
 
       if (!city) {
-        throw new Error('Please enter the city!');
+        return setError({ message: 'Please enter the city!' });
       }
 
       if (data?.userCitiesWeather.length === Env.MAX_WEATHER_CITIES_AMOUNT) {
-        throw new Error(`You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.`);
+        return setError({ message: `You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.` });
       }
 
       const isCityAlreadyExists = data?.userCitiesWeather.some(
         (forecast) => forecast.city === city,
       );
       if (isCityAlreadyExists) {
-        throw new Error(`You already have a subscription to ${city}.`);
+        return setError({ message: `You already have a subscription to ${city}.` });
       }
 
       await addWeatherSubscription({
@@ -67,7 +65,7 @@ export const useAddWeatherSubscription = (
 
       setCity('');
     } catch (err) {
-      setError({ message: 'Oops...Something went wrong!' });
+      setError({ message: UNEXPECTED_ERROR_MESSAGE });
     }
   };
 
