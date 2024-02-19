@@ -11,6 +11,7 @@ import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 import { CitiesModule } from '@modules/cities';
 import { CitySearchModule } from '@modules/citySearch';
+import { FeaturesModule } from '@modules/features';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CitySearchModule } from '@modules/citySearch';
     WeatherForecastModule,
     SubscriptionsModule,
     CitySearchModule,
+    FeaturesModule,
   ],
   providers: [
     {

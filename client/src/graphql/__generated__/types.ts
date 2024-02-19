@@ -61,6 +61,7 @@ export type MutationSignUpArgs = {
 export type Query = {
   __typename?: 'Query';
   citiesByPrefix: Array<SearchedCity>;
+  citySearchStatus: Scalars['Boolean']['output'];
   currentUser: Maybe<UserPayload>;
   userCitiesWeather: Array<WeatherForecast>;
 };

@@ -14,6 +14,7 @@ type Props<TItem> = {
   onPressOutside: () => void;
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
+  isAutocompleteEnabled?: boolean
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -27,6 +28,7 @@ export const InputAutocomplete = <TItem,>({
   onPressOutside,
   onInputFocus,
   isAutocompleteShown,
+  isAutocompleteEnabled
 }: Props<TItem>): JSX.Element => {
   return (
     <OutsidePressHandler
@@ -41,7 +43,7 @@ export const InputAutocomplete = <TItem,>({
         error={error}
         onFocus={onInputFocus}
       />
-      {!loading && data && isAutocompleteShown && (
+      {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <View className="absolute top-14 bg-gray-800 rounded w-full z-10 shadow-xl">
           <FlatList data={data} renderItem={onRenderItem} />
         </View>
