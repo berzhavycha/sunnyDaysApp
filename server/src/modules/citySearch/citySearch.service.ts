@@ -4,10 +4,10 @@ import { Cache } from 'cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
+import { TOO_MANY_REQUESTS_ERROR_CODE } from '@shared';
 import { CitySearchRepository } from './citySearch.repository';
 import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
-import { TOO_MANY_REQUESTS_ERROR_CODE } from './constants';
 
 @Injectable()
 export class CitySearchService {

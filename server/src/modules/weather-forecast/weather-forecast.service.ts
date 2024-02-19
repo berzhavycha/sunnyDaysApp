@@ -5,13 +5,14 @@ import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
+import { daysOfWeek } from '@shared'
 import { SubscriptionsService } from '@modules/subscriptions';
 import { upperCaseEveryFirstLetter } from '@shared/utils';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
-import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE, daysOfWeek } from './constants';
+import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
 @Injectable()
 export class WeatherForecastService {

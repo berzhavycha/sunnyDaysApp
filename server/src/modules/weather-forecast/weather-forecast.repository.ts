@@ -3,8 +3,8 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { ConfigService } from '@nestjs/config';
 
+import { HttpStatusCode } from '@shared';
 import { IWeatherApiResponse } from './interfaces';
-import { HttpStatusCode } from './constants';
 
 @Injectable()
 export class WeatherApiRepository {

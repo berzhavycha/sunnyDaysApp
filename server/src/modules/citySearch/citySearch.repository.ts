@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 
-import { HttpStatusCode } from '@modules/weather-forecast';
+import { HttpStatusCode } from '@shared';
 import { CityPrefixArgsDto } from './dtos';
 import { CitySearchResponse } from './interfaces';
 
