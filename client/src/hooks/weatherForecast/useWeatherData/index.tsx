@@ -5,6 +5,7 @@ import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { Env } from '@/env';
 import { useSubscriptionError } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { ExtensionsErrorCode } from '@/graphql';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
@@ -46,10 +47,14 @@ export const useWeatherData = (): HookReturn => {
       setError({ message: '' });
     }
 
-    if (error?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
-      setError({ message: error?.message ?? '' });
-    } else if (error) {
-      setError({ message: 'Oops...Something went wrong!' });
+    if (error) {
+      const { code, message } = error?.graphQLErrors[0].extensions
+
+      if (code === ExtensionsErrorCode.BAD_REQUEST) {
+        setError({ message });
+      } else if (error) {
+        setError({ message: 'Oops...Something went wrong!' });
+      }
     }
   }, [data, loading, error]);
 

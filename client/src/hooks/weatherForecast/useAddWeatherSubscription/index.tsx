@@ -6,6 +6,7 @@ import { Env } from '@/env';
 import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { AddWeatherSubscriptionDocument } from './mutations';
+import { ExtensionsErrorCode } from '@/graphql';
 
 type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -25,10 +26,14 @@ export const useAddWeatherSubscription = (
   );
 
   useEffect(() => {
-    if (error?.graphQLErrors[0].extensions.code === 'BAD_REQUEST') {
-      setError({ message: error?.message ?? '' });
-    } else if (error) {
-      setError({ message: 'Oops...Something went wrong!' });
+    if (error) {
+      const { code, message } = error?.graphQLErrors[0].extensions
+
+      if (code === ExtensionsErrorCode.BAD_REQUEST) {
+        setError({ message });
+      } else if (error) {
+        setError({ message: 'Oops...Something went wrong!' });
+      }
     }
   }, [data, loading, error]);
 
@@ -62,9 +67,7 @@ export const useAddWeatherSubscription = (
 
       setCity('');
     } catch (err) {
-      if (err instanceof Error) {
-        setError({ message: err.message });
-      }
+      setError({ message: 'Oops...Something went wrong!' });
     }
   };
 

@@ -4,16 +4,14 @@ import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
+// import { HttpExceptionFilter } from './httpExceptionFilter';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  // app.useGlobalFilters(new HttpExceptionFilter());
   app.use(cookieParser());
-  app.enableCors({
-    origin: 'http://localhost:3000', // specify the origin(s) from which requests are allowed
-    credentials: true
-  });
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
