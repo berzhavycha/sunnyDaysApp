@@ -35,8 +35,10 @@ export class CitySearchService {
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
 
-      const resultCitiesList = topCities.map((city) => ({
-        name: city.name,
+      const uniqueCityNames = Array.from(new Set(topCities.map(city => city.name)));
+
+      const resultCitiesList = uniqueCityNames.map(cityName => ({
+        name: cityName,
       }));
 
       await this.cacheManager.set(
