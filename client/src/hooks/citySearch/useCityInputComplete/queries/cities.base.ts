@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const GET_CITIES = gql`
+export const CITIES = gql`
   query Cities(
     $prefix: String!
     $sort: String!

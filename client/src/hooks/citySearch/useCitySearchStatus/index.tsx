@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 
-import { CitySearchStatusDocument } from './queries';
-import { getFetchPolicyForKey, ONE_MINUTE } from '@/utils/getFetchPolicyForKey';
 import { Env } from '@/env';
+import { getFetchPolicyForKey, ONE_MINUTE } from '@/utils';
+import { CitySearchStatusDocument } from './queries';
 
 type HookReturn = {
     isEnabled?: boolean
