@@ -9,4 +9,4 @@ import { CitySearchRepository } from './citySearch.repository';
   imports: [HttpModule],
   providers: [CitySearchService, CitySearchResolver, CitySearchRepository],
 })
-export class CitySearchModule { }
+export class CitySearchModule {}

@@ -1,5 +1,7 @@
-import { FIRST_LETTER_REGEX } from "../regex";
+import { FIRST_LOWERCASE_LETTER_REGEX } from '../regex';
 
 export const upperCaseEveryFirstLetter = (text: string): string => {
-    return text.replace(FIRST_LETTER_REGEX, (match) => match.toUpperCase());
+  return text.replace(FIRST_LOWERCASE_LETTER_REGEX, (match) =>
+    match.toUpperCase(),
+  );
 };

@@ -15,7 +15,7 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -35,9 +35,11 @@ export class CitySearchService {
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
 
-      const uniqueCityNames = Array.from(new Set(topCities.map(city => city.name)));
+      const uniqueCityNames = Array.from(
+        new Set(topCities.map((city) => city.name)),
+      );
 
-      const resultCitiesList = uniqueCityNames.map(cityName => ({
+      const resultCitiesList = uniqueCityNames.map((cityName) => ({
         name: cityName,
       }));
 

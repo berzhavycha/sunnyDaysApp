@@ -1,1 +1,1 @@
-export * from './firstLetter'
+export * from './firstLowerCaseLetter';

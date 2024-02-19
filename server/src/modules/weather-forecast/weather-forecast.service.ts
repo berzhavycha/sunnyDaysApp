@@ -5,9 +5,8 @@ import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
-import { daysOfWeek } from '@shared'
+import { daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
 import { SubscriptionsService } from '@modules/subscriptions';
-import { upperCaseEveryFirstLetter } from '@shared/utils';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
@@ -22,7 +21,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(
     userId: string,
@@ -55,7 +54,7 @@ export class WeatherForecastService {
           return null;
         }
 
-        cities.push(name)
+        cities.push(name);
 
         return this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
@@ -70,7 +69,10 @@ export class WeatherForecastService {
       const responses = await Promise.all(weatherForecastsPromises);
       const validResponses = responses.filter((res) => res !== null);
 
-      const newForecasts = this.mapResponsesToWeatherForecasts(validResponses, cities);
+      const newForecasts = this.mapResponsesToWeatherForecasts(
+        validResponses,
+        cities,
+      );
 
       for (const forecast of newForecasts) {
         await this.cacheManager.set(
@@ -86,20 +88,22 @@ export class WeatherForecastService {
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);
-      if (error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE) {
+      if (
+        error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
+      ) {
         throw new BadRequestException(
           error.response.data.error.message,
           error.response.status,
         );
       } else {
-        throw error
+        throw error;
       }
     }
   }
 
   private mapResponsesToWeatherForecasts(
     responses: AxiosResponse<IWeatherApiResponse>[],
-    cities: string[]
+    cities: string[],
   ): WeatherForecast[] {
     return responses.map((response, index) => {
       const { data } = response;

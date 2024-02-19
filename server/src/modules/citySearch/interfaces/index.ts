@@ -1,1 +1,1 @@
-export * from './citySearchResponse.interface'
+export * from './citySearchResponse.interface';

@@ -8,13 +8,13 @@ import { City } from './entities';
 export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
-  ) { }
+  ) {}
 
   async createCity(cityName: string): Promise<City> {
     let city = await this.findByName(cityName);
 
     if (city) {
-      return city
+      return city;
     }
 
     city = this.citiesRepository.create({ name: cityName.toLowerCase() });

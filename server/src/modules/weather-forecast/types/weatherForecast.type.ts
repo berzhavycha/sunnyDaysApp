@@ -6,7 +6,7 @@ import { WeatherDay } from './weatherDay.type';
 export class WeatherForecast {
   @Field(() => ID)
   id: string;
-  
+
   @Field(() => String)
   city: string;
 

@@ -11,7 +11,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async createSubscription(
     cityName: string,
@@ -36,7 +36,7 @@ export class SubscriptionsService {
       where: { cityId: city.id, userId },
     });
     await this.subscriptionRepository.delete(subscription);
-    return subscription
+    return subscription;
   }
 
   async getSubscriptionsByUserId(

@@ -4,6 +4,6 @@ import { FeaturesResolver } from './features.resolver';
 import { FeaturesService } from './features.service';
 
 @Module({
-  providers: [FeaturesResolver, FeaturesService]
+  providers: [FeaturesResolver, FeaturesService],
 })
-export class FeaturesModule { }
+export class FeaturesModule {}

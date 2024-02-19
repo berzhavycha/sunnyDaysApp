@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 
-import { ONE_DAY } from '@shared'
+import { ONE_DAY } from '@shared';
 import { IUser, UsersService } from '@modules/users';
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { AuthResult, ITokens, JwtPayload } from './interfaces';
@@ -20,7 +20,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {

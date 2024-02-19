@@ -34,4 +34,4 @@ import { FeaturesModule } from '@modules/features';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

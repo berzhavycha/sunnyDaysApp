@@ -1,1 +1,1 @@
-export * from './upperCaseEveryFirstLetter'
+export * from './upperCaseEveryFirstLetter';

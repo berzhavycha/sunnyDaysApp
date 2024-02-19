@@ -3,7 +3,7 @@ import { ObjectType, Field, Float, Int, ID } from '@nestjs/graphql';
 @ObjectType()
 export class WeatherDay {
   @Field(() => ID)
-  id: string;  
+  id: string;
 
   @Field(() => Float)
   tempCelsius: number;

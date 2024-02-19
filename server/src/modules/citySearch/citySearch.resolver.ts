@@ -7,7 +7,7 @@ import { CityPrefixArgsDto } from './dtos';
 
 @Resolver()
 export class CitySearchResolver {
-  constructor(private readonly citySearchService: CitySearchService) { }
+  constructor(private readonly citySearchService: CitySearchService) {}
 
   @Public()
   @Query(() => [SearchedCity]!, { name: 'citiesByPrefix' })
