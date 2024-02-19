@@ -6,6 +6,7 @@ import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
 import { SubscriptionsService } from '@modules/subscriptions';
+import { upperCaseEveryFirstLetter } from '@shared/utils';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
@@ -39,6 +40,7 @@ export class WeatherForecastService {
     }
 
     const cachedForecasts: WeatherForecast[] = [];
+    const cities: string[] = [];
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
@@ -51,6 +53,8 @@ export class WeatherForecastService {
           cachedForecasts.push(cachedForecast);
           return null;
         }
+
+        cities.push(name)
 
         return this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
@@ -65,7 +69,7 @@ export class WeatherForecastService {
       const responses = await Promise.all(weatherForecastsPromises);
       const validResponses = responses.filter((res) => res !== null);
 
-      const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
+      const newForecasts = this.mapResponsesToWeatherForecasts(validResponses, cities);
 
       for (const forecast of newForecasts) {
         await this.cacheManager.set(
@@ -94,13 +98,14 @@ export class WeatherForecastService {
 
   private mapResponsesToWeatherForecasts(
     responses: AxiosResponse<IWeatherApiResponse>[],
+    cities: string[]
   ): WeatherForecast[] {
-    return responses.map((response) => {
+    return responses.map((response, index) => {
       const { data } = response;
-      
+
       return {
         id: uuidv4(),
-        city: data.location.name,
+        city: upperCaseEveryFirstLetter(cities[index]),
         tempCelsius: data.current.temp_c,
         tempFahrenheit: data.current.temp_f,
         text: data.current.condition.text,
@@ -116,7 +121,6 @@ export class WeatherForecastService {
       const dateInstance = new Date(date);
 
       const dayOfWeek = daysOfWeek[dateInstance.getDay()];
-
 
       return {
         id: uuidv4(),

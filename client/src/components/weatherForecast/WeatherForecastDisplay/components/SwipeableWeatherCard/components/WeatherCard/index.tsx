@@ -13,7 +13,7 @@ export const WeatherCard: FC<WeatherForecast> = memo(
     return (
       <View className="flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl">
         <View className="w-full flex-row justify-between mb-2">
-          <View className="flex">
+          <View className="flex w-[60%]">
             <Text className="text-[38px] mb-2 font-bold text-white">{tempCelsius} °C</Text>
             <Text className="text-xs mb-1 text-white">{text}</Text>
             <Text className="text-xs text-white mb-2">Precipitation: {humidity}%</Text>

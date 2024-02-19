@@ -1,0 +1,1 @@
+export const FIRST_LETTER_REGEX = /(^|\s)[a-z]/g
