@@ -17,6 +17,7 @@ const _clientEnv = {
     MAX_FORECAST_DAYS: parseInt(process.env.MAX_FORECAST_DAYS ?? '', 10),
     WEATHER_FORECAST_CACHE_MINUTES_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_MINUTES_TIME ?? '', 10),
     PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH ?? '', 10),
+    FEATURE_CACHE_MINUTES_TIME: parseInt(process.env.FEATURE_CACHE_MINUTES_TIME ?? '', 10)
 };
 
 const { error, value } = envSchema.validate(_clientEnv);

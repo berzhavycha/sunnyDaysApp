@@ -10,6 +10,7 @@ const envSchema = Joi.object({
     MAX_FORECAST_DAYS: Joi.number().default(3),
     WEATHER_FORECAST_CACHE_MINUTES_TIME: Joi.number().default(30),
     PASSWORD_MIN_LENGTH: Joi.number().default(8),
+    FEATURE_CACHE_MINUTES_TIME: Joi.number().default(15)
 })
 
 module.exports = {
