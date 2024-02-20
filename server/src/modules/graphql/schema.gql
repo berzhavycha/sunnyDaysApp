@@ -46,20 +46,20 @@ type UserPayload {
 }
 
 type WeatherDay {
+  celsius: Float!
   dayOfWeek: String!
+  fahrenheit: Float!
   humidity: Int!
   id: ID!
-  tempCelsius: Float!
-  tempFahrenheit: Float!
   text: String!
 }
 
 type WeatherForecast {
+  celsius: Float!
   city: String!
   daysForecast: [WeatherDay!]!
+  fahrenheit: Float!
   humidity: Int!
   id: ID!
-  tempCelsius: Float!
-  tempFahrenheit: Float!
   text: String!
 }

@@ -6,6 +6,7 @@ import { apolloClient } from '@/graphql';
 import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentUserProvider } from '../CurrentUser';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
+import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -13,7 +14,9 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
       <CurrentUserProvider>
         <CitySearchListProvider>
           <SubscriptionErrorProvider>
-            <EventProvider>{children}</EventProvider>
+            <CurrentTempUnitProvider>
+              <EventProvider>{children}</EventProvider>
+            </CurrentTempUnitProvider>
           </SubscriptionErrorProvider>
         </CitySearchListProvider>
       </CurrentUserProvider>

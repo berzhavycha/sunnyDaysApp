@@ -5,14 +5,14 @@ export const USER_CITIES_WEATHER = gql`
     userCitiesWeather(citiesLimit: $citiesLimit, forecastDaysAmount: $forecastDaysAmount) {
       id
       city
-      tempFahrenheit
-      tempCelsius
+      fahrenheit
+      celsius
       text
       humidity
       daysForecast {
         id
-        tempCelsius
-        tempFahrenheit
+        celsius
+        fahrenheit
         text
         humidity
         dayOfWeek

@@ -6,10 +6,10 @@ export class WeatherDay {
   id: string;
 
   @Field(() => Float)
-  tempCelsius: number;
+  celsius: number;
 
   @Field(() => Float)
-  tempFahrenheit: number;
+  fahrenheit: number;
 
   @Field(() => String)
   text: string;
