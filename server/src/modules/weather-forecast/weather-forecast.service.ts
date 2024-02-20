@@ -111,8 +111,8 @@ export class WeatherForecastService {
       return {
         id: uuidv4(),
         city: upperCaseEveryFirstLetter(cities[index]),
-        tempCelsius: data.current.temp_c,
-        tempFahrenheit: data.current.temp_f,
+        celsius: data.current.temp_c,
+        fahrenheit: data.current.temp_f,
         text: data.current.condition.text,
         humidity: data.current.humidity,
         daysForecast: this.mapForecastDays(data.forecast.forecastday),
@@ -129,8 +129,8 @@ export class WeatherForecastService {
 
       return {
         id: uuidv4(),
-        tempCelsius: day.avgtemp_c,
-        tempFahrenheit: day.avgtemp_f,
+        celsius: day.avgtemp_c,
+        fahrenheit: day.avgtemp_f,
         text: day.condition.text,
         humidity: day.avghumidity,
         dayOfWeek,

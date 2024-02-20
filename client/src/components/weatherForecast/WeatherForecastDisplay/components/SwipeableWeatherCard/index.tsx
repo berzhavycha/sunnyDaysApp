@@ -13,6 +13,7 @@ type Props = {
 };
 
 export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.Element => {
+
   return (
     <Swipeable
       renderRightActions={() => (
@@ -40,11 +41,7 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
       <Animated.View>
         <WeatherCard
           key={item.city}
-          city={item.city}
-          tempCelsius={item.tempCelsius}
-          text={item.text}
-          humidity={item.humidity}
-          daysForecast={item.daysForecast}
+          info={item}
         />
       </Animated.View>
     </Swipeable>

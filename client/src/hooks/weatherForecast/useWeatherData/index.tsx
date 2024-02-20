@@ -15,7 +15,8 @@ type HookReturn = {
 
 export type WeatherForecast = {
   city: string;
-  tempCelsius: number;
+  celsius: number;
+  fahrenheit: number;
   humidity: number;
   text: string;
   daysForecast: WeatherForecastDays[];
@@ -24,7 +25,8 @@ export type WeatherForecast = {
 export type WeatherForecastDays = {
   text: string;
   dayOfWeek: string;
-  tempCelsius: number;
+  celsius: number;
+  fahrenheit: number;
   humidity: number;
 };
 
