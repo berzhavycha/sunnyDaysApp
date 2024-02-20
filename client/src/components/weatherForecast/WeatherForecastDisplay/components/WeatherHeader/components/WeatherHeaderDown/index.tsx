@@ -1,11 +1,16 @@
 import { View } from 'react-native';
 import { useState } from 'react';
 
-import { City, useCityInputComplete, useAddWeatherSubscription, useCitySearchStatus } from '@/hooks';
+import {
+  City,
+  useCityInputComplete,
+  useAddWeatherSubscription,
+  useCitySearchStatus,
+} from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
+import { useCitySearchList, useSubscriptionError } from '@/context';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { useCitySelection } from './hooks';
-import { useCitySearchList, useSubscriptionError } from '@/context';
 
 export const WeatherHeaderDown = (): JSX.Element => {
   const [city, setCity] = useState<string>('');
@@ -14,7 +19,7 @@ export const WeatherHeaderDown = (): JSX.Element => {
   const { renderCityItem } = useCitySelection(addSubscription);
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { isEnabled } = useCitySearchStatus()
+  const { isEnabled } = useCitySearchStatus();
 
   const onPressAddSubscription = async (): Promise<void> => await addSubscription(city);
 

@@ -29,6 +29,5 @@ export const fieldsErrorHandler = <T>(
     fieldsError = pickErrorsCallback([errors.message]);
   }
 
-
   return fieldsError;
 };

@@ -5,7 +5,7 @@ import { typePolicies } from './typePolicies';
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
-    typePolicies
+    typePolicies,
   }),
 });
 

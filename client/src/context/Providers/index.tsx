@@ -13,9 +13,7 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
       <CurrentUserProvider>
         <CitySearchListProvider>
           <SubscriptionErrorProvider>
-            <EventProvider>
-              {children}
-            </EventProvider>
+            <EventProvider>{children}</EventProvider>
           </SubscriptionErrorProvider>
         </CitySearchListProvider>
       </CurrentUserProvider>

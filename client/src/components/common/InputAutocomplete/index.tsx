@@ -14,7 +14,7 @@ type Props<TItem> = {
   onPressOutside: () => void;
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
-  isAutocompleteEnabled?: boolean
+  isAutocompleteEnabled?: boolean;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -28,7 +28,7 @@ export const InputAutocomplete = <TItem,>({
   onPressOutside,
   onInputFocus,
   isAutocompleteShown,
-  isAutocompleteEnabled
+  isAutocompleteEnabled,
 }: Props<TItem>): JSX.Element => {
   return (
     <OutsidePressHandler

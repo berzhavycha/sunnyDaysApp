@@ -5,18 +5,18 @@ import { getFetchPolicyForKey, ONE_MINUTE } from '@/utils';
 import { CitySearchStatusDocument } from './queries';
 
 type HookReturn = {
-    isEnabled?: boolean
+  isEnabled?: boolean;
 };
 
 export const useCitySearchStatus = (): HookReturn => {
-    const { data } = useQuery(CitySearchStatusDocument, {
-        fetchPolicy: getFetchPolicyForKey(
-            'citySearchStatus',
-            ONE_MINUTE * Env.FEATURE_CACHE_MINUTES_TIME,
-        ),
-    })
+  const { data } = useQuery(CitySearchStatusDocument, {
+    fetchPolicy: getFetchPolicyForKey(
+      'citySearchStatus',
+      ONE_MINUTE * Env.FEATURE_CACHE_MINUTES_TIME,
+    ),
+  });
 
-    return {
-        isEnabled: data?.citySearchStatus
-    };
+  return {
+    isEnabled: data?.citySearchStatus,
+  };
 };

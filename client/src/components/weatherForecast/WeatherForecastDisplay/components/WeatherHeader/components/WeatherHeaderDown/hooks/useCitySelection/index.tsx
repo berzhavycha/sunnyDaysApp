@@ -14,12 +14,12 @@ export const useCitySelection = (onCitySelect: (text: string) => Promise<void>):
   const { onPressOutside } = useCitySearchList();
 
   const renderCityItem = ({ item }: RenderCityItemProps): JSX.Element => {
-    const handleCitySelect = async (): Promise<void> => {
+    const citySelectHandler = async (): Promise<void> => {
       await onCitySelect(item.name);
       onPressOutside();
     };
 
-    return <ListItem content={item.name} onItemClick={handleCitySelect} />;
+    return <ListItem content={item.name} onItemClick={citySelectHandler} />;
   };
 
   return { renderCityItem };

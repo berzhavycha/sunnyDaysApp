@@ -46,7 +46,7 @@ export const useWeatherData = (): HookReturn => {
     if (loading) {
       setError({ message: '' });
     }
-    
+
     if (error) {
       if (error?.graphQLErrors[0]?.extensions.originalError) {
         setError({ message: error?.graphQLErrors[0].extensions.originalError.message });
@@ -55,7 +55,6 @@ export const useWeatherData = (): HookReturn => {
       }
     }
   }, [data, loading, error]);
-
 
   return { data, loading, error };
 };

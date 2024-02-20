@@ -1,2 +1,2 @@
-export * from './citySearchStatus.base'
-export * from './citySearchStatus.base.generated'
+export * from './citySearchStatus.base';
+export * from './citySearchStatus.base.generated';

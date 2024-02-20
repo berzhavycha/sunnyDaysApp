@@ -18,12 +18,9 @@ export const useAddWeatherSubscription = (
 ): HookReturn => {
   const { setError } = useSubscriptionError();
   const { data } = useWeatherData();
-  const [addWeatherSubscription, { loading, error }] = useMutation(
-    AddWeatherSubscriptionDocument,
-    {
-      refetchQueries: [UserCitiesWeatherDocument],
-    },
-  );
+  const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument, {
+    refetchQueries: [UserCitiesWeatherDocument],
+  });
 
   useEffect(() => {
     if (error) {
@@ -35,7 +32,6 @@ export const useAddWeatherSubscription = (
     }
   }, [data, loading, error]);
 
-
   const addSubscription = async (city: string): Promise<void> => {
     try {
       setError({ message: '' });
@@ -45,7 +41,9 @@ export const useAddWeatherSubscription = (
       }
 
       if (data?.userCitiesWeather.length === Env.MAX_WEATHER_CITIES_AMOUNT) {
-        return setError({ message: `You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.` });
+        return setError({
+          message: `You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.`,
+        });
       }
 
       const isCityAlreadyExists = data?.userCitiesWeather.some(

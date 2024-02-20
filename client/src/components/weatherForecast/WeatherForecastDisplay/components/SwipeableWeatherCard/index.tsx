@@ -17,9 +17,7 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
     <Swipeable
       renderRightActions={() => (
         <Animated.View
-          style={[
-            { backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 },
-          ]}
+          style={[{ backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 }]}
         >
           <CustomTouchable
             activeOpacity={0.5}
