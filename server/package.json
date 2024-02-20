@@ -23,7 +23,6 @@
     "madge": "madge --ts-config ./tsconfig.json --circular --extensions js,ts src/"
   },
   "dependencies": {
-    "@adminjs/typeorm": "^5.0.1",
     "@nestjs/apollo": "^12.0.11",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/cache-manager": "^2.2.0",
@@ -50,7 +49,8 @@
     "pg": "^8.11.3",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.19",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "typescript": "^5.1.3"
   },
   "devDependencies": {
     "@apollo/server": "^4.10.0",
@@ -78,8 +78,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "tsconfig-paths": "^4.2.0"
   },
   "jest": {
     "moduleFileExtensions": [
