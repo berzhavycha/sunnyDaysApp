@@ -1,9 +1,12 @@
-import { ObjectType, Field, Float, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Float, Int, ID } from '@nestjs/graphql';
 
 import { WeatherDay } from './weatherDay.type';
 
 @ObjectType()
 export class WeatherForecast {
+  @Field(() => ID)
+  id: string;
+
   @Field(() => String)
   city: string;
 

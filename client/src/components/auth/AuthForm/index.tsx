@@ -24,7 +24,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
     resolver: joiResolver(userSchema(authType)),
   });
 
-  const onSubmit = async (data: UserDto): Promise<void> => await authHandler(data)
+  const onSubmit = async (data: UserDto): Promise<void> => await authHandler(data);
 
   return (
     <>
@@ -36,12 +36,15 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
             source={require('@/assets/images/weather-icon.png')}
             className="w-[80px] h-[80px] mb-8"
           />
-          <Text
-            className={`text-2xl mb-${subTitle !== undefined ? '2' : '8'} text-white font-bold`}
-          >
-            {title}
-          </Text>
-          {subTitle && <Text className="text-xs mb-8 font-light text-gray-400">{subTitle}</Text>}
+          <Text className="text-2xl mb-2 text-white font-bold">{title}</Text>
+          {subTitle && <Text className="text-xs mb-2 font-light text-gray-400">{subTitle}</Text>}
+          <View className="h-8">
+            {fieldsError.unexpectedError && (
+              <Text className="text-red-500 text-[12px]">
+                {fieldsError.unexpectedError} Try again later!
+              </Text>
+            )}
+          </View>
           <View className="w-64">
             <ControlledInput
               control={control}
@@ -68,10 +71,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
                 error={fieldsError.confirmPassword ?? ''}
               />
             )}
-            <Button
-              text={convertCamelToSpacedPascal(authType)}
-              onPress={handleSubmit(onSubmit)}
-            />
+            <Button text={convertCamelToSpacedPascal(authType)} onPress={handleSubmit(onSubmit)} />
             <View className="justify-center items-center">
               {authType === AuthType.SIGN_IN ? (
                 <Text className="text-gray-400 mt-8">

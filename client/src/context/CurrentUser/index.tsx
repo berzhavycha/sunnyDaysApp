@@ -12,19 +12,19 @@ import {
 
 import { CurrentUserDocument } from './queries';
 
-interface CurrentUserState {
+type CurrentUserState = {
   email: string;
-}
+};
 
-interface CurrentUserContextType {
+type ContextType = {
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
   onSignOut: () => Promise<void>;
-}
+};
 
-const CurrentUserContext = createContext<CurrentUserContextType | null>(null);
+const CurrentUserContext = createContext<ContextType | null>(null);
 
-export const useCurrentUser = (): CurrentUserContextType => {
+export const useCurrentUser = (): ContextType => {
   const userContext = useContext(CurrentUserContext);
 
   if (!userContext) {
@@ -55,7 +55,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     await client.clearStore();
   };
 
-  const contextValue: CurrentUserContextType = {
+  const contextValue: ContextType = {
     currentUser,
     setCurrentUser,
     onSignOut,

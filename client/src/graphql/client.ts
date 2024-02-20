@@ -1,9 +1,12 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
 import { errorLink, refreshTokenLink, mainHttpLink } from './links';
+import { typePolicies } from './typePolicies';
 
 export const apolloClient = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies,
+  }),
 });
 
 export const apolloLinks = ApolloLink.from([

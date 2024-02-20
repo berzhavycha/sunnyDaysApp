@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import OutsidePressHandler from 'react-native-outside-press';
 
@@ -12,6 +11,10 @@ type Props<TItem> = {
   onSearchChange: (text: string) => void;
   placeholder: string;
   error: string;
+  onPressOutside: () => void;
+  onInputFocus: () => void;
+  isAutocompleteShown: boolean;
+  isAutocompleteEnabled?: boolean;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -22,12 +25,11 @@ export const InputAutocomplete = <TItem,>({
   onSearchChange,
   placeholder,
   error,
+  onPressOutside,
+  onInputFocus,
+  isAutocompleteShown,
+  isAutocompleteEnabled,
 }: Props<TItem>): JSX.Element => {
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-
-  const onPressOutside = (): void => setIsInputFocused(false);
-  const onInputFocus = (): void => setIsInputFocused(true);
-
   return (
     <OutsidePressHandler
       onOutsidePress={onPressOutside}
@@ -41,7 +43,7 @@ export const InputAutocomplete = <TItem,>({
         error={error}
         onFocus={onInputFocus}
       />
-      {!loading && data && isInputFocused && (
+      {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <View className="absolute top-14 bg-gray-800 rounded w-full z-10 shadow-xl">
           <FlatList data={data} renderItem={onRenderItem} />
         </View>

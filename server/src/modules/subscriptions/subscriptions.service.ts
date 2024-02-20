@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { CitiesService } from '@modules/cities';
 import { Subscription } from './entities';
@@ -17,11 +17,7 @@ export class SubscriptionsService {
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
-    let city = await this.citiesService.findByName(cityName);
-
-    if (!city) {
-      city = await this.citiesService.createCity(cityName);
-    }
+    const city = await this.citiesService.createCity(cityName);
 
     const subscriptionEntity = this.subscriptionRepository.create({
       cityId: city.id,
@@ -33,13 +29,14 @@ export class SubscriptionsService {
   async deleteSubscription(
     cityName: string,
     userId: string,
-  ): Promise<DeleteResult> {
+  ): Promise<Subscription> {
     const city = await this.citiesService.findByName(cityName);
 
     const subscription = await this.subscriptionRepository.findOne({
       where: { cityId: city.id, userId },
     });
-    return this.subscriptionRepository.delete(subscription);
+    await this.subscriptionRepository.delete(subscription);
+    return subscription;
   }
 
   async getSubscriptionsByUserId(

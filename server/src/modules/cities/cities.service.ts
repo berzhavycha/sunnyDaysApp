@@ -11,7 +11,13 @@ export class CitiesService {
   ) {}
 
   async createCity(cityName: string): Promise<City> {
-    const city = this.citiesRepository.create({ name: cityName.toLowerCase() });
+    let city = await this.findByName(cityName);
+
+    if (city) {
+      return city;
+    }
+
+    city = this.citiesRepository.create({ name: cityName.toLowerCase() });
     return this.citiesRepository.save(city);
   }
 

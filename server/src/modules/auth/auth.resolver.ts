@@ -9,7 +9,7 @@ import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { CurrentUser, Public } from './decorators';
 import { Message, UserPayload } from './types';
 
-@Resolver(() => String)
+@Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 

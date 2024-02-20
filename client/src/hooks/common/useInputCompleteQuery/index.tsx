@@ -1,10 +1,10 @@
 import { ApolloError, DocumentNode, OperationVariables, useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 
-type UseInputCompleteQueryResult<TItem> = {
+type HookReturn<TItem> = {
   loading: boolean;
   data: TItem[];
-  error?: ApolloError | undefined;
+  error?: ApolloError;
 };
 
 export const useInputCompleteQuery = <
@@ -16,7 +16,7 @@ export const useInputCompleteQuery = <
   searchInput: string,
   variables: TVariables,
   extractData: (data: TData) => TItem[],
-): UseInputCompleteQueryResult<TItem> => {
+): HookReturn<TItem> => {
   const [getItems, { loading, data, error }] = useLazyQuery(query);
 
   useEffect(() => {

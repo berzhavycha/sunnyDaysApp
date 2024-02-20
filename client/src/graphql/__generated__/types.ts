@@ -27,11 +27,6 @@ export type Credentials = {
   password: Scalars['String']['input'];
 };
 
-export type GeodbCity = {
-  __typename?: 'GeodbCity';
-  name: Scalars['String']['output'];
-};
-
 export type Message = {
   __typename?: 'Message';
   message: Scalars['String']['output'];
@@ -65,13 +60,15 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  citiesByPrefix: Array<GeodbCity>;
+  citiesByPrefix: Array<SearchedCity>;
+  citySearchStatus: Scalars['Boolean']['output'];
   currentUser: Maybe<UserPayload>;
   userCitiesWeather: Array<WeatherForecast>;
 };
 
 export type QueryCitiesByPrefixArgs = {
   limit: Scalars['Int']['input'];
+  minPopulation: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
   prefix: Scalars['String']['input'];
   sort: Scalars['String']['input'];
@@ -80,6 +77,11 @@ export type QueryCitiesByPrefixArgs = {
 export type QueryUserCitiesWeatherArgs = {
   citiesLimit: Scalars['Int']['input'];
   forecastDaysAmount: Scalars['Int']['input'];
+};
+
+export type SearchedCity = {
+  __typename?: 'SearchedCity';
+  name: Scalars['String']['output'];
 };
 
 export type Subscription = {
@@ -98,6 +100,7 @@ export type WeatherDay = {
   __typename?: 'WeatherDay';
   dayOfWeek: Scalars['String']['output'];
   humidity: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
   tempCelsius: Scalars['Float']['output'];
   tempFahrenheit: Scalars['Float']['output'];
   text: Scalars['String']['output'];
@@ -108,6 +111,7 @@ export type WeatherForecast = {
   city: Scalars['String']['output'];
   daysForecast: Array<WeatherDay>;
   humidity: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
   tempCelsius: Scalars['Float']['output'];
   tempFahrenheit: Scalars['Float']['output'];
   text: Scalars['String']['output'];

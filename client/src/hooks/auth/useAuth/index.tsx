@@ -14,21 +14,22 @@ export type UserDto = {
 
 export type FieldErrorsState<T> = {
   [key in keyof T]: string;
+} & {
+  unexpectedError?: string;
 };
 
-export type AuthHookReturnType = {
+type HookReturn = {
   authHandler: (userDto: UserDto) => Promise<void>;
   loading: boolean;
-  fieldsError: FieldErrorsState<UserDto>
+  fieldsError: FieldErrorsState<UserDto>;
 };
 
-export const useAuth = (
-  mutation: DocumentNode = SignInDocument,
-): AuthHookReturnType => {
+export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => {
   const [fieldsError, setFieldsError] = useState<FieldErrorsState<UserDto>>({
     email: '',
     password: '',
     confirmPassword: '',
+    unexpectedError: '',
   });
 
   const [authMutation, { loading }] = useMutation(mutation);
@@ -62,6 +63,6 @@ export const useAuth = (
   return {
     loading,
     authHandler,
-    fieldsError
+    fieldsError,
   };
 };

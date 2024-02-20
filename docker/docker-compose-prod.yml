@@ -1,0 +1,46 @@
+version: '3.8' 
+
+services:
+  server:
+    build: 
+      context: ../server
+      dockerfile: ./Dockerfile
+      target: production
+    ports:
+      - "4000:4000"
+    env_file:
+      - ../server/.env
+    networks:
+      - server_network
+    restart: unless-stopped
+    command: sh -c 'echo "Running migrations..." && npm run typeorm migration:run -- -d ./src/modules/database/configs/index.ts && echo "Migrations complete." && npm run start:prod'
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres
+    ports:
+      - 5433:5432
+    networks:
+      - server_network
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=weather_app_password
+
+  redis:
+    image: redis
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+    ports:
+      - 6379:6379
+    networks:
+      - server_network
+    restart: unless-stopped
+
+networks:
+  server_network:
+    driver: bridge

@@ -11,10 +11,6 @@ input Credentials {
   password: String!
 }
 
-type GeodbCity {
-  name: String!
-}
-
 type Message {
   message: String!
 }
@@ -29,9 +25,14 @@ type Mutation {
 }
 
 type Query {
-  citiesByPrefix(limit: Int!, offset: Int!, prefix: String!, sort: String!): [GeodbCity!]!
+  citiesByPrefix(limit: Int!, minPopulation: Int!, offset: Int!, prefix: String!, sort: String!): [SearchedCity!]!
+  citySearchStatus: Boolean!
   currentUser: UserPayload
   userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
+}
+
+type SearchedCity {
+  name: String!
 }
 
 type Subscription {
@@ -47,6 +48,7 @@ type UserPayload {
 type WeatherDay {
   dayOfWeek: String!
   humidity: Int!
+  id: ID!
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!
@@ -56,6 +58,7 @@ type WeatherForecast {
   city: String!
   daysForecast: [WeatherDay!]!
   humidity: Int!
+  id: ID!
   tempCelsius: Float!
   tempFahrenheit: Float!
   text: String!

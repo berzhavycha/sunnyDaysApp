@@ -4,4 +4,5 @@ export const appValidationSchema = Joi.object({
   LOGIN_FIELD: Joi.string().default('email'),
   PORT: Joi.number().default(4000),
   COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(30),
+  FEATURES_MANAGER_KEY: Joi.string().required(),
 });

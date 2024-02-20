@@ -8,14 +8,16 @@ require("dotenv").config({
 });
 
 const _clientEnv = {
-    GRAPHQL_BASE_URL: process.env.GRAPHQL_BASE_URL,
-    FETCH_CITY_AUTOCOMPLETE_LIMIT: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_LIMIT ?? '', 10),
-    FETCH_CITY_AUTOCOMPLETE_SORT: process.env.FETCH_CITY_AUTOCOMPLETE_SORT,
-    FETCH_CITY_AUTOCOMPLETE_OFFSET: parseInt(process.env.FETCH_CITY_AUTOCOMPLETE_OFFSET ?? '', 10),
+    BASE_URL: process.env.BASE_URL,
+    CITIES_SEARCH_LIMIT: parseInt(process.env.CITIES_SEARCH_LIMIT ?? '', 10),
+    CITIES_SEARCH_SORT: process.env.CITIES_SEARCH_SORT,
+    CITIES_SEARCH_OFFSET: parseInt(process.env.CITIES_SEARCH_OFFSET ?? '', 10),
+    CITIES_SEARCH_MIN_POPULATION: parseInt(process.env.CITIES_SEARCH_MIN_POPULATION ?? '', 10),
     MAX_WEATHER_CITIES_AMOUNT: parseInt(process.env.MAX_WEATHER_CITIES_AMOUNT ?? '', 10),
     MAX_FORECAST_DAYS: parseInt(process.env.MAX_FORECAST_DAYS ?? '', 10),
     WEATHER_FORECAST_CACHE_MINUTES_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_MINUTES_TIME ?? '', 10),
     PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH ?? '', 10),
+    FEATURE_CACHE_MINUTES_TIME: parseInt(process.env.FEATURE_CACHE_MINUTES_TIME ?? '', 10)
 };
 
 const { error, value } = envSchema.validate(_clientEnv);

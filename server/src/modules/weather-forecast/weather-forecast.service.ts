@@ -1,15 +1,17 @@
-import { Injectable, Inject, HttpException } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
+import { v4 as uuidv4 } from 'uuid';
 
+import { daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
 import { SubscriptionsService } from '@modules/subscriptions';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
-import { daysOfWeek } from './constants';
+import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
 @Injectable()
 export class WeatherForecastService {
@@ -38,6 +40,7 @@ export class WeatherForecastService {
     }
 
     const cachedForecasts: WeatherForecast[] = [];
+    const cities: string[] = [];
 
     const weatherForecastsPromises = userSubscriptions.map(
       async (subscription) => {
@@ -50,6 +53,8 @@ export class WeatherForecastService {
           cachedForecasts.push(cachedForecast);
           return null;
         }
+
+        cities.push(name);
 
         return this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
@@ -64,7 +69,10 @@ export class WeatherForecastService {
       const responses = await Promise.all(weatherForecastsPromises);
       const validResponses = responses.filter((res) => res !== null);
 
-      const newForecasts = this.mapResponsesToWeatherForecasts(validResponses);
+      const newForecasts = this.mapResponsesToWeatherForecasts(
+        validResponses,
+        cities,
+      );
 
       for (const forecast of newForecasts) {
         await this.cacheManager.set(
@@ -80,21 +88,29 @@ export class WeatherForecastService {
       return [...cachedForecasts, ...newForecasts];
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);
-      throw new HttpException(
-        error.response.data.error.message,
-        error.response.status,
-      );
+      if (
+        error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
+      ) {
+        throw new BadRequestException(
+          error.response.data.error.message,
+          error.response.status,
+        );
+      } else {
+        throw error;
+      }
     }
   }
 
   private mapResponsesToWeatherForecasts(
     responses: AxiosResponse<IWeatherApiResponse>[],
+    cities: string[],
   ): WeatherForecast[] {
-    return responses.map((response) => {
+    return responses.map((response, index) => {
       const { data } = response;
 
       return {
-        city: data.location.name,
+        id: uuidv4(),
+        city: upperCaseEveryFirstLetter(cities[index]),
         tempCelsius: data.current.temp_c,
         tempFahrenheit: data.current.temp_f,
         text: data.current.condition.text,
@@ -112,6 +128,7 @@ export class WeatherForecastService {
       const dayOfWeek = daysOfWeek[dateInstance.getDay()];
 
       return {
+        id: uuidv4(),
         tempCelsius: day.avgtemp_c,
         tempFahrenheit: day.avgtemp_f,
         text: day.condition.text,

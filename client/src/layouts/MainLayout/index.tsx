@@ -1,18 +1,15 @@
 import { ApolloProvider } from '@apollo/client';
-import { EventProvider } from 'react-native-outside-press';
 
-import { CurrentUserProvider } from '@/context';
+import { Providers } from '@/context';
 import { apolloClient } from '@/graphql';
 import { InitialLayout } from '../InitialLayout';
 
 export const MainLayout = (): JSX.Element => {
   return (
     <ApolloProvider client={apolloClient}>
-      <CurrentUserProvider>
-        <EventProvider>
-          <InitialLayout />
-        </EventProvider>
-      </CurrentUserProvider>
+      <Providers>
+        <InitialLayout />
+      </Providers>
     </ApolloProvider>
   );
 };
