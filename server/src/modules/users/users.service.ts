@@ -3,12 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 
 import { User } from './entities';
+import { IUser } from './interfaces';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async createUser(
     email: string,
@@ -44,5 +45,11 @@ export class UsersService {
     Object.assign(user, updateUserDto);
 
     return this.usersRepository.save(user);
+  }
+
+  async getSafeUser(user: User): Promise<IUser | null> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordHash, refreshTokenHash, ...result } = user;
+    return result;
   }
 }

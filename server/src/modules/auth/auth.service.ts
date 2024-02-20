@@ -20,7 +20,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -60,9 +60,7 @@ export class AuthService {
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { passwordHash, refreshTokenHash, ...result } = user;
-      return result;
+      return this.usersService.getSafeUser(user)
     }
 
     throw new UnauthorizedException('Invalid password!');

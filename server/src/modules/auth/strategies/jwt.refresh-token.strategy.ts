@@ -37,8 +37,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
     if (!user) {
       throw new UnauthorizedException();
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { passwordHash, refreshTokenHash, ...safeUser } = user;
-    return safeUser;
+
+    return this.usersService.getSafeUser(user)
   }
 }
