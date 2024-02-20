@@ -9,12 +9,12 @@ import { Env } from '@/env';
 import { pickWeatherIcon } from '../../utils';
 
 type Props = {
-  info: WeatherForecastDays
-}
+  info: WeatherForecastDays;
+};
 
 export const SubWeatherForecastDay: FC<Props> = memo(({ info }) => {
-  const { text, humidity, dayOfWeek } = info
-  const { currentTempUnit } = useCurrentTempUnit()
+  const { text, humidity, dayOfWeek } = info;
+  const { currentTempUnit } = useCurrentTempUnit();
 
   const dayWeatherIcon = pickWeatherIcon(text);
 
@@ -28,11 +28,12 @@ export const SubWeatherForecastDay: FC<Props> = memo(({ info }) => {
           style={{ width: 40, height: 40 }}
           className="mb-2 p-8"
         />
-        <Text className="text-[16px] font-bold text-white">{info[currentTempUnit.name]} {tempUnitSigns[currentTempUnit.name]}</Text>
+        <Text className="text-[16px] font-bold text-white">
+          {info[currentTempUnit.name]} {tempUnitSigns[currentTempUnit.name]}
+        </Text>
         <Text className="text-xs text-white">{humidity}%</Text>
       </View>
       <Text className="text-gray-300 font-bold">{dayOfWeek}</Text>
     </View>
   );
-},
-);
+});

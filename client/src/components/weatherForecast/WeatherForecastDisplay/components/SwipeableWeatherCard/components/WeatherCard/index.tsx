@@ -3,18 +3,18 @@ import { View, Text, Image } from 'react-native';
 
 import { useCurrentTempUnit } from '@/context';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
+import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 import { WeatherForecast } from '@/hooks';
 import { SubWeatherForecastDay } from '../SubWeatherForecastDay';
 import { pickWeatherIcon } from '../../utils';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 
 type Props = {
-  info: WeatherForecast
-}
+  info: WeatherForecast;
+};
 
 export const WeatherCard: FC<Props> = memo(({ info }) => {
-  const { currentTempUnit } = useCurrentTempUnit()
-  const { city, text, humidity, daysForecast } = info
+  const { currentTempUnit } = useCurrentTempUnit();
+  const { city, text, humidity, daysForecast } = info;
 
   const weatherIcon = pickWeatherIcon(text);
 
@@ -22,7 +22,9 @@ export const WeatherCard: FC<Props> = memo(({ info }) => {
     <View className="flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl">
       <View className="w-full flex-row justify-between mb-2">
         <View className="flex w-[60%]">
-          <Text className="text-[38px] mb-2 font-bold text-white">{info[currentTempUnit.name]} {tempUnitSigns[currentTempUnit.name]}</Text>
+          <Text className="text-[38px] mb-2 font-bold text-white">
+            {info[currentTempUnit.name]} {tempUnitSigns[currentTempUnit.name]}
+          </Text>
           <Text className="text-xs mb-1 text-white">{text}</Text>
           <Text className="text-xs text-white mb-2">Precipitation: {humidity}%</Text>
           <Text className="text-[20px] font-bold text-white">{city}</Text>
@@ -39,5 +41,4 @@ export const WeatherCard: FC<Props> = memo(({ info }) => {
       </View>
     </View>
   );
-},
-);
+});

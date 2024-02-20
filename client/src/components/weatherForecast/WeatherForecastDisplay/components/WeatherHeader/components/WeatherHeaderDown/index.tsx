@@ -1,11 +1,7 @@
 import { View } from 'react-native';
 import { useState } from 'react';
 
-import {
-  City,
-  useCityInputComplete,
-  useAddWeatherSubscription,
-} from '@/hooks';
+import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
