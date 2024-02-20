@@ -1,7 +1,10 @@
 import { FC, createContext, PropsWithChildren, useState, useContext } from 'react';
 
+import { useCitySearchStatus } from '@/hooks/citySearch';
+
 type CitySearchListState = {
-  isShown: boolean;
+  isVisible: boolean;
+  isEnabled: boolean;
 };
 
 type ContextType = {
@@ -23,21 +26,24 @@ export const useCitySearchList = (): ContextType => {
 };
 
 export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
+  const { isEnabled } = useCitySearchStatus();
+
   const [listState, setListState] = useState<CitySearchListState>({
-    isShown: false,
+    isVisible: false,
+    isEnabled
   });
 
   const onPressOutside = (): void => {
     setListState((prevState) => ({
       ...prevState,
-      isShown: false,
+      isVisible: false,
     }));
   };
 
   const onInputFocus = (): void => {
     setListState((prevState) => ({
       ...prevState,
-      isShown: true,
+      isVisible: true,
     }));
   };
 

@@ -5,7 +5,6 @@ import {
   City,
   useCityInputComplete,
   useAddWeatherSubscription,
-  useCitySearchStatus,
 } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
@@ -19,7 +18,6 @@ export const WeatherHeaderDown = (): JSX.Element => {
   const { renderCityItem } = useCitySelection(addSubscription);
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { isEnabled } = useCitySearchStatus();
 
   const onPressAddSubscription = async (): Promise<void> => await addSubscription(city);
 
@@ -36,8 +34,8 @@ export const WeatherHeaderDown = (): JSX.Element => {
           error={error.message}
           onInputFocus={onInputFocus}
           onPressOutside={onPressOutside}
-          isAutocompleteShown={listState.isShown}
-          isAutocompleteEnabled={isEnabled}
+          isAutocompleteShown={listState.isVisible}
+          isAutocompleteEnabled={listState.isEnabled}
         />
       </View>
       <View className="w-14">
