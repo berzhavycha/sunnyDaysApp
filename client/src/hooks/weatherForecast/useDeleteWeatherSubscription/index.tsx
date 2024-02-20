@@ -17,9 +17,9 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   useEffect(() => {
     if (error) {
-      if (error?.graphQLErrors[0]?.extensions.originalError) {
-        setError({ message: error?.graphQLErrors[0].extensions.originalError.message });
-      } else if (error) {
+      if (error.graphQLErrors[0]?.extensions.originalError) {
+        setError({ message: error.graphQLErrors[0].extensions.originalError.message });
+      } else {
         setError({ message: UNEXPECTED_ERROR_MESSAGE });
       }
     }
