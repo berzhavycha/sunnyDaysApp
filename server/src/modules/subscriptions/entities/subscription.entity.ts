@@ -1,9 +1,9 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  PrimaryColumn,
   JoinColumn,
   ManyToOne,
+  Column,
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
@@ -19,11 +19,11 @@ export class Subscription implements ISubscription {
   id: string;
 
   @Field(() => String)
-  @PrimaryColumn({ name: 'user_id' })
+  @Column({ name: 'user_id' })
   userId: string;
 
   @Field(() => String)
-  @PrimaryColumn({ name: 'city_id' })
+  @Column({ name: 'city_id' })
   cityId: string;
 
   @ManyToOne('User', 'subscriptions', { onDelete: 'CASCADE' })
