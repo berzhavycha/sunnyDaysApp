@@ -49,6 +49,7 @@ export class WeatherForecastService {
         const cachedForecast = await this.cacheManager.get<WeatherForecast>(
           `weather_forecast:${name}`,
         );
+        
         if (cachedForecast) {
           cachedForecasts.push(cachedForecast);
           return null;

@@ -19,11 +19,11 @@ export class Subscription implements ISubscription {
   id: string;
 
   @Field(() => String)
-  @Column({ name: 'user_id' })
+  @Column()
   userId: string;
 
   @Field(() => String)
-  @Column({ name: 'city_id' })
+  @Column()
   cityId: string;
 
   @ManyToOne('User', 'subscriptions', { onDelete: 'CASCADE' })
