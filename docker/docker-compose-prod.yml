@@ -13,7 +13,7 @@ services:
     networks:
       - server_network
     restart: unless-stopped
-    command: sh -c 'echo "Running migrations..." && npm run typeorm migration:run -- -d ./dist/modules/database/configs/index.js && echo "Migrations complete." && npm run start:prod'
+    command: sh -c 'echo "Running migrations..." && npm run typeorm migration:run -- -d ./dist/modules/database/configs/index.js && echo "Migrations complete." && node dist/main'
     depends_on:
       - postgres
       - redis
