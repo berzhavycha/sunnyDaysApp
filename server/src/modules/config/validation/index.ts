@@ -4,8 +4,8 @@ import { appValidationSchema } from './app';
 import { jwtValidationSchema } from './jwt';
 import { postgresValidationSchema } from './postgres';
 import { redisValidationSchema } from './redis';
-import { weatherApiValidationSchema } from './weatherApi';
-import { citySearchValidationSchema } from './citySearch';
+import { weatherApiValidationSchema } from './weather-api';
+import { citySearchValidationSchema } from './city-search';
 
 export const configValidationSchema = Joi.object()
   .concat(appValidationSchema)

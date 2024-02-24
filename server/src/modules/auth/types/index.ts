@@ -1,2 +1,2 @@
 export * from './message.type';
-export * from './userPayload.type';
+export * from './user-payload.type';

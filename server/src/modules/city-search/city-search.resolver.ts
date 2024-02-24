@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { Public } from '@modules/auth';
-import { CitySearchService } from './citySearch.service';
+import { CitySearchService } from './city-search.service';
 import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
 

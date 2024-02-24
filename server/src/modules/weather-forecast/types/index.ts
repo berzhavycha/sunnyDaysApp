@@ -1,2 +1,2 @@
-export * from './weatherForecast.type';
-export * from './weatherDay.type';
+export * from './weather-forecast.type';
+export * from './weather-day.type';

@@ -1,1 +1,1 @@
-export * from './forecastParamArgs.dto';
+export * from './forecast-param-args.dto';

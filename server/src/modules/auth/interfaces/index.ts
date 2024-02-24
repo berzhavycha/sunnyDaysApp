@@ -1,3 +1,3 @@
 export * from './tokens.interface';
-export * from './jwtPayload.interface';
-export * from './authResult.interface';
+export * from './jwt-payload.interface';
+export * from './auth-result.interface';
