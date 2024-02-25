@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
 import { TOO_MANY_REQUESTS_ERROR_CODE } from '@shared';
-import { CitySearchRepository } from './citySearch.repository';
+import { CitySearchRepository } from './city-search.repository';
 import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
 

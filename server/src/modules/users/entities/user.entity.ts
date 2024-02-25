@@ -19,10 +19,10 @@ export class User implements IUser {
   @Column({ unique: true })
   email: string;
 
-  @Column({ name: 'password_hash' })
+  @Column()
   passwordHash: string;
 
-  @Column({ name: 'refresh_token_hash', nullable: true })
+  @Column({ nullable: true })
   refreshTokenHash: string | null;
 
   @ManyToMany('City', { cascade: true })
@@ -36,6 +36,7 @@ export class User implements IUser {
       name: 'city_id',
       referencedColumnName: 'id',
     },
+    synchronize: false
   })
   cities: ICity[];
 

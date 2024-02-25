@@ -1,6 +1,6 @@
 import { ObjectType, Field, Float, Int, ID } from '@nestjs/graphql';
 
-import { WeatherDay } from './weatherDay.type';
+import { WeatherDay } from './weather-day.type';
 
 @ObjectType()
 export class WeatherForecast {

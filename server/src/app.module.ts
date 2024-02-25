@@ -10,7 +10,7 @@ import { DatabaseModule } from '@modules/database';
 import { GraphqlModule } from '@modules/graphql';
 import { RedisModule } from '@modules/redis';
 import { CitiesModule } from '@modules/cities';
-import { CitySearchModule } from '@modules/citySearch';
+import { CitySearchModule } from '@modules/city-search';
 import { FeaturesModule } from '@modules/features';
 
 @Module({

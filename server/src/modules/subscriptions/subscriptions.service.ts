@@ -11,7 +11,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
@@ -43,6 +43,10 @@ export class SubscriptionsService {
     userId: string,
     limit: number,
   ): Promise<Subscription[]> {
-    return this.subscriptionRepository.find({ where: { userId }, take: limit });
+    return this.subscriptionRepository.find({
+      where: { userId },
+      relations: ['city'],
+      take: limit,
+    });
   }
 }

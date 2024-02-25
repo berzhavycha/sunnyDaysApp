@@ -2,7 +2,7 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
 import { ExtendedGraphQLContext } from '@modules/graphql';
-import { IUser } from '@modules/users';
+import { SafeUser } from '@modules/users';
 import { AuthService } from './auth.service';
 import { UserDto } from './dtos';
 import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
@@ -69,7 +69,7 @@ export class AuthResolver {
 
   @Query(() => UserPayload, { name: 'currentUser', nullable: true })
   public async getCurrentUser(
-    @CurrentUser() user: IUser,
+    @CurrentUser() user: SafeUser,
   ): Promise<UserPayload | null> {
     if (user) return user;
     else return null;

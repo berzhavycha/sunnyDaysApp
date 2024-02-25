@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 
 import { User } from './entities';
-import { IUser } from './interfaces';
+import { SafeUser } from './interfaces';
 
 @Injectable()
 export class UsersService {
@@ -47,7 +47,7 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async getSafeUser(user: User): Promise<IUser | null> {
+  async getSafeUser(user: User): Promise<SafeUser | null> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, refreshTokenHash, ...result } = user;
     return result;

@@ -1,2 +1,2 @@
-export * from './forecastDay';
-export * from './weatherApiResponse';
+export * from './forecast-day';
+export * from './weather-api-response';
