@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { ConfigService } from '@nestjs/config';
 
-import { IUser } from '@modules/users';
+import { SafeUser } from '@modules/users';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: configService.get<string>('LOGIN_FIELD') });
   }
 
-  async validate(email: string, password: string): Promise<IUser> {
+  async validate(email: string, password: string): Promise<SafeUser> {
     return this.authService.validateUser(email, password);
   }
 }

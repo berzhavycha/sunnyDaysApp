@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 
 import { ONE_DAY } from '@shared';
-import { IUser, UsersService } from '@modules/users';
+import { SafeUser, UsersService } from '@modules/users';
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { AuthResult, ITokens, JwtPayload } from './interfaces';
 import { UserDto } from './dtos';
@@ -46,14 +46,14 @@ export class AuthService {
     }
   }
 
-  async signIn(signedInUser: IUser): Promise<AuthResult> {
+  async signIn(signedInUser: SafeUser): Promise<AuthResult> {
     return {
       user: signedInUser,
       tokens: await this.generateTokens(signedInUser.id, signedInUser.email),
     };
   }
 
-  async validateUser(email: string, password: string): Promise<IUser | null> {
+  async validateUser(email: string, password: string): Promise<SafeUser | null> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid email!');

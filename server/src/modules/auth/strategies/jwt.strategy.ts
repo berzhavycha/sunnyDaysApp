@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Request } from 'express-serve-static-core';
 
-import { UsersService, IUser } from '@modules/users';
+import { UsersService, SafeUser } from '@modules/users';
 import { JwtPayload } from '../interfaces';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return null;
   }
 
-  async validate(payload: JwtPayload): Promise<IUser> {
+  async validate(payload: JwtPayload): Promise<SafeUser> {
     const user = await this.usersService.findById(payload.sub);
     if (!user) {
       throw new UnauthorizedException();
