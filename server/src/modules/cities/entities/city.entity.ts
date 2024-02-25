@@ -4,6 +4,7 @@ import { Field } from '@nestjs/graphql';
 import { ISubscription } from '@modules/subscriptions/interfaces';
 import { ICity } from '../interfaces';
 
+
 @Entity({ name: 'cities' })
 export class City implements ICity {
   @Field(() => String)

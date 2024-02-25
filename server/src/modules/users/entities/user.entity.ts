@@ -36,6 +36,7 @@ export class User implements IUser {
       name: 'city_id',
       referencedColumnName: 'id',
     },
+    synchronize: false
   })
   cities: ICity[];
 
