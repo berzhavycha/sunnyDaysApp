@@ -20,7 +20,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -53,14 +53,17 @@ export class AuthService {
     };
   }
 
-  async validateUser(email: string, password: string): Promise<SafeUser | null> {
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<SafeUser | null> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid email!');
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
-      return this.usersService.getSafeUser(user)
+      return this.usersService.getSafeUser(user);
     }
 
     throw new UnauthorizedException('Invalid password!');

@@ -38,6 +38,6 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
       throw new UnauthorizedException();
     }
 
-    return this.usersService.getSafeUser(user)
+    return this.usersService.getSafeUser(user);
   }
 }

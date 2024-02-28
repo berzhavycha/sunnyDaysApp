@@ -21,7 +21,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(
     userId: string,
@@ -49,7 +49,7 @@ export class WeatherForecastService {
         const cachedForecast = await this.cacheManager.get<WeatherForecast>(
           `weather_forecast:${name}`,
         );
-        
+
         if (cachedForecast) {
           cachedForecasts.push(cachedForecast);
           return null;

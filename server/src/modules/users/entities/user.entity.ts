@@ -26,6 +26,6 @@ export class User {
   @ManyToMany(() => City, { cascade: true })
   cities: City[];
 
-  @OneToMany(() => Subscription, subscription => subscription.user)
+  @OneToMany(() => Subscription, (subscription) => subscription.user)
   subscriptions: Subscription[];
 }

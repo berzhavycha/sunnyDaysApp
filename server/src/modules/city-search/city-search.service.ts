@@ -15,7 +15,7 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -50,6 +50,8 @@ export class CitySearchService {
           ttl: this.configService.get<number>(
             'REDIS_SEARCH_CITIES_DATA_TTL_SECONDS',
           ),
+          // Type bug
+          // Stackoverflow answer - https://stackoverflow.com/a/77066815
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       );

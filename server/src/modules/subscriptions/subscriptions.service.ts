@@ -11,7 +11,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async createSubscription(
     cityName: string,

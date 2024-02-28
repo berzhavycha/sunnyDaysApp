@@ -25,11 +25,17 @@ export class Subscription {
   @Column()
   cityId: string;
 
-  @ManyToOne(() => User, user => user.subscriptions, { onDelete: 'CASCADE', createForeignKeyConstraints: true })
+  @ManyToOne(() => User, (user) => user.subscriptions, {
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: true,
+  })
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
   user: User;
 
-  @ManyToOne(() => City, city => city.subscriptions, { onDelete: 'CASCADE', createForeignKeyConstraints: true })
+  @ManyToOne(() => City, (city) => city.subscriptions, {
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: true,
+  })
   @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
   city: City;
 }

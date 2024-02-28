@@ -23,7 +23,7 @@ export const typeOrmConfigOptions: TypeOrmConfigOptions = {
       autoLoadEntities: true,
       migrations: ['dist/modules/database/migrations/*.js'],
       synchronize: false,
-      namingStrategy: new SnakeNamingStrategy()
+      namingStrategy: new SnakeNamingStrategy(),
     };
   },
 };

@@ -13,6 +13,6 @@ export class City {
   @Column()
   name: string;
 
-  @OneToMany(() => Subscription, subscription => subscription.user)
+  @OneToMany(() => Subscription, (subscription) => subscription.city)
   subscriptions: Subscription[];
 }
