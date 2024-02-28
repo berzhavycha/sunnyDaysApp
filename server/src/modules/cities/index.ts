@@ -1,3 +1,3 @@
 export * from './cities.module';
 export * from './cities.service';
-export * from './interfaces';
+export * from './entities'

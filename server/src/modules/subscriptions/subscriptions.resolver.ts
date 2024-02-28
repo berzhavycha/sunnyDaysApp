@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 
 import { CurrentUser } from '@modules/auth/decorators';
 import { SubscriptionsService } from './subscriptions.service';
-import { Subscription } from './entities/subscription.entity';
+import { Subscription } from './entities';
 import { CityDto } from './dtos';
 
 @Resolver()

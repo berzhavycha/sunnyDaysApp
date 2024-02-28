@@ -7,13 +7,12 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { ISubscription } from '../interfaces';
-import { City } from '@modules/cities/entities/city.entity';
-import { User } from '@modules/users/entities/user.entity';
+import { City } from '@modules/cities/entities';
+import { User } from '@modules/users/entities';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
-export class Subscription implements ISubscription {
+export class Subscription {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -6,12 +6,11 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { IUser } from '../interfaces';
-import { Subscription } from '@modules/subscriptions/entities/subscription.entity';
-import { City } from '@modules/cities/entities/city.entity';
+import { Subscription } from '@modules/subscriptions/entities';
+import { City } from '@modules/cities/entities';
 
 @Entity({ name: 'users' })
-export class User implements IUser {
+export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
