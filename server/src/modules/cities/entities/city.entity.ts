@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field } from '@nestjs/graphql';
 
-import { ISubscription } from '@modules/subscriptions/interfaces';
 import { ICity } from '../interfaces';
+import { Subscription } from '@modules/subscriptions/entities/subscription.entity';
 
 
 @Entity({ name: 'cities' })
@@ -15,6 +15,6 @@ export class City implements ICity {
   @Column()
   name: string;
 
-  @OneToMany('Subscription', 'city')
-  subscriptions: ISubscription[];
+  @OneToMany(() => Subscription, subscription => subscription.user)
+  subscriptions: Subscription[];
 }

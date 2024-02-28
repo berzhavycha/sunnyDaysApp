@@ -3,13 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
-  JoinTable,
   OneToMany,
 } from 'typeorm';
 
-import { ICity } from '@modules/cities/interfaces';
-import { ISubscription } from '@modules/subscriptions/interfaces';
 import { IUser } from '../interfaces';
+import { Subscription } from '@modules/subscriptions/entities/subscription.entity';
+import { City } from '@modules/cities/entities/city.entity';
 
 @Entity({ name: 'users' })
 export class User implements IUser {
@@ -25,21 +24,9 @@ export class User implements IUser {
   @Column({ nullable: true })
   refreshTokenHash: string | null;
 
-  @ManyToMany('City', { cascade: true })
-  @JoinTable({
-    name: 'subscriptions',
-    joinColumn: {
-      name: 'user_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'city_id',
-      referencedColumnName: 'id',
-    },
-    synchronize: false
-  })
-  cities: ICity[];
+  @ManyToMany(() => City, { cascade: true })
+  cities: City[];
 
-  @OneToMany('Subscription', 'user')
-  subscriptions: ISubscription[];
+  @OneToMany(() => Subscription, subscription => subscription.user)
+  subscriptions: Subscription[];
 }

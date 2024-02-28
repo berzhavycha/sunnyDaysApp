@@ -7,9 +7,9 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { ICity } from '@modules/cities/interfaces';
-import { SafeUser } from '@modules/users/interfaces';
 import { ISubscription } from '../interfaces';
+import { City } from '@modules/cities/entities/city.entity';
+import { User } from '@modules/users/entities/user.entity';
 
 @ObjectType()
 @Entity({ name: 'subscriptions' })
@@ -26,11 +26,11 @@ export class Subscription implements ISubscription {
   @Column()
   cityId: string;
 
-  @ManyToOne('User', 'subscriptions', { onDelete: 'CASCADE', createForeignKeyConstraints: true })
+  @ManyToOne(() => User, user => user.subscriptions, { onDelete: 'CASCADE', createForeignKeyConstraints: true })
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
-  user: SafeUser;
+  user: User;
 
-  @ManyToOne('City', 'subscriptions', { onDelete: 'CASCADE', createForeignKeyConstraints: true })
+  @ManyToOne(() => City, city => city.subscriptions, { onDelete: 'CASCADE', createForeignKeyConstraints: true })
   @JoinColumn([{ name: 'city_id', referencedColumnName: 'id' }])
-  city: ICity;
+  city: City;
 }
