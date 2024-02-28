@@ -81,6 +81,8 @@ export class WeatherForecastService {
           forecast,
           {
             ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
+            // Type bug
+            // Stackoverflow answer - https://stackoverflow.com/a/77066815
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
         );
