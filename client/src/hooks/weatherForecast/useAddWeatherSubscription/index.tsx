@@ -35,7 +35,7 @@ export const useAddWeatherSubscription = (
       const errorMessage = validateCity(city, data);
 
       if (errorMessage) {
-        setError({ message: errorMessage });
+        return setError({ message: errorMessage });
       }
 
       await addWeatherSubscription({
