@@ -1,10 +1,10 @@
 FROM node:21.6.2-alpine3.18 AS base
+USER node
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 RUN npm install
 COPY --chown=node:node . .
 EXPOSE 4000
-USER node
 
 FROM base AS development
 CMD ["npm", "run", "start:dev"]
