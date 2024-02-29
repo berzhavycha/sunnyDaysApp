@@ -80,7 +80,7 @@ export class WeatherForecastService {
           `weather_forecast:${forecast.city.toLowerCase()}`,
           forecast,
           {
-            ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL'),
+            ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
             // Type bug
             // Stackoverflow answer - https://stackoverflow.com/a/77066815
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
