@@ -1,1 +1,1 @@
-export * from './validateCity'
+export * from './validateCity';

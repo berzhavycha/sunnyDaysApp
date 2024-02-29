@@ -17,7 +17,7 @@ type SubscriptionErrorState = {
 type ContextType = {
   error: SubscriptionErrorState;
   setError: Dispatch<SetStateAction<SubscriptionErrorState>>;
-  handleError: (error: ApolloError) => void
+  handleError: (error: ApolloError) => void;
 };
 
 const SubscriptionErrorContext = createContext<ContextType | null>(null);
@@ -48,7 +48,7 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
   const contextValue: ContextType = {
     error,
     setError,
-    handleError
+    handleError,
   };
 
   return (

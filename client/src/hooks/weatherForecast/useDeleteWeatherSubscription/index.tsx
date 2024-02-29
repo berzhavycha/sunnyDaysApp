@@ -17,7 +17,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   useEffect(() => {
     if (error) {
-      handleError(error)
+      handleError(error);
     }
   }, [error]);
 

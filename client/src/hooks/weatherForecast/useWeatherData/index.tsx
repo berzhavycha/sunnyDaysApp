@@ -49,7 +49,7 @@ export const useWeatherData = (): HookReturn => {
     }
 
     if (error) {
-      handleError(error)
+      handleError(error);
     }
   }, [data, loading, error]);
 

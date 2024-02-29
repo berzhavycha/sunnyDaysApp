@@ -24,7 +24,7 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
-      handleError(error)
+      handleError(error);
     }
   }, [data, loading, error]);
 
@@ -33,9 +33,9 @@ export const useAddWeatherSubscription = (
       setError({ message: '' });
 
       const errorMessage = validateCity(city, data);
-      
+
       if (errorMessage) {
-        setError({ message: errorMessage })
+        setError({ message: errorMessage });
       }
 
       await addWeatherSubscription({
