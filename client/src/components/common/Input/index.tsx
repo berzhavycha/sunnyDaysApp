@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 
 import { upperCaseFirstLetter } from '@/utils';
 import { CustomTouchable } from '../CustomTouchable';
+import { ActiveOpacity } from '../CustomTouchable/constants';
 
 export interface InputProps extends TextInputProps {
   icon: 'mail' | 'lock' | 'key' | 'search';
@@ -42,7 +43,7 @@ export const Input: FC<InputProps> = memo(
           <CustomTouchable
             style={{ position: 'absolute', top: 12, right: 12, zIndex: 100 }}
             onPress={toggleShowPassword}
-            activeOpacity={0.5}
+            activeOpacity={ActiveOpacity.MEDIUM}
           >
             <Feather name={isPasswordShown ? 'eye' : 'eye-off'} size={20} color="#ccc" />
           </CustomTouchable>

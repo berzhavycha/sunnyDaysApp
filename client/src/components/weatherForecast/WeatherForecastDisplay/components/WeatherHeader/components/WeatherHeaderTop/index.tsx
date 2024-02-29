@@ -5,6 +5,7 @@ import { useCurrentTempUnit } from '@/context';
 import { useSignOut } from '@/hooks';
 import { CustomTouchable } from '@/components/common';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+import { ActiveOpacity } from '@/components/common/CustomTouchable/constants';
 
 export const WeatherHeaderTop = (): JSX.Element => {
   const { signOutHandler } = useSignOut();
@@ -29,7 +30,7 @@ export const WeatherHeaderTop = (): JSX.Element => {
               height: 25,
               borderRadius: 50,
             }}
-            activeOpacity={0.2}
+            activeOpacity={ActiveOpacity.LOW}
             highlightColor="#60a5fa"
           >
             <Text className="text-white font-bold">{tempUnitSigns[currentTempUnit.name]} </Text>

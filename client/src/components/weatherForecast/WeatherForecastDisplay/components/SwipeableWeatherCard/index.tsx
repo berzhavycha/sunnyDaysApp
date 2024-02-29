@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { WeatherForecast } from '@/hooks';
 import { CustomTouchable } from '@/components/common';
 import { WeatherCard } from './components';
+import { ActiveOpacity } from '@/components/common/CustomTouchable/constants';
 
 type Props = {
   item: WeatherForecast;
@@ -20,7 +21,7 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
           style={[{ backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 }]}
         >
           <CustomTouchable
-            activeOpacity={0.5}
+            activeOpacity={ActiveOpacity.MEDIUM}
             style={{
               display: 'flex',
               justifyContent: 'center',
