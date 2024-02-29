@@ -1,3 +1,5 @@
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+import { ApolloError } from '@apollo/client';
 import {
   FC,
   createContext,
@@ -15,6 +17,7 @@ type SubscriptionErrorState = {
 type ContextType = {
   error: SubscriptionErrorState;
   setError: Dispatch<SetStateAction<SubscriptionErrorState>>;
+  handleError: (error: ApolloError) => void
 };
 
 const SubscriptionErrorContext = createContext<ContextType | null>(null);
@@ -34,9 +37,18 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
     message: '',
   });
 
+  const handleError = (error: ApolloError): void => {
+    if (error.graphQLErrors[0]?.extensions.originalError) {
+      setError({ message: error.graphQLErrors[0].extensions.originalError.message });
+    } else {
+      setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    }
+  };
+
   const contextValue: ContextType = {
     error,
     setError,
+    handleError
   };
 
   return (

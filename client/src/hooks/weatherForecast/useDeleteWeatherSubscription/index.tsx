@@ -12,16 +12,12 @@ type HookReturn = {
 };
 
 export const useDeleteWeatherSubscription = (): HookReturn => {
-  const { setError } = useSubscriptionError();
+  const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
 
   useEffect(() => {
     if (error) {
-      if (error.graphQLErrors[0]?.extensions.originalError) {
-        setError({ message: error.graphQLErrors[0].extensions.originalError.message });
-      } else {
-        setError({ message: UNEXPECTED_ERROR_MESSAGE });
-      }
+      handleError(error)
     }
   }, [error]);
 

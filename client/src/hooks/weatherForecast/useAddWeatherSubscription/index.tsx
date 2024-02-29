@@ -16,7 +16,7 @@ type HookReturn = {
 export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
-  const { setError } = useSubscriptionError();
+  const { setError, handleError } = useSubscriptionError();
   const { data } = useWeatherData();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument, {
     refetchQueries: [UserCitiesWeatherDocument],
@@ -24,11 +24,7 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
-      if (error.graphQLErrors[0]?.extensions.originalError) {
-        setError({ message: error.graphQLErrors[0].extensions.originalError.message });
-      } else {
-        setError({ message: UNEXPECTED_ERROR_MESSAGE });
-      }
+      handleError(error)
     }
   }, [data, loading, error]);
 
@@ -37,6 +33,7 @@ export const useAddWeatherSubscription = (
       setError({ message: '' });
 
       const errorMessage = validateCity(city, data);
+      
       if (errorMessage) {
         setError({ message: errorMessage })
       }
