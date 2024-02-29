@@ -36,7 +36,7 @@ export const WeatherHeaderTop = (): JSX.Element => {
             <Text className="text-white font-bold">{tempUnitSigns[currentTempUnit.name]} </Text>
           </CustomTouchable>
         </View>
-        <CustomTouchable onPress={signOutHandler} activeOpacity={0.5}>
+        <CustomTouchable onPress={signOutHandler} activeOpacity={ActiveOpacity.MEDIUM}>
           <FontAwesome name="sign-out" size={24} color="#ccc" />
         </CustomTouchable>
       </View>

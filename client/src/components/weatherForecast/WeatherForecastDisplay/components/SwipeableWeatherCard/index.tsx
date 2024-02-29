@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons';
 
 import { WeatherForecast } from '@/hooks';
 import { CustomTouchable } from '@/components/common';
-import { WeatherCard } from './components';
 import { ActiveOpacity } from '@/components/common/CustomTouchable/constants';
+import { WeatherCard } from './components';
 
 type Props = {
   item: WeatherForecast;

@@ -18,9 +18,11 @@ export const SubWeatherForecastDay: FC<Props> = memo(({ info }) => {
 
   const dayWeatherIcon = pickWeatherIcon(text);
 
+  const subWeatherForecastWidth = Math.floor((1 / Env.MAX_FORECAST_DAYS) * 100 - 1)
+
   return (
     <View
-      className={`w-[${Math.floor((1 / Env.MAX_FORECAST_DAYS) * 100 - 1)}%] justify-center items-center`}
+      className={`w-[${subWeatherForecastWidth}}%] justify-center items-center`}
     >
       <View className="w-full flex mb-2 justify-center items-center bg-blue-600 rounded-xl px-2 py-2">
         <Image
