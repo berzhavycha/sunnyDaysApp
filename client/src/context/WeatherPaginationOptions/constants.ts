@@ -1,1 +1,1 @@
-export const START_PAGE_NUMBER = 1
+export const START_PAGE_NUMBER = 1;

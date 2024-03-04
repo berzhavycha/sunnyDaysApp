@@ -22,7 +22,12 @@ export const WeatherForecastFragment = gql`
 
 export const USER_CITIES_WEATHER = gql`
   query UserCitiesWeather($offset: Int!, $limit: Int!, $order: String!, $forecastDaysAmount: Int!) {
-    userCitiesWeather(offset: $offset, limit: $limit, order: $order, forecastDaysAmount: $forecastDaysAmount) {
+    userCitiesWeather(
+      offset: $offset
+      limit: $limit
+      order: $order
+      forecastDaysAmount: $forecastDaysAmount
+    ) {
       edges {
         ...WeatherForecast
       }

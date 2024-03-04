@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import { ApolloError, ApolloQueryResult, FetchMoreQueryOptions, OperationVariables, useQuery } from '@apollo/client';
+import {
+  ApolloError,
+  ApolloQueryResult,
+  FetchMoreQueryOptions,
+  OperationVariables,
+  useQuery,
+} from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { Env } from '@/env';
@@ -10,7 +16,9 @@ type HookReturn = {
   data?: UserCitiesWeatherQuery;
   loading: boolean;
   error?: ApolloError;
-  fetchMore: (fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+  fetchMore: (
+    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
 };
 
 export type WeatherForecast = {
@@ -33,7 +41,7 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions()
+  const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions();
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,

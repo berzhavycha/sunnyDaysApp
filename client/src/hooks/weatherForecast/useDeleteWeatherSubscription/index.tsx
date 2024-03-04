@@ -15,8 +15,8 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage } = useWeatherPaginationQueryOptions()
-  const { fetchMore, data } = useWeatherData()
+  const { paginationOptions, currentPage } = useWeatherPaginationQueryOptions();
+  const { fetchMore, data } = useWeatherData();
 
   useEffect(() => {
     if (error) {
@@ -54,24 +54,27 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               query: UserCitiesWeatherDocument,
               variables: {
                 ...userCitiesWeatherQueryVariables,
-                offset: userCitiesWeatherQueryVariables.offset + userCitiesWeatherQueryVariables.limit
+                offset:
+                  userCitiesWeatherQueryVariables.offset + userCitiesWeatherQueryVariables.limit,
               },
-            })
+            });
 
             if (!nextCachedPage?.userCitiesWeather.edges?.length) {
-              await fetchMore({ variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage } });
+              await fetchMore({
+                variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage },
+              });
             }
 
-            const clearedData = cachedQuery.userCitiesWeather.edges?.map(edge => {
+            const clearedData = cachedQuery.userCitiesWeather.edges?.map((edge) => {
               if (edge.city === cityName) {
                 return {
                   ...edge,
-                  _deleted: true
-                }
+                  _deleted: true,
+                };
               }
 
-              return edge
-            })
+              return edge;
+            });
 
             cache.writeQuery({
               query: UserCitiesWeatherDocument,
@@ -79,7 +82,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               data: {
                 userCitiesWeather: {
                   ...cachedQuery.userCitiesWeather,
-                  edges: clearedData ?? []
+                  edges: clearedData ?? [],
                 },
               },
             });

@@ -11,7 +11,7 @@ const config: CodegenConfig = {
   generates: {
     'src/graphql/__generated__/types.ts': {
       schema: [process.env.BASE_URL as string, './src/graphql/client-schema.graphql'],
-      plugins: ['typescript']
+      plugins: ['typescript'],
     },
     baseUrl: {
       schema: [process.env.BASE_URL as string, './src/graphql/client-schema.graphql'],

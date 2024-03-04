@@ -1,3 +1,3 @@
-export * from './TouchablePaginationButton'
-export * from './PaginationButtons'
-export * from './PaginationPageButtons'
+export * from './TouchablePaginationButton';
+export * from './PaginationButtons';
+export * from './PaginationPageButtons';

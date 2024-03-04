@@ -8,9 +8,9 @@ export const apolloClient = new ApolloClient({
     typePolicies,
   }),
   resolvers: {
-    WeatherForecast: { 
+    WeatherForecast: {
       _deleted: (weatherForecast): boolean => Boolean(weatherForecast._deleted),
-    }
+    },
   },
 });
 
