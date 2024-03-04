@@ -1,5 +1,5 @@
 import { CitiesQuery } from '../useCityInputComplete/queries';
-import { City } from '../';
+import { City } from '..';
 
 export const extractData = (data: CitiesQuery): City[] => {
   if (!data || !data.citiesByPrefix) {
