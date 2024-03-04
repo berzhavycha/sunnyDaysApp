@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
-import { ApolloError, useQuery } from '@apollo/client';
+import { ApolloError, ApolloQueryResult, FetchMoreQueryOptions, OperationVariables, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { Env } from '@/env';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from './queries';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
   loading: boolean;
   error?: ApolloError;
-  onFetchMore: (variables: Partial<UserCitiesWeatherQueryVariables>) => Promise<void>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fetchMore: any
+  fetchMore: (fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
 };
 
 export type WeatherForecast = {
@@ -35,7 +33,7 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, updatePaginationOptions, setIsFetching, isFetching, isPageCached } = useWeatherPaginationQueryOptions()
+  const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions()
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -48,16 +46,6 @@ export const useWeatherData = (): HookReturn => {
     ),
   });
 
-  const onFetchMore = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
-    if (!isPageCached(variables)) {
-      setIsFetching(true)
-      await fetchMore({ variables })
-      setIsFetching(false)
-    }
-
-    updatePaginationOptions(variables)
-  }
-
   useEffect(() => {
     if (loading) {
       setError({ message: '' });
@@ -68,5 +56,5 @@ export const useWeatherData = (): HookReturn => {
     }
   }, [data, loading, error]);
 
-  return { data, loading: loading || isFetching, error, onFetchMore, fetchMore };
+  return { data, loading: loading || isFetching, error, fetchMore };
 };

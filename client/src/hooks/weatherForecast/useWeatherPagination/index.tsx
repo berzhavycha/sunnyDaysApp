@@ -2,6 +2,8 @@ import { useWeatherPaginationQueryOptions } from '@/context';
 import { useWeatherData } from '../useWeatherData';
 import { useState, useEffect } from 'react';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from '../useWeatherData/queries';
+import { useApolloClient } from '@apollo/client';
 
 
 type HookReturn = {
@@ -13,8 +15,9 @@ type HookReturn = {
 };
 
 export const useWeatherPagination = (): HookReturn => {
-    const { data, onFetchMore } = useWeatherData()
-    const { paginationOptions, currentPage, setCurrentPage } = useWeatherPaginationQueryOptions()
+    const { data, fetchMore } = useWeatherData()
+    const client = useApolloClient();
+    const { paginationOptions, currentPage, setCurrentPage, setIsFetching, updatePaginationOptions } = useWeatherPaginationQueryOptions()
     const [totalPages, setTotalPages] = useState<number>(0);
     const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
@@ -23,6 +26,33 @@ export const useWeatherPagination = (): HookReturn => {
         setTotalPages(Math.ceil(totalCount / paginationOptions.limit));
         setPaginationPageNumbers(Array.from({ length: totalPages }, (_, index) => index + 1))
     }, [data, paginationOptions.limit, totalPages]);
+
+    const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
+        const cachedData = client.readQuery<UserCitiesWeatherQuery>({
+            query: UserCitiesWeatherDocument,
+            variables: {
+                ...paginationOptions,
+                ...variables
+            }
+        });
+
+        if (cachedData?.userCitiesWeather.edges?.length) {
+            const isValueCorrect = cachedData.userCitiesWeather.edges?.some(edge => !!edge);
+            return isValueCorrect;
+        }
+
+        return false;
+    };
+
+    const onFetchMore = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
+        if (!isPageCached(variables)) {
+            setIsFetching(true)
+            await fetchMore({ variables })
+            setIsFetching(false)
+        }
+
+        updatePaginationOptions(variables)
+    }
 
     const onClickPrev = async (): Promise<void> => {
         if (currentPage !== START_PAGE_NUMBER) {
@@ -43,8 +73,6 @@ export const useWeatherPagination = (): HookReturn => {
         await onFetchMore({ offset });
         setCurrentPage(page)
     };
-
-
 
 
     return { onClickPrev, onClickNext, onGoToPage, totalPages, paginationPageNumbers };

@@ -1,10 +1,9 @@
 import { FC, createContext, PropsWithChildren, useContext, useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { Env } from '@/env';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
+import {  UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 import { START_PAGE_NUMBER } from './constants';
-import { useApolloClient } from '@apollo/client';
 
 type WeatherPaginationQueryOptionsState = {
     offset: number;
@@ -19,7 +18,6 @@ type ContextType = {
     setCurrentPage: Dispatch<SetStateAction<number>>
     isFetching: boolean;
     setIsFetching: Dispatch<SetStateAction<boolean>>;
-    isPageCached: (variables: Partial<UserCitiesWeatherQueryVariables>) => boolean
 };
 
 const CurrentPaginationQueryOptionsContext = createContext<ContextType | null>(null);
@@ -36,7 +34,6 @@ export const useWeatherPaginationQueryOptions = (): ContextType => {
 
 export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ children }) => {
     const { currentUser } = useCurrentUser()
-    const client = useApolloClient();
     const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER)
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const [paginationOptions, setPaginationOptions] = useState<WeatherPaginationQueryOptionsState>({
@@ -59,23 +56,6 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
         }));
     };
 
-    const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
-        const cachedData = client.readQuery<UserCitiesWeatherQuery>({
-            query: UserCitiesWeatherDocument,
-            variables: {
-                ...paginationOptions,
-                ...variables
-            }
-        });
-
-        if (cachedData?.userCitiesWeather.edges?.length) {
-            const isValueCorrect = cachedData.userCitiesWeather.edges?.some(edge => !!edge);
-            return isValueCorrect;
-        }
-
-        return false;
-    };
-
     const contextValue: ContextType = {
         paginationOptions,
         updatePaginationOptions,
@@ -83,7 +63,6 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
         setCurrentPage,
         isFetching,
         setIsFetching,
-        isPageCached
     };
 
     return (
