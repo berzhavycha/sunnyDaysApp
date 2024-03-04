@@ -27,7 +27,7 @@ export class SubscriptionsService {
 
     if (existingSubscription) {
       throw new BadRequestException(
-        `You already has a subscription for ${upperCaseEveryFirstLetter(
+        `You already have a subscription for ${upperCaseEveryFirstLetter(
           city.name,
         )}`,
       );
