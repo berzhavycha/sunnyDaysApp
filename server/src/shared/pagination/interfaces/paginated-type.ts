@@ -1,6 +1,6 @@
-import { PaginationInfo } from "../types";
+import { PaginationInfo } from '../types';
 
 export interface PaginatedType<T> {
-    edges: T[];
-    paginationInfo: PaginationInfo;
+  edges: T[];
+  paginationInfo: PaginationInfo;
 }

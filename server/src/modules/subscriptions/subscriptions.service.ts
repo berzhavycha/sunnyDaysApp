@@ -13,7 +13,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async createSubscription(
     cityName: string,
@@ -22,11 +22,15 @@ export class SubscriptionsService {
     const city = await this.citiesService.createCity(cityName);
 
     const existingSubscription = await this.subscriptionRepository.findOne({
-      where: { cityId: city.id, userId }
+      where: { cityId: city.id, userId },
     });
 
     if (existingSubscription) {
-      throw new BadRequestException(`You already has a subscription for ${upperCaseEveryFirstLetter(city.name)}`);
+      throw new BadRequestException(
+        `You already has a subscription for ${upperCaseEveryFirstLetter(
+          city.name,
+        )}`,
+      );
     }
 
     const subscriptionEntity = this.subscriptionRepository.create({
@@ -58,8 +62,8 @@ export class SubscriptionsService {
       where: { userId },
       relations: ['city'],
       order: {
-        [orderColumn]: order
-      }
+        [orderColumn]: order,
+      },
     });
   }
 
@@ -76,8 +80,8 @@ export class SubscriptionsService {
       take,
       skip,
       order: {
-        [orderColumn]: order
-      }
+        [orderColumn]: order,
+      },
     });
   }
 }

@@ -5,17 +5,17 @@ import { PaginationInfo } from './types';
 import { PaginatedType } from './interfaces';
 
 export function Paginated<T>(classRef: Type<T>): Type<PaginatedType<T>> {
-    @ObjectType({ isAbstract: true })
-    abstract class PaginatedTypeClass implements PaginatedType<T> {
-        @Field(() => [classRef])
-        edges: (T | null)[];
+  @ObjectType({ isAbstract: true })
+  abstract class PaginatedTypeClass implements PaginatedType<T> {
+    @Field(() => [classRef])
+    edges: (T | null)[];
 
-        @Field(() => PaginationInfo)
-        paginationInfo: PaginationInfo;
-    }
+    @Field(() => PaginationInfo)
+    paginationInfo: PaginationInfo;
+  }
 
-    @ObjectType({ isAbstract: true })
-    class ConcretePaginatedTypeClass extends PaginatedTypeClass { }
+  @ObjectType({ isAbstract: true })
+  class ConcretePaginatedTypeClass extends PaginatedTypeClass {}
 
-    return ConcretePaginatedTypeClass;
+  return ConcretePaginatedTypeClass;
 }

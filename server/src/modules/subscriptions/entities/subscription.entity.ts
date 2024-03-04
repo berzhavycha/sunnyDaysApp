@@ -28,7 +28,7 @@ export class Subscription {
 
   @Field(() => Date)
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
-  createdAt: Date
+  createdAt: Date;
 
   @ManyToOne(() => User, (user) => user.subscriptions, {
     onDelete: 'CASCADE',

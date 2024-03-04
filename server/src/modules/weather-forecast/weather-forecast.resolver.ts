@@ -9,7 +9,7 @@ import { PaginatedWeatherForecast } from './types/paginated-weather-forecast';
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,
-  ) { }
+  ) {}
 
   @Query(() => PaginatedWeatherForecast!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(

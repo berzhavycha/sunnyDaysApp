@@ -1,1 +1,1 @@
-export * from './pagination-info'
+export * from './pagination-info';

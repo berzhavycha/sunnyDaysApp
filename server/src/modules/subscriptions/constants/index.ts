@@ -1,2 +1,2 @@
-export const DEFAULT_ORDER_COLUMN = 'createdAt'
-export const DEFAULT_ORDER = 'ASC'
+export const DEFAULT_ORDER_COLUMN = 'createdAt';
+export const DEFAULT_ORDER = 'ASC';

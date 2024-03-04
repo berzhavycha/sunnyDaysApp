@@ -1,7 +1,7 @@
-import { ObjectType } from "@nestjs/graphql";
+import { ObjectType } from '@nestjs/graphql';
 
-import { Paginated } from "@shared";
-import { WeatherForecast } from "./weather-forecast.type";
+import { Paginated } from '@shared';
+import { WeatherForecast } from './weather-forecast.type';
 
 @ObjectType()
-export class PaginatedWeatherForecast extends Paginated(WeatherForecast) { }
+export class PaginatedWeatherForecast extends Paginated(WeatherForecast) {}

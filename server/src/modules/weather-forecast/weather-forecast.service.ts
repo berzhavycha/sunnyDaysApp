@@ -21,7 +21,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(
     userId: string,
@@ -36,13 +36,13 @@ export class WeatherForecastService {
         userId,
         offset,
         limit,
-        order
+        order,
       );
 
     if (userSubscriptions.length === 0) {
       return {
         edges: [],
-        paginationInfo: { totalCount: 0 }
+        paginationInfo: { totalCount: 0 },
       };
     }
 
@@ -51,7 +51,7 @@ export class WeatherForecastService {
 
     const weatherForecastsPromises = [];
     for (const subscription of userSubscriptions) {
-      const { name } = subscription.city
+      const { name } = subscription.city;
 
       const cachedForecast = await this.cacheManager.get<WeatherForecast>(
         `weather_forecast:${name}`,
@@ -69,10 +69,9 @@ export class WeatherForecastService {
           .catch((error) => {
             problematicCity = name;
             throw error;
-          })
+          }),
       );
     }
-
 
     try {
       const responses = await Promise.all(weatherForecastsPromises);
@@ -88,7 +87,9 @@ export class WeatherForecastService {
           `weather_forecast:${forecast.city.toLowerCase()}`,
           forecast,
           {
-            ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
+            ttl: this.configService.get<number>(
+              'REDIS_WEATHER_DATA_TTL_SECONDS',
+            ),
             // Type bug
             // Stackoverflow answer - https://stackoverflow.com/a/77066815
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -96,15 +97,16 @@ export class WeatherForecastService {
         );
       }
 
-      const forecastList = [...cachedForecasts, ...newForecasts]
+      const forecastList = [...cachedForecasts, ...newForecasts];
 
-      const allUserSubscriptions = await this.subscriptionsService.getSubscriptionsByUserId(userId)
+      const allUserSubscriptions =
+        await this.subscriptionsService.getSubscriptionsByUserId(userId);
 
       return {
         edges: forecastList,
         paginationInfo: {
-          totalCount: allUserSubscriptions.length
-        }
+          totalCount: allUserSubscriptions.length,
+        },
       };
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);

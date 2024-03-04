@@ -1,7 +1,7 @@
-import { ObjectType, Field, Int } from "@nestjs/graphql";
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class PaginationInfo {
-    @Field(() => Int)
-    totalCount: number
+  @Field(() => Int)
+  totalCount: number;
 }

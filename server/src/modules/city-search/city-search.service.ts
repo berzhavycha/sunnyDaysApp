@@ -15,7 +15,7 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
