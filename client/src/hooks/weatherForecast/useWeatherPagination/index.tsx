@@ -3,12 +3,13 @@ import { useWeatherData } from '../useWeatherData';
 import { useState, useEffect } from 'react';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 
+
 type HookReturn = {
     onClickPrev: () => Promise<void>;
     onClickNext: () => Promise<void>;
     goToPage: (page: number) => Promise<void>;
     totalPages: number
-    paginationPageNumbers: number[]
+    paginationPageNumbers: number[],
 };
 
 export const useWeatherPagination = (): HookReturn => {
@@ -42,6 +43,9 @@ export const useWeatherPagination = (): HookReturn => {
         await onFetchMore({ offset });
         setCurrentPage(page)
     };
+
+
+
 
     return { onClickPrev, onClickNext, goToPage, totalPages, paginationPageNumbers };
 };

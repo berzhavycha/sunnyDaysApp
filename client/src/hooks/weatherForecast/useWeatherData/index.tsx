@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ApolloError, useApolloClient, useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { Env } from '@/env';
@@ -35,8 +35,7 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const client = useApolloClient();
-  const { paginationOptions, updatePaginationOptions, setIsFetching, isFetching } = useWeatherPaginationQueryOptions()
+  const { paginationOptions, updatePaginationOptions, setIsFetching, isFetching, isPageCached } = useWeatherPaginationQueryOptions()
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -50,19 +49,12 @@ export const useWeatherData = (): HookReturn => {
   });
 
   const onFetchMore = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
-    const cachedData = client.readQuery<UserCitiesWeatherQuery>({ 
-      query: UserCitiesWeatherDocument, 
-      variables: {
-        ...paginationOptions,
-        ...variables
-      }
-    });
-    
-    if(!cachedData?.userCitiesWeather.edges?.length){
+    if (!isPageCached(variables)) {
       setIsFetching(true)
       await fetchMore({ variables })
       setIsFetching(false)
     }
+
     updatePaginationOptions(variables)
   }
 

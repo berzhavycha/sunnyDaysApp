@@ -9,16 +9,26 @@ export const userCitiesWeather: FieldPolicy = {
       paginationInfo: existing ? { ...existing.paginationInfo } : { totalCount: 0 }
     }
 
-    console.log(incoming)
     for (let i = 0; i < incoming?.edges?.length; ++i) {
       merged.edges[offset + i] = incoming.edges[i];
       merged.paginationInfo = { ...incoming.paginationInfo }
     }
 
-    return {
-      edges: merged.edges.filter(edge => !context.readField<boolean>('_deleted', edge)),
-      paginationInfo: merged.paginationInfo
+    merged.edges = Array.from({ length: merged.edges.length }, (_, index) =>
+      merged.edges[index] !== undefined ? merged.edges[index] : {}
+    );
+
+    const res = {
+      edges: [...merged.edges].filter(edge => !context.readField<boolean>('_deleted', edge)),
+      paginationInfo: { ...merged.paginationInfo }
     };
+
+    res.edges = Array.from({ length: res.edges.length }, (_, index) =>
+      JSON.stringify(res.edges[index]) === "{}" ? undefined : res.edges[index]
+    );
+
+    console.log(res.edges.map(edge => context.readField<string>('city', edge ?? {})))
+    return res
   },
   read(existing, context) {
     return existing && {

@@ -16,9 +16,9 @@ export const PaginationButton: FC<Props> = ({ content, onClick, isActive, isNavi
     return (
         <CustomTouchable
             style={{
-                backgroundColor: isActive ? '#2563eb' : isNavigator ? '#60a5fa' : 'none',
+                backgroundColor: !isActive && isNavigator ? '#60a5fa' : '#2563eb',
                 borderWidth: isNavigator ? 0 : 1,
-                borderColor: '#2563eb',
+                borderColor: isActive ? '#fff' : '#2563eb',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

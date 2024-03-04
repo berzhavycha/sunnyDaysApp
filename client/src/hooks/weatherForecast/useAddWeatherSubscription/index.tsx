@@ -46,6 +46,7 @@ export const useAddWeatherSubscription = (
         },
       });
 
+      console.log("ADD CITY")
       setCity('');
     } catch (err) {
       setError({ message: UNEXPECTED_ERROR_MESSAGE });
