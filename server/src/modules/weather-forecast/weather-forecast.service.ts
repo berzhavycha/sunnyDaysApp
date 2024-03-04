@@ -98,10 +98,12 @@ export class WeatherForecastService {
 
       const forecastList = [...cachedForecasts, ...newForecasts]
 
+      const allUserSubscriptions = await this.subscriptionsService.getSubscriptionsByUserId(userId)
+
       return {
         edges: forecastList,
         paginationInfo: {
-          totalCount: (await this.subscriptionsService.getSubscriptionsByUserId(userId)).length
+          totalCount: allUserSubscriptions.length
         }
       };
     } catch (error) {

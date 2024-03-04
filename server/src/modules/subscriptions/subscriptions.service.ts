@@ -22,12 +22,11 @@ export class SubscriptionsService {
     const city = await this.citiesService.createCity(cityName);
 
     const existingSubscription = await this.subscriptionRepository.findOne({
-      where: { cityId: city.id, userId },
-      relations: ['city']
+      where: { cityId: city.id, userId }
     });
 
     if (existingSubscription) {
-      throw new BadRequestException(`You already has a subscription for ${upperCaseEveryFirstLetter(existingSubscription.city.name)}`);
+      throw new BadRequestException(`You already has a subscription for ${upperCaseEveryFirstLetter(city.name)}`);
     }
 
     const subscriptionEntity = this.subscriptionRepository.create({

@@ -30,8 +30,8 @@ type Mutation {
 }
 
 type PaginatedWeatherForecast {
-  edges: [WeatherForecast!]
-  paginationInfo: PaginationInfo
+  edges: [WeatherForecast!]!
+  paginationInfo: PaginationInfo!
 }
 
 type PaginationInfo {
