@@ -3,13 +3,13 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from '@modules/auth';
 import { WeatherForecastService } from './weather-forecast.service';
 import { ForecastParamArgsDto } from './dtos';
-import { PaginatedWeatherForecast } from './types/paginated-weather-forecast';
+import { PaginatedWeatherForecast } from './types';
 
 @Resolver()
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,
-  ) {}
+  ) { }
 
   @Query(() => PaginatedWeatherForecast!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(

@@ -2,16 +2,13 @@ import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 
 import { errorLink, refreshTokenLink, mainHttpLink } from './links';
 import { typePolicies } from './typePolicies';
+import { resolvers } from './resolvers';
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies,
   }),
-  resolvers: {
-    WeatherForecast: {
-      _deleted: (weatherForecast): boolean => Boolean(weatherForecast._deleted),
-    },
-  },
+  resolvers
 });
 
 export const apolloLinks = ApolloLink.from([

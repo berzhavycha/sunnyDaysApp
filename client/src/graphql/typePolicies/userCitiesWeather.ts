@@ -1,5 +1,6 @@
-import { WeatherForecast } from '@/hooks';
 import { FieldPolicy } from '@apollo/client';
+
+import { WeatherForecast } from '@/hooks';
 
 interface PageInfo {
   totalCount: number;
