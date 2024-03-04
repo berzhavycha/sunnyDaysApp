@@ -7,7 +7,7 @@ import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants'
 type HookReturn = {
     onClickPrev: () => Promise<void>;
     onClickNext: () => Promise<void>;
-    goToPage: (page: number) => Promise<void>;
+    onGoToPage: (page: number) => Promise<void>;
     totalPages: number
     paginationPageNumbers: number[],
 };
@@ -38,7 +38,7 @@ export const useWeatherPagination = (): HookReturn => {
         }
     };
 
-    const goToPage = async (page: number): Promise<void> => {
+    const onGoToPage = async (page: number): Promise<void> => {
         const offset = (page - 1) * paginationOptions.limit;
         await onFetchMore({ offset });
         setCurrentPage(page)
@@ -47,6 +47,6 @@ export const useWeatherPagination = (): HookReturn => {
 
 
 
-    return { onClickPrev, onClickNext, goToPage, totalPages, paginationPageNumbers };
+    return { onClickPrev, onClickNext, onGoToPage, totalPages, paginationPageNumbers };
 };
 

@@ -1,7 +1,7 @@
 import { FC } from "react"
 
-import { CustomTouchable } from "../CustomTouchable"
-import { ActiveOpacity } from "../CustomTouchable/constants"
+import { CustomTouchable } from "../../CustomTouchable"
+import { ActiveOpacity } from "../../CustomTouchable/constants"
 
 type Props = {
     onClick: () => Promise<void>
@@ -10,7 +10,7 @@ type Props = {
     isNavigator?: boolean
 }
 
-export const PaginationButton: FC<Props> = ({ content, onClick, isActive, isNavigator }) => {
+export const TouchablePaginationButton: FC<Props> = ({ content, onClick, isActive, isNavigator }) => {
     const onPress = async (): Promise<void> => await onClick()
 
     return (
