@@ -11,6 +11,11 @@ input Credentials {
   password: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Message {
   message: String!
 }
@@ -24,11 +29,20 @@ type Mutation {
   signUp(input: Credentials!): UserPayload!
 }
 
+type PaginatedWeatherForecast {
+  edges: [WeatherForecast!]
+  paginationInfo: PaginationInfo
+}
+
+type PaginationInfo {
+  totalCount: Int!
+}
+
 type Query {
   citiesByPrefix(limit: Int!, minPopulation: Int!, offset: Int!, prefix: String!, sort: String!): [SearchedCity!]!
   citySearchStatus: Boolean!
   currentUser: UserPayload
-  userCitiesWeather(citiesLimit: Int!, forecastDaysAmount: Int!): [WeatherForecast!]!
+  userCitiesWeather(forecastDaysAmount: Int!, limit: Int!, offset: Int!, order: String!): PaginatedWeatherForecast!
 }
 
 type SearchedCity {
@@ -37,6 +51,7 @@ type SearchedCity {
 
 type Subscription {
   cityId: String!
+  createdAt: DateTime!
   id: String!
   userId: String!
 }

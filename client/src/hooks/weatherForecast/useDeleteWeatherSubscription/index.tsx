@@ -1,11 +1,12 @@
-import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
+import { useMutation } from '@apollo/client';
 
 import { Env } from '@/env';
-import { useSubscriptionError } from '@/context';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
+import { useWeatherData } from '../useWeatherData';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -14,6 +15,8 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
+  const { paginationOptions, currentPage } = useWeatherPaginationQueryOptions()
+  const { fetchMore, data } = useWeatherData()
 
   useEffect(() => {
     if (error) {
@@ -24,7 +27,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
   const deleteSubscription = async (cityName: string): Promise<void> => {
     try {
       const userCitiesWeatherQueryVariables = {
-        citiesLimit: Env.MAX_WEATHER_CITIES_AMOUNT,
+        ...paginationOptions,
         forecastDaysAmount: Env.MAX_FORECAST_DAYS,
       };
 
@@ -40,21 +43,44 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             id: 'temp-id',
           },
         },
-        update(cache) {
+        async update(cache) {
           const cachedQuery = cache.readQuery({
             query: UserCitiesWeatherDocument,
             variables: userCitiesWeatherQueryVariables,
           });
 
           if (cachedQuery) {
-            const data = cachedQuery.userCitiesWeather.filter(
-              (forecast) => forecast.city !== cityName,
-            );
+            const nextCachedPage = cache.readQuery({
+              query: UserCitiesWeatherDocument,
+              variables: {
+                ...userCitiesWeatherQueryVariables,
+                offset: userCitiesWeatherQueryVariables.offset + userCitiesWeatherQueryVariables.limit
+              },
+            })
+
+            if (!nextCachedPage?.userCitiesWeather.edges?.length) {
+              await fetchMore({ offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage });
+            }
+
+            const clearedData = cachedQuery.userCitiesWeather.edges?.map(edge => {
+              if (edge.city === cityName) {
+                return {
+                  ...edge,
+                  _deleted: true
+                }
+              }
+
+              return edge
+            })
+
             cache.writeQuery({
               query: UserCitiesWeatherDocument,
               variables: userCitiesWeatherQueryVariables,
               data: {
-                userCitiesWeather: data,
+                userCitiesWeather: {
+                  ...cachedQuery.userCitiesWeather,
+                  edges: clearedData ?? []
+                },
               },
             });
           }

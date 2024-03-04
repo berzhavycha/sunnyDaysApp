@@ -4,6 +4,7 @@ import {
   JoinColumn,
   ManyToOne,
   Column,
+  CreateDateColumn,
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
@@ -24,6 +25,10 @@ export class Subscription {
   @Field(() => String)
   @Column()
   cityId: string;
+
+  @Field(() => Date)
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
+  createdAt: Date
 
   @ManyToOne(() => User, (user) => user.subscriptions, {
     onDelete: 'CASCADE',

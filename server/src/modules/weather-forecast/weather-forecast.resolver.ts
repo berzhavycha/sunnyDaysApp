@@ -2,24 +2,29 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { CurrentUser } from '@modules/auth';
 import { WeatherForecastService } from './weather-forecast.service';
-import { WeatherForecast } from './types';
 import { ForecastParamArgsDto } from './dtos';
+import { PaginatedWeatherForecast } from './types/paginated-weather-forecast';
 
 @Resolver()
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,
-  ) {}
+  ) { }
 
-  @Query(() => [WeatherForecast]!, { name: 'userCitiesWeather' })
+  @Query(() => PaginatedWeatherForecast!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(
     @Args() forecastParams: ForecastParamArgsDto,
     @CurrentUser('id') id: string,
-  ): Promise<WeatherForecast[]> {
-    return this.weatherForecastService.getUserCitiesWeather(
+  ): Promise<PaginatedWeatherForecast> {
+    const res = await this.weatherForecastService.getUserCitiesWeather(
       id,
-      forecastParams.citiesLimit,
+      forecastParams.limit,
+      forecastParams.offset,
+      forecastParams.order,
       forecastParams.forecastDaysAmount,
     );
+
+    console.log(res.edges.map(i => i.city))
+    return res
   }
 }

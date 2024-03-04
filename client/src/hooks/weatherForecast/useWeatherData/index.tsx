@@ -1,18 +1,22 @@
 import { useEffect } from 'react';
-import { ApolloError, useQuery } from '@apollo/client';
+import { ApolloError, useApolloClient, useQuery } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
 import { Env } from '@/env';
-import { useSubscriptionError } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from './queries';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
   loading: boolean;
   error?: ApolloError;
+  onFetchMore: (variables: Partial<UserCitiesWeatherQueryVariables>) => Promise<void>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchMore: any
 };
 
 export type WeatherForecast = {
+  id: string;
   city: string;
   celsius: number;
   fahrenheit: number;
@@ -31,9 +35,11 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
+  const client = useApolloClient();
+  const { paginationOptions, updatePaginationOptions, setIsFetching, isFetching } = useWeatherPaginationQueryOptions()
+  const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
-      citiesLimit: Env.MAX_WEATHER_CITIES_AMOUNT,
+      ...paginationOptions,
       forecastDaysAmount: Env.MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
@@ -42,6 +48,23 @@ export const useWeatherData = (): HookReturn => {
       ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
+
+  const onFetchMore = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
+    const cachedData = client.readQuery<UserCitiesWeatherQuery>({ 
+      query: UserCitiesWeatherDocument, 
+      variables: {
+        ...paginationOptions,
+        ...variables
+      }
+    });
+    
+    if(!cachedData?.userCitiesWeather.edges?.length){
+      setIsFetching(true)
+      await fetchMore({ variables })
+      setIsFetching(false)
+    }
+    updatePaginationOptions(variables)
+  }
 
   useEffect(() => {
     if (loading) {
@@ -53,5 +76,5 @@ export const useWeatherData = (): HookReturn => {
     }
   }, [data, loading, error]);
 
-  return { data, loading, error };
+  return { data, loading: loading || isFetching, error, onFetchMore, fetchMore };
 };

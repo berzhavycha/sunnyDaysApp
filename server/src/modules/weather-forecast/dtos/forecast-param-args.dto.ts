@@ -1,13 +1,10 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
 import { IsInt, IsNotEmpty } from 'class-validator';
 
-@ArgsType()
-export class ForecastParamArgsDto {
-  @Field(() => Int!)
-  @IsNotEmpty()
-  @IsInt()
-  citiesLimit: number;
+import { PaginationArgs } from '@shared';
 
+@ArgsType()
+export class ForecastParamArgsDto extends PaginationArgs {
   @Field(() => Int!)
   @IsNotEmpty()
   @IsInt()

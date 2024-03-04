@@ -7,6 +7,11 @@ export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies,
   }),
+  resolvers: {
+    WeatherForecast: { 
+      _deleted: (weatherForecast): boolean => Boolean(weatherForecast._deleted),
+    }
+  },
 });
 
 export const apolloLinks = ApolloLink.from([

@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { Order } from '@shared';
 import { CitiesService } from '@modules/cities';
 import { Subscription } from './entities';
+import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN } from './constants';
 
 @Injectable()
 export class SubscriptionsService {
@@ -11,7 +13,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
@@ -30,23 +32,48 @@ export class SubscriptionsService {
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
-    const city = await this.citiesService.findByName(cityName);
+    try {
+      const city = await this.citiesService.findByName(cityName);
 
-    const subscription = await this.subscriptionRepository.findOne({
-      where: { cityId: city.id, userId },
-    });
-    await this.subscriptionRepository.delete(subscription);
-    return subscription;
+      const subscription = await this.subscriptionRepository.findOne({
+        where: { cityId: city.id, userId },
+      });
+      await this.subscriptionRepository.delete({ id: subscription.id });
+      return subscription;
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async getSubscriptionsByUserId(
     userId: string,
-    limit: number,
+    order: Order = DEFAULT_ORDER,
+    orderColumn: string = DEFAULT_ORDER_COLUMN,
   ): Promise<Subscription[]> {
     return this.subscriptionRepository.find({
       where: { userId },
       relations: ['city'],
-      take: limit,
+      order: {
+        [orderColumn]: order
+      }
+    });
+  }
+
+  async getPaginatedSubscriptionsByUserId(
+    userId: string,
+    take: number,
+    skip: number,
+    order: Order = DEFAULT_ORDER,
+    orderColumn: string = DEFAULT_ORDER_COLUMN,
+  ): Promise<Subscription[]> {
+    return this.subscriptionRepository.find({
+      where: { userId },
+      relations: ['city'],
+      take,
+      skip,
+      order: {
+        [orderColumn]: order
+      }
     });
   }
 }

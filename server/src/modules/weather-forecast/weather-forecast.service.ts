@@ -5,11 +5,11 @@ import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
-import { daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
+import { Order, daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
 import { SubscriptionsService } from '@modules/subscriptions';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
-import { WeatherDay, WeatherForecast } from './types';
+import { WeatherDay, WeatherForecast, PaginatedWeatherForecast } from './types';
 import { WeatherApiRepository } from './weather-forecast.repository';
 import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
@@ -21,50 +21,58 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getUserCitiesWeather(
     userId: string,
-    citiesLimit: number,
+    offset: number,
+    limit: number,
+    order: Order,
     forecastDaysAmount: number,
-  ): Promise<WeatherForecast[]> {
+  ): Promise<PaginatedWeatherForecast> {
     let problematicCity: string;
     const userSubscriptions =
-      await this.subscriptionsService.getSubscriptionsByUserId(
+      await this.subscriptionsService.getPaginatedSubscriptionsByUserId(
         userId,
-        citiesLimit,
+        offset,
+        limit,
+        order
       );
 
     if (userSubscriptions.length === 0) {
-      return [];
+      return {
+        edges: [],
+        paginationInfo: { totalCount: 0 }
+      };
     }
 
     const cachedForecasts: WeatherForecast[] = [];
     const cities: string[] = [];
 
-    const weatherForecastsPromises = userSubscriptions.map(
-      async (subscription) => {
-        const { name } = subscription.city;
+    const weatherForecastsPromises = [];
+    for (const subscription of userSubscriptions) {
+      const { name } = subscription.city
 
-        const cachedForecast = await this.cacheManager.get<WeatherForecast>(
-          `weather_forecast:${name}`,
-        );
+      const cachedForecast = await this.cacheManager.get<WeatherForecast>(
+        `weather_forecast:${name}`,
+      );
+      if (cachedForecast) {
+        cachedForecasts.push(cachedForecast);
+        continue;
+      }
 
-        if (cachedForecast) {
-          cachedForecasts.push(cachedForecast);
-          return null;
-        }
+      cities.push(name);
 
-        cities.push(name);
-
-        return this.weatherApiRepository
+      weatherForecastsPromises.push(
+        this.weatherApiRepository
           .getCityWeather(name, forecastDaysAmount)
           .catch((error) => {
             problematicCity = name;
             throw error;
-          });
-      },
-    );
+          })
+      );
+    }
+
 
     try {
       const responses = await Promise.all(weatherForecastsPromises);
@@ -88,7 +96,14 @@ export class WeatherForecastService {
         );
       }
 
-      return [...cachedForecasts, ...newForecasts];
+      const forecastList = [...cachedForecasts, ...newForecasts]
+
+      return {
+        edges: forecastList,
+        paginationInfo: {
+          totalCount: (await this.subscriptionsService.getSubscriptionsByUserId(userId)).length
+        }
+      };
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);
       if (
