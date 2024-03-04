@@ -59,7 +59,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             })
 
             if (!nextCachedPage?.userCitiesWeather.edges?.length) {
-              await fetchMore({ offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage });
+              await fetchMore({ variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage } });
             }
 
             const clearedData = cachedQuery.userCitiesWeather.edges?.map(edge => {

@@ -24,7 +24,6 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
-      console.log(error)
       handleError(error);
     }
   }, [data, loading, error]);
