@@ -27,7 +27,7 @@ export class Subscription {
   cityId: string;
 
   @Field(() => Date)
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
+  @CreateDateColumn({ type: 'timestamp with time zone' })
   createdAt: Date;
 
   @ManyToOne(() => User, (user) => user.subscriptions, {
