@@ -1,31 +1,41 @@
+import { WeatherForecast } from '@/hooks';
 import { FieldPolicy } from '@apollo/client';
 
-export const userCitiesWeather: FieldPolicy = {
+interface PageInfo {
+  totalCount: number
+}
+
+interface PaginationResult {
+  edges: WeatherForecast[];
+  paginationInfo: PageInfo;
+}
+
+export const userCitiesWeather: FieldPolicy<PaginationResult> = {
   merge(existing, incoming, context) {
     const offset = context.args?.offset
 
-    const merged = {
-      edges: existing ? [...existing.edges] : [],
-      paginationInfo: existing ? { ...existing.paginationInfo } : { totalCount: 0 }
-    }
+    const mergedEdges = existing ? [...existing.edges] : [];
+    let mergedPaginationInfo = existing ? { ...existing.paginationInfo } : { totalCount: 0 };
 
-    if (incoming && incoming.edges) {
-      for (let i = 0; i < incoming.edges.length; ++i) {
-        merged.edges[offset + i] = incoming.edges[i];
-      }
-      merged.paginationInfo = { ...incoming.paginationInfo };
-    }
+    incoming?.edges?.forEach((edge, index) => {
+      mergedEdges[offset + index] = edge;
+    });
 
-    merged.edges = merged.edges.map((edge) => edge || {});
+    mergedPaginationInfo = { ...incoming.paginationInfo }
 
-    const filteredEdges = merged.edges.filter((edge) => !context.readField<boolean>('_deleted', edge));
-
-    const sanitizedEdges = filteredEdges.map((edge) => (JSON.stringify(edge) === '{}' ? undefined : edge));
-
-    return {
-      edges: sanitizedEdges,
-      paginationInfo: { ...merged.paginationInfo },
+    const res = {
+      edges: [...mergedEdges].filter(edge => {
+        // return true for undefined values in the mergedEdges in case user skipped some pages, so we don`t filter out
+        // the gap between pages
+        if (edge === undefined) {
+          return true
+        }
+        return !context.readField<boolean>('_deleted', edge)
+      }),
+      paginationInfo: { ...mergedPaginationInfo }
     };
+
+    return res
   },
   read(existing, context) {
     return existing && {
