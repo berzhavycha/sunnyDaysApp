@@ -7,14 +7,8 @@ export const validateCityRules = [
     message: 'Please enter the city!',
   },
   {
-    validator: (city: string, data: UserCitiesWeatherQuery | undefined): boolean => {
-      return !data?.userCitiesWeather.edges?.some((forecast) => forecast.city === city);
-    },
-    message: (city: string): string => `You already have a subscription to ${city}.`,
-  },
-  {
     validator: (_city: string, data: UserCitiesWeatherQuery | undefined): boolean => {
-      return (data?.userCitiesWeather.edges?.length ?? 0) < Env.MAX_WEATHER_CITIES_AMOUNT;
+      return (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) < Env.MAX_WEATHER_CITIES_AMOUNT;
     },
     message: `You cannot have more than ${Env.MAX_WEATHER_CITIES_AMOUNT} cities.`,
   },

@@ -7,6 +7,6 @@ export const validateCity = (
 ): string | void => {
   const failedRule = validateCityRules.find((rule) => !rule.validator(city, data));
   if (failedRule) {
-    return typeof failedRule.message === 'function' ? failedRule.message(city) : failedRule.message;
+    return failedRule.message;
   }
 };

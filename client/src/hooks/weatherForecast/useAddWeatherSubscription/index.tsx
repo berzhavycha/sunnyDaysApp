@@ -24,6 +24,7 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
+      console.log(error)
       handleError(error);
     }
   }, [data, loading, error]);
@@ -46,7 +47,6 @@ export const useAddWeatherSubscription = (
         },
       });
 
-      console.log("ADD CITY")
       setCity('');
     } catch (err) {
       setError({ message: UNEXPECTED_ERROR_MESSAGE });

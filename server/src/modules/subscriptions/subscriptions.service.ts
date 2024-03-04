@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Order } from '@shared';
+import { Order, upperCaseEveryFirstLetter } from '@shared';
 import { CitiesService } from '@modules/cities';
 import { Subscription } from './entities';
 import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN } from './constants';
@@ -21,6 +21,15 @@ export class SubscriptionsService {
   ): Promise<Subscription> {
     const city = await this.citiesService.createCity(cityName);
 
+    const existingSubscription = await this.subscriptionRepository.findOne({
+      where: { cityId: city.id, userId },
+      relations: ['city']
+    });
+
+    if (existingSubscription) {
+      throw new BadRequestException(`You already has a subscription for ${upperCaseEveryFirstLetter(existingSubscription.city.name)}`);
+    }
+
     const subscriptionEntity = this.subscriptionRepository.create({
       cityId: city.id,
       userId,
@@ -32,17 +41,13 @@ export class SubscriptionsService {
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
-    try {
-      const city = await this.citiesService.findByName(cityName);
+    const city = await this.citiesService.findByName(cityName);
 
-      const subscription = await this.subscriptionRepository.findOne({
-        where: { cityId: city.id, userId },
-      });
-      await this.subscriptionRepository.delete({ id: subscription.id });
-      return subscription;
-    } catch (error) {
-      console.log(error)
-    }
+    const subscription = await this.subscriptionRepository.findOne({
+      where: { cityId: city.id, userId },
+    });
+    await this.subscriptionRepository.delete({ id: subscription.id });
+    return subscription;
   }
 
   async getSubscriptionsByUserId(
