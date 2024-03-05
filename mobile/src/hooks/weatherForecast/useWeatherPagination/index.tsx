@@ -24,7 +24,7 @@ export const useWeatherPagination = (): HookReturn => {
     setCurrentPage,
     setIsFetching,
     updatePaginationOptions,
-    totalPages
+    totalPages,
   } = useWeatherPaginationQueryOptions();
 
   const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {

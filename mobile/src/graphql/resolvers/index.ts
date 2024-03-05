@@ -1,7 +1,7 @@
-import { Resolvers } from "@apollo/client";
+import { Resolvers } from '@apollo/client';
 
-import { weatherForecastResolvers } from "./weatherForecast";
+import { weatherForecastResolvers } from './weatherForecast';
 
 export const resolvers: Resolvers = {
-    WeatherForecast: { ...weatherForecastResolvers }
-}
+  WeatherForecast: { ...weatherForecastResolvers },
+};

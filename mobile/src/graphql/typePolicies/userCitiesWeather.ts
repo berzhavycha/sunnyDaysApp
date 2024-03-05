@@ -25,7 +25,9 @@ export const userCitiesWeather: FieldPolicy<PaginationResult> = {
     mergedPaginationInfo = { ...incoming.paginationInfo };
 
     return {
-      edges: [...mergedEdges].filter((edge) => !context.readField<boolean>('_deleted', edge)),
+      edges: [...mergedEdges].filter(
+        (edge) => edge && !context.readField<boolean>('_deleted', edge),
+      ),
       paginationInfo: { ...mergedPaginationInfo },
     };
   },

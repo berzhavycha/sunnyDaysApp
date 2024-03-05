@@ -16,7 +16,14 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, updatePaginationOptions, currentPage, totalCount, setTotalCount, setCurrentPage } = useWeatherPaginationQueryOptions();
+  const {
+    paginationOptions,
+    updatePaginationOptions,
+    currentPage,
+    totalCount,
+    setTotalCount,
+    setCurrentPage,
+  } = useWeatherPaginationQueryOptions();
   const { fetchMore, data } = useWeatherData();
 
   useEffect(() => {
@@ -40,41 +47,51 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
           },
         },
         async update(cache) {
-          setTotalCount(prev => prev - 1)
+          setTotalCount((prev) => prev - 1);
 
-          const currentPageCache = readPageCache(cache, paginationOptions)
+          const currentPageCache = readPageCache(cache, paginationOptions);
 
           if (currentPageCache) {
-            const nextPageCache = readPageCache(cache, paginationOptions, { offset: paginationOptions.offset + paginationOptions.limit })
-            const clearedCurrentPage = purgePageCache(currentPageCache.userCitiesWeather.edges, cityName)
+            const nextPageCache = readPageCache(cache, paginationOptions, {
+              offset: paginationOptions.offset + paginationOptions.limit,
+            });
+            const clearedCurrentPage = purgePageCache(
+              currentPageCache.userCitiesWeather.edges,
+              cityName,
+            );
 
             writePageCache(cache, paginationOptions, {
               ...currentPageCache.userCitiesWeather,
               edges: clearedCurrentPage ?? [],
-            })
+            });
 
             if (!nextPageCache?.userCitiesWeather.edges?.length) {
               await fetchMore({
                 variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage },
               });
 
-              const newCurrentPageCache = readPageCache(cache, paginationOptions)
+              const newCurrentPageCache = readPageCache(cache, paginationOptions);
               if (newCurrentPageCache) {
-                const newClearedData = purgePageCache(newCurrentPageCache.userCitiesWeather.edges, cityName)
-
+                const newClearedData = purgePageCache(
+                  newCurrentPageCache.userCitiesWeather.edges,
+                  cityName,
+                );
 
                 writePageCache(cache, paginationOptions, {
                   ...newCurrentPageCache.userCitiesWeather,
                   edges: newClearedData ?? [],
-                })
+                });
               }
             }
 
-            if ((totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 && currentPageCache?.userCitiesWeather.edges?.length === 1) {
+            if (
+              (totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 &&
+              currentPageCache?.userCitiesWeather.edges?.length === 1
+            ) {
               updatePaginationOptions({
-                offset: paginationOptions.offset - paginationOptions.limit
-              })
-              setCurrentPage(prev => prev - 1 || START_PAGE_NUMBER)
+                offset: paginationOptions.offset - paginationOptions.limit,
+              });
+              setCurrentPage((prev) => prev - 1 || START_PAGE_NUMBER);
             }
           }
         },

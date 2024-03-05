@@ -8,7 +8,7 @@ export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies,
   }),
-  resolvers
+  resolvers,
 });
 
 export const apolloLinks = ApolloLink.from([
