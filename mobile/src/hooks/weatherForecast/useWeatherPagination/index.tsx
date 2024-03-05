@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 
 import { useWeatherPaginationQueryOptions } from '@/context';
@@ -14,23 +13,19 @@ type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  totalPages: number;
-  paginationPageNumbers: number[];
 };
 
 export const useWeatherPagination = (): HookReturn => {
   const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
-  const { paginationOptions, currentPage, setCurrentPage, setIsFetching, updatePaginationOptions } =
-    useWeatherPaginationQueryOptions();
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
-
-  useEffect(() => {
-    const totalCount = data?.userCitiesWeather.paginationInfo?.totalCount ?? 0;
-    setTotalPages(Math.ceil(totalCount / paginationOptions.limit));
-    setPaginationPageNumbers(Array.from({ length: totalPages }, (_, index) => index + 1));
-  }, [data, paginationOptions.limit, totalPages]);
+  const {
+    paginationOptions,
+    currentPage,
+    setCurrentPage,
+    setIsFetching,
+    updatePaginationOptions,
+    totalPages
+  } = useWeatherPaginationQueryOptions();
 
   const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
     const cachedData = client.readQuery<UserCitiesWeatherQuery>({
@@ -81,5 +76,5 @@ export const useWeatherPagination = (): HookReturn => {
     setCurrentPage(page);
   };
 
-  return { onClickPrev, onClickNext, onGoToPage, totalPages, paginationPageNumbers };
+  return { onClickPrev, onClickNext, onGoToPage };
 };
