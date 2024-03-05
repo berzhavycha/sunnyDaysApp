@@ -32,6 +32,7 @@ export type WeatherForecast = {
 };
 
 export type WeatherForecastDays = {
+  id: string;
   text: string;
   dayOfWeek: string;
   celsius: number;

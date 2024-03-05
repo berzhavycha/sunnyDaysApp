@@ -13,6 +13,7 @@ type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
+  isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>) => boolean
 };
 
 export const useWeatherPagination = (): HookReturn => {
@@ -27,7 +28,7 @@ export const useWeatherPagination = (): HookReturn => {
     totalPages,
   } = useWeatherPaginationQueryOptions();
 
-  const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
+  const isPageContentCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
     const cachedData = client.readQuery<UserCitiesWeatherQuery>({
       query: UserCitiesWeatherDocument,
       variables: {
@@ -47,7 +48,7 @@ export const useWeatherPagination = (): HookReturn => {
   const onFetchMore = async (
     variables: Partial<UserCitiesWeatherQueryVariables>,
   ): Promise<void> => {
-    if (!isPageCached(variables)) {
+    if (!isPageContentCached(variables)) {
       setIsFetching(true);
       await fetchMore({ variables });
       setIsFetching(false);
@@ -76,5 +77,5 @@ export const useWeatherPagination = (): HookReturn => {
     setCurrentPage(page);
   };
 
-  return { onClickPrev, onClickNext, onGoToPage };
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
 };

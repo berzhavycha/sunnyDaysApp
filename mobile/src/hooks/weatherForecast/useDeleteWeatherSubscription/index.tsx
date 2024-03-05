@@ -8,6 +8,7 @@ import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 import { purgePageCache, readPageCache, writePageCache } from './utils';
+import { useWeatherPagination } from '../useWeatherPagination';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -25,6 +26,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
     setCurrentPage,
   } = useWeatherPaginationQueryOptions();
   const { fetchMore, data } = useWeatherData();
+  const { isPageContentCached } = useWeatherPagination()
 
   useEffect(() => {
     if (error) {
@@ -52,9 +54,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
           const currentPageCache = readPageCache(cache, paginationOptions);
 
           if (currentPageCache) {
-            const nextPageCache = readPageCache(cache, paginationOptions, {
-              offset: paginationOptions.offset + paginationOptions.limit,
-            });
             const clearedCurrentPage = purgePageCache(
               currentPageCache.userCitiesWeather.edges,
               cityName,
@@ -65,7 +64,8 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               edges: clearedCurrentPage ?? [],
             });
 
-            if (!nextPageCache?.userCitiesWeather.edges?.length) {
+            if (!isPageContentCached({ offset: paginationOptions.offset + paginationOptions.limit })) {
+              console.log('fetching')
               await fetchMore({
                 variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage },
               });
