@@ -14,7 +14,7 @@ import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeat
 import { useCurrentUser } from '../CurrentUser';
 import { START_PAGE_NUMBER } from './constants';
 
-type WeatherPaginationQueryOptionsState = {
+export type WeatherPaginationQueryOptionsState = {
   offset: number;
   limit: number;
   order: string;

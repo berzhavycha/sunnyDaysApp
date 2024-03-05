@@ -10,14 +10,13 @@ import { useRenderWeatherCard } from './hooks';
 export const WeatherCardsList = (): JSX.Element => {
   const { data, loading } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { onGoToPage, onClickNext, onClickPrev } =
-    useWeatherPagination();
+  const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationQueryOptions();
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
   const listFooterComponent =
-    totalPages !== 1 ? (
+    totalPages > 1 ? (
       <PaginationButtons
         startPageNumber={START_PAGE_NUMBER}
         currentPage={currentPage}

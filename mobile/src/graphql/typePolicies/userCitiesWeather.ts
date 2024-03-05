@@ -25,14 +25,7 @@ export const userCitiesWeather: FieldPolicy<PaginationResult> = {
     mergedPaginationInfo = { ...incoming.paginationInfo };
 
     return {
-      edges: [...mergedEdges].filter((edge) => {
-        // return true for undefined values in the mergedEdges in case user skipped some pages, so we don`t filter out
-        // the gap between pages
-        if (edge === undefined) {
-          return true;
-        }
-        return !context.readField<boolean>('_deleted', edge);
-      }),
+      edges: [...mergedEdges].filter((edge) => !context.readField<boolean>('_deleted', edge)),
       paginationInfo: { ...mergedPaginationInfo },
     };
   },
