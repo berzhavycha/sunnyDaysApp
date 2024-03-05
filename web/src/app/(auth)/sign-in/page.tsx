@@ -1,4 +1,4 @@
-import { AuthForm } from '@/components/auth/AuthForm';
+import { AuthForm } from '@/components';
 import { AuthType } from '@/hooks';
 import { SignInDocument } from '@/hooks/auth/useAuth/mutations';
 

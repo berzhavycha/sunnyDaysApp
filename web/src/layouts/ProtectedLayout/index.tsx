@@ -10,11 +10,11 @@ export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
   const { currentUser, loadingUser } = useCurrentUser();
 
   useEffect(() => {
-    // if (!currentUser && !loadingUser) {
-    //   router.replace('/sign-in');
-    // } else {
-    // }
-    router.replace('/weather-forecast');
+    if (!currentUser && !loadingUser) {
+      router.replace('/sign-in');
+    } else {
+      // router.replace('/weather-forecast');
+    }
   }, [currentUser, router, loadingUser]);
 
   return <>{children}</>;
