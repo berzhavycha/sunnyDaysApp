@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useQuery } from '@apollo/client';
 
@@ -12,10 +12,7 @@ type HookReturn = {
 
 export const useCitySearchStatus = (): HookReturn => {
   const { data } = useQuery(CitySearchStatusDocument, {
-    fetchPolicy: getFetchPolicyForKey(
-      'citySearchStatus',
-      ONE_MINUTE * FEATURE_CACHE_MINUTES_TIME,
-    ),
+    fetchPolicy: getFetchPolicyForKey('citySearchStatus', ONE_MINUTE * FEATURE_CACHE_MINUTES_TIME),
   });
 
   return {

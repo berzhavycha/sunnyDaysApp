@@ -1,1 +1,1 @@
-export * from './useMakeClient'
+export * from './useMakeClient';

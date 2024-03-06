@@ -20,13 +20,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       setIsPasswordShown((prevIsPasswordShown) => !prevIsPasswordShown);
     };
 
-    const iconClassWithLabel = `absolute top-10 left-3 text-gray-500`
-    const iconClassWithoutLabel = `absolute top-3 left-3 text-gray-500`
+    const iconClassWithLabel = `absolute top-10 left-3 text-gray-500`;
+    const iconClassWithoutLabel = `absolute top-3 left-3 text-gray-500`;
 
     return (
       <div className="relative w-full">
-        {label && <label className="block text-left mb-2 text-sm font-bold text-blue-900">{label}</label>}
-        <FontAwesomeIcon className={label ? iconClassWithLabel : iconClassWithoutLabel} icon={icon} />
+        {label && (
+          <label className="block text-left mb-2 text-sm font-bold text-blue-900">{label}</label>
+        )}
+        <FontAwesomeIcon
+          className={label ? iconClassWithLabel : iconClassWithoutLabel}
+          icon={icon}
+        />
         <input
           ref={ref}
           type={isPasswordShown ? 'password' : 'text'}
@@ -48,4 +53,3 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   },
 );
 Input.displayName = 'Input';
-

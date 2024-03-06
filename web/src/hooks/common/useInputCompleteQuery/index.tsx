@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { ApolloError, DocumentNode, OperationVariables, useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';

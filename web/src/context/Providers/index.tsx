@@ -14,9 +14,7 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
         <ProtectedLayout>
           <CitySearchListProvider>
             <CurrentTempUnitProvider>
-              <SubscriptionErrorProvider>
-                {children}
-              </SubscriptionErrorProvider>
+              <SubscriptionErrorProvider>{children}</SubscriptionErrorProvider>
             </CurrentTempUnitProvider>
           </CitySearchListProvider>
         </ProtectedLayout>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useLazyQuery, useApolloClient } from '@apollo/client';
 import {
@@ -21,7 +21,7 @@ type CurrentUserState = {
 type ContextType = {
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
-  loadingUser: boolean
+  loadingUser: boolean;
   onSignOut: () => Promise<void>;
 };
 

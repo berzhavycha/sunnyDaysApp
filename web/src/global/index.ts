@@ -1,10 +1,7 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
-export const CITIES_SEARCH_LIMIT = parseInt(
-  process.env.NEXT_PUBLIC_CITIES_SEARCH_LIMIT as string,
-);
-export const CITIES_SEARCH_SORT = process.env
-  .NEXT_PUBLIC_CITIES_SEARCH_SORT as string;
+export const CITIES_SEARCH_LIMIT = parseInt(process.env.NEXT_PUBLIC_CITIES_SEARCH_LIMIT as string);
+export const CITIES_SEARCH_SORT = process.env.NEXT_PUBLIC_CITIES_SEARCH_SORT as string;
 export const CITIES_SEARCH_OFFSET = parseInt(
   process.env.NEXT_PUBLIC_CITIES_SEARCH_OFFSET as string,
 );
