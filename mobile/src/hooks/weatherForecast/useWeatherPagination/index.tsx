@@ -1,6 +1,6 @@
-import { useApolloClient } from '@apollo/client';
+import { ApolloError, useApolloClient } from '@apollo/client';
 
-import { useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 import { useWeatherData } from '../useWeatherData';
 import {
@@ -19,6 +19,7 @@ type HookReturn = {
 export const useWeatherPagination = (): HookReturn => {
   const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
+  const { handleError } = useSubscriptionError()
   const {
     paginationOptions,
     currentPage,
@@ -48,13 +49,20 @@ export const useWeatherPagination = (): HookReturn => {
   const onFetchMore = async (
     variables: Partial<UserCitiesWeatherQueryVariables>,
   ): Promise<void> => {
-    if (!isPageContentCached(variables)) {
-      setIsFetching(true);
-      await fetchMore({ variables });
-      setIsFetching(false);
-    }
+    try {
+      if (!isPageContentCached(variables)) {
+        setIsFetching(true);
+        await fetchMore({ variables });
+        setIsFetching(false);
+      }
 
-    updatePaginationOptions(variables);
+      updatePaginationOptions(variables);
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        handleError(error)
+        setIsFetching(false);
+      }
+    }
   };
 
   const onClickPrev = async (): Promise<void> => {
