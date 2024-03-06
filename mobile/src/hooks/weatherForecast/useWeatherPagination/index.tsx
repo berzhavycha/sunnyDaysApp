@@ -58,7 +58,6 @@ export const useWeatherPagination = (): HookReturn => {
   };
 
   const onClickPrev = async (): Promise<void> => {
-    console.log("CURRENT PAGE", currentPage)
     if (currentPage !== START_PAGE_NUMBER) {
       await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
       setCurrentPage((prevPage) => prevPage - 1);

@@ -20,7 +20,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
     paginationOptions,
     currentPage,
     totalCount,
-    setTotalCount,
   } = useWeatherPaginationQueryOptions();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination()
@@ -46,8 +45,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
           },
         },
         async update(cache) {
-          setTotalCount((prev) => prev - 1);
-
           const currentPageCache = readPageCache(cache, paginationOptions);
 
           if (currentPageCache) {
@@ -80,7 +77,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               }
             }
 
-            console.log(totalCount - 1)
             if (
               (totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 &&
               currentPageCache?.userCitiesWeather.edges?.length === 1

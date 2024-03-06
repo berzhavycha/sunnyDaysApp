@@ -11,37 +11,53 @@ interface PaginationResult {
   paginationInfo: PageInfo;
 }
 
+const isPageGap = (edges: (WeatherForecast | { _deleted: boolean })[]): boolean => {
+  return !edges?.some(edge => !!edge)
+}
 
 export const userCitiesWeather: FieldPolicy<PaginationResult> = {
   merge(existing, incoming, context) {
     const offset = context.args?.offset;
+    const limit = context.args?.limit
 
-    const mergedEdges = existing ? [...existing.edges] : [];
-    let mergedPaginationInfo = existing ? { ...existing.paginationInfo } : { totalCount: 0 };
+    let mergedEdges = existing ? [...existing.edges] : [];
+    const mergedPaginationInfo = existing ? { ...existing.paginationInfo } : { ...incoming.paginationInfo }
 
     incoming?.edges?.forEach((edge, index) => {
       mergedEdges[offset + index] = edge;
     });
 
-    mergedPaginationInfo = !incoming.edges.length ? { ...mergedPaginationInfo } : {
-      ...incoming.paginationInfo
-    };
+    // if it is not a page gap we have to delete all undefined values on the page to clear space for 
+    // elements from the next page
+    if (!isPageGap(mergedEdges.slice(offset, offset + limit))) {
+      mergedEdges = mergedEdges.map((edge, index) => {
+        if (index > offset && index < offset + limit && !edge) {
+          return { _deleted: true }
+        }
+
+        return edge
+      })
+    }
 
     const filteredMergedEdge = [...mergedEdges].filter((edge) => {
-      // return empty element for undefined values in the mergedEdges in case user skipped some pages, so we don`t 
-      //filter out the gap between pages
+      // return true for undefined values in the mergedEdges in case user skipped some pages, so we don`t 
+      // filter out the gap between pages
       if (!edge) {
         return true;
       }
+
+      // we should check whether edge has city value before decreasing totalCount, 
+      // because if it is just {_deleted: true} we don`t want to decrease totalCount twice on the same deleted object
+      if (context.readField<boolean>('_deleted', edge) && context.readField<boolean>('city', edge)) {
+        mergedPaginationInfo.totalCount--
+      }
+
       return !context.readField<boolean>('_deleted', edge);
     })
 
     return {
       edges: filteredMergedEdge,
-      paginationInfo: {
-        ...mergedPaginationInfo,
-        totalCount: mergedPaginationInfo.totalCount - (mergedEdges.length - filteredMergedEdge.length)
-      },
+      paginationInfo: mergedPaginationInfo
     };
   },
   read(existing, context) {
