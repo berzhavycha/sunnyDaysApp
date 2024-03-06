@@ -29,9 +29,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
     resolver: joiResolver(userSchema(authType)),
   });
 
-  const onSubmit = async (data: UserDto): Promise<void> => {
-    await authHandler(data);
-  };
+  const onSubmit = async (data: UserDto): Promise<void> => await authHandler(data);
 
   return (
     <>
@@ -41,7 +39,8 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
         ) :
           <div className="flex h-full flex-col justify-center p-6">
             <h1 className="text-4xl text-blue-900 text-center mb-4 font-bold">{title}</h1>
-            <p className="text-sm text-blue-900 text-center mb-4">{subtitle}</p>
+            <p className="text-sm text-blue-900 text-center mb-2">{subtitle}</p>
+            <div className="text-md text-center text-red-500 mt-2 mb-4 h-2">{fieldsError.unexpectedError}</div>
             <form
               className="mt-4"
               action=""
