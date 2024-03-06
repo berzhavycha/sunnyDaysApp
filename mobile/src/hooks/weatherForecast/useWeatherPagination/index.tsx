@@ -37,6 +37,11 @@ export const useWeatherPagination = (): HookReturn => {
       },
     });
 
+    console.log({
+      ...paginationOptions,
+      ...variables,
+    })
+
     if (cachedData?.userCitiesWeather.edges?.length) {
       const isValueCorrect = cachedData.userCitiesWeather.edges?.some((edge) => !!edge);
       return isValueCorrect;

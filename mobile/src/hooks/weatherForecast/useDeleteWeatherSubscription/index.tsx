@@ -64,8 +64,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               edges: clearedCurrentPage ?? [],
             });
 
-            if (!isPageContentCached({ offset: paginationOptions.offset + paginationOptions.limit })) {
-              console.log('fetching')
+            if (!isPageContentCached({ offset: paginationOptions.offset + paginationOptions.limit - 1 })) {
               await fetchMore({
                 variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage },
               });
@@ -84,6 +83,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               }
             }
 
+            console.log(totalCount - 1, data?.userCitiesWeather.paginationInfo?.totalCount)
             if (
               (totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 &&
               currentPageCache?.userCitiesWeather.edges?.length === 1

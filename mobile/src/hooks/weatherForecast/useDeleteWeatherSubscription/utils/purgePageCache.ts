@@ -1,7 +1,7 @@
 import { WeatherForecast } from '../../useWeatherData';
 import { UserCitiesWeatherQuery } from '../../useWeatherData/queries';
 
-const WEATHER_FORECAST_TO_DELETE: WeatherForecast = {
+const MOCK_WEATHER_FORECAST: WeatherForecast = {
   id: '',
   city: '',
   text: '',
@@ -18,8 +18,11 @@ export const purgePageCache = (
   return edges?.map((edge) => {
     if (edge.city === cityName) {
       return { ...edge, _deleted: true };
-    } 
-   
+    }
+    else if (!edge) {
+      return { ...MOCK_WEATHER_FORECAST, _deleted: true }
+    }
+
     return edge;
   });
 };
