@@ -16,13 +16,9 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const {
-    paginationOptions,
-    currentPage,
-    totalCount,
-  } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalCount } = useWeatherPaginationQueryOptions();
   const { fetchMore } = useWeatherData();
-  const { isPageContentCached, onClickPrev } = useWeatherPagination()
+  const { isPageContentCached, onClickPrev } = useWeatherPagination();
 
   useEffect(() => {
     if (error) {
@@ -58,7 +54,11 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               edges: clearedCurrentPage ?? [],
             });
 
-            if (!isPageContentCached({ offset: paginationOptions.offset + paginationOptions.limit - 1 })) {
+            if (
+              !isPageContentCached({
+                offset: paginationOptions.offset + paginationOptions.limit - 1,
+              })
+            ) {
               await fetchMore({
                 variables: { offset: paginationOptions.limit * currentPage },
               });
@@ -81,7 +81,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               (totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 &&
               currentPageCache?.userCitiesWeather.edges?.length === 1
             ) {
-              await onClickPrev()
+              await onClickPrev();
             }
           }
         },

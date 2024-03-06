@@ -62,7 +62,7 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
   });
 
   useEffect(() => {
-    const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit)
+    const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
     setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
   }, [paginationOptions, totalCount]);
