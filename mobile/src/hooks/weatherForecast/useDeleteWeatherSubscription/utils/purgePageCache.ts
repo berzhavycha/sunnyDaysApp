@@ -20,6 +20,8 @@ export const purgePageCache = (
       return { ...edge, _deleted: true };
     }
     else if (!edge) {
+      // Should provide mock value instead of undefined in order to delete the place for this element on the given offset
+      // so merging with the next page can happen
       return { ...MOCK_WEATHER_FORECAST, _deleted: true }
     }
 

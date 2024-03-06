@@ -37,11 +37,6 @@ export const useWeatherPagination = (): HookReturn => {
       },
     });
 
-    console.log({
-      ...paginationOptions,
-      ...variables,
-    })
-
     if (cachedData?.userCitiesWeather.edges?.length) {
       const isValueCorrect = cachedData.userCitiesWeather.edges?.some((edge) => !!edge);
       return isValueCorrect;
@@ -63,6 +58,7 @@ export const useWeatherPagination = (): HookReturn => {
   };
 
   const onClickPrev = async (): Promise<void> => {
+    console.log("CURRENT PAGE", currentPage)
     if (currentPage !== START_PAGE_NUMBER) {
       await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
       setCurrentPage((prevPage) => prevPage - 1);

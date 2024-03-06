@@ -65,6 +65,7 @@ export const useWeatherData = (): HookReturn => {
     }
 
     if (data) {
+      console.log("DATA TOTAL", data.userCitiesWeather.paginationInfo)
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
     }
   }, [data, loading, error]);

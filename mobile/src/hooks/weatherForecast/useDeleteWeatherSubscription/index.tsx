@@ -6,7 +6,6 @@ import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/contex
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
-import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 import { purgePageCache, readPageCache, writePageCache } from './utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 
@@ -19,14 +18,12 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
   const {
     paginationOptions,
-    updatePaginationOptions,
     currentPage,
     totalCount,
     setTotalCount,
-    setCurrentPage,
   } = useWeatherPaginationQueryOptions();
-  const { fetchMore, data } = useWeatherData();
-  const { isPageContentCached } = useWeatherPagination()
+  const { fetchMore } = useWeatherData();
+  const { isPageContentCached, onClickPrev } = useWeatherPagination()
 
   useEffect(() => {
     if (error) {
@@ -66,7 +63,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
             if (!isPageContentCached({ offset: paginationOptions.offset + paginationOptions.limit - 1 })) {
               await fetchMore({
-                variables: { offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage },
+                variables: { offset: paginationOptions.limit * currentPage },
               });
 
               const newCurrentPageCache = readPageCache(cache, paginationOptions);
@@ -83,15 +80,12 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               }
             }
 
-            console.log(totalCount - 1, data?.userCitiesWeather.paginationInfo?.totalCount)
+            console.log(totalCount - 1)
             if (
               (totalCount - 1) % Env.WEATHER_CITIES_LIMIT === 0 &&
               currentPageCache?.userCitiesWeather.edges?.length === 1
             ) {
-              updatePaginationOptions({
-                offset: paginationOptions.offset - paginationOptions.limit,
-              });
-              setCurrentPage((prev) => prev - 1 || START_PAGE_NUMBER);
+              await onClickPrev()
             }
           }
         },
