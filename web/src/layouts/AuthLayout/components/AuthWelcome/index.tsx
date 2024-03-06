@@ -20,7 +20,7 @@ export const AuthWelcome = (): JSX.Element => {
             </p>
             <p className="text-md text-white mb-4 font-bold">{signUpMessage}</p>
             <Link
-                className="w-36 py-2 text-center rounded-xl border border-blue-400 text-white text-sm hover:bg-blue-400 transition-all"
+                className="w-36 py-2 text-center rounded-xl border border-blue-500 text-white text-sm hover:bg-blue-500 transition-all"
                 href={altPath}
             >
                 {convertPathToPascal(altPath)}

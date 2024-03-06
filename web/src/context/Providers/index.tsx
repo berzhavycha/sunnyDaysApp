@@ -11,13 +11,15 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloWrapper>
       <CurrentUserProvider>
-        <CitySearchListProvider>
-          <CurrentTempUnitProvider>
-            <SubscriptionErrorProvider>
-              <ProtectedLayout>{children}</ProtectedLayout>
-            </SubscriptionErrorProvider>
-          </CurrentTempUnitProvider>
-        </CitySearchListProvider>
+        <ProtectedLayout>
+          <CitySearchListProvider>
+            <CurrentTempUnitProvider>
+              <SubscriptionErrorProvider>
+                {children}
+              </SubscriptionErrorProvider>
+            </CurrentTempUnitProvider>
+          </CitySearchListProvider>
+        </ProtectedLayout>
       </CurrentUserProvider>
     </ApolloWrapper>
   );

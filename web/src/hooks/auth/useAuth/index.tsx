@@ -49,7 +49,6 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
       });
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
-
       setCurrentUser(data);
     } catch (error) {
       if (error instanceof ApolloError) {
