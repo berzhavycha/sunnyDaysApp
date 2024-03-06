@@ -5,9 +5,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 
 import { Providers } from '@/context';
-
-import './globals.css';
-import { ProtectedLayout } from '@/layouts';
+import { ProtectedLayout } from '../ProtectedLayout';
 
 config.autoAddCss = false;
 

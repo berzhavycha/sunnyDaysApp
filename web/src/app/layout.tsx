@@ -1,5 +1,7 @@
 import { MainLayout } from "@/layouts";
 
+import './globals.css';
+
 export default function RootLayout({
   children,
 }: Readonly<{

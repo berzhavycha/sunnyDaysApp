@@ -8,7 +8,7 @@ type Props = {
 
 export const CurrentCityWeather: React.FC<Props> = () => {
     return (
-        <div className='absolute w-1/4 flex flex-col justify-between gap-5 bg-blue-800 h-[90%] rounded-3xl p-4'>
+        <div className='w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5'>
             <TodayWeatherInfo
                 city={'Lviv'}
                 celsius={24}
