@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"./src/**/*.ts\" \"./src/**/*.tsx\""
+    "format": "prettier --write \"./src/**/*.ts\" \"./src/**/*.tsx\"",
+    "compile": "graphql-codegen",
+    "watch": "graphql-codegen -w"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -23,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^3.3.4",
+    "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
     "next": "14.1.1",
     "react": "^18",
@@ -30,6 +33,8 @@
     "react-hook-form": "^7.51.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

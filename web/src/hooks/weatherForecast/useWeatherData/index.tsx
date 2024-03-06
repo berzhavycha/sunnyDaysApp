@@ -1,21 +1,28 @@
-'use client'
-
 import { useEffect } from 'react';
-import { ApolloError, useQuery } from '@apollo/client';
+import {
+  ApolloError,
+  ApolloQueryResult,
+  FetchMoreQueryOptions,
+  OperationVariables,
+  useQuery,
+} from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
-import { useSubscriptionError } from '@/context';
+import { Env } from '@/env';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { MAX_WEATHER_CITIES_AMOUNT, MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
   loading: boolean;
   error?: ApolloError;
+  fetchMore: (
+    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
 };
 
 export type WeatherForecast = {
+  id: string;
   city: string;
   celsius: number;
   fahrenheit: number;
@@ -33,16 +40,17 @@ export type WeatherForecastDays = {
 };
 
 export const useWeatherData = (): HookReturn => {
-  const { setError } = useSubscriptionError();
-  const { data, loading, error } = useQuery(UserCitiesWeatherDocument, {
+  const { setError, handleError } = useSubscriptionError();
+  const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions();
+  const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
-      citiesLimit: MAX_WEATHER_CITIES_AMOUNT,
-      forecastDaysAmount: MAX_FORECAST_DAYS,
+      ...paginationOptions,
+      forecastDaysAmount: Env.MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: getFetchPolicyForKey(
       'weatherData',
-      ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
+      ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
 
@@ -52,13 +60,9 @@ export const useWeatherData = (): HookReturn => {
     }
 
     if (error) {
-      if (error.graphQLErrors[0]?.extensions.originalError) {
-        setError({ message: error.graphQLErrors[0].extensions.originalError.message });
-      } else {
-        setError({ message: UNEXPECTED_ERROR_MESSAGE });
-      }
+      handleError(error);
     }
   }, [data, loading, error]);
 
-  return { data, loading, error };
+  return { data, loading: loading || isFetching, error, fetchMore };
 };

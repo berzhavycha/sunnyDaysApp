@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';

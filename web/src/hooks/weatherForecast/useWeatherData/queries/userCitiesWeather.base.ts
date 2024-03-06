@@ -1,22 +1,40 @@
 import { gql } from '@apollo/client';
 
-export const USER_CITIES_WEATHER = gql`
-  query UserCitiesWeather($citiesLimit: Int!, $forecastDaysAmount: Int!) {
-    userCitiesWeather(citiesLimit: $citiesLimit, forecastDaysAmount: $forecastDaysAmount) {
+export const WeatherForecastFragment = gql`
+  fragment WeatherForecast on WeatherForecast {
+    id
+    city
+    celsius
+    fahrenheit
+    text
+    humidity
+    daysForecast {
       id
-      city
-      fahrenheit
       celsius
+      fahrenheit
       text
       humidity
-      daysForecast {
-        id
-        celsius
-        fahrenheit
-        text
-        humidity
-        dayOfWeek
+      dayOfWeek
+    }
+    _deleted @client
+  }
+`;
+
+export const USER_CITIES_WEATHER = gql`
+  query UserCitiesWeather($offset: Int!, $limit: Int!, $order: String!, $forecastDaysAmount: Int!) {
+    userCitiesWeather(
+      offset: $offset
+      limit: $limit
+      order: $order
+      forecastDaysAmount: $forecastDaysAmount
+    ) {
+      edges {
+        ...WeatherForecast
+      }
+      paginationInfo {
+        totalCount
       }
     }
   }
+  ${WeatherForecastFragment}
 `;
