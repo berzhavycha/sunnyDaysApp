@@ -6,6 +6,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { Providers } from '@/context';
 
 import './globals.css';
+import { ProtectedLayout } from '@/layouts';
 
 config.autoAddCss = false;
 
@@ -24,7 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <ProtectedLayout>
+          <Providers>{children}</Providers>
+        </ProtectedLayout>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { Env } from '@/env';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
+import { MAX_FORECAST_DAYS } from '@/global';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -28,7 +28,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
     try {
       const userCitiesWeatherQueryVariables = {
         ...paginationOptions,
-        forecastDaysAmount: Env.MAX_FORECAST_DAYS,
+        forecastDaysAmount: MAX_FORECAST_DAYS,
       };
 
       await deleteWeatherSubscription({

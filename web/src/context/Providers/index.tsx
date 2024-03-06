@@ -1,23 +1,23 @@
 import { FC, PropsWithChildren } from 'react';
 
-import { ProtectedLayout } from '@/layouts';
 import { ApolloWrapper } from '../ApolloWrapper';
 import { CurrentUserProvider } from '../CurrentUser';
 import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
+import { WeatherPaginationQueryOptionsProvider } from '../WeatherPaginationOptions';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ApolloWrapper>
       <CurrentUserProvider>
-        <ProtectedLayout>
-          <CitySearchListProvider>
-            <CurrentTempUnitProvider>
+        <CitySearchListProvider>
+          <CurrentTempUnitProvider>
+            <WeatherPaginationQueryOptionsProvider>
               <SubscriptionErrorProvider>{children}</SubscriptionErrorProvider>
-            </CurrentTempUnitProvider>
-          </CitySearchListProvider>
-        </ProtectedLayout>
+            </WeatherPaginationQueryOptionsProvider>
+          </CurrentTempUnitProvider>
+        </CitySearchListProvider>
       </CurrentUserProvider>
     </ApolloWrapper>
   );
