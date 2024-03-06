@@ -1,4 +1,3 @@
-import { Env } from '@/env';
 import { UserCitiesWeatherQuery } from '../useWeatherData/queries';
 
 export const validateCityRules = [
