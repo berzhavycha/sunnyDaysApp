@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react';
 import {
   ApolloError,
@@ -8,9 +10,9 @@ import {
 } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { Env } from '@/env';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
@@ -45,12 +47,12 @@ export const useWeatherData = (): HookReturn => {
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
-      forecastDaysAmount: Env.MAX_FORECAST_DAYS,
+      forecastDaysAmount: MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: getFetchPolicyForKey(
       'weatherData',
-      ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
+      ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
 

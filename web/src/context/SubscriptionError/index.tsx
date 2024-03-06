@@ -1,4 +1,5 @@
-import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+'use client'
+
 import { ApolloError } from '@apollo/client';
 import {
   FC,
@@ -9,6 +10,8 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
+
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 
 type SubscriptionErrorState = {
   message: string;

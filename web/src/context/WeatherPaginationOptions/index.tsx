@@ -1,3 +1,5 @@
+'use client'
+
 import {
   FC,
   createContext,
@@ -12,6 +14,7 @@ import {
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 import { START_PAGE_NUMBER } from './constants';
+import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
 
 export type WeatherPaginationQueryOptionsState = {
   offset: number;
