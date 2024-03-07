@@ -9,7 +9,7 @@ import { useCitySearchList } from '@/context';
 import { useRenderCityItem } from './hooks';
 
 
-export const Header = (): JSX.Element => {
+export const WeatherHeader = (): JSX.Element => {
     const [search, setSearch] = useState<string>('')
     const { listState, onInputFocus, onPressOutside } = useCitySearchList()
     const { renderCityItem } = useRenderCityItem(async () => console.log('Select'))
