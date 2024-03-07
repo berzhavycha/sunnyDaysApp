@@ -12,6 +12,7 @@ const nextConfig = {
     },
 
     images: {
+        domains: ['png.pngtree.com'], 
         remotePatterns: [
             {
                 protocol: 'https',

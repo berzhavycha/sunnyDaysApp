@@ -1,48 +1,48 @@
 'use client'
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAddWeatherSubscription, useCityInputComplete } from '@/hooks';
-import { useCitySearchList, useCurrentUser } from '@/context';
+import { useCitySearchList, useCurrentTempUnit, useCurrentUser, useSubscriptionError } from '@/context';
 import { Button, InputAutocomplete } from '@/components/common';
 import { useRenderCityItem } from './hooks';
-
+import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 
 export const WeatherHeader = (): JSX.Element => {
-    const [search, setSearch] = useState<string>('')
+    const [city, setCity] = useState<string>('')
+    const { error } = useSubscriptionError()
     const { listState, onInputFocus, onPressOutside } = useCitySearchList()
-    const { renderCityItem } = useRenderCityItem(async () => console.log('Select'))
+    const { addSubscription } = useAddWeatherSubscription(setCity)
+    const { renderCityItem } = useRenderCityItem(addSubscription)
     const { onSignOut } = useCurrentUser()
-    const { addSubscription } = useAddWeatherSubscription(setSearch)
-    const { data, loading } = useCityInputComplete(search);
+    const { data, loading } = useCityInputComplete(city);
+    const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit()
 
-    const onAddSubscription = async (): Promise<void> => await addSubscription(search)
+    const onAddSubscription = async (): Promise<void> => await addSubscription(city)
 
     return (
         <header className='w-full flex justify-between items-baseline'>
-            <div className="flex items-start w-3/4 justify-center gap-8">
+            <div className="flex items-start w-3/5 justify-center gap-8 mb-2">
                 <InputAutocomplete
                     loading={loading}
                     data={data}
-                    search={search}
-                    onSearchChange={setSearch}
+                    search={city}
+                    onSearchChange={setCity}
                     placeholder={'Enter your city'}
-                    error={''}
+                    error={error.message}
                     onPressOutside={onPressOutside}
                     onInputFocus={onInputFocus}
                     isAutocompleteShown={listState.isVisible}
                     isAutocompleteEnabled={listState.isEnabled}
                     onRenderItem={renderCityItem}
                 />
-                <button onClick={onAddSubscription} className='w-1/4 bg-blue-600 px-4 py-2 rounded-xl hover:bg-blue-700 text-white'>Add City</button>
+                <Button content="Add" onClick={onAddSubscription} />
             </div>
-            <div className="flex gap-8">
-                <Button content="°C" onClick={async () => console.log("°C")} />
-                <button onClick={onSignOut}>
-                    <FontAwesomeIcon icon={faSignOut} className='text-white text-lg hover:text-gray-400' />
-                </button>
+            <div className="flex gap-6">
+                <Button content={tempUnitSigns[currentTempUnit.name]} onClick={onTempUnitChange} />
+                <Button content={<FontAwesomeIcon icon={faSignOut} className='text-white text-md' />} onClick={onSignOut} />
             </div>
         </header>
     );

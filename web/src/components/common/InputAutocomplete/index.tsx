@@ -1,9 +1,11 @@
 'use client'
 
-import React, { MouseEventHandler, useRef } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import { Input } from '../Input';
 import { CustomFlatList } from '../CustomFlatList';
+import { useOutsideClick } from './hooks';
 
 type Props<TItem> = {
   loading: boolean;
@@ -34,29 +36,22 @@ export const InputAutocomplete = <TItem,>({
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside: MouseEventHandler<HTMLInputElement> = (event) => {
-    if (
-      autocompleteRef.current &&
-      !autocompleteRef.current.contains(event.target as Node)
-    ) {
-      onPressOutside();
-    }
-  };
+  useOutsideClick(autocompleteRef, onPressOutside)
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
 
   return (
     <div className="relative w-full" ref={autocompleteRef}>
       <Input
         value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
+        onChange={onChange}
         placeholder={placeholder}
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
-        onMouseDown={handleClickOutside}
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
-        <div className="autocomplete-list absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
-          <CustomFlatList data={data} renderItem={onRenderItem} />
+        <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
+          <CustomFlatList className='flex flex-col' data={data} renderItem={onRenderItem} />
         </div>
       )}
     </div>

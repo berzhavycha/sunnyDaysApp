@@ -1,4 +1,4 @@
-import { WeatherForecast, useDeleteWeatherSubscription } from '@/hooks';
+import { WeatherForecast } from '@/hooks';
 import { WeatherCard } from '../../components';
 
 type HookReturn = {
@@ -6,11 +6,7 @@ type HookReturn = {
 };
 
 export const useRenderWeatherCard = (): HookReturn => {
-  const { deleteSubscription } = useDeleteWeatherSubscription();
-
   function renderItem(props: WeatherForecast): JSX.Element {
-    const onDelete = async (): Promise<void> => await deleteSubscription(props.city);
-
     return <WeatherCard {...props} />;
   }
 

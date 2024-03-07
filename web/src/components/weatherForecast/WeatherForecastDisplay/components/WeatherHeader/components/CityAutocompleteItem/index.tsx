@@ -9,16 +9,17 @@ type Props = {
 }
 
 export const CityAutocompleteItem: FC<Props> = ({ name, country, onClick }) => {
+    const onItemClick = async (): Promise<void> => await onClick(name)
+
     return (
         <div
             className="text-black py-3 px-4 flex gap-2 items-center transition-colors duration-300 hover:bg-gray-200 cursor-pointer"
-            style={{ borderRadius: '0.5rem' }}
-            onClick={() => onClick(name)}
+            onClick={onItemClick}
         >
             <FontAwesomeIcon className="text-blue-600" icon={faLocationPin} />
             <div className="flex">
-                <div className="main">{name}</div>
-                <div className="text-gray-400">, {country}</div>
+                <p className="main">{name}</p>
+                <p className="text-gray-400">, {country}</p>
             </div>
         </div>
     )
