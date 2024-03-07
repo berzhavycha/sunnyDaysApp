@@ -35,19 +35,19 @@ export const signClassName = {
     small: {
         fontSize: '[12px]',
         position: 'absolute',
-        top: '0',
+        top: '1',
         right: '[-16px]',
     },
     medium: {
         fontSize: '[18px]',
         position: 'absolute',
         top: '[-10px]',
-        right: '[-8px]',
+        right: '2',
     },
     large: {
         fontSize: '[22px]',
         position: 'absolute',
         top: '2',
-        right: '[-24px]',
+        right: '2',
     },
 };

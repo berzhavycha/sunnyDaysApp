@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAutocomplete } from '@/components/common/InputAutocomplete';
-import { useCitySearchList } from '@/context';
+import { useCitySearchList, useCurrentUser } from '@/context';
 import { useRenderCityItem } from './hooks';
 
 
@@ -13,9 +13,10 @@ export const WeatherHeader = (): JSX.Element => {
     const [search, setSearch] = useState<string>('')
     const { listState, onInputFocus, onPressOutside } = useCitySearchList()
     const { renderCityItem } = useRenderCityItem(async () => console.log('Select'))
+    const { onSignOut } = useCurrentUser()
 
     return (
-        <header className='flex justify-between items-baseline'>
+        <header className='w-full flex justify-between items-baseline'>
             <div className="flex items-start w-3/4 justify-center gap-8">
                 <InputAutocomplete
                     loading={false}
@@ -34,7 +35,7 @@ export const WeatherHeader = (): JSX.Element => {
             </div>
             <div className="flex gap-8">
                 <button className='bg-blue-600 py-1 px-3 text-white rounded-xl hover:bg-blue-700'>°C</button>
-                <button>
+                <button onClick={onSignOut}>
                     <FontAwesomeIcon icon={faSignOut} className='text-white text-lg hover:text-gray-400' />
                 </button>
             </div>
