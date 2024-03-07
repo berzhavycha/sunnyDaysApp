@@ -7,7 +7,7 @@ export const WeatherCardList = (): JSX.Element => {
     return (
         <div className=''>
             <Header />
-            <div className="w-full flex gap-5 flex-wrap">
+            <div className="w-full flex gap-6 flex-wrap">
                 <WeatherCard />
                 <WeatherCard />
                 <WeatherCard />

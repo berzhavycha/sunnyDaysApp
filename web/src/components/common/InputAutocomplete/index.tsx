@@ -46,7 +46,7 @@ export const InputAutocomplete = <TItem,>({
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl">
-          {data.map((item) => {
+          {/* {data.map((item) => {
             return (
               <div
                 key={item as string}
@@ -59,7 +59,7 @@ export const InputAutocomplete = <TItem,>({
                 </div>
               </div>
             );
-          })}
+          })} */}
         </div>
       )}
     </div>
