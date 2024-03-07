@@ -37,6 +37,7 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
+        onBlur={onPressOutside}
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">

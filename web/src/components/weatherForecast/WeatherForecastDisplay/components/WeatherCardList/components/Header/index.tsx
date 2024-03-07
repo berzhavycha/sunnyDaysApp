@@ -5,10 +5,12 @@ import React, { useState } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputAutocomplete } from '@/components/common/InputAutocomplete';
+import { useCitySearchList } from '@/context';
 
 
 export const Header = (): JSX.Element => {
     const [search, setSearch] = useState<string>('')
+    const { listState, onInputFocus, onPressOutside } = useCitySearchList()
 
     return (
         <header className='flex justify-between items-baseline'>
@@ -20,9 +22,9 @@ export const Header = (): JSX.Element => {
                     onSearchChange={setSearch}
                     placeholder={'Enter your city'}
                     error={''}
-                    onPressOutside={() => console.log('press outside')}
-                    onInputFocus={() => console.log('Input focus')}
-                    isAutocompleteShown={true}
+                    onPressOutside={onPressOutside}
+                    onInputFocus={onInputFocus}
+                    isAutocompleteShown={listState.isVisible}
                     isAutocompleteEnabled
                 />
                 <button className='w-1/4 bg-blue-600 px-4 py-2 rounded-xl hover:bg-blue-700 text-white'>Add City</button>
