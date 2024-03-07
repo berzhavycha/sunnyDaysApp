@@ -9,15 +9,17 @@ interface FlatListProps<T> {
 
 export const CustomFlatList = <T,>({ data, renderItem, listFooterComponent, className }: FlatListProps<T>): JSX.Element => {
     return (
-        <div className={className}>
-            {data.map((item) => (
-                <>
-                    {renderItem(item)}
-                </>
-            ))}
+        <>
+            <div className={className}>
+                {data.map((item) => (
+                    <>
+                        {renderItem(item)}
+                    </>
+                ))}
+            </div>
             {listFooterComponent && (
-                <div>{listFooterComponent}</div>
+                <div className='mt-10'>{listFooterComponent}</div>
             )}
-        </div>
+        </>
     );
 }

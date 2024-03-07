@@ -5,7 +5,8 @@ import React from 'react';
 import { useWeatherPaginationQueryOptions } from '@/context';
 import { useWeatherData, useWeatherPagination } from '@/hooks';
 import { useRenderWeatherCard } from './hooks';
-import { CustomFlatList, Spinner } from '@/components/common';
+import { CustomFlatList, PaginationButtonsPanel, Spinner } from '@/components/common';
+import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 
 
 
@@ -17,7 +18,7 @@ export const WeatherCardList = (): JSX.Element => {
 
     // const listFooterComponent =
     //     totalPages > 1 ? (
-    //         <PaginationButtons
+    //         <PaginationButtonsPanel
     //             startPageNumber={START_PAGE_NUMBER}
     //             currentPage={currentPage}
     //             paginationPageNumbers={paginationPageNumbers}
@@ -25,8 +26,18 @@ export const WeatherCardList = (): JSX.Element => {
     //             onClickPageButton={onGoToPage}
     //             onClickNext={onClickNext}
     //             onClickPrev={onClickPrev}
-    //         />   
+    //         />
     //     ) : null;
+
+    const listFooterComponent = <PaginationButtonsPanel
+        startPageNumber={START_PAGE_NUMBER}
+        currentPage={currentPage}
+        paginationPageNumbers={paginationPageNumbers}
+        totalPages={totalPages}
+        onClickPageButton={onGoToPage}
+        onClickNext={onClickNext}
+        onClickPrev={onClickPrev}
+    />
 
     return (
         <div className='w-full h-full'>
@@ -43,6 +54,7 @@ export const WeatherCardList = (): JSX.Element => {
                             className='w-full flex flex-wrap gap-6'
                             data={data?.userCitiesWeather.edges ?? []}
                             renderItem={renderItem}
+                            listFooterComponent={listFooterComponent}
                         />
                     )
             }
