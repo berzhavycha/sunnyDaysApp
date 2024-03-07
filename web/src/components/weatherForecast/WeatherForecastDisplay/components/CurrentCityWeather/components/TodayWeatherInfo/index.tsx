@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import Image from "next/image";
 import { ExtraWeatherInfoItem } from "../ExtraWeatherInfoItem";
-import { faWind, faCloudRain, faSmog } from "@fortawesome/free-solid-svg-icons";
+import { faWind, faCloudRain, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { TemperatureInfo } from "@/components";
 
 type Props = {
@@ -22,15 +22,15 @@ export const TodayWeatherInfo: FC<Props> = ({ city, text, wind, humidity, ...tem
         <div className="flex justify-between pr-8 items-start mb-2">
             <Image src={'https://cdn-icons-png.flaticon.com/512/4834/4834559.png'} width={150} height={150} alt={''} />
             <div>
-                <TemperatureInfo value={temp.celsius} tempSign="°C" size="large"/>
+                <TemperatureInfo value={temp.celsius} tempSign="°C" size="large" fontWeight="bold"/>
                 <p className='text-md text-white font-light'>{text}</p>
             </div>
         </div>
         <div className="flex justify-between flex-wrap gap-3">
             <ExtraWeatherInfoItem icon={faWind} data={wind} infoType="Wind Speed" />
             <ExtraWeatherInfoItem icon={faCloudRain} data={humidity} infoType="Humidity" />
-            <ExtraWeatherInfoItem icon={faSmog} data={humidity} infoType="Humidity" />
-            <ExtraWeatherInfoItem icon={faWind} data={humidity} infoType="Something" />
+            <ExtraWeatherInfoItem icon={faSun} data={'6:38 AM'} infoType="Sunrise" />
+            <ExtraWeatherInfoItem icon={faMoon} data={'6:54 PM'} infoType="Sunset" />
         </div>
     </div>
 );

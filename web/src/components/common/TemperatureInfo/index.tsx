@@ -1,25 +1,23 @@
 import { FC } from "react";
+import { valueClassName, signClassName } from "./constants";
 
 type Props = {
     value: number;
     tempSign: string;
-    size: 'small' | 'medium' | 'large'
+    size: 'small' | 'medium' | 'large';
+    fontWeight: 'normal' | 'light' | 'bold';
 }
 
-export const valueClassName = {
-    small: 'text-[20px] text-white relative',
-    medium: 'text-4xl text-white relative',
-    large: 'text-[60px] text-white font-bold relative'
-}
+export const TemperatureInfo: FC<Props> = ({ value, tempSign, size, fontWeight }) => {
+    const { fontSize: valueFontSize, fontWeight: weight, textColor, position } = valueClassName[size];
+    const { fontSize: signFontSize, position: signPosition, top, right } = signClassName[size];
 
-export const signClassName = {
-    small: 'absolute top-0 right-[-16px] text-[12px]',
-    medium: 'absolute top-[-10px] right-[-8px] text-[18px]',
-    large: 'absolute top-2 right-[-24px] text-[22px]'
-}
-
-export const TemperatureInfo: FC<Props> = ({ value, tempSign, size }) => {
     return (
-        <p className={valueClassName[size]}>{value}<span className={signClassName[size]}>{tempSign}</span></p>
-    )
-}
+        <p className={`text-${valueFontSize} ${textColor} ${weight[fontWeight]} ${position}`}>
+            {value}
+            <span className={`text-${signFontSize} ${signPosition} ${top ? `top-${top}` : ''} ${right ? `right-${right}` : ''}`}>
+                {tempSign}
+            </span>
+        </p>
+    );
+};

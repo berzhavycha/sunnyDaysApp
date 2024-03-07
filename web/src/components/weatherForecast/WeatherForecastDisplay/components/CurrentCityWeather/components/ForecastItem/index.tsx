@@ -17,7 +17,11 @@ export const ForecastItem: FC<ForecastItemProps> = ({ text, day, ...temp }) => {
     return (
         <div className="flex justify-between items-center rounded-xl transition hover:bg-blue-700 p-4 cursor-pointer">
             <Image src={weatherIconMapping[weatherIcon]} width={45} height={45} alt={'weather-icon'} />
-            <TemperatureInfo value={temp.celsius} tempSign="°C" size="small"/>
+            <div className="flex items-center">
+                <TemperatureInfo value={temp.celsius} tempSign="°C" size="small" fontWeight="bold"/>
+                <span className="text-white ml-5 mr-1">/</span>
+                <TemperatureInfo value={temp.celsius} tempSign="°C" size="small" fontWeight="light"/>
+            </div>
             <p className='text-white font-light w-1/3 text-left'>{day}</p>
         </div>
     )
