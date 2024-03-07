@@ -1,4 +1,6 @@
-import React from 'react';
+'use client'
+
+import React, { MouseEventHandler, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Input } from '../Input';
 import { CustomFlatList } from '../CustomFlatList';
@@ -30,8 +32,19 @@ export const InputAutocomplete = <TItem,>({
   isAutocompleteEnabled,
   onRenderItem
 }: Props<TItem>): JSX.Element => {
+  const autocompleteRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside: MouseEventHandler<HTMLInputElement> = (event) => {
+    if (
+      autocompleteRef.current &&
+      !autocompleteRef.current.contains(event.target as Node)
+    ) {
+      onPressOutside();
+    }
+  };
+
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" ref={autocompleteRef}>
       <Input
         value={search}
         onChange={(e) => onSearchChange(e.target.value)}
@@ -39,10 +52,10 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
-        onBlur={onPressOutside}
+        onMouseDown={handleClickOutside}
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
-        <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
+        <div className="autocomplete-list absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
           <CustomFlatList data={data} renderItem={onRenderItem} />
         </div>
       )}

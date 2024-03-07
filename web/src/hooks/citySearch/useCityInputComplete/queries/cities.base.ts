@@ -16,6 +16,7 @@ export const CITIES = gql`
       minPopulation: $minPopulation
     ) {
       name
+      country
     }
   }
 `;

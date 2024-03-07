@@ -46,6 +46,7 @@ type Query {
 }
 
 type SearchedCity {
+  country: String!
   name: String!
 }
 

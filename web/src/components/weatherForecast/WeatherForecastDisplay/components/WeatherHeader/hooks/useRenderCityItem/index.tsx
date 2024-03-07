@@ -15,7 +15,7 @@ export const useRenderCityItem = (onCitySelect: (text: string) => Promise<void>)
             onPressOutside();
         };
 
-        return <CityAutocompleteItem name='Lviv' country='Ukraine' onClick={citySelectHandler} />;
+        return <CityAutocompleteItem name={item.name} country={item.country} onClick={citySelectHandler} />;
     };
 
     return { renderCityItem };
