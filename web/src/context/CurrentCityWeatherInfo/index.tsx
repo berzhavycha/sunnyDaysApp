@@ -7,7 +7,7 @@ type InfoType = WeatherForecast & {
     dayOfWeek?: string
 }
 
-type CurrentCityWeatherInfoState = {
+export type CurrentCityWeatherInfoState = {
     info: InfoType
 };
 
@@ -38,10 +38,10 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true)
 
     useEffect(() => {
-        if (currentCityWeatherInfo?.info.city) {
-            setTodayWeatherCityInfo(currentCityWeatherInfo.info)
+        if (currentCityWeatherInfo && currentCityWeatherInfo.info && currentCityWeatherInfo.info.city) {
+            setTodayWeatherCityInfo(currentCityWeatherInfo.info);
         }
-    }, [currentCityWeatherInfo?.info.city])
+    }, [currentCityWeatherInfo]);
 
     const onTodayCurrentWeather = (): void => {
         if (todayCityWeatherInfo) {

@@ -1,13 +1,13 @@
 import { FC } from "react";
-
 import Image from "next/image";
-import { ExtraWeatherInfoItem } from "../ExtraWeatherInfoItem";
 import { faWind, faCloudRain, faDroplet } from "@fortawesome/free-solid-svg-icons";
+
+import { useCurrentTempUnit } from "@/context";
 import { TemperatureInfo, weatherIconMapping } from "@/components";
 import { WeatherForecast } from "@/hooks";
-import { pickWeatherIcon } from "@/components/weatherForecast/WeatherForecastDisplay/utils";
-import { useCurrentTempUnit } from "@/context";
+import { pickWeatherIcon } from "@/components/weatherForecast/utils";
 import { tempUnitSigns } from "@/context/CurrentTempUnit/constants";
+import { ExtraWeatherInfoItem } from "../ExtraWeatherInfoItem";
 
 type Props = WeatherForecast & {
     dayOfWeek: string

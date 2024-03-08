@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAddWeatherSubscription, useCityInputComplete } from '@/hooks';
 import { useCitySearchList, useCurrentTempUnit, useCurrentUser, useSubscriptionError } from '@/context';
 import { Button, InputAutocomplete } from '@/components/common';
-import { useRenderCityItem } from './hooks';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+import { useRenderCityItem } from './hooks';
 
 export const WeatherHeader = (): JSX.Element => {
     const [city, setCity] = useState<string>('')
@@ -21,6 +21,7 @@ export const WeatherHeader = (): JSX.Element => {
     const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit()
 
     const onAddSubscription = async (): Promise<void> => await addSubscription(city)
+    const onSignOutBtnContent = <FontAwesomeIcon icon={faSignOut} className='text-white text-md' />
 
     return (
         <header className='w-full flex justify-between items-baseline'>
@@ -42,7 +43,7 @@ export const WeatherHeader = (): JSX.Element => {
             </div>
             <div className="flex gap-6">
                 <Button content={tempUnitSigns[currentTempUnit.name]} onClick={onTempUnitChange} />
-                <Button content={<FontAwesomeIcon icon={faSignOut} className='text-white text-md' />} onClick={onSignOut} />
+                <Button content={onSignOutBtnContent} onClick={onSignOut} />
             </div>
         </header>
     );

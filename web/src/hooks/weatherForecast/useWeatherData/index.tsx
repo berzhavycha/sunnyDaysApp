@@ -9,10 +9,11 @@ import {
   useQuery,
 } from '@apollo/client';
 
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
+import { ONE_MINUTE } from '@/shared';
+import { getFetchPolicyForKey } from '@/utils';
+import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
@@ -78,7 +79,7 @@ export const useWeatherData = (): HookReturn => {
     if (data) {
       setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] })
     }
-  }, [data, loading, error]);
+  }, [data, loading, error, setError, handleError, setCurrentCityWeatherInfo]);
 
   return { data, loading: loading || isFetching, error, fetchMore };
 };

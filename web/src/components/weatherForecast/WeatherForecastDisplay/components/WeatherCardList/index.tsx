@@ -1,12 +1,10 @@
 'use client'
 
-import React from 'react';
-
 import { useWeatherPaginationQueryOptions } from '@/context';
 import { useWeatherData, useWeatherPagination } from '@/hooks';
-import { useRenderWeatherCard } from './hooks';
-import { CustomFlatList, PaginationButtonsPanel, Spinner } from '@/components/common';
+import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
+import { useRenderWeatherCard } from './hooks';
 
 
 export const WeatherCardList = (): JSX.Element => {
@@ -35,7 +33,7 @@ export const WeatherCardList = (): JSX.Element => {
                     <Spinner />
                 </div>
             ) : !data?.userCitiesWeather.edges.length ? (
-                <h1 className='text-white'>No data</h1>
+                <NoData />
             ) : (
                 <CustomFlatList
                     className='w-full flex flex-wrap gap-6'

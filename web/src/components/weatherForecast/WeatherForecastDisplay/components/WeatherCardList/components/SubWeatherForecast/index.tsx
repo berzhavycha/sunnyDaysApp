@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 
 import { TemperatureInfo, weatherIconMapping } from '@/components';
-import { pickWeatherIcon } from '@/components/weatherForecast/WeatherForecastDisplay/utils';
+import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { useCurrentTempUnit } from '@/context';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 
@@ -13,7 +13,7 @@ type Props = {
     dayOfWeek: string;
 };
 
-export const SubWeatherForecast: React.FC<Props> = ({ text, dayOfWeek, ...info }) => {
+export const SubWeatherForecast: FC<Props> = ({ text, dayOfWeek, ...info }) => {
     const { currentTempUnit } = useCurrentTempUnit();
     const weatherIcon = pickWeatherIcon(text);
 

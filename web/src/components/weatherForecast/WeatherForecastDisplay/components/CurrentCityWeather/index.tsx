@@ -1,37 +1,22 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import { TodayWeatherInfo } from './components/TodayWeatherInfo';
-import { Forecast } from './components/Forecast';
 import { useCurrentCityWeatherInfo } from '@/context';
-import { daysOfWeek } from '@/shared';
 import { useDeleteWeatherSubscription } from '@/hooks';
+import { NoData } from '@/components';
+import { TodayWeatherInfo, Forecast } from './components';
+import { useCurrentWeatherTime } from './hooks';
 
 export const CurrentCityWeather = (): JSX.Element => {
-    const [dayOfWeek, setDayOfWeek] = useState<string>('')
-    const [time, setTime] = useState<string>('')
     const { currentCityWeatherInfo } = useCurrentCityWeatherInfo()
     const { deleteSubscription } = useDeleteWeatherSubscription()
-
-    useEffect(() => {
-        if (currentCityWeatherInfo?.info?.dayOfWeek) {
-            setDayOfWeek(currentCityWeatherInfo?.info.dayOfWeek)
-            setTime('')
-        } else {
-            const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
-            const dayOfWeek = daysOfWeek[dateInstance.getDay()];
-            setDayOfWeek(dayOfWeek)
-            setTime(`${dateInstance.getHours()}:${dateInstance.getMinutes()}`)
-        }
-
-    }, [currentCityWeatherInfo])
+    const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo)
 
     const onDelete = async (): Promise<void> => await deleteSubscription(currentCityWeatherInfo?.info.city ?? '')
 
     return (
         <div className='w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5'>
             {!currentCityWeatherInfo?.info ? (
-                <h1>No Data</h1>
+                <NoData />
             ) : (
                 <>
                     <TodayWeatherInfo

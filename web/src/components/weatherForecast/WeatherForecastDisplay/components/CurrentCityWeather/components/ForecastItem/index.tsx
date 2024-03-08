@@ -1,12 +1,13 @@
+import { FC } from "react";
+import Image from "next/image";
+
 import { TemperatureInfo } from "@/components";
-import { weatherIconMapping } from "@/components/weatherForecast/constants";
-import { pickWeatherIcon } from "@/components/weatherForecast/WeatherForecastDisplay/utils";
 import { useCurrentTempUnit } from "@/context";
-import { tempUnitSigns } from "@/context/CurrentTempUnit/constants";
 import { WeatherForecastDays } from "@/hooks";
 import { upperCaseFirstLetter } from "@/utils";
-import Image from "next/image";
-import { FC } from "react";
+import { weatherIconMapping } from "@/components/weatherForecast/constants";
+import { pickWeatherIcon } from "@/components/weatherForecast/utils";
+import { tempUnitSigns } from "@/context/CurrentTempUnit/constants";
 
 type Props = WeatherForecastDays & {
     onClick: () => void

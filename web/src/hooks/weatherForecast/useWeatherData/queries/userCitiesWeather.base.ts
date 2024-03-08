@@ -22,8 +22,8 @@ export const WeatherForecastFragment = gql`
       dayOfWeek
       minCelsius
       maxCelsius
-      minCelsius
-      maxCelsius
+      minFahrenheit
+      maxFahrenheit
     }
     _deleted @client
   }

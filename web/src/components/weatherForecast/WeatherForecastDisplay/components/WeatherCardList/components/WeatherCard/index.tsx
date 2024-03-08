@@ -1,10 +1,10 @@
-import React from 'react';
+import { FC } from 'react';
 import Image from 'next/image';
 
 import { WeatherForecast } from '@/hooks';
 import { TemperatureInfo } from '@/components/common';
 import { weatherIconMapping } from '@/components/weatherForecast/constants'
-import { pickWeatherIcon } from '@/components/weatherForecast/WeatherForecastDisplay/utils';
+import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 import { useCurrentTempUnit } from '@/context';
 import { SubWeatherForecast } from '../SubWeatherForecast';
@@ -13,7 +13,7 @@ type Props = WeatherForecast & {
     onClick: () => void
 }
 
-export const WeatherCard: React.FC<Props> = ({ onClick, city, text, daysForecast, ...info }) => {
+export const WeatherCard: FC<Props> = ({ onClick, city, text, daysForecast, ...info }) => {
     const { currentTempUnit } = useCurrentTempUnit();
     const weatherIcon = pickWeatherIcon(text);
 
@@ -29,9 +29,7 @@ export const WeatherCard: React.FC<Props> = ({ onClick, city, text, daysForecast
             </div>
             <div className="flex justify-between items-center gap-4">
                 {daysForecast?.map((item, index) => {
-                    return (
-                        <SubWeatherForecast key={index} {...item} />
-                    )
+                    return <SubWeatherForecast key={index} {...item} />
                 })}
             </div>
         </div>
