@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { valueClassName, signClassName } from "./constants";
+import { valueClassName } from "./constants";
 
 type Props = {
     value: number;
@@ -9,13 +9,14 @@ type Props = {
 }
 
 export const TemperatureInfo: FC<Props> = ({ value, tempSign, size, fontWeight }) => {
-    const { fontSize: valueFontSize, fontWeight: weight, textColor, position } = valueClassName[size];
-    const { fontSize: signFontSize, position: signPosition, top, right } = signClassName[size];
+    const { fontSize: valueFontSize, fontWeight: weight, textColor } = valueClassName[size];
+
+    const className = `text-${valueFontSize} ${textColor} ${weight[fontWeight]}`
 
     return (
-        <p className={`text-${valueFontSize} ${textColor} ${weight[fontWeight]} ${position}`}>
+        <p className={className}>
             {value}
-            <span className={`text-${signFontSize} ${signPosition} ${top ? `top-${top}` : ''} ${right ? `right-${right}` : ''}`}>
+            <span className="ml-1">
                 {tempSign}
             </span>
         </p>

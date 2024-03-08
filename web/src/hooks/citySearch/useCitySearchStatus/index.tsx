@@ -2,9 +2,10 @@
 
 import { useQuery } from '@apollo/client';
 
-import { getFetchPolicyForKey, ONE_MINUTE } from '@/utils';
-import { CitySearchStatusDocument } from './queries';
+import { ONE_MINUTE } from '@/shared';
+import { getFetchPolicyForKey } from '@/utils';
 import { FEATURE_CACHE_MINUTES_TIME } from '@/global';
+import { CitySearchStatusDocument } from './queries';
 
 type HookReturn = {
   isEnabled: boolean;

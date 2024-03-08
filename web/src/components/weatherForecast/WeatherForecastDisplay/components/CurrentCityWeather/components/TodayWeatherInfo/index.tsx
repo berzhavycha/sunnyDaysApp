@@ -21,11 +21,11 @@ export const TodayWeatherInfo: FC<Props> = ({ city, text, windSpeed, dayOfWeek, 
         <div className="bg-blue-600 rounded-3xl p-5">
             <p className='text-white font-bold text-lg'>{city}</p>
             <p className='text-white font-light text-sm mb-2'>{dayOfWeek}{time && `, ${time}`}</p>
-            <div className="flex justify-between pr-8 items-start mb-6">
-                <Image src={weatherIconMapping[weatherIcon]} width={130} height={130} alt={'today-weather-icon'} />
+            <div className="flex justify-between pr-3 items-center mb-6">
+                <Image src={weatherIconMapping[weatherIcon]} width={120} height={120} alt={'today-weather-icon'} />
                 <div>
                     <TemperatureInfo value={info[currentTempUnit.name]} tempSign={tempUnitSigns[currentTempUnit.name]} size="large" fontWeight="bold" />
-                    <p className='text-md text-white font-light'>{text}</p>
+                    <p className='text-lg text-white font-light'>{text}</p>
                 </div>
             </div>
             <div className="flex justify-between">

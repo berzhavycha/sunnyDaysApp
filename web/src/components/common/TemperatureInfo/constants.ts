@@ -1,13 +1,12 @@
 export const valueClassName = {
     small: {
-        fontSize: '[20px]',
+        fontSize: '20px',
         fontWeight: {
             normal: 'font-normal',
             light: 'font-light',
             bold: 'font-bold',
         },
         textColor: 'text-white',
-        position: 'relative',
     },
     medium: {
         fontSize: '4xl',
@@ -17,37 +16,14 @@ export const valueClassName = {
             bold: 'font-bold',
         },
         textColor: 'text-white',
-        position: 'relative',
     },
     large: {
-        fontSize: '[60px]',
+        fontSize: '5xl',
         fontWeight: {
             normal: 'font-normal',
             light: 'font-light',
             bold: 'font-bold',
         },
         textColor: 'text-white',
-        position: 'relative',
-    },
-};
-
-export const signClassName = {
-    small: {
-        fontSize: '[12px]',
-        position: 'absolute',
-        top: '1',
-        right: '[-16px]',
-    },
-    medium: {
-        fontSize: '[18px]',
-        position: 'absolute',
-        top: '[-10px]',
-        right: '2',
-    },
-    large: {
-        fontSize: '[22px]',
-        position: 'absolute',
-        top: '2',
-        right: '2',
     },
 };

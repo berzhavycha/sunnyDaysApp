@@ -1,13 +1,14 @@
 'use client'
 
 import { useCurrentCityWeatherInfo } from '@/context';
-import { useDeleteWeatherSubscription } from '@/hooks';
-import { NoData } from '@/components';
+import { useDeleteWeatherSubscription, useWeatherData } from '@/hooks';
+import { NoData, Spinner } from '@/components';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
 export const CurrentCityWeather = (): JSX.Element => {
     const { currentCityWeatherInfo } = useCurrentCityWeatherInfo()
+    const { loading } = useWeatherData()
     const { deleteSubscription } = useDeleteWeatherSubscription()
     const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo)
 
@@ -15,27 +16,30 @@ export const CurrentCityWeather = (): JSX.Element => {
 
     return (
         <div className='w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5'>
-            {!currentCityWeatherInfo?.info ? (
-                <NoData />
-            ) : (
-                <>
-                    <TodayWeatherInfo
-                        city={currentCityWeatherInfo.info.city}
-                        celsius={currentCityWeatherInfo.info.celsius}
-                        fahrenheit={currentCityWeatherInfo.info.fahrenheit}
-                        text={currentCityWeatherInfo.info.text}
-                        windSpeed={currentCityWeatherInfo.info.windSpeed}
-                        humidity={currentCityWeatherInfo.info.humidity}
-                        precip={currentCityWeatherInfo.info.precip}
-                        dayOfWeek={dayOfWeek}
-                        time={time}
-                    />
-                    <Forecast
-                        info={currentCityWeatherInfo.info.daysForecast ?? []}
-                    />
-                    <button onClick={onDelete} className='text-center border border-red-500 w-full rounded-xl text-red-400 p-2 transition hover:bg-red-500 hover:text-white'>Delete City</button>
-                </>
-            )}
+            {loading ? (
+                <Spinner />
+            ) :
+                !currentCityWeatherInfo?.info ? (
+                    <NoData />
+                ) : (
+                    <>
+                        <TodayWeatherInfo
+                            city={currentCityWeatherInfo.info.city}
+                            celsius={currentCityWeatherInfo.info.celsius}
+                            fahrenheit={currentCityWeatherInfo.info.fahrenheit}
+                            text={currentCityWeatherInfo.info.text}
+                            windSpeed={currentCityWeatherInfo.info.windSpeed}
+                            humidity={currentCityWeatherInfo.info.humidity}
+                            precip={currentCityWeatherInfo.info.precip}
+                            dayOfWeek={dayOfWeek}
+                            time={time}
+                        />
+                        <Forecast
+                            info={currentCityWeatherInfo.info.daysForecast ?? []}
+                        />
+                        <button onClick={onDelete} className='text-center border border-red-500 w-full rounded-xl text-red-400 p-2 transition hover:bg-red-500 hover:text-white'>Delete City</button>
+                    </>
+                )}
         </div>
     );
 };
