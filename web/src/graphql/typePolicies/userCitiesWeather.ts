@@ -13,6 +13,7 @@ interface PaginationResult {
 
 export const userCitiesWeather: FieldPolicy<PaginationResult> = {
   merge(existing, incoming, context) {
+    console.log("EXISTING", existing)
     const offset = context.args?.offset;
 
     const mergedEdges = existing ? [...existing.edges] : [];

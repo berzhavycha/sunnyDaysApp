@@ -31,7 +31,7 @@ export const TodayWeatherInfo: FC<Props> = ({ city, text, windSpeed, dayOfWeek, 
             <div className="flex justify-between">
                 <ExtraWeatherInfoItem icon={faWind} data={`${windSpeed} km/h`} infoType="Wind Speed" />
                 <ExtraWeatherInfoItem icon={faDroplet} data={humidity} infoType="Humidity" />
-                <ExtraWeatherInfoItem icon={faCloudRain} data={`${precip}mm`} infoType="Precip" />
+                <ExtraWeatherInfoItem icon={faCloudRain} data={`${precip} mm`} infoType="Precip" />
             </div>
         </div>
     );

@@ -1,9 +1,6 @@
-'use client'
+import { ApolloError, useApolloClient } from '@apollo/client';
 
-import { useState, useEffect } from 'react';
-import { useApolloClient } from '@apollo/client';
-
-import { useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 import { useWeatherData } from '../useWeatherData';
 import {
@@ -16,25 +13,23 @@ type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  totalPages: number;
-  paginationPageNumbers: number[];
+  isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>) => boolean;
 };
 
 export const useWeatherPagination = (): HookReturn => {
   const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
-  const { paginationOptions, currentPage, setCurrentPage, setIsFetching, updatePaginationOptions } =
-    useWeatherPaginationQueryOptions();
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
+  const { handleError } = useSubscriptionError();
+  const {
+    paginationOptions,
+    currentPage,
+    setCurrentPage,
+    setIsFetching,
+    updatePaginationOptions,
+    totalPages,
+  } = useWeatherPaginationQueryOptions();
 
-  useEffect(() => {
-    const totalCount = data?.userCitiesWeather.paginationInfo?.totalCount ?? 0;
-    setTotalPages(Math.ceil(totalCount / paginationOptions.limit));
-    setPaginationPageNumbers(Array.from({ length: totalPages }, (_, index) => index + 1));
-  }, [data, paginationOptions.limit, totalPages]);
-
-  const isPageCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
+  const isPageContentCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
     const cachedData = client.readQuery<UserCitiesWeatherQuery>({
       query: UserCitiesWeatherDocument,
       variables: {
@@ -54,13 +49,20 @@ export const useWeatherPagination = (): HookReturn => {
   const onFetchMore = async (
     variables: Partial<UserCitiesWeatherQueryVariables>,
   ): Promise<void> => {
-    if (!isPageCached(variables)) {
-      setIsFetching(true);
-      await fetchMore({ variables });
-      setIsFetching(false);
-    }
+    try {
+      if (!isPageContentCached(variables)) {
+        setIsFetching(true);
+        await fetchMore({ variables });
+        setIsFetching(false);
+      }
 
-    updatePaginationOptions(variables);
+      updatePaginationOptions(variables);
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        handleError(error);
+        setIsFetching(false);
+      }
+    }
   };
 
   const onClickPrev = async (): Promise<void> => {
@@ -83,5 +85,5 @@ export const useWeatherPagination = (): HookReturn => {
     setCurrentPage(page);
   };
 
-  return { onClickPrev, onClickNext, onGoToPage, totalPages, paginationPageNumbers };
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
 };
