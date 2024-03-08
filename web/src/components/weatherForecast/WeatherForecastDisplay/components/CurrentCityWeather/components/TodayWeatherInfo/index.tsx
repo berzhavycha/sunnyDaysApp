@@ -20,7 +20,7 @@ export const TodayWeatherInfo: FC<Props> = ({ city, text, windSpeed, dayOfWeek, 
     return (
         <div className="bg-blue-600 rounded-3xl p-5">
             <p className='text-white font-bold text-lg'>{city}</p>
-            <p className='text-white font-light text-sm mb-2'>{dayOfWeek}{`, ${time}`}</p>
+            <p className='text-white font-light text-sm mb-2'>{dayOfWeek}{time && `, ${time}`}</p>
             <div className="flex justify-between pr-8 items-start mb-6">
                 <Image src={weatherIconMapping[weatherIcon]} width={130} height={130} alt={'today-weather-icon'} />
                 <div>

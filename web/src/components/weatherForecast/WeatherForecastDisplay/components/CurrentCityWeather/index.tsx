@@ -16,6 +16,7 @@ export const CurrentCityWeather = (): JSX.Element => {
     useEffect(() => {
         if (currentCityWeatherInfo?.info?.dayOfWeek) {
             setDayOfWeek(currentCityWeatherInfo?.info.dayOfWeek)
+            setTime('')
         } else {
             const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
             const dayOfWeek = daysOfWeek[dateInstance.getDay()];
@@ -45,7 +46,7 @@ export const CurrentCityWeather = (): JSX.Element => {
                         time={time}
                     />
                     <Forecast
-                        info={currentCityWeatherInfo.info.daysForecast}
+                        info={currentCityWeatherInfo.info.daysForecast ?? []}
                     />
                     <button onClick={onDelete} className='text-center border border-red-500 w-full rounded-xl text-red-400 p-2 transition hover:bg-red-500 hover:text-white'>Delete City</button>
                 </>
