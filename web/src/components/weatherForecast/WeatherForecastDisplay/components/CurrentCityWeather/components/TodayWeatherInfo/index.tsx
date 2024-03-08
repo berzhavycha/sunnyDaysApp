@@ -2,35 +2,37 @@ import { FC } from "react";
 
 import Image from "next/image";
 import { ExtraWeatherInfoItem } from "../ExtraWeatherInfoItem";
-import { faWind, faCloudRain, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { TemperatureInfo } from "@/components";
+import { faWind, faCloudRain, faDroplet } from "@fortawesome/free-solid-svg-icons";
+import { TemperatureInfo, weatherIconMapping } from "@/components";
+import { WeatherForecast } from "@/hooks";
+import { pickWeatherIcon } from "@/components/weatherForecast/WeatherForecastDisplay/utils";
+import { useCurrentTempUnit } from "@/context";
+import { tempUnitSigns } from "@/context/CurrentTempUnit/constants";
 
-type Props = {
-    city: string,
-    celsius: number,
-    fahrenheit: number,
-    text: string,
-    wind: string,
-    humidity: string,
-    smog: string
+type Props = WeatherForecast & {
+    dayOfWeek: string
 }
 
-export const TodayWeatherInfo: FC<Props> = ({ city, text, wind, humidity, ...temp }): JSX.Element => (
-    <div className="bg-blue-600 rounded-3xl p-5">
-        <p className='text-white font-bold text-lg'>{city}</p>
-        <p className='text-white font-light text-sm'>Tuesday, 12:35</p>
-        <div className="flex justify-between pr-8 items-start mb-2">
-            <Image src={'https://cdn-icons-png.flaticon.com/512/4834/4834559.png'} width={150} height={150} alt={''} />
-            <div>
-                <TemperatureInfo value={temp.celsius} tempSign="°C" size="large" fontWeight="bold"/>
-                <p className='text-md text-white font-light'>{text}</p>
+export const TodayWeatherInfo: FC<Props> = ({ city, text, windSpeed, dayOfWeek, time, precip, humidity, ...info }): JSX.Element => {
+    const { currentTempUnit } = useCurrentTempUnit();
+    const weatherIcon = pickWeatherIcon(text);
+
+    return (
+        <div className="bg-blue-600 rounded-3xl p-5">
+            <p className='text-white font-bold text-lg'>{city}</p>
+            <p className='text-white font-light text-sm mb-2'>{dayOfWeek}{`, ${time}`}</p>
+            <div className="flex justify-between pr-8 items-start mb-6">
+                <Image src={weatherIconMapping[weatherIcon]} width={130} height={130} alt={'today-weather-icon'} />
+                <div>
+                    <TemperatureInfo value={info[currentTempUnit.name]} tempSign={tempUnitSigns[currentTempUnit.name]} size="large" fontWeight="bold" />
+                    <p className='text-md text-white font-light'>{text}</p>
+                </div>
+            </div>
+            <div className="flex justify-between">
+                <ExtraWeatherInfoItem icon={faWind} data={`${windSpeed} km/h`} infoType="Wind Speed" />
+                <ExtraWeatherInfoItem icon={faDroplet} data={humidity} infoType="Humidity" />
+                <ExtraWeatherInfoItem icon={faCloudRain} data={`${precip}mm`} infoType="Precip" />
             </div>
         </div>
-        <div className="flex justify-between flex-wrap gap-3">
-            <ExtraWeatherInfoItem icon={faWind} data={wind} infoType="Wind Speed" />
-            <ExtraWeatherInfoItem icon={faCloudRain} data={humidity} infoType="Humidity" />
-            <ExtraWeatherInfoItem icon={faSun} data={'6:38 AM'} infoType="Sunrise" />
-            <ExtraWeatherInfoItem icon={faMoon} data={'6:54 PM'} infoType="Sunset" />
-        </div>
-    </div>
-);
+    );
+}

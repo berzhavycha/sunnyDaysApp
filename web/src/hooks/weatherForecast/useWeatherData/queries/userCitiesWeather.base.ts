@@ -8,13 +8,22 @@ export const WeatherForecastFragment = gql`
     fahrenheit
     text
     humidity
+    precip
+    windSpeed
+    time
     daysForecast {
       id
       celsius
       fahrenheit
       text
       humidity
+      precip
+      windSpeed
       dayOfWeek
+      minCelsius
+      maxCelsius
+      minCelsius
+      maxCelsius
     }
     _deleted @client
   }

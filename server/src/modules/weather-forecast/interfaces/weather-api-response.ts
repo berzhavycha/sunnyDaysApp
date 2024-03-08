@@ -3,7 +3,8 @@ import { IForecastDay } from './forecast-day';
 export interface IWeatherApiResponse {
   location: {
     name: string;
-    country: string
+    country: string;
+    localtime: string
   };
   current: {
     temp_c: number;

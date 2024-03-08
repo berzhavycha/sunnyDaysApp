@@ -21,7 +21,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getUserCitiesWeather(
     userId: string,
@@ -137,6 +137,9 @@ export class WeatherForecastService {
         fahrenheit: data.current.temp_f,
         text: data.current.condition.text,
         humidity: data.current.humidity,
+        precip: data.current.precip_mm,
+        windSpeed: data.current.wind_kph,
+        time: data.location.localtime,
         daysForecast: this.mapForecastDays(data.forecast.forecastday),
       };
     });
@@ -155,6 +158,12 @@ export class WeatherForecastService {
         fahrenheit: day.avgtemp_f,
         text: day.condition.text,
         humidity: day.avghumidity,
+        precip: day.totalprecip_mm,
+        windSpeed: day.maxwind_kph,
+        maxCelsius: day.maxtemp_c,
+        minCelsius: day.mintemp_c,
+        maxFahrenheit: day.maxtemp_f,
+        minFahrenheit: day.mintemp_f,
         dayOfWeek,
       };
     });

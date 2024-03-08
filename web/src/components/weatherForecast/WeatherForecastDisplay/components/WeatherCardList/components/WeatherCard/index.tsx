@@ -24,7 +24,7 @@ export const WeatherCard: React.FC<WeatherForecast> = ({ city, text, daysForecas
                 <Image src={weatherIconMapping[weatherIcon]} width={120} height={120} alt={'weather-icon'} />
             </div>
             <div className="flex justify-between items-center gap-4">
-                {daysForecast.map((item, index) => {
+                {daysForecast?.map((item, index) => {
                     return (
                         <SubWeatherForecast key={index} {...item} />
                     )

@@ -10,7 +10,7 @@ import {
 } from '@apollo/client';
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 
@@ -24,13 +24,16 @@ type HookReturn = {
 };
 
 export type WeatherForecast = {
-  id: string;
+  id?: string;
   city: string;
   celsius: number;
   fahrenheit: number;
   humidity: number;
   text: string;
-  daysForecast: WeatherForecastDays[];
+  precip: number;
+  windSpeed: number;
+  time?: string;
+  daysForecast?: WeatherForecastDays[];
 };
 
 export type WeatherForecastDays = {
@@ -39,11 +42,18 @@ export type WeatherForecastDays = {
   celsius: number;
   fahrenheit: number;
   humidity: number;
+  precip: number;
+  windSpeed: number;
+  minCelsius: number;
+  maxCelsius: number;
+  minFahrenheit: number;
+  maxFahrenheit: number;
 };
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions();
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -63,6 +73,10 @@ export const useWeatherData = (): HookReturn => {
 
     if (error) {
       handleError(error);
+    }
+
+    if (data) {
+      setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] })
     }
   }, [data, loading, error]);
 
