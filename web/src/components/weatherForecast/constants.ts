@@ -1,5 +1,3 @@
-export const ADD_CITY_BTN_TEXT = '+';
-
 export const weatherIconMapping = {
   clear:
     'https://png.pngtree.com/png-vector/20230407/ourmid/pngtree-sun-flat-icon-vector-png-image_6678094.png',

@@ -9,12 +9,16 @@ import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 import { useCurrentTempUnit } from '@/context';
 import { SubWeatherForecast } from '../SubWeatherForecast';
 
-export const WeatherCard: React.FC<WeatherForecast> = ({ city, text, daysForecast, ...info }) => {
+type Props = WeatherForecast & {
+    onClick: () => void
+}
+
+export const WeatherCard: React.FC<Props> = ({ onClick, city, text, daysForecast, ...info }) => {
     const { currentTempUnit } = useCurrentTempUnit();
     const weatherIcon = pickWeatherIcon(text);
 
     return (
-        <div className='w-[32%] p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow'>
+        <div onClick={onClick} className='w-[32%] p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow'>
             <div className="flex justify-between items-center mb-8">
                 <div className="flex flex-col gap-2 text-left">
                     <p className='text-white text-md'>{city}</p>
