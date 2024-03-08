@@ -1,29 +1,29 @@
 export const valueClassName = {
-    small: {
-        fontSize: '20px',
-        fontWeight: {
-            normal: 'font-normal',
-            light: 'font-light',
-            bold: 'font-bold',
-        },
-        textColor: 'text-white',
+  small: {
+    fontSize: '20px',
+    fontWeight: {
+      normal: 'font-normal',
+      light: 'font-light',
+      bold: 'font-bold',
     },
-    medium: {
-        fontSize: '4xl',
-        fontWeight: {
-            normal: 'font-normal',
-            light: 'font-light',
-            bold: 'font-bold',
-        },
-        textColor: 'text-white',
+    textColor: 'text-white',
+  },
+  medium: {
+    fontSize: '4xl',
+    fontWeight: {
+      normal: 'font-normal',
+      light: 'font-light',
+      bold: 'font-bold',
     },
-    large: {
-        fontSize: '5xl',
-        fontWeight: {
-            normal: 'font-normal',
-            light: 'font-light',
-            bold: 'font-bold',
-        },
-        textColor: 'text-white',
+    textColor: 'text-white',
+  },
+  large: {
+    fontSize: '5xl',
+    fontWeight: {
+      normal: 'font-normal',
+      light: 'font-light',
+      bold: 'font-bold',
     },
+    textColor: 'text-white',
+  },
 };

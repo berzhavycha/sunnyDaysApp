@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect } from 'react';
 import {
@@ -12,7 +12,11 @@ import {
 import { ONE_MINUTE } from '@/shared';
 import { getFetchPolicyForKey } from '@/utils';
 import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
-import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import {
+  useCurrentCityWeatherInfo,
+  useSubscriptionError,
+  useWeatherPaginationQueryOptions,
+} from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
 type HookReturn = {
@@ -54,7 +58,7 @@ export type WeatherForecastDays = {
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions();
-  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -77,7 +81,7 @@ export const useWeatherData = (): HookReturn => {
     }
 
     if (data) {
-      setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] })
+      setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
     }
   }, [data, loading, error, setError, handleError, setCurrentCityWeatherInfo]);
 

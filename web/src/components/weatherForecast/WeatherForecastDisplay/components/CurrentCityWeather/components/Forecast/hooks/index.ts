@@ -1,1 +1,1 @@
-export * from './useRenderForecastItem'
+export * from './useRenderForecastItem';

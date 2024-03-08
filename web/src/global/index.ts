@@ -19,9 +19,10 @@ export const MAX_FORECAST_DAYS = parseInt(process.env.NEXT_PUBLIC_MAX_FORECAST_D
 export const WEATHER_FORECAST_CACHE_MINUTES_TIME = parseInt(
   process.env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_TIME_MINUTES as string,
 );
-export const WEATHER_CITIES_LIMIT = parseInt(process.env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT as string)
-export const WEATHER_CITIES_ORDER = process.env.NEXT_PUBLIC_WEATHER_CITIES_ORDER as string
-
+export const WEATHER_CITIES_LIMIT = parseInt(
+  process.env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT as string,
+);
+export const WEATHER_CITIES_ORDER = process.env.NEXT_PUBLIC_WEATHER_CITIES_ORDER as string;
 
 // GENERAL
 export const PASSWORD_MIN_LENGTH = parseInt(process.env.NEXT_PUBLIC_PASSWORD_MIN_LENGTH as string);

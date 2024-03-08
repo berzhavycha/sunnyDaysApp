@@ -1,4 +1,4 @@
-import { MainLayout } from "@/layouts";
+import { MainLayout } from '@/layouts';
 
 import './globals.css';
 
@@ -7,7 +7,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>): JSX.Element {
-  return (
-    <MainLayout>{children}</MainLayout>
-  );
+  return <MainLayout>{children}</MainLayout>;
 }

@@ -27,26 +27,18 @@ export const PaginationButtonsPanel: FC<Props> = ({
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;
 
-  const prevBtnContent = <FontAwesomeIcon icon={faArrowLeft} />
-  const nextBtnContent = <FontAwesomeIcon icon={faArrowRight} />
+  const prevBtnContent = <FontAwesomeIcon icon={faArrowLeft} />;
+  const nextBtnContent = <FontAwesomeIcon icon={faArrowRight} />;
 
   return (
     <div className="w-full flex flex-row justify-center pb-4">
-      <Button
-        content={prevBtnContent}
-        onClick={onClickPrev}
-        isDisabled={!isPrevBtnActive}
-      />
+      <Button content={prevBtnContent} onClick={onClickPrev} isDisabled={!isPrevBtnActive} />
       <PaginationPageButtons
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         onClickPageButton={onClickPageButton}
       />
-      <Button
-        content={nextBtnContent}
-        onClick={onClickNext}
-        isDisabled={!isNextBtnActive}
-      />
+      <Button content={nextBtnContent} onClick={onClickNext} isDisabled={!isNextBtnActive} />
     </div>
   );
 };

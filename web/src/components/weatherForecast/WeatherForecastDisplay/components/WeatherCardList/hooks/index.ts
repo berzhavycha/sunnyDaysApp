@@ -1,1 +1,1 @@
-export * from './useRenderWeatherCard'
+export * from './useRenderWeatherCard';

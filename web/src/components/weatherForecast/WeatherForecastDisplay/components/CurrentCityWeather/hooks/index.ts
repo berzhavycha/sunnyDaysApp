@@ -1,1 +1,1 @@
-export * from './useCurrentWeatherTime'
+export * from './useCurrentWeatherTime';

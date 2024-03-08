@@ -1,1 +1,1 @@
-export * from './pickWeatherIcon'
+export * from './pickWeatherIcon';

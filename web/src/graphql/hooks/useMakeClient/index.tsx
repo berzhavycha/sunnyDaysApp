@@ -16,9 +16,9 @@ export const useMakeClient = (): UseMakeClientReturn => {
   const makeClient = (): NextSSRApolloClient<NormalizedCacheObject> => {
     const client = new NextSSRApolloClient({
       cache: new NextSSRInMemoryCache({
-        typePolicies
+        typePolicies,
       }),
-      resolvers
+      resolvers,
     });
 
     const apolloLinks = ApolloLink.from([
@@ -32,11 +32,11 @@ export const useMakeClient = (): UseMakeClientReturn => {
     client.setLink(
       typeof window === undefined
         ? ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          apolloLinks,
-        ])
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            apolloLinks,
+          ])
         : apolloLinks,
     );
 

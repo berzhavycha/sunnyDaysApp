@@ -8,9 +8,7 @@ export const validateCityRules = [
   },
   {
     validator: (_city: string, data: UserCitiesWeatherQuery | undefined): boolean => {
-      return (
-        (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) < MAX_WEATHER_CITIES_AMOUNT
-      );
+      return (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) < MAX_WEATHER_CITIES_AMOUNT;
     },
     message: `You cannot have more than ${MAX_WEATHER_CITIES_AMOUNT} cities.`,
   },

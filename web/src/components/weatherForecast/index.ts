@@ -1,2 +1,2 @@
-export * from './WeatherForecastDisplay'
-export * from './constants'
+export * from './WeatherForecastDisplay';
+export * from './constants';

@@ -1,9 +1,7 @@
-import { WeatherForecastDisplay } from "@/components/weatherForecast/WeatherForecastDisplay"
+import { WeatherForecastDisplay } from '@/components/weatherForecast/WeatherForecastDisplay';
 
 const WeatherForecast = (): JSX.Element => {
-    return (
-        <WeatherForecastDisplay />
-    )
-}
+  return <WeatherForecastDisplay />;
+};
 
-export default WeatherForecast
+export default WeatherForecast;

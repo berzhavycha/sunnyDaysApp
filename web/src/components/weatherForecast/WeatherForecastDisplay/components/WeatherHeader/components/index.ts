@@ -1,1 +1,1 @@
-export * from './CityAutocompleteItem'
+export * from './CityAutocompleteItem';

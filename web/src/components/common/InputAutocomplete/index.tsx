@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -32,11 +32,11 @@ export const InputAutocomplete = <TItem,>({
   onInputFocus,
   isAutocompleteShown,
   isAutocompleteEnabled,
-  onRenderItem
+  onRenderItem,
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick(autocompleteRef, onPressOutside)
+  useOutsideClick(autocompleteRef, onPressOutside);
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
 
   return (
@@ -51,7 +51,7 @@ export const InputAutocomplete = <TItem,>({
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
-          <CustomFlatList className='flex flex-col' data={data} renderItem={onRenderItem} />
+          <CustomFlatList className="flex flex-col" data={data} renderItem={onRenderItem} />
         </div>
       )}
     </div>

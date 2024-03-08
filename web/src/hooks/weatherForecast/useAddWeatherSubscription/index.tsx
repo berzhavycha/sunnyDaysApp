@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useMutation } from '@apollo/client';

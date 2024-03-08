@@ -1,67 +1,79 @@
 'use client';
 
 import { WeatherForecast } from '@/hooks';
-import { FC, createContext, PropsWithChildren, useContext, useState, Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  FC,
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from 'react';
 
 type InfoType = WeatherForecast & {
-    dayOfWeek?: string
-}
+  dayOfWeek?: string;
+};
 
 export type CurrentCityWeatherInfoState = {
-    info: InfoType
+  info: InfoType;
 };
 
 type ContextType = {
-    currentCityWeatherInfo: CurrentCityWeatherInfoState | undefined;
-    setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState | undefined>>;
-    isTodayCurrentWeather: boolean;
-    setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
-    setTodayWeatherCityInfo: Dispatch<SetStateAction<InfoType | undefined>>
-    onTodayCurrentWeather: () => void
+  currentCityWeatherInfo: CurrentCityWeatherInfoState | undefined;
+  setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState | undefined>>;
+  isTodayCurrentWeather: boolean;
+  setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
+  setTodayWeatherCityInfo: Dispatch<SetStateAction<InfoType | undefined>>;
+  onTodayCurrentWeather: () => void;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
 
 export const useCurrentCityWeatherInfo = (): ContextType => {
-    const context = useContext(CurrentCityWeatherContext);
+  const context = useContext(CurrentCityWeatherContext);
 
-    if (!context) {
-        throw new Error('useCurrentCityWeatherInfo must be used within an CurrentCityWeatherInfoProvider');
-    }
+  if (!context) {
+    throw new Error(
+      'useCurrentCityWeatherInfo must be used within an CurrentCityWeatherInfoProvider',
+    );
+  }
 
-    return context;
+  return context;
 };
 
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [todayCityWeatherInfo, setTodayWeatherCityInfo] = useState<InfoType>()
-    const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>();
-    const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true)
+  const [todayCityWeatherInfo, setTodayWeatherCityInfo] = useState<InfoType>();
+  const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
+    useState<CurrentCityWeatherInfoState>();
+  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
 
-    useEffect(() => {
-        if (currentCityWeatherInfo && currentCityWeatherInfo.info && currentCityWeatherInfo.info.city) {
-            setTodayWeatherCityInfo(currentCityWeatherInfo.info);
-        }
-    }, [currentCityWeatherInfo]);
-
-    const onTodayCurrentWeather = (): void => {
-        if (todayCityWeatherInfo) {
-            setIsTodayCurrentWeather(true)
-            setCurrentCityWeatherInfo({ info: todayCityWeatherInfo })
-        }
+  useEffect(() => {
+    if (currentCityWeatherInfo && currentCityWeatherInfo.info && currentCityWeatherInfo.info.city) {
+      setTodayWeatherCityInfo(currentCityWeatherInfo.info);
     }
+  }, [currentCityWeatherInfo]);
 
-    const contextValue: ContextType = {
-        currentCityWeatherInfo,
-        setCurrentCityWeatherInfo,
-        isTodayCurrentWeather,
-        setIsTodayCurrentWeather,
-        setTodayWeatherCityInfo,
-        onTodayCurrentWeather
-    };
+  const onTodayCurrentWeather = (): void => {
+    if (todayCityWeatherInfo) {
+      setIsTodayCurrentWeather(true);
+      setCurrentCityWeatherInfo({ info: todayCityWeatherInfo });
+    }
+  };
 
-    return (
-        <CurrentCityWeatherContext.Provider value={contextValue}>
-            {children}
-        </CurrentCityWeatherContext.Provider>
-    );
+  const contextValue: ContextType = {
+    currentCityWeatherInfo,
+    setCurrentCityWeatherInfo,
+    isTodayCurrentWeather,
+    setIsTodayCurrentWeather,
+    setTodayWeatherCityInfo,
+    onTodayCurrentWeather,
+  };
+
+  return (
+    <CurrentCityWeatherContext.Provider value={contextValue}>
+      {children}
+    </CurrentCityWeatherContext.Provider>
+  );
 };

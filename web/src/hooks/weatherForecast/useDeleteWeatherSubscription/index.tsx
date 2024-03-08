@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
@@ -44,7 +44,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
         async update(cache) {
           const currentPageCache = readPageCache(cache, paginationOptions);
-          console.log(currentPageCache)
+          console.log(currentPageCache);
 
           if (currentPageCache) {
             const clearedCurrentPage = purgePageCache(
