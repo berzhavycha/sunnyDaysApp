@@ -43,6 +43,7 @@ export const WeatherHeader = (): JSX.Element => {
           isAutocompleteShown={listState.isVisible}
           isAutocompleteEnabled={listState.isEnabled}
           onRenderItem={renderCityItem}
+          onEnter={onAddSubscription}
         />
         <Button content="Add" onClick={onAddSubscription} />
       </div>

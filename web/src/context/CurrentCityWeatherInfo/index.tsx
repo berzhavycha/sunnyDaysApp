@@ -53,7 +53,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     if (currentCityWeatherInfo && currentCityWeatherInfo.info && currentCityWeatherInfo.info.city) {
       setTodayWeatherCityInfo(currentCityWeatherInfo.info);
     }
-  }, [currentCityWeatherInfo]);
+  }, [currentCityWeatherInfo?.info?.city]);
 
   const onTodayCurrentWeather = (): void => {
     if (todayCityWeatherInfo) {

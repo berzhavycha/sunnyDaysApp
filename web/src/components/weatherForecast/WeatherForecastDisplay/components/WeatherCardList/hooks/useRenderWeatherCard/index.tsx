@@ -1,6 +1,6 @@
 import { WeatherForecast } from '@/hooks';
-import { WeatherCard } from '../../components';
 import { useCurrentCityWeatherInfo } from '@/context';
+import { WeatherCard } from '../../components';
 
 type HookReturn = {
   renderItem(props: WeatherForecast): JSX.Element;
