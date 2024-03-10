@@ -1,6 +1,6 @@
 export const valueClassName = {
   small: {
-    fontSize: '20px',
+    fontSize: 'md',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
