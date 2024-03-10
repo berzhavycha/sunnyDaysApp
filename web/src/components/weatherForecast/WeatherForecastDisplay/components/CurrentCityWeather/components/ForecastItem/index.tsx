@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { TemperatureInfo } from '@/components';
 import { useCurrentTempUnit } from '@/context';
 import { WeatherForecastDays } from '@/hooks';
-import { upperCaseFirstLetter } from '@/utils';
+import { upperCaseFirstLetter } from '@/shared';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';

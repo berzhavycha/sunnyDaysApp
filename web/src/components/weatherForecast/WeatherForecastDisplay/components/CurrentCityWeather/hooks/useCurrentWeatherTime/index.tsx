@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { CurrentCityWeatherInfoState } from '@/context';
-import { daysOfWeek } from '@/shared';
-import { getTimeFormat } from '@/utils';
+import { daysOfWeek, getTimeFormat } from '@/shared';
 
 type HookReturn = {
   dayOfWeek: string;

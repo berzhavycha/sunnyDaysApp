@@ -8,7 +8,7 @@ import { DocumentNode } from '@apollo/client';
 
 import { Input } from '@/components/common';
 import { AuthType, UserDto, useAuth } from '@/hooks';
-import { convertCamelToSpacedPascal } from '@/utils';
+import { convertCamelToSpacedPascal } from '@/shared';
 import { userSchema } from './validation';
 
 type Props = {

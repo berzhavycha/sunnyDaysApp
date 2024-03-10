@@ -9,8 +9,7 @@ import {
   useQuery,
 } from '@apollo/client';
 
-import { ONE_MINUTE } from '@/shared';
-import { getFetchPolicyForKey } from '@/utils';
+import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 import {
   useCurrentCityWeatherInfo,

@@ -2,8 +2,7 @@
 
 import { useQuery } from '@apollo/client';
 
-import { ONE_MINUTE } from '@/shared';
-import { getFetchPolicyForKey } from '@/utils';
+import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { FEATURE_CACHE_MINUTES_TIME } from '@/global';
 import { CitySearchStatusDocument } from './queries';
 
