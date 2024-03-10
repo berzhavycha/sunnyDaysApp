@@ -45,12 +45,12 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
 
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [todayCityWeatherInfo, setTodayWeatherCityInfo] = useState<InfoType>();
+  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
     useState<CurrentCityWeatherInfoState>();
-  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currentCityWeatherInfo && currentCityWeatherInfo.info && currentCityWeatherInfo.info.city) {
+    if (currentCityWeatherInfo?.info.city) {
       setTodayWeatherCityInfo(currentCityWeatherInfo.info);
     }
   }, [currentCityWeatherInfo?.info?.city]);

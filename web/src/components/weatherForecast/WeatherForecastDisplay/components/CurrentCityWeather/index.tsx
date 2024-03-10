@@ -24,13 +24,7 @@ export const CurrentCityWeather = (): JSX.Element => {
       ) : (
         <>
           <TodayWeatherInfo
-            city={currentCityWeatherInfo.info.city}
-            celsius={currentCityWeatherInfo.info.celsius}
-            fahrenheit={currentCityWeatherInfo.info.fahrenheit}
-            text={currentCityWeatherInfo.info.text}
-            windSpeed={currentCityWeatherInfo.info.windSpeed}
-            humidity={currentCityWeatherInfo.info.humidity}
-            precip={currentCityWeatherInfo.info.precip}
+            {...currentCityWeatherInfo.info}
             dayOfWeek={dayOfWeek}
             time={time}
           />
