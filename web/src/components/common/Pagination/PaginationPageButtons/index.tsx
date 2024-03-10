@@ -14,13 +14,13 @@ export const PaginationPageButtons: FC<Props> = ({
   onClickPageButton,
 }): JSX.Element => {
   return (
-    <div className="flex">
+    <div className="flex gap-3">
       {paginationPageNumbers.map((page) => {
         const isActive = currentPage === page;
 
         const onClick = async (): Promise<void> => await onClickPageButton(page);
 
-        return <Button key={page} content={page} isActive={isActive} onClick={onClick} />;
+        return <Button key={page} content={page} isActive={isActive} onClick={onClick} styles='w-12' />;
       })}
     </div>
   );

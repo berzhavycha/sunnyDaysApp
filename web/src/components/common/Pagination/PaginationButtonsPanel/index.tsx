@@ -31,14 +31,14 @@ export const PaginationButtonsPanel: FC<Props> = ({
   const nextBtnContent = <FontAwesomeIcon icon={faArrowRight} />;
 
   return (
-    <div className="w-full flex flex-row justify-center pb-4">
-      <Button content={prevBtnContent} onClick={onClickPrev} isDisabled={!isPrevBtnActive} />
+    <div className="w-full flex flex-row justify-center pb-4 gap-3">
+      <Button content={prevBtnContent} onClick={onClickPrev} isDisabled={!isPrevBtnActive} styles='w-12'/>
       <PaginationPageButtons
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         onClickPageButton={onClickPageButton}
       />
-      <Button content={nextBtnContent} onClick={onClickNext} isDisabled={!isNextBtnActive} />
+      <Button content={nextBtnContent} onClick={onClickNext} isDisabled={!isNextBtnActive} styles='w-12'/>
     </div>
   );
 };

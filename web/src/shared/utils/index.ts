@@ -4,3 +4,4 @@ export * from './fieldsErrorHandler';
 export * from './getFetchPolicyForKey';
 export * from './convertPathToPascal';
 export * from './getTimeFormat'
+export * from './convertObjectToTailwind'

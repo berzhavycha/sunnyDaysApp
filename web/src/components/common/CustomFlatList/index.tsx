@@ -14,13 +14,13 @@ export const CustomFlatList = <T,>({
   className,
 }: FlatListProps<T>): JSX.Element => {
   return (
-    <>
+    <div className={`w-full flex flex-col justify-between h-full ${className}`}>
       <div className={className}>
         {data.map((item) => (
           <>{renderItem(item)}</>
         ))}
       </div>
-      {listFooterComponent && <div className="mt-10">{listFooterComponent}</div>}
-    </>
+      {listFooterComponent && <div className='mb-12'>{listFooterComponent}</div>}
+    </div>
   );
 };
