@@ -1,7 +1,7 @@
 'use client';
 
 import { useCurrentCityWeatherInfo } from '@/context';
-import { useDeleteWeatherSubscription } from '@/hooks';
+import { useDeleteWeatherSubscription, useWeatherData } from '@/hooks';
 import { NoData } from '@/components';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';

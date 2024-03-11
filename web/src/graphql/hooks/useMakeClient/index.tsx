@@ -23,14 +23,24 @@ export const useMakeClient = (tokensHash: string): UseMakeClientReturn => {
       resolvers,
     });
 
-    const apolloLinks = ApolloLink.from([
+    const commonLinks = [
       errorLink.split(
         (operation) => operation.getContext().unauthenticated,
         refreshTokenLink(client),
-      ),
+      )
+    ]
+
+    const serverApolloLinks = ApolloLink.from([
+      ...commonLinks,
+      mainHttpLink,
+    ]);
+
+    const clientApolloLinks = ApolloLink.from([
+      ...commonLinks,
       forwardCookieLink('tokens', decrypt(tokensHash, SECRET_COOKIE_KEY)),
       mainHttpLink,
     ]);
+
 
     client.setLink(
       typeof window === undefined
@@ -38,9 +48,9 @@ export const useMakeClient = (tokensHash: string): UseMakeClientReturn => {
           new SSRMultipartLink({
             stripDefer: true,
           }),
-          apolloLinks,
+          serverApolloLinks
         ])
-        : apolloLinks,
+        : clientApolloLinks,
     );
 
     return client;

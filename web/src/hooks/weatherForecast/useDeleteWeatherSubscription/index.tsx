@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
-import { useWeatherData } from '@/context/WeatherData';
+import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from './utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { WEATHER_CITIES_LIMIT } from '@/global';
