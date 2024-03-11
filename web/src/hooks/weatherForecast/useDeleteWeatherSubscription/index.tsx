@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
-import { useWeatherData } from '../useWeatherData';
+import { useWeatherData } from '@/context/WeatherData';
 import { purgePageCache, readPageCache, writePageCache } from './utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { WEATHER_CITIES_LIMIT } from '@/global';
@@ -30,6 +30,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   const deleteSubscription = async (cityName: string): Promise<void> => {
     try {
+      
       await deleteWeatherSubscription({
         variables: {
           city: {
@@ -44,6 +45,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
         async update(cache) {
           const currentPageCache = readPageCache(cache, paginationOptions);
+          console.log("UPDATE")
 
           if (currentPageCache) {
             const clearedCurrentPage = purgePageCache(

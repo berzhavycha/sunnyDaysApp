@@ -7,6 +7,7 @@ import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
 import { WeatherPaginationQueryOptionsProvider } from '../WeatherPaginationOptions';
 import { CurrentCityWeatherInfoProvider } from '..';
+import { WeatherDataProvider } from '../WeatherData';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -16,7 +17,11 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
           <CurrentTempUnitProvider>
             <WeatherPaginationQueryOptionsProvider>
               <CurrentCityWeatherInfoProvider>
-                <SubscriptionErrorProvider>{children}</SubscriptionErrorProvider>
+                <SubscriptionErrorProvider>
+                  <WeatherDataProvider>
+                    {children}
+                  </WeatherDataProvider>
+                </SubscriptionErrorProvider>
               </CurrentCityWeatherInfoProvider>
             </WeatherPaginationQueryOptionsProvider>
           </CurrentTempUnitProvider>

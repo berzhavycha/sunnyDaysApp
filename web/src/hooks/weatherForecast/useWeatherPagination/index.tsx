@@ -2,7 +2,7 @@ import { ApolloError, useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
-import { useWeatherData } from '../useWeatherData';
+import { useWeatherData } from '@/context/WeatherData';
 import {
   UserCitiesWeatherDocument,
   UserCitiesWeatherQuery,
