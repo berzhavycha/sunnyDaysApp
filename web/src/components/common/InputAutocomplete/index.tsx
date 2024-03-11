@@ -1,18 +1,17 @@
-import {
-  faLocationPin,
-  faLocationPinLock,
-  faMapLocation,
-  faSearch,
-} from '@fortawesome/free-solid-svg-icons';
+'use client';
+
+import React, { ChangeEvent, useRef } from 'react';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import { Input } from '../Input';
-import { icon } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons/faMapLocationDot';
+import { CustomFlatList } from '../CustomFlatList';
+import { useOutsideClick } from './hooks';
 
 type Props<TItem> = {
   loading: boolean;
   data: TItem[];
   search: string;
+  onRenderItem: (item: TItem) => JSX.Element;
   onSearchChange: (text: string) => void;
   placeholder: string;
   error: string;
@@ -20,6 +19,7 @@ type Props<TItem> = {
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
   isAutocompleteEnabled?: boolean;
+  onEnter: () => Promise<void>
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -33,33 +33,33 @@ export const InputAutocomplete = <TItem,>({
   onInputFocus,
   isAutocompleteShown,
   isAutocompleteEnabled,
+  onRenderItem,
+  onEnter
 }: Props<TItem>): JSX.Element => {
+  const autocompleteRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(autocompleteRef, onPressOutside);
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
+  const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>): Promise<void> => {
+    if (e.key === 'Enter') {
+      await onEnter();
+    }
+  };
+
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" ref={autocompleteRef}>
       <Input
         value={search}
-        onChange={() => onSearchChange(search)}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
-        <div className="absolute top-14 bg-white w-full z-10 rounded-xl">
-          {data.map((item) => {
-            return (
-              <div
-                key={item as string}
-                className="text-black py-3 px-4 flex gap-2 items-center hover:bg-gray-200"
-              >
-                <FontAwesomeIcon className="text-blue-600" icon={faLocationPin} />
-                <div className="flex">
-                  <div className="main">{item as string}</div>
-                  <div className="text-gray-400"> , Ukraine</div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
+          <CustomFlatList className="flex flex-col" data={data} renderItem={onRenderItem} />
         </div>
       )}
     </div>

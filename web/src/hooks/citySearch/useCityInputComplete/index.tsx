@@ -9,6 +9,7 @@ import { CitiesDocument, CitiesQuery, CitiesQueryVariables } from './queries';
 
 export type City = {
   name: string;
+  country: string;
 };
 
 type HookReturn = {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import {
   ApolloError,
@@ -7,9 +9,13 @@ import {
   useQuery,
 } from '@apollo/client';
 
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
-import { Env } from '@/env';
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
+import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
+import {
+  useCurrentCityWeatherInfo,
+  useSubscriptionError,
+  useWeatherPaginationQueryOptions,
+} from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
 type HookReturn = {
@@ -22,13 +28,16 @@ type HookReturn = {
 };
 
 export type WeatherForecast = {
-  id: string;
+  id?: string;
   city: string;
   celsius: number;
   fahrenheit: number;
   humidity: number;
   text: string;
-  daysForecast: WeatherForecastDays[];
+  precip: number;
+  windSpeed: number;
+  time?: string;
+  daysForecast?: WeatherForecastDays[];
 };
 
 export type WeatherForecastDays = {
@@ -37,20 +46,27 @@ export type WeatherForecastDays = {
   celsius: number;
   fahrenheit: number;
   humidity: number;
+  precip: number;
+  windSpeed: number;
+  minCelsius: number;
+  maxCelsius: number;
+  minFahrenheit: number;
+  maxFahrenheit: number;
 };
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, isFetching } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationQueryOptions();
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
-      forecastDaysAmount: Env.MAX_FORECAST_DAYS,
+      forecastDaysAmount: MAX_FORECAST_DAYS,
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: getFetchPolicyForKey(
       'weatherData',
-      ONE_MINUTE * Env.WEATHER_FORECAST_CACHE_MINUTES_TIME,
+      ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
 
@@ -62,7 +78,12 @@ export const useWeatherData = (): HookReturn => {
     if (error) {
       handleError(error);
     }
-  }, [data, loading, error]);
+
+    if (data) {
+      setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
+      setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+    }
+  }, [data, loading, error, setError, handleError, setCurrentCityWeatherInfo]);
 
   return { data, loading: loading || isFetching, error, fetchMore };
 };

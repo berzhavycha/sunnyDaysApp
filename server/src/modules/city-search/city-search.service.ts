@@ -15,7 +15,7 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -35,17 +35,13 @@ export class CitySearchService {
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
 
-      const uniqueCityNames = Array.from(
-        new Set(topCities.map((city) => city.name)),
+      const uniqueCities = topCities.filter((city, index, self) =>
+        self.findIndex(c => c.name === city.name) === index
       );
-
-      const resultCitiesList = uniqueCityNames.map((cityName) => ({
-        name: cityName,
-      }));
 
       await this.cacheManager.set(
         `cities:${cityPrefixArgs.limit}:${cityPrefixArgs.prefix}`,
-        resultCitiesList,
+        uniqueCities,
         {
           ttl: this.configService.get<number>(
             'REDIS_SEARCH_CITIES_DATA_TTL_SECONDS',
@@ -56,7 +52,7 @@ export class CitySearchService {
         } as any,
       );
 
-      return resultCitiesList;
+      return uniqueCities;
     } catch (error) {
       if (
         error instanceof AxiosError &&

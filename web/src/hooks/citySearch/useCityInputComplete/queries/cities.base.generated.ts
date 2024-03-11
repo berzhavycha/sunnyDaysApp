@@ -11,7 +11,7 @@ export type CitiesQueryVariables = Types.Exact<{
 
 export type CitiesQuery = {
   __typename?: 'Query';
-  citiesByPrefix: Array<{ __typename?: 'SearchedCity'; name: string }>;
+  citiesByPrefix: Array<{ __typename?: 'SearchedCity'; name: string; country: string }>;
 };
 
 export const CitiesDocument = {
@@ -98,7 +98,10 @@ export const CitiesDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'country' } },
+              ],
             },
           },
         ],

@@ -1,7 +1,9 @@
+import { MoonLoader } from 'react-spinners';
+
 export const Spinner = (): JSX.Element => {
   return (
-    <div className="fixed top-0 left-0 w-full h-screen bg-gray-900 flex justify-center items-center z-100">
-      Loading...
+    <div className="flex justify-center items-center h-full w-full">
+      <MoonLoader color="#3b82f6" size={100} />
     </div>
   );
 };

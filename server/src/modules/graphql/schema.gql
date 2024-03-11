@@ -46,6 +46,7 @@ type Query {
 }
 
 type SearchedCity {
+  country: String!
   name: String!
 }
 
@@ -66,7 +67,13 @@ type WeatherDay {
   fahrenheit: Float!
   humidity: Int!
   id: ID!
+  maxCelsius: Float!
+  maxFahrenheit: Float!
+  minCelsius: Float!
+  minFahrenheit: Float!
+  precip: Float!
   text: String!
+  windSpeed: Float!
 }
 
 type WeatherForecast {
@@ -76,5 +83,8 @@ type WeatherForecast {
   fahrenheit: Float!
   humidity: Int!
   id: ID!
+  precip: Float!
   text: String!
+  time: String!
+  windSpeed: Float!
 }

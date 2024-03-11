@@ -96,6 +96,7 @@ export type QueryUserCitiesWeatherArgs = {
 
 export type SearchedCity = {
   __typename?: 'SearchedCity';
+  country: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
 
@@ -119,7 +120,13 @@ export type WeatherDay = {
   fahrenheit: Scalars['Float']['output'];
   humidity: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
+  maxCelsius: Scalars['Float']['output'];
+  maxFahrenheit: Scalars['Float']['output'];
+  minCelsius: Scalars['Float']['output'];
+  minFahrenheit: Scalars['Float']['output'];
+  precip: Scalars['Float']['output'];
   text: Scalars['String']['output'];
+  windSpeed: Scalars['Float']['output'];
 };
 
 export type WeatherForecast = {
@@ -131,5 +138,8 @@ export type WeatherForecast = {
   fahrenheit: Scalars['Float']['output'];
   humidity: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
+  precip: Scalars['Float']['output'];
   text: Scalars['String']['output'];
+  time: Scalars['String']['output'];
+  windSpeed: Scalars['Float']['output'];
 };

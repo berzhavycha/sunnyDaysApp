@@ -22,6 +22,15 @@ export class WeatherForecast {
   @Field(() => Int)
   humidity: number;
 
+  @Field(() => Float)
+  precip: number;
+
+  @Field(() => Float)
+  windSpeed: number;
+
+  @Field(() => String)
+  time: string
+
   @Field(() => [WeatherDay])
   daysForecast: WeatherDay[];
 }

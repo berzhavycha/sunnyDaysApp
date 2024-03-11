@@ -13,7 +13,7 @@ export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
     if (!currentUser && !loadingUser) {
       router.replace('/sign-in');
     } else {
-      // router.replace('/weather-forecast');
+      router.replace('/weather-forecast');
     }
   }, [currentUser, router, loadingUser]);
 

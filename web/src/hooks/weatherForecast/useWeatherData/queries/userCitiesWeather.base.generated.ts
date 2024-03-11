@@ -9,6 +9,9 @@ export type WeatherForecastFragment = {
   fahrenheit: number;
   text: string;
   humidity: number;
+  precip: number;
+  windSpeed: number;
+  time: string;
   _deleted: boolean;
   daysForecast: Array<{
     __typename?: 'WeatherDay';
@@ -17,7 +20,13 @@ export type WeatherForecastFragment = {
     fahrenheit: number;
     text: string;
     humidity: number;
+    precip: number;
+    windSpeed: number;
     dayOfWeek: string;
+    minCelsius: number;
+    maxCelsius: number;
+    minFahrenheit: number;
+    maxFahrenheit: number;
   }>;
 };
 
@@ -40,6 +49,9 @@ export type UserCitiesWeatherQuery = {
       fahrenheit: number;
       text: string;
       humidity: number;
+      precip: number;
+      windSpeed: number;
+      time: string;
       _deleted: boolean;
       daysForecast: Array<{
         __typename?: 'WeatherDay';
@@ -48,7 +60,13 @@ export type UserCitiesWeatherQuery = {
         fahrenheit: number;
         text: string;
         humidity: number;
+        precip: number;
+        windSpeed: number;
         dayOfWeek: string;
+        minCelsius: number;
+        maxCelsius: number;
+        minFahrenheit: number;
+        maxFahrenheit: number;
       }>;
     }>;
     paginationInfo: { __typename?: 'PaginationInfo'; totalCount: number };
@@ -164,6 +182,9 @@ export const UserCitiesWeatherDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'fahrenheit' } },
           { kind: 'Field', name: { kind: 'Name', value: 'text' } },
           { kind: 'Field', name: { kind: 'Name', value: 'humidity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'precip' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'windSpeed' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'time' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'daysForecast' },
@@ -175,7 +196,13 @@ export const UserCitiesWeatherDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'fahrenheit' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'text' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'humidity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'precip' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'windSpeed' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'minCelsius' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'maxCelsius' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'minFahrenheit' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'maxFahrenheit' } },
               ],
             },
           },

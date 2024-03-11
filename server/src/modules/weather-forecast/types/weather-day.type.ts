@@ -11,6 +11,18 @@ export class WeatherDay {
   @Field(() => Float)
   fahrenheit: number;
 
+  @Field(() => Float)
+  minCelsius: number;
+
+  @Field(() => Float)
+  maxCelsius: number;
+
+  @Field(() => Float)
+  minFahrenheit: number;
+  
+  @Field(() => Float)
+  maxFahrenheit: number;
+
   @Field(() => String)
   text: string;
 
@@ -19,4 +31,10 @@ export class WeatherDay {
 
   @Field(() => String)
   dayOfWeek: string;
+
+  @Field(() => Float)
+  precip: number;
+
+  @Field(() => Float)
+  windSpeed: number;
 }
