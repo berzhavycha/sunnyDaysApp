@@ -7,7 +7,7 @@ const { cookies } = require('next/headers')
 
 export const ApolloWrapper = ({ children }: PropsWithChildren): JSX.Element => {
   const cookiesStore = cookies()
-  const tokensHash = encrypt(cookiesStore.get('tokens')?.value, SECRET_COOKIE_KEY)
+  const tokensHash = encrypt(cookiesStore.get('tokens')?.value, SECRET_COOKIE_KEY as string)
 
   return <ApolloClientWrapper tokensHash={tokensHash}>{children}</ApolloClientWrapper>;
 };
