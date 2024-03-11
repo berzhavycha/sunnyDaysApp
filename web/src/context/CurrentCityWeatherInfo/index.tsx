@@ -50,7 +50,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     useState<CurrentCityWeatherInfoState>();
 
   useEffect(() => {
-    if (currentCityWeatherInfo?.info.city) {
+    if (currentCityWeatherInfo?.info?.city) {
       setTodayWeatherCityInfo(currentCityWeatherInfo.info);
     }
   }, [currentCityWeatherInfo?.info?.city]);

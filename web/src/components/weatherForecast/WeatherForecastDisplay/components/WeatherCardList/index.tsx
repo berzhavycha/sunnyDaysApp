@@ -1,13 +1,14 @@
 'use client';
 
 import { useWeatherPaginationQueryOptions } from '@/context';
-import { useWeatherData, useWeatherPagination } from '@/hooks';
+import { useWeatherPagination } from '@/hooks';
 import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
 import { useRenderWeatherCard } from './hooks';
+import { useWeatherData } from '@/context/WeatherData'
 
 export const WeatherCardList = (): JSX.Element => {
-  const { data, loading } = useWeatherData();
+  const { data } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
   const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationQueryOptions();
@@ -27,11 +28,7 @@ export const WeatherCardList = (): JSX.Element => {
 
   return (
     <div className="w-full h-full">
-      {loading ? (
-        <div className="w-full h-full">
-          <Spinner />
-        </div>
-      ) : !data?.userCitiesWeather.edges.length ? (
+      {!data?.userCitiesWeather.edges.length ? (
         <NoData />
       ) : (
         <CustomFlatList
