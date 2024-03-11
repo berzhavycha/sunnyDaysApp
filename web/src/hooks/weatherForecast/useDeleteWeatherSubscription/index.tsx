@@ -18,7 +18,7 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationQueryOptions();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
 
@@ -30,7 +30,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   const deleteSubscription = async (cityName: string): Promise<void> => {
     try {
-      
+
       await deleteWeatherSubscription({
         variables: {
           city: {
@@ -62,6 +62,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
               !isPageContentCached({
                 offset: paginationOptions.offset + paginationOptions.limit - 1,
               })
+              && currentPage !== totalPages
             ) {
               await fetchMore({
                 variables: { offset: paginationOptions.limit * currentPage },

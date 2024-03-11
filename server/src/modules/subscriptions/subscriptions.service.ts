@@ -74,6 +74,7 @@ export class SubscriptionsService {
     order: Order = DEFAULT_ORDER,
     orderColumn: string = DEFAULT_ORDER_COLUMN,
   ): Promise<Subscription[]> {
+    console.log(`take=${take}, skip=${skip}, order=${order}, userId=${userId}`)
     return this.subscriptionRepository.find({
       where: { userId },
       relations: ['city'],

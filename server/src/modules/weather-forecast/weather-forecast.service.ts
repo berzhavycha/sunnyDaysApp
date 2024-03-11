@@ -39,6 +39,7 @@ export class WeatherForecastService {
         order,
       );
 
+    console.log(userSubscriptions.map(sub => sub.city.name), userId)
     if (userSubscriptions.length === 0) {
       return {
         edges: [],
