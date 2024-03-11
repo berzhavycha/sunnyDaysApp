@@ -16,12 +16,15 @@ export class WeatherForecastResolver {
     @Args() forecastParams: ForecastParamArgsDto,
     @CurrentUser('id') id: string,
   ): Promise<PaginatedWeatherForecast> {
-    return this.weatherForecastService.getUserCitiesWeather(
+    const res = await this.weatherForecastService.getUserCitiesWeather(
       id,
       forecastParams.limit,
       forecastParams.offset,
       forecastParams.order,
       forecastParams.forecastDaysAmount,
     );
+
+    console.log(res.edges.map(edge => edge.city))
+    return res
   }
 }

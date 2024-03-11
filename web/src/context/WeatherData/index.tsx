@@ -14,8 +14,8 @@ import {
     ApolloQueryResult,
     FetchMoreQueryOptions,
     OperationVariables,
-    useSuspenseQuery,
 } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 import { MAX_FORECAST_DAYS } from '@/global';
 import { UserCitiesWeatherQuery, UserCitiesWeatherDocument } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useSubscriptionError, useWeatherPaginationQueryOptions, useCurrentCityWeatherInfo } from '..';
@@ -81,21 +81,11 @@ export const WeatherDataProvider: FC<PropsWithChildren> = ({ children }) => {
             forecastDaysAmount: MAX_FORECAST_DAYS,
         },
         fetchPolicy: 'cache-and-network',
-        
-        // notifyOnNetworkStatusChange: true,
-        // fetchPolicy: getFetchPolicyForKey(
-        //   'weatherData',
-        //   ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
-        // ),
     });
 
     console.log(data.userCitiesWeather.edges.map(item => item.city))
 
     useEffect(() => {
-        // if (loading) {
-        //   setError({ message: '' });
-        // }
-
         if (error) {
             handleError(error);
         }
