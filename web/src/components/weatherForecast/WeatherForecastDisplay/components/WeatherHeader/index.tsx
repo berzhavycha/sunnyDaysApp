@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useAddWeatherSubscription, useCityInputComplete } from '@/hooks';
+import { useAddWeatherSubscription, useCityInputComplete, useSignOut } from '@/hooks';
 import {
   useCitySearchList,
   useCurrentTempUnit,
@@ -21,7 +21,7 @@ export const WeatherHeader = (): JSX.Element => {
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { addSubscription } = useAddWeatherSubscription(setCity);
   const { renderCityItem } = useRenderCityItem(addSubscription);
-  const { onSignOut } = useCurrentUser();
+  const { signOutHandler } = useSignOut()
   const { data, loading } = useCityInputComplete(city);
   const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit();
 
@@ -49,7 +49,7 @@ export const WeatherHeader = (): JSX.Element => {
       </div>
       <div className="flex gap-6">
         <Button content={tempUnitSigns[currentTempUnit.name]} onClick={onTempUnitChange} />
-        <Button content={onSignOutBtnContent} onClick={onSignOut} />
+        <Button content={onSignOutBtnContent} onClick={signOutHandler} />
       </div>
     </header>
   );

@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 
 import { useSubscriptionError } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
-import { useWeatherData } from '@/context/WeatherData';
+import { useWeatherData } from '../useWeatherData';
 import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
