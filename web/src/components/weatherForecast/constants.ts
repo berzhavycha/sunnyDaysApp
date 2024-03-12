@@ -1,3 +1,5 @@
+export const ADD_SUBSCRIPTION_BTN_CONTENT = "Add"
+
 export const weatherIconMapping = {
   clear:
     'https://png.pngtree.com/png-vector/20230407/ourmid/pngtree-sun-flat-icon-vector-png-image_6678094.png',

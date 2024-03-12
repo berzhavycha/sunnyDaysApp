@@ -7,7 +7,7 @@ import { TemperatureInfo, weatherIconMapping } from '@/components';
 import { WeatherForecast } from '@/hooks';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { ExtraWeatherInfoItem } from '../ExtraWeatherInfoItem';
+import { ExtraWeatherInfo } from '../ExtraWeatherInfo';
 
 type Props = WeatherForecast & {
   dayOfWeek: string;
@@ -40,7 +40,7 @@ export const TodayWeatherInfo: FC<Props> = ({
           height={120}
           alt={'today-weather-icon'}
         />
-        <div>
+        <div className='text-right'>
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
@@ -51,9 +51,9 @@ export const TodayWeatherInfo: FC<Props> = ({
         </div>
       </div>
       <div className="flex justify-between">
-        <ExtraWeatherInfoItem icon={faWind} data={`${windSpeed} km/h`} infoType="Wind Speed" />
-        <ExtraWeatherInfoItem icon={faDroplet} data={humidity} infoType="Humidity" />
-        <ExtraWeatherInfoItem icon={faCloudRain} data={`${precip} mm`} infoType="Precip" />
+        <ExtraWeatherInfo icon={faWind} data={`${windSpeed} km/h`} infoType="Wind Speed" />
+        <ExtraWeatherInfo icon={faDroplet} data={humidity} infoType="Humidity" />
+        <ExtraWeatherInfo icon={faCloudRain} data={`${precip} mm`} infoType="Precip" />
       </div>
     </div>
   );

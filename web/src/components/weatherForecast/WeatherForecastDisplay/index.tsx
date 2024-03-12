@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
-import { CurrentCityWeather, WeatherCardList, WeatherHeader } from './components';
+
 import { Spinner } from '@/components';
+import { CurrentCityWeather, WeatherCardList, WeatherHeader } from './components';
 
 export const WeatherForecastDisplay = (): JSX.Element => {
   return (
