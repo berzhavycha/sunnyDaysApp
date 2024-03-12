@@ -63,14 +63,12 @@ export const userCitiesWeather: FieldPolicy<PaginationResult> = {
       return !context.readField<boolean>('_deleted', edge);
     });
 
-    console.log("MERGE", filteredMergedEdge.map(edge => context.readField<string>('city', edge)))
     return {
       edges: filteredMergedEdge,
       paginationInfo: mergedPaginationInfo,
     };
   },
   read(existing, context) {
-    console.log("READ", existing?.edges.map(edge => context.readField<string>('city', edge)))
     return (
       existing && {
         edges: existing.edges.slice(
