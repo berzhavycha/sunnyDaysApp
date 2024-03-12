@@ -7,13 +7,16 @@ type HookReturn = {
 };
 
 export const useRenderForecastItem = (): HookReturn => {
-  const { setCurrentCityWeatherInfo, setIsTodayCurrentWeather } = useCurrentCityWeatherInfo();
+  const { setCurrentCityWeatherInfo, setIsTodayCurrentWeather, setCurrentForecastDay } = useCurrentCityWeatherInfo();
 
   function renderItem(props: WeatherForecastDays): JSX.Element {
     const onForecastItemClick = (): void => {
       setIsTodayCurrentWeather(false);
+      setCurrentForecastDay(props.dayOfWeek)
+
       setCurrentCityWeatherInfo((prev) => {
         if (prev) {
+
           return {
             info: {
               ...prev.info,
