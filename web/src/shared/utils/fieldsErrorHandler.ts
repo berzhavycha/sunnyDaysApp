@@ -12,10 +12,10 @@ export const fieldsErrorHandler = <T>(
     errors.graphQLErrors.forEach((graphQLError) => {
       if (
         graphQLError.extensions?.code === 'BAD_REQUEST' &&
-        graphQLError.extensions?.originalError?.message
+        graphQLError.originalError?.message
       ) {
-        const inputErrorMessages = graphQLError.extensions.originalError.message as string[];
-        fieldsError = pickErrorsCallback(inputErrorMessages);
+        const inputErrorMessages = graphQLError.originalError.message;
+        fieldsError = pickErrorsCallback([inputErrorMessages]);
       } else if (
         graphQLError.extensions?.code === 'INTERNAL_SERVER_ERROR' ||
         graphQLError.extensions?.code === 'UNAUTHENTICATED' ||

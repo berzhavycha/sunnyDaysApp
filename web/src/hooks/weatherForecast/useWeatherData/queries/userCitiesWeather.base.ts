@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const WeatherForecastFragment = gql`
+const WeatherForecastFragment = gql`
   fragment WeatherForecast on WeatherForecast {
     id
     city
