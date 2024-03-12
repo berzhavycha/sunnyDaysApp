@@ -27,16 +27,17 @@ export const WeatherCardList = (): JSX.Element => {
 
   return (
     <div className="w-full h-full">
-      {!data?.userCitiesWeather.edges.length ? (
-        <NoData />
-      ) : (
-        <CustomFlatList
-          className="w-full flex flex-wrap gap-6"
-          data={data?.userCitiesWeather.edges}
-          renderItem={renderItem}
-          listFooterComponent={listFooterComponent}
-        />
-      )}
+      {
+        !data?.userCitiesWeather.edges.length ? (
+          <NoData />
+        ) : (
+          <CustomFlatList
+            className="w-full flex flex-wrap gap-6"
+            data={data?.userCitiesWeather.edges}
+            renderItem={renderItem}
+            listFooterComponent={listFooterComponent}
+          />
+        )}
     </div>
   );
 };
