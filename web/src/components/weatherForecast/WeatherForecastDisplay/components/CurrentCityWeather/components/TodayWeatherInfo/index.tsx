@@ -44,7 +44,7 @@ export const TodayWeatherInfo: FC<Props> = ({
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
-            size="large"
+            size="medium"
             fontWeight="bold"
           />
           <p className="text-lg text-white font-light">{text}</p>

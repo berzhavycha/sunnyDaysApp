@@ -56,7 +56,7 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, setTotalCount } = useWeatherPaginationQueryOptions();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { data, error, fetchMore } = useSuspenseQuery(UserCitiesWeatherDocument, {
     variables: {
@@ -77,8 +77,9 @@ export const useWeatherData = (): HookReturn => {
     if (data) {
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
       setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+      setError({ message: '' })
     }
-  }, [data, error, setError, handleError, setCurrentCityWeatherInfo]);
+  }, [data]);
 
-  return { data, loading: isFetching, error, fetchMore };
+  return { data, loading: false, error, fetchMore };
 };

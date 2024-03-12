@@ -24,7 +24,6 @@ export const useWeatherPagination = (): HookReturn => {
     paginationOptions,
     currentPage,
     setCurrentPage,
-    setIsFetching,
     updatePaginationOptions,
     totalPages,
   } = useWeatherPaginationQueryOptions();
@@ -51,16 +50,12 @@ export const useWeatherPagination = (): HookReturn => {
   ): Promise<void> => {
     try {
       if (!isPageContentCached(variables)) {
-        setIsFetching(true);
         await fetchMore({ variables });
-        setIsFetching(false);
       }
-
       updatePaginationOptions(variables);
     } catch (error) {
       if (error instanceof ApolloError) {
         handleError(error);
-        setIsFetching(false);
       }
     }
   };
