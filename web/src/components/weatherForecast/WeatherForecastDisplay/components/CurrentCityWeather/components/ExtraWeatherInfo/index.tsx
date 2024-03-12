@@ -8,7 +8,7 @@ type Props = {
   infoType: string;
 };
 
-export const ExtraWeatherInfoItem: React.FC<Props> = ({ icon, data, infoType }) => {
+export const ExtraWeatherInfo: React.FC<Props> = ({ icon, data, infoType }) => {
   return (
     <div className="text-left px-4 w-[48%] flex flex-col items-center">
       <FontAwesomeIcon className="text-blue-300 text-[28px] mb-2" icon={icon} />

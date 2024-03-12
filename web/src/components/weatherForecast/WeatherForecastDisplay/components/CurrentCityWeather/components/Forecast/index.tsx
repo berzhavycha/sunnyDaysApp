@@ -15,7 +15,7 @@ export const Forecast: FC<Props> = ({ info }) => {
 
   return (
     <div className="bg-blue-600 rounded-3xl pt-4 py-2 px-3 h-full">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 h-8">
         <p className="text-white font-bold text-lg pl-3">Forecast</p>
         {!isTodayCurrentWeather && (
           <button
