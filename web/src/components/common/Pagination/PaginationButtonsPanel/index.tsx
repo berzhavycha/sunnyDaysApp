@@ -32,13 +32,23 @@ export const PaginationButtonsPanel: FC<Props> = ({
 
   return (
     <div className="w-full flex flex-row justify-center pb-4 gap-3">
-      <Button content={prevBtnContent} onClick={onClickPrev} isDisabled={!isPrevBtnActive} styles='w-12'/>
+      <Button
+        content={prevBtnContent}
+        onClick={onClickPrev}
+        isDisabled={!isPrevBtnActive}
+        styles="w-12"
+      />
       <PaginationPageButtons
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         onClickPageButton={onClickPageButton}
       />
-      <Button content={nextBtnContent} onClick={onClickNext} isDisabled={!isNextBtnActive} styles='w-12'/>
+      <Button
+        content={nextBtnContent}
+        onClick={onClickNext}
+        isDisabled={!isNextBtnActive}
+        styles="w-12"
+      />
     </div>
   );
 };

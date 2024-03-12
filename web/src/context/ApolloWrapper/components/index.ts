@@ -1,1 +1,1 @@
-export * from './ApolloClientWrapper'
+export * from './ApolloClientWrapper';

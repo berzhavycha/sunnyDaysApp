@@ -5,12 +5,7 @@ import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAddWeatherSubscription, useCityInputComplete, useSignOut } from '@/hooks';
-import {
-  useCitySearchList,
-  useCurrentTempUnit,
-  useCurrentUser,
-  useSubscriptionError,
-} from '@/context';
+import { useCitySearchList, useCurrentTempUnit, useSubscriptionError } from '@/context';
 import { Button, InputAutocomplete } from '@/components/common';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 import { useRenderCityItem } from './hooks';
@@ -21,7 +16,7 @@ export const WeatherHeader = (): JSX.Element => {
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { addSubscription } = useAddWeatherSubscription(setCity);
   const { renderCityItem } = useRenderCityItem(addSubscription);
-  const { signOutHandler } = useSignOut()
+  const { signOutHandler } = useSignOut();
   const { data, loading } = useCityInputComplete(city);
   const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit();
 

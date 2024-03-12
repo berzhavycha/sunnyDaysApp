@@ -16,9 +16,7 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
           <CurrentTempUnitProvider>
             <WeatherPaginationQueryOptionsProvider>
               <CurrentCityWeatherInfoProvider>
-                <SubscriptionErrorProvider>
-                  {children}
-                </SubscriptionErrorProvider>
+                <SubscriptionErrorProvider>{children}</SubscriptionErrorProvider>
               </CurrentCityWeatherInfoProvider>
             </WeatherPaginationQueryOptionsProvider>
           </CurrentTempUnitProvider>

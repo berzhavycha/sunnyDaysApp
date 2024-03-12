@@ -2,7 +2,10 @@ import { SuspenseQueryHookFetchPolicy } from '@apollo/client';
 
 const keys = new Map<string, number>();
 
-export const getSuspenseFetchPolicyForKey = (key: string, expirationMs: number): SuspenseQueryHookFetchPolicy => {
+export const getSuspenseFetchPolicyForKey = (
+  key: string,
+  expirationMs: number,
+): SuspenseQueryHookFetchPolicy => {
   const lastFetchTimestamp = keys.get(key);
   const diffFromNow = lastFetchTimestamp
     ? Date.now() - lastFetchTimestamp

@@ -6,11 +6,11 @@ import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/s
 import { useMakeClient } from '@/graphql';
 
 type Props = PropsWithChildren & {
-    tokensHash: string
-}
+  tokensHash: string;
+};
 
 export const ApolloClientWrapper: FC<Props> = ({ children, tokensHash }): JSX.Element => {
-    const { makeClient } = useMakeClient(tokensHash);
+  const { makeClient } = useMakeClient(tokensHash);
 
-    return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+  return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
 };

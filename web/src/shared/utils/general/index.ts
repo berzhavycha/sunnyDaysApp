@@ -1,2 +1,2 @@
-export * from './getTimeFormat'
-export * from './upperCaseFirstLetter'
+export * from './getTimeFormat';
+export * from './upperCaseFirstLetter';
