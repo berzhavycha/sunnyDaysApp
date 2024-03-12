@@ -31,4 +31,4 @@ export const FEATURE_CACHE_MINUTES_TIME = parseInt(
   process.env.NEXT_PUBLIC_FEATURE_CACHE_MINUTES_TIME as string,
 );
 
-export const SECRET_COOKIE_KEY = process.env.NEXT_PUBLIC_SECRET_COOKIE_KEY as string
+export const SECRET_COOKIE_KEY = process.env.NEXT_PUBLIC_SECRET_COOKIE_KEY as string;

@@ -20,7 +20,9 @@ export const PaginationPageButtons: FC<Props> = ({
 
         const onClick = async (): Promise<void> => await onClickPageButton(page);
 
-        return <Button key={page} content={page} isActive={isActive} onClick={onClick} styles='w-12' />;
+        return (
+          <Button key={page} content={page} isActive={isActive} onClick={onClick} styles="w-12" />
+        );
       })}
     </div>
   );

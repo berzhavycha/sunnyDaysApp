@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   FC,
@@ -11,19 +11,14 @@ import {
   SetStateAction,
 } from 'react';
 
+import { PaginationQueryOptionsState } from '@/shared';
+import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 import { START_PAGE_NUMBER } from './constants';
-import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
-
-export type WeatherPaginationQueryOptionsState = {
-  offset: number;
-  limit: number;
-  order: string;
-};
 
 type ContextType = {
-  paginationOptions: WeatherPaginationQueryOptionsState;
+  paginationOptions: PaginationQueryOptionsState;
   updatePaginationOptions: (newOptions: Partial<UserCitiesWeatherQueryVariables>) => void;
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
@@ -54,7 +49,7 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
-  const [paginationOptions, setPaginationOptions] = useState<WeatherPaginationQueryOptionsState>({
+  const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
     limit: WEATHER_CITIES_LIMIT,
     order: WEATHER_CITIES_ORDER,

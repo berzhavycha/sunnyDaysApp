@@ -7,7 +7,7 @@ type Props = {
   onClick: () => Promise<void> | void;
   isActive?: boolean;
   isDisabled?: boolean;
-  styles?: string
+  styles?: string;
 };
 
 export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styles }) => {
@@ -17,11 +17,17 @@ export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styl
     }
   };
 
-  const isActiveButtonStyle = isActive ? convertObjectToTailwind(buttonStyle['active']) : ''
-  const isDisabledButtonStyle = isDisabled ? convertObjectToTailwind(buttonStyle['disabled']) : convertObjectToTailwind(buttonStyle['undisabled'])
+  const isActiveButtonStyle = isActive ? convertObjectToTailwind(buttonStyle['active']) : '';
+  const isDisabledButtonStyle = isDisabled
+    ? convertObjectToTailwind(buttonStyle['disabled'])
+    : convertObjectToTailwind(buttonStyle['undisabled']);
 
   return (
-    <button className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${styles}`} onClick={onPress} disabled={isDisabled}>
+    <button
+      className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${styles}`}
+      onClick={onPress}
+      disabled={isDisabled}
+    >
       {content}
     </button>
   );

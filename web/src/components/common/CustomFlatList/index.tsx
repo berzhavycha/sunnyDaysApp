@@ -20,7 +20,7 @@ export const CustomFlatList = <T,>({
           <Fragment key={index}>{renderItem(item)}</Fragment>
         ))}
       </div>
-      {listFooterComponent && <div className='mb-12'>{listFooterComponent}</div>}
+      {listFooterComponent && <div className="mb-12">{listFooterComponent}</div>}
     </div>
   );
 };
