@@ -7,11 +7,11 @@ type HookReturn = {
 };
 
 export const useRenderWeatherCard = (): HookReturn => {
-  const { setCurrentCityWeatherInfo, setTodayWeatherCityInfo } = useCurrentCityWeatherInfo();
+  const { setCurrentCityWeatherInfo, setShownWeatherInfo } = useCurrentCityWeatherInfo();
 
   function renderItem(props: WeatherForecast): JSX.Element {
     const onClick = (): void => {
-      setTodayWeatherCityInfo(props);
+      setShownWeatherInfo(props);
       setCurrentCityWeatherInfo({ info: props });
     };
 
