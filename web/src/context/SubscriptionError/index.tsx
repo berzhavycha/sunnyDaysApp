@@ -41,9 +41,8 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
   });
 
   const handleError = (error: ApolloError): void => {
-    console.log(error);
-    if (error.graphQLErrors[0]?.extensions.originalError) {
-      setError({ message: error.graphQLErrors[0].extensions.originalError.message });
+    if (error.graphQLErrors[0].originalError) {
+      setError({ message: error.graphQLErrors[0].originalError.message });
     } else {
       setError({ message: UNEXPECTED_ERROR_MESSAGE });
     }

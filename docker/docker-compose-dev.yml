@@ -1,6 +1,18 @@
 version: '3.8' 
 
 services:
+  client:
+    build:
+      context: ../web
+      target: development
+      dockerfile: Dockerfile
+    volumes:
+        - ../web:/home/node
+        - /home/node/node_modules
+        - /home/node/.next
+    ports:
+      - "3000:3000"
+
   server:
     build: 
       context: ../server
