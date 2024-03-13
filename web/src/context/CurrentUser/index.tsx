@@ -46,7 +46,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
       if (data && data.currentUser) {
         setCurrentUser(data.currentUser);
       }
-    },
+    }
   });
 
   useEffect(() => {

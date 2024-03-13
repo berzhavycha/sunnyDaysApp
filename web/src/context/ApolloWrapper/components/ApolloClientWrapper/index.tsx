@@ -4,13 +4,18 @@ import { FC, PropsWithChildren } from 'react';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 
 import { useMakeClient } from '@/graphql';
+import { UpdateAuth } from '../UpdateAuth';
 
 type Props = PropsWithChildren & {
   tokensHash: string;
 };
 
 export const ApolloClientWrapper: FC<Props> = ({ children, tokensHash }): JSX.Element => {
-  const { makeClient } = useMakeClient(tokensHash);
+  const { makeClient } = useMakeClient();
 
-  return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+  return <ApolloNextAppProvider makeClient={makeClient}>
+    <UpdateAuth tokensHash={tokensHash}>
+      {children}
+    </UpdateAuth>
+  </ApolloNextAppProvider>;
 };
