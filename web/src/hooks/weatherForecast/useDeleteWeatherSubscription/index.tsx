@@ -45,7 +45,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
         async update(cache) {
           const currentPageCache = readPageCache(cache, paginationOptions);
-          console.log('UPDATE');
 
           if (currentPageCache) {
             const clearedCurrentPage = purgePageCache(

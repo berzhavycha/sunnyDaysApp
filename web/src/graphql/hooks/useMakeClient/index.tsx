@@ -1,52 +1,50 @@
-import { resolvers } from '../../resolvers';
-import { errorLink, refreshTokenLink, mainHttpLink, forwardCookieLink } from '../../links';
-import { typePolicies } from '../../typePolicies';
 import { NormalizedCacheObject, ApolloLink } from '@apollo/client';
 import {
   NextSSRApolloClient,
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
-import { decrypt } from '@/shared';
-import { SECRET_COOKIE_KEY } from '@/global';
+
+import { resolvers } from '../../resolvers';
+import { errorLink, refreshTokenLink, mainHttpLink, forwardCookieLink } from '../../links';
+import { typePolicies } from '../../typePolicies';
 
 type UseMakeClientReturn = {
   makeClient: () => NextSSRApolloClient<NormalizedCacheObject>;
 };
 
-export const useMakeClient = (tokensHash: string): UseMakeClientReturn => {
+export const useMakeClient = (): UseMakeClientReturn => {
   const makeClient = (): NextSSRApolloClient<NormalizedCacheObject> => {
     const client = new NextSSRApolloClient({
       cache: new NextSSRInMemoryCache({
         typePolicies,
       }),
       resolvers,
+      defaultOptions: {
+        watchQuery: {
+          errorPolicy: "all",
+        }
+      },
     });
 
-    const commonLinks = [
+    const apolloLinks = ApolloLink.from([
       errorLink.split(
         (operation) => operation.getContext().unauthenticated,
         refreshTokenLink(client),
       ),
-    ];
-
-    const serverApolloLinks = ApolloLink.from([...commonLinks, mainHttpLink]);
-
-    const clientApolloLinks = ApolloLink.from([
-      ...commonLinks,
-      forwardCookieLink('tokens', decrypt(tokensHash, SECRET_COOKIE_KEY)),
+      forwardCookieLink,
       mainHttpLink,
     ]);
 
     client.setLink(
       typeof window === undefined
         ? ApolloLink.from([
-            new SSRMultipartLink({
-              stripDefer: true,
-            }),
-            serverApolloLinks,
-          ])
-        : clientApolloLinks,
+          new SSRMultipartLink({
+            stripDefer: true,
+          }),
+          apolloLinks,
+        ])
+        : apolloLinks,
     );
 
     return client;
