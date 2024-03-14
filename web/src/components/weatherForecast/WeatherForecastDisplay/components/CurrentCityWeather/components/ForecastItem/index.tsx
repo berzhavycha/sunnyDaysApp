@@ -15,12 +15,12 @@ type Props = WeatherForecastDays & {
 
 export const ForecastItem: FC<Props> = ({ onClick, text, dayOfWeek, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
-  const { currentForecastDay } = useCurrentCityWeatherInfo()
-  
+  const { currentForecastDay } = useCurrentCityWeatherInfo();
+
   const weatherIcon = pickWeatherIcon(text);
 
-  const minTemp = info[`max${upperCaseFirstLetter(currentTempUnit.name)}` as keyof typeof info]
-  const maxTemp = info[`min${upperCaseFirstLetter(currentTempUnit.name)}` as keyof typeof info]
+  const minTemp = info[`max${upperCaseFirstLetter(currentTempUnit.name)}` as keyof typeof info];
+  const maxTemp = info[`min${upperCaseFirstLetter(currentTempUnit.name)}` as keyof typeof info];
 
   return (
     <div

@@ -22,8 +22,8 @@ export const useMakeClient = (): UseMakeClientReturn => {
       resolvers,
       defaultOptions: {
         watchQuery: {
-          errorPolicy: "all",
-        }
+          errorPolicy: 'all',
+        },
       },
     });
 
@@ -39,11 +39,11 @@ export const useMakeClient = (): UseMakeClientReturn => {
     client.setLink(
       typeof window === undefined
         ? ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          apolloLinks,
-        ])
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            apolloLinks,
+          ])
         : apolloLinks,
     );
 

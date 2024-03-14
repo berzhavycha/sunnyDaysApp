@@ -28,7 +28,7 @@ type ContextType = {
   setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
   onTodayCurrentWeather: () => void;
   currentForecastDay: string;
-  setCurrentForecastDay: Dispatch<SetStateAction<string>>
+  setCurrentForecastDay: Dispatch<SetStateAction<string>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -48,7 +48,7 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
     useState<CurrentCityWeatherInfoState>();
-  const [currentForecastDay, setCurrentForecastDay] = useState<string>('')
+  const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
 
@@ -60,7 +60,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
 
   const onTodayCurrentWeather = (): void => {
     if (shownWeatherInfo) {
-      setCurrentForecastDay('')
+      setCurrentForecastDay('');
       setIsTodayCurrentWeather(true);
       setCurrentCityWeatherInfo({ info: shownWeatherInfo });
     }
@@ -74,7 +74,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     setShownWeatherInfo,
     onTodayCurrentWeather,
     currentForecastDay,
-    setCurrentForecastDay
+    setCurrentForecastDay,
   };
 
   return (

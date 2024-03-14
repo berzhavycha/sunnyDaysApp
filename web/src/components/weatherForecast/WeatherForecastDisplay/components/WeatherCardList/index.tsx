@@ -10,7 +10,7 @@ export const WeatherCardList = (): JSX.Element => {
   const { data } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationQueryOptions();
-  const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination()
+  const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
 
   const listFooterComponent =
     totalPages > 1 ? (
@@ -27,7 +27,7 @@ export const WeatherCardList = (): JSX.Element => {
 
   return (
     <div className="w-full h-full">
-      {!data?.userCitiesWeather.edges.length ? (
+      {!data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
         <NoData />
       ) : (
         <CustomFlatList

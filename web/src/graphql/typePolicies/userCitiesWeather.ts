@@ -19,6 +19,7 @@ export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastE
       ? { ...existing.paginationInfo }
       : { ...incoming?.paginationInfo };
 
+    console.log("INCOMING", incoming)
     incoming?.edges?.forEach((edge, index) => {
       mergedEdges[offset + index] = edge;
     });
@@ -55,12 +56,18 @@ export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastE
       return !context.readField<boolean>('_deleted', edge);
     });
 
+    console.log("MERGE", {
+      edges: filteredMergedEdge,
+      paginationInfo: mergedPaginationInfo,
+    })
+    
     return {
       edges: filteredMergedEdge,
       paginationInfo: mergedPaginationInfo,
     };
   },
   read(existing, context) {
+    console.log("READ", existing?.paginationInfo)
     return (
       existing && {
         edges: existing.edges.slice(

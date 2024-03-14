@@ -1,4 +1,4 @@
-export const ADD_SUBSCRIPTION_BTN_CONTENT = "Add"
+export const ADD_SUBSCRIPTION_BTN_CONTENT = 'Add';
 
 export const weatherIconMapping = {
   clear:

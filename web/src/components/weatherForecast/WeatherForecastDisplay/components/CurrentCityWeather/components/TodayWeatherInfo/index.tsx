@@ -40,7 +40,7 @@ export const TodayWeatherInfo: FC<Props> = ({
           height={120}
           alt={'today-weather-icon'}
         />
-        <div className='text-right'>
+        <div className="text-right">
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
