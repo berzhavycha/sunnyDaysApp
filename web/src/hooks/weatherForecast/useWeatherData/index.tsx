@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ApolloError,
   ApolloQueryResult,
@@ -15,15 +15,21 @@ import {
   useSubscriptionError,
   useWeatherPaginationQueryOptions,
 } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 import { getSuspenseFetchPolicyForKey, ONE_MINUTE } from '@/shared';
+import {
+  UserCitiesWeatherDocument,
+  UserCitiesWeatherQuery,
+  UserCitiesWeatherQueryVariables,
+} from './queries';
 
 type HookReturn = {
-  data?: UserCitiesWeatherQuery;
-  loading: boolean;
+  data: UserCitiesWeatherQuery | null;
   error?: ApolloError;
   fetchMore: (
     fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+  refetch: (
+    refetchOptions?: Partial<UserCitiesWeatherQueryVariables>,
   ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
 };
 
@@ -58,7 +64,8 @@ export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const { paginationOptions, setTotalCount } = useWeatherPaginationQueryOptions();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { data, error, fetchMore } = useSuspenseQuery(UserCitiesWeatherDocument, {
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
+  const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
       forecastDaysAmount: MAX_FORECAST_DAYS,
@@ -74,12 +81,13 @@ export const useWeatherData = (): HookReturn => {
       handleError(error);
     }
 
-    if (data) {
+    if (data && data.userCitiesWeather) {
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
       setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
       setError({ message: '' });
+      setWeatherData(data);
     }
-  }, [data]);
+  }, [data, error]);
 
-  return { data, loading: false, error, fetchMore };
+  return { data: weatherData, error, fetchMore, refetch };
 };

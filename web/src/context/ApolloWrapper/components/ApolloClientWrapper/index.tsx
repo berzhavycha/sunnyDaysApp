@@ -13,9 +13,9 @@ type Props = PropsWithChildren & {
 export const ApolloClientWrapper: FC<Props> = ({ children, tokensHash }): JSX.Element => {
   const { makeClient } = useMakeClient();
 
-  return <ApolloNextAppProvider makeClient={makeClient}>
-    <UpdateAuth tokensHash={tokensHash}>
-      {children}
-    </UpdateAuth>
-  </ApolloNextAppProvider>;
+  return (
+    <ApolloNextAppProvider makeClient={makeClient}>
+      <UpdateAuth tokensHash={tokensHash}>{children}</UpdateAuth>
+    </ApolloNextAppProvider>
+  );
 };

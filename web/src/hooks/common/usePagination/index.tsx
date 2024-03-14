@@ -17,10 +17,14 @@ interface HookReturn<TVariables> {
   isPageContentCached: (variables: Partial<PaginationQueryOptionsState & TVariables>) => boolean;
 }
 
-interface UsePaginationDependencies<TEdge, TData extends Record<string, PaginationQueryData<TEdge> | string>, TVariables> {
+interface UsePaginationDependencies<
+  TEdge,
+  TData extends Record<string, PaginationQueryData<TEdge> | string>,
+  TVariables,
+> {
   query: DocumentNode;
   queryDataField: string;
-  data: TData | undefined;
+  data: TData | null;
   fetchMore: (
     fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, TData>,
   ) => Promise<ApolloQueryResult<TData>>;
@@ -32,7 +36,11 @@ interface UsePaginationDependencies<TEdge, TData extends Record<string, Paginati
   totalPages: number;
 }
 
-export const usePagination = <TEdge, TData extends Record<string, PaginationQueryData<TEdge> | string>, TVariables>({
+export const usePagination = <
+  TEdge,
+  TData extends Record<string, PaginationQueryData<TEdge> | string>,
+  TVariables,
+>({
   query,
   queryDataField,
   data,
@@ -58,8 +66,8 @@ export const usePagination = <TEdge, TData extends Record<string, PaginationQuer
     });
 
     if (cachedData) {
-      const queryFieldData = cachedData[queryDataField];
-      if (typeof queryFieldData !== 'string' && queryFieldData.edges) {
+      const queryFieldData = cachedData?.[queryDataField];
+      if (typeof queryFieldData !== 'string' && queryFieldData.edges.length) {
         const isValueCorrect = queryFieldData.edges.some((edge) => !!edge);
         return isValueCorrect;
       }

@@ -7,7 +7,7 @@ export const validateCityRules = [
     message: 'Please enter the city!',
   },
   {
-    validator: (_city: string, data: UserCitiesWeatherQuery | undefined): boolean => {
+    validator: (_city: string, data: UserCitiesWeatherQuery | null): boolean => {
       return (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) < MAX_WEATHER_CITIES_AMOUNT;
     },
     message: `You cannot have more than ${MAX_WEATHER_CITIES_AMOUNT} cities.`,
