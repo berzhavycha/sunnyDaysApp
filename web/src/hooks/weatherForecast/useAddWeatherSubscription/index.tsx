@@ -10,6 +10,7 @@ import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
 import { useWeatherPagination } from '..';
 import { clearPageCache } from '../utils';
+import { WEATHER_CITIES_LIMIT } from '@/global';
 
 type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -23,7 +24,7 @@ export const useAddWeatherSubscription = (
   const { setError, handleError } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const { onGoToPage } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationQueryOptions();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
 
   useEffect(() => {
@@ -50,12 +51,13 @@ export const useAddWeatherSubscription = (
         },
       });
 
-      if (currentPage !== totalPages) {
+      const isAddingOnTheNextPage = (totalCount) % WEATHER_CITIES_LIMIT === 0
+      if (currentPage !== totalPages || isAddingOnTheNextPage) {
         clearPageCache(client, {
           ...paginationOptions,
           offset: (totalPages - 1) * paginationOptions.limit,
         });
-        await onGoToPage(totalPages);
+        await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
       } else {
         refetch();
       }
