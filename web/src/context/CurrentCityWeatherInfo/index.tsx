@@ -25,8 +25,10 @@ type ContextType = {
   setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState | undefined>>;
   isTodayCurrentWeather: boolean;
   setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
-  setTodayWeatherCityInfo: Dispatch<SetStateAction<InfoType | undefined>>;
+  setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
   onTodayCurrentWeather: () => void;
+  currentForecastDay: string;
+  setCurrentForecastDay: Dispatch<SetStateAction<string>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -44,21 +46,23 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
 };
 
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [todayCityWeatherInfo, setTodayWeatherCityInfo] = useState<InfoType>();
-  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
     useState<CurrentCityWeatherInfoState>();
+  const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
+  const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
+  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currentCityWeatherInfo?.info.city) {
-      setTodayWeatherCityInfo(currentCityWeatherInfo.info);
+    if (currentCityWeatherInfo?.info?.city) {
+      setShownWeatherInfo(currentCityWeatherInfo.info);
     }
   }, [currentCityWeatherInfo?.info?.city]);
 
   const onTodayCurrentWeather = (): void => {
-    if (todayCityWeatherInfo) {
+    if (shownWeatherInfo) {
+      setCurrentForecastDay('');
       setIsTodayCurrentWeather(true);
-      setCurrentCityWeatherInfo({ info: todayCityWeatherInfo });
+      setCurrentCityWeatherInfo({ info: shownWeatherInfo });
     }
   };
 
@@ -67,8 +71,10 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     setCurrentCityWeatherInfo,
     isTodayCurrentWeather,
     setIsTodayCurrentWeather,
-    setTodayWeatherCityInfo,
+    setShownWeatherInfo,
     onTodayCurrentWeather,
+    currentForecastDay,
+    setCurrentForecastDay,
   };
 
   return (

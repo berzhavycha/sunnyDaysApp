@@ -19,7 +19,7 @@ type Props<TItem> = {
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
   isAutocompleteEnabled?: boolean;
-  onEnter: () => Promise<void>
+  onEnter: () => Promise<void>;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -34,11 +34,11 @@ export const InputAutocomplete = <TItem,>({
   isAutocompleteShown,
   isAutocompleteEnabled,
   onRenderItem,
-  onEnter
+  onEnter,
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
-
   useOutsideClick(autocompleteRef, onPressOutside);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
   const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>): Promise<void> => {
     if (e.key === 'Enter') {

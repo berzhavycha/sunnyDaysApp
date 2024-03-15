@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { valueClassName } from './constants';
 
 type Props = {
@@ -9,12 +10,10 @@ type Props = {
 };
 
 export const TemperatureInfo: FC<Props> = ({ value, tempSign, size, fontWeight }) => {
-  const { fontSize: valueFontSize, fontWeight: weight, textColor } = valueClassName[size];
-
-  const className = `text-${valueFontSize} ${textColor} ${weight[fontWeight]}`;
+  const { fontSize, fontWeight: weight, textColor } = valueClassName[size];
 
   return (
-    <p className={className}>
+    <p className={`text-${fontSize} ${textColor} ${weight[fontWeight]}`}>
       {value}
       <span className="ml-1">{tempSign}</span>
     </p>

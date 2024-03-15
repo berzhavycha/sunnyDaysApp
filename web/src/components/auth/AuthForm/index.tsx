@@ -39,7 +39,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
         <div className="text-md text-center text-red-500 mt-2 mb-4 h-2">
           {fieldsError.unexpectedError}
         </div>
-        <form className="mt-4" method="POST" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
             {...register('email')}
             label="Email:"

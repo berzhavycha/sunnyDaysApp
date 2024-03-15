@@ -1,29 +1,35 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ApolloError,
   ApolloQueryResult,
   FetchMoreQueryOptions,
   OperationVariables,
-  useQuery,
 } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
   useWeatherPaginationQueryOptions,
 } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { getSuspenseFetchPolicyForKey, ONE_MINUTE } from '@/shared';
+import {
+  UserCitiesWeatherDocument,
+  UserCitiesWeatherQuery,
+  UserCitiesWeatherQueryVariables,
+} from './queries';
 
 type HookReturn = {
-  data?: UserCitiesWeatherQuery;
-  loading: boolean;
+  data: UserCitiesWeatherQuery | null;
   error?: ApolloError;
   fetchMore: (
     fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+  refetch: (
+    refetchOptions?: Partial<UserCitiesWeatherQueryVariables>,
   ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
 };
 
@@ -56,34 +62,32 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, setTotalCount } = useWeatherPaginationQueryOptions();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
+  const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
       forecastDaysAmount: MAX_FORECAST_DAYS,
     },
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: getFetchPolicyForKey(
+    fetchPolicy: getSuspenseFetchPolicyForKey(
       'weatherData',
       ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
 
   useEffect(() => {
-    if (loading) {
-      setError({ message: '' });
-    }
-
     if (error) {
       handleError(error);
     }
 
-    if (data) {
+    if (data && data.userCitiesWeather) {
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
       setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+      setError({ message: '' });
+      setWeatherData(data);
     }
-  }, [data, loading, error, setError, handleError, setCurrentCityWeatherInfo]);
+  }, [data, error]);
 
-  return { data, loading: loading || isFetching, error, fetchMore };
+  return { data: weatherData, error, fetchMore, refetch };
 };

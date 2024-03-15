@@ -22,7 +22,9 @@ export const useCurrentWeatherTime = (
       const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
       const dayOfWeek = daysOfWeek[dateInstance.getDay()];
       setDayOfWeek(dayOfWeek);
-      setTime(`${getTimeFormat(dateInstance.getHours())}:${getTimeFormat(dateInstance.getMinutes())}`);
+      setTime(
+        `${getTimeFormat(dateInstance.getHours())}:${getTimeFormat(dateInstance.getMinutes())}`,
+      );
     }
   }, [currentCityWeatherInfo]);
 

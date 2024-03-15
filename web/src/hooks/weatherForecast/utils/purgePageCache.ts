@@ -1,4 +1,4 @@
-import { UserCitiesWeatherQuery } from '../../useWeatherData/queries';
+import { UserCitiesWeatherQuery } from '../useWeatherData/queries';
 
 export const purgePageCache = (
   edges: UserCitiesWeatherQuery['userCitiesWeather']['edges'],

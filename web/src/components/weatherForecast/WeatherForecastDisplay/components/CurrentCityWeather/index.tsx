@@ -7,8 +7,8 @@ import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
 export const CurrentCityWeather = (): JSX.Element => {
+  const { data } = useWeatherData();
   const { currentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { loading } = useWeatherData();
   const { deleteSubscription } = useDeleteWeatherSubscription();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
 
@@ -17,17 +17,13 @@ export const CurrentCityWeather = (): JSX.Element => {
 
   return (
     <div className="w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5">
-      {loading ? (
-        <Spinner />
-      ) : !currentCityWeatherInfo?.info ? (
+      {!data || !data.userCitiesWeather || !data.userCitiesWeather.edges.length ? (
         <NoData />
+      ) : !currentCityWeatherInfo?.info ? (
+        <Spinner />
       ) : (
         <>
-          <TodayWeatherInfo
-            {...currentCityWeatherInfo.info}
-            dayOfWeek={dayOfWeek}
-            time={time}
-          />
+          <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
           <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
           <button
             onClick={onDelete}

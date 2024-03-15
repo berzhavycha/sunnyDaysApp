@@ -45,7 +45,7 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<Message> {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
-
+    
     if (!refreshToken) {
       throw new Error('Refresh token not found in cookies.');
     }

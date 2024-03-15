@@ -7,7 +7,7 @@ import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/contex
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
-import { purgePageCache, readPageCache, writePageCache } from './utils';
+import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { WEATHER_CITIES_LIMIT } from '@/global';
 
@@ -18,7 +18,8 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalCount, totalPages } =
+    useWeatherPaginationQueryOptions();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
 
@@ -44,7 +45,6 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
         async update(cache) {
           const currentPageCache = readPageCache(cache, paginationOptions);
-          console.log(currentPageCache);
 
           if (currentPageCache) {
             const clearedCurrentPage = purgePageCache(
@@ -60,7 +60,8 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             if (
               !isPageContentCached({
                 offset: paginationOptions.offset + paginationOptions.limit - 1,
-              })
+              }) &&
+              currentPage !== totalPages
             ) {
               await fetchMore({
                 variables: { offset: paginationOptions.limit * currentPage },

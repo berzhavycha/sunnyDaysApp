@@ -1,12 +1,14 @@
-'use client';
-
 import { PropsWithChildren } from 'react';
-import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 
-import { useMakeClient } from '@/graphql';
+import { ApolloClientWrapper } from './components';
+import { encrypt } from '@/shared';
+import { SECRET_COOKIE_KEY } from '@/global';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { cookies } = require('next/headers');
 
 export const ApolloWrapper = ({ children }: PropsWithChildren): JSX.Element => {
-  const { makeClient } = useMakeClient();
+  const cookiesStore = cookies();
+  const tokensHash = encrypt(cookiesStore.get('tokens')?.value, SECRET_COOKIE_KEY);
 
-  return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+  return <ApolloClientWrapper tokensHash={tokensHash}>{children}</ApolloClientWrapper>;
 };

@@ -1,14 +1,16 @@
 'use client';
 
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 
-import { useSubscriptionError } from '@/context';
+import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
-import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
 import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
+import { useWeatherPagination } from '..';
+import { clearPageCache } from '../utils';
+import { WEATHER_CITIES_LIMIT } from '@/global';
 
 type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -18,11 +20,12 @@ type HookReturn = {
 export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
+  const client = useApolloClient();
   const { setError, handleError } = useSubscriptionError();
-  const { data } = useWeatherData();
-  const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument, {
-    refetchQueries: [UserCitiesWeatherDocument],
-  });
+  const { data, refetch } = useWeatherData();
+  const { onGoToPage } = useWeatherPagination();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationQueryOptions();
+  const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
 
   useEffect(() => {
     if (error) {
@@ -47,6 +50,17 @@ export const useAddWeatherSubscription = (
           },
         },
       });
+
+      const isAddingOnTheNextPage = (totalCount) % WEATHER_CITIES_LIMIT === 0
+      if (currentPage !== totalPages || isAddingOnTheNextPage) {
+        clearPageCache(client, {
+          ...paginationOptions,
+          offset: (totalPages - 1) * paginationOptions.limit,
+        });
+        await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
+      } else {
+        refetch();
+      }
 
       setCity('');
     } catch (err) {

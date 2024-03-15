@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   FC,
@@ -11,24 +11,16 @@ import {
   SetStateAction,
 } from 'react';
 
+import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
-import { START_PAGE_NUMBER } from './constants';
-import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
-
-export type WeatherPaginationQueryOptionsState = {
-  offset: number;
-  limit: number;
-  order: string;
-};
 
 type ContextType = {
-  paginationOptions: WeatherPaginationQueryOptionsState;
+  paginationOptions: PaginationQueryOptionsState;
   updatePaginationOptions: (newOptions: Partial<UserCitiesWeatherQueryVariables>) => void;
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
-  isFetching: boolean;
-  setIsFetching: Dispatch<SetStateAction<boolean>>;
   totalCount: number;
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
@@ -52,12 +44,11 @@ export const useWeatherPaginationQueryOptions = (): ContextType => {
 export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ children }) => {
   const { currentUser } = useCurrentUser();
   const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
-  const [paginationOptions, setPaginationOptions] = useState<WeatherPaginationQueryOptionsState>({
+  const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
     limit: WEATHER_CITIES_LIMIT,
     order: WEATHER_CITIES_ORDER,
@@ -88,8 +79,6 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
     updatePaginationOptions,
     currentPage,
     setCurrentPage,
-    isFetching,
-    setIsFetching,
     totalCount,
     setTotalCount,
     totalPages,

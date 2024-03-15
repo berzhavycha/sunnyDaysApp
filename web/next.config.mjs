@@ -12,11 +12,14 @@ const nextConfig = {
     },
 
     images: {
-        domains: ['png.pngtree.com'], 
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'cdn-icons-png.flaticon.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'png.pngtree.com',
             },
         ],
     },

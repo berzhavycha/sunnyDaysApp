@@ -1,12 +1,13 @@
-import { resolvers } from '../../resolvers';
-import { errorLink, refreshTokenLink, mainHttpLink } from '../../links';
-import { typePolicies } from '../../typePolicies';
 import { NormalizedCacheObject, ApolloLink } from '@apollo/client';
 import {
   NextSSRApolloClient,
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
+
+import { resolvers } from '../../resolvers';
+import { errorLink, refreshTokenLink, mainHttpLink, forwardCookieLink } from '../../links';
+import { typePolicies } from '../../typePolicies';
 
 type UseMakeClientReturn = {
   makeClient: () => NextSSRApolloClient<NormalizedCacheObject>;
@@ -19,6 +20,11 @@ export const useMakeClient = (): UseMakeClientReturn => {
         typePolicies,
       }),
       resolvers,
+      defaultOptions: {
+        watchQuery: {
+          errorPolicy: 'all',
+        },
+      },
     });
 
     const apolloLinks = ApolloLink.from([
@@ -26,6 +32,7 @@ export const useMakeClient = (): UseMakeClientReturn => {
         (operation) => operation.getContext().unauthenticated,
         refreshTokenLink(client),
       ),
+      forwardCookieLink,
       mainHttpLink,
     ]);
 
