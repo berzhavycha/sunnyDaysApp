@@ -11,11 +11,10 @@ import {
   SetStateAction,
 } from 'react';
 
-import { PaginationQueryOptionsState } from '@/shared';
+import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
 import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
-import { START_PAGE_NUMBER } from './constants';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;

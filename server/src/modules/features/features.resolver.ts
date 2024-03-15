@@ -5,7 +5,7 @@ import { FeaturesService } from './features.service';
 
 @Resolver()
 export class FeaturesResolver {
-  constructor(private readonly featuresService: FeaturesService) {}
+  constructor(private readonly featuresService: FeaturesService) { }
 
   @Public()
   @Query(() => Boolean, { name: 'citySearchStatus' })

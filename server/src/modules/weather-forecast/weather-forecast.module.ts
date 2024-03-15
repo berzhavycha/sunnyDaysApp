@@ -5,14 +5,14 @@ import { SubscriptionsModule } from '@modules/subscriptions';
 import { CitiesModule } from '@modules/cities';
 import { WeatherForecastService } from './weather-forecast.service';
 import { WeatherForecastResolver } from './weather-forecast.resolver';
-import { WeatherApiRepository } from './weather-forecast.repository';
+import { WeatherForecastRepository } from './weather-forecast.repository';
 
 @Module({
   imports: [SubscriptionsModule, CitiesModule, HttpModule],
   providers: [
     WeatherForecastService,
     WeatherForecastResolver,
-    WeatherApiRepository,
+    WeatherForecastRepository,
   ],
 })
 export class WeatherForecastModule {}

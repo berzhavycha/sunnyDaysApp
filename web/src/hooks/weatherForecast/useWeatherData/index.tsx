@@ -6,8 +6,8 @@ import {
   ApolloQueryResult,
   FetchMoreQueryOptions,
   OperationVariables,
-  useSuspenseQuery,
 } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
 import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
 import {

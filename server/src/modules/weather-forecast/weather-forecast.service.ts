@@ -10,14 +10,14 @@ import { SubscriptionsService } from '@modules/subscriptions';
 import { CitiesService } from '@modules/cities';
 import { IWeatherApiResponse, IForecastDay } from './interfaces';
 import { WeatherDay, WeatherForecast, PaginatedWeatherForecast } from './types';
-import { WeatherApiRepository } from './weather-forecast.repository';
+import { WeatherForecastRepository } from './weather-forecast.repository';
 import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
 @Injectable()
 export class WeatherForecastService {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
-    private readonly weatherApiRepository: WeatherApiRepository,
+    private readonly weatherApiRepository: WeatherForecastRepository,
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
