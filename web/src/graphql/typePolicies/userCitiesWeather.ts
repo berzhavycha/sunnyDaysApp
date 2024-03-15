@@ -15,7 +15,7 @@ export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastE
     const limit = context.args?.limit;
 
     let mergedEdges = existing ? [...existing.edges] : [];
-    const mergedPaginationInfo = existing
+    const mergedPaginationInfo = existing && existing.paginationInfo.totalCount
       ? { ...existing.paginationInfo }
       : { ...incoming?.paginationInfo };
 
@@ -54,7 +54,7 @@ export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastE
 
       return !context.readField<boolean>('_deleted', edge);
     });
-    
+
     return {
       edges: filteredMergedEdge,
       paginationInfo: mergedPaginationInfo,

@@ -3,7 +3,7 @@
 import { useWeatherPaginationQueryOptions } from '@/context';
 import { useWeatherData, useWeatherPagination } from '@/hooks';
 import { CustomFlatList, NoData, PaginationButtonsPanel } from '@/components/common';
-import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
+import { START_PAGE_NUMBER } from '@/shared';
 import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardList = (): JSX.Element => {

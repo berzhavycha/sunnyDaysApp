@@ -16,6 +16,7 @@ export class WeatherForecastResolver {
     @Args() forecastParams: ForecastParamArgsDto,
     @CurrentUser('id') id: string,
   ): Promise<PaginatedWeatherForecast> {
+    console.log('req')
     return this.weatherForecastService.getUserCitiesWeather(
       id,
       forecastParams.limit,

@@ -1,14 +1,13 @@
 import {
+  ApolloClient,
   ApolloError,
   ApolloQueryResult,
   DocumentNode,
   FetchMoreQueryOptions,
   OperationVariables,
-  useApolloClient,
 } from '@apollo/client';
 
-import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
-import { PaginationQueryData, PaginationQueryOptionsState } from '@/shared';
+import { PaginationQueryData, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
 
 interface HookReturn<TVariables> {
   onClickPrev: () => Promise<void>;
@@ -22,6 +21,7 @@ interface UsePaginationDependencies<
   TData extends Record<string, PaginationQueryData<TEdge> | string>,
   TVariables,
 > {
+  client: ApolloClient<object>,
   query: DocumentNode;
   queryDataField: string;
   data: TData | null;
@@ -41,6 +41,7 @@ export const usePagination = <
   TData extends Record<string, PaginationQueryData<TEdge> | string>,
   TVariables,
 >({
+  client,
   query,
   queryDataField,
   data,
@@ -52,12 +53,10 @@ export const usePagination = <
   onCurrentPageChange,
   totalPages,
 }: UsePaginationDependencies<TEdge, TData, TVariables>): HookReturn<TVariables> => {
-  const client = useApolloClient();
-
   const isPageContentCached = (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
   ): boolean => {
-    const cachedData = client.readQuery<TData>({
+    const cachedData = client.cache.readQuery<TData>({
       query: query,
       variables: {
         ...paginationOptions,
