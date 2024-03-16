@@ -23,6 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^3.3.4",
+    "apollo-link-context": "^1.0.20",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",

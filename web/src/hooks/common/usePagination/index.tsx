@@ -80,7 +80,8 @@ export const usePagination = <
   ): Promise<void> => {
     try {
       if (!isPageContentCached(variables)) {
-        await fetchMore({ variables });
+        const data = await fetchMore({ variables });
+        console.log(data)
       }
       updatePaginationOptions(variables);
     } catch (error) {
