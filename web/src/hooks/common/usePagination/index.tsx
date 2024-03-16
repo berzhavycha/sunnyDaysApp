@@ -77,24 +77,34 @@ export const usePagination = <
 
   const onFetchMore = async (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
-  ): Promise<void> => {
+  ): Promise<boolean> => {
     try {
       if (!isPageContentCached(variables)) {
-        const data = await fetchMore({ variables });
-        console.log(data)
+        const { errors } = await fetchMore({ variables });
+
+        if (errors?.length) {
+          throw new ApolloError(errors[0].extensions);
+        }
       }
+
       updatePaginationOptions(variables);
+
+      return true;
     } catch (error) {
       if (error instanceof ApolloError) {
         onError(error);
       }
+
+      return false;
     }
   };
 
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {
-      await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
-      onCurrentPageChange(currentPage - 1);
+      const isFetchSuccess = await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
+      if (isFetchSuccess) {
+        onCurrentPageChange(currentPage - 1);
+      }
     }
   };
 
@@ -102,16 +112,20 @@ export const usePagination = <
     if (currentPage !== totalPages) {
       const queryFieldData = data?.[queryDataField];
       if (queryFieldData && typeof queryFieldData !== 'string' && queryFieldData.edges) {
-        await onFetchMore({ offset: (queryFieldData.edges.length ?? 1) * currentPage });
-        onCurrentPageChange(currentPage + 1);
+        const isFetchSuccess = await onFetchMore({ offset: (queryFieldData.edges.length ?? 1) * currentPage });
+        if (isFetchSuccess) {
+          onCurrentPageChange(currentPage + 1);
+        }
       }
     }
   };
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    await onFetchMore({ offset, limit: paginationOptions.limit, order: paginationOptions.order });
-    onCurrentPageChange(page);
+    const isFetchSuccess = await onFetchMore({ offset, limit: paginationOptions.limit, order: paginationOptions.order });
+    if (isFetchSuccess) {
+      onCurrentPageChange(page);
+    }
   };
 
   return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
