@@ -1,4 +1,4 @@
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { usePagination } from '@/hooks';
 import { useWeatherData } from '../useWeatherData';
@@ -21,7 +21,7 @@ export const useWeatherPagination = (): HookReturn => {
   const { data, fetchMore } = useWeatherData();
   const { handleError } = useSubscriptionError();
   const { totalPages, currentPage, setCurrentPage, paginationOptions, updatePaginationOptions } =
-    useWeatherPaginationQueryOptions();
+    useWeatherPaginationInfo();
 
   const { onGoToPage, onClickNext, onClickPrev, isPageContentCached } = usePagination<
     WeatherForecastEdge,

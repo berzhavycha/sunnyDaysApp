@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
@@ -18,8 +18,8 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount, totalPages } =
-    useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalCount, totalPages, setIsSuspenseLoaderBlocked } =
+    useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
 
@@ -31,6 +31,8 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   const deleteSubscription = async (cityName: string): Promise<void> => {
     try {
+      setIsSuspenseLoaderBlocked(true)
+
       await deleteWeatherSubscription({
         variables: {
           city: {
@@ -94,6 +96,8 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
       setError({ message: '' });
     } catch (error) {
       setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    } finally {
+      setIsSuspenseLoaderBlocked(false)
     }
   };
 

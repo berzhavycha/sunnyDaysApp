@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
 import { AddWeatherSubscriptionDocument } from './mutations';
@@ -24,7 +24,7 @@ export const useAddWeatherSubscription = (
   const { setError, handleError } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const { onGoToPage } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
 
   useEffect(() => {

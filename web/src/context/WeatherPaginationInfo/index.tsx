@@ -25,28 +25,32 @@ type ContextType = {
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
   paginationPageNumbers: number[];
+  isSuspenseLoaderBlocked: boolean,
+  setIsSuspenseLoaderBlocked: Dispatch<SetStateAction<boolean>>
 };
 
 const CurrentPaginationQueryOptionsContext = createContext<ContextType | null>(null);
 
-export const useWeatherPaginationQueryOptions = (): ContextType => {
-  const paginationOptionsContext = useContext(CurrentPaginationQueryOptionsContext);
+export const useWeatherPaginationInfo = (): ContextType => {
+  const paginationInfo = useContext(CurrentPaginationQueryOptionsContext);
 
-  if (!paginationOptionsContext) {
+  if (!paginationInfo) {
     throw new Error(
-      'useWeatherPaginationOptions must be used within an WeatherPaginationOptionsProvider',
+      'useWeatherPaginationInfo must be used within an WeatherPaginationInfoProvider',
     );
   }
 
-  return paginationOptionsContext;
+  return paginationInfo;
 };
 
-export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ children }) => {
+export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { currentUser } = useCurrentUser();
   const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
+
+  const [isSuspenseLoaderBlocked, setIsSuspenseLoaderBlocked] = useState<boolean>(false)
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
@@ -83,6 +87,8 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
     setTotalCount,
     totalPages,
     paginationPageNumbers,
+    isSuspenseLoaderBlocked,
+    setIsSuspenseLoaderBlocked
   };
 
   return (

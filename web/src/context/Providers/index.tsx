@@ -5,8 +5,8 @@ import { CurrentUserProvider } from '../CurrentUser';
 import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
-import { WeatherPaginationQueryOptionsProvider } from '../WeatherPaginationOptions';
-import { CurrentCityWeatherInfoProvider } from '..';
+import { WeatherPaginationInfoProvider } from '../WeatherPaginationInfo';
+import { CurrentCityWeatherInfoProvider } from '../CurrentCityWeatherInfo';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -14,11 +14,11 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
       <CurrentUserProvider>
         <CitySearchListProvider>
           <CurrentTempUnitProvider>
-            <WeatherPaginationQueryOptionsProvider>
+            <WeatherPaginationInfoProvider >
               <CurrentCityWeatherInfoProvider>
                 <SubscriptionErrorProvider>{children}</SubscriptionErrorProvider>
               </CurrentCityWeatherInfoProvider>
-            </WeatherPaginationQueryOptionsProvider>
+            </WeatherPaginationInfoProvider>
           </CurrentTempUnitProvider>
         </CitySearchListProvider>
       </CurrentUserProvider>
