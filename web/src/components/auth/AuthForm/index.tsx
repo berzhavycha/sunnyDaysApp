@@ -6,8 +6,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { DocumentNode } from '@apollo/client';
 
-import { Input } from '@/components/common';
 import { AuthType, UserDto, useAuth } from '@/hooks';
+import { Input } from '@/components/common';
 import { userSchema } from './validation';
 import { SubmitButton } from './components';
 

@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { buttonStyle } from './constants';
+
 import { convertObjectToTailwind } from '@/shared';
+import { buttonStyle } from './constants';
 
 type Props = {
   content: string | number | JSX.Element;

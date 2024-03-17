@@ -34,6 +34,8 @@ export const WeatherCardList = (): JSX.Element => {
       />
     ) : null;
 
+  const keyExtractor = (item: { city: string }): string => item.city
+
   return (
     <div className="w-full h-full">
       {isLoading ? (
@@ -47,6 +49,7 @@ export const WeatherCardList = (): JSX.Element => {
             data={data?.userCitiesWeather.edges}
             renderItem={renderItem}
             listFooterComponent={listFooterComponent}
+            keyExtractor={keyExtractor}
           />
         )}
     </div>

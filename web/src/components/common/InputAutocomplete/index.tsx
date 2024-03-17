@@ -20,6 +20,7 @@ type Props<TItem> = {
   isAutocompleteShown: boolean;
   isAutocompleteEnabled?: boolean;
   onEnter: () => Promise<void>;
+  keyExtractor: (item: TItem) => string
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -35,6 +36,7 @@ export const InputAutocomplete = <TItem,>({
   isAutocompleteEnabled,
   onRenderItem,
   onEnter,
+  keyExtractor
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
   useOutsideClick(autocompleteRef, onPressOutside);
@@ -59,7 +61,7 @@ export const InputAutocomplete = <TItem,>({
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
-          <CustomFlatList className="flex flex-col" data={data} renderItem={onRenderItem} />
+          <CustomFlatList className="flex flex-col" data={data} renderItem={onRenderItem} keyExtractor={keyExtractor} />
         </div>
       )}
     </div>
