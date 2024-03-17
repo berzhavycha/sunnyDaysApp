@@ -4,7 +4,6 @@ import { MainLayout } from '@/layouts';
 
 import './globals.css';
 
-
 export const metadata: Metadata = {
   title: 'Sunny Days',
   description: 'Sunny Days App',

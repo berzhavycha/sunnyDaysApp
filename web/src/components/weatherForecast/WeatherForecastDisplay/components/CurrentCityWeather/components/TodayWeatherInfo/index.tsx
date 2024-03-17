@@ -38,6 +38,7 @@ export const TodayWeatherInfo: FC<Props> = ({
           src={weatherIconMapping[weatherIcon]}
           width={120}
           height={120}
+          priority
           alt={'today-weather-icon'}
         />
         <div className="text-right">
