@@ -1,9 +1,11 @@
+'use client'
+
 import React, { FC } from 'react';
 import Image from 'next/image';
 
 import { TemperatureInfo, weatherIconMapping } from '@/components';
-import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { useCurrentTempUnit } from '@/context';
+import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 
 type Props = {

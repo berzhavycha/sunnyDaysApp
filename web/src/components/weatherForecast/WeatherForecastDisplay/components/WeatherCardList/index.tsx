@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
 import { useWeatherPaginationInfo } from '@/context';
-import { useWeatherData, useWeatherPagination } from '@/hooks';
+import { useIsLoading, useWeatherData, useWeatherPagination } from '@/hooks';
 import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/shared';
 import { useRenderWeatherCard } from './hooks';
@@ -13,13 +11,7 @@ export const WeatherCardList = (): JSX.Element => {
   const { renderItem } = useRenderWeatherCard();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationInfo();
   const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (data || error) {
-      setIsLoading(false);
-    }
-  }, [data, error]);
+  const { loading } = useIsLoading(data, error)
 
   const listFooterComponent =
     totalPages > 1 ? (
@@ -38,7 +30,7 @@ export const WeatherCardList = (): JSX.Element => {
 
   return (
     <div className="w-full h-full">
-      {isLoading ? (
+      {loading ? (
         <Spinner />
       ) :
         !data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
