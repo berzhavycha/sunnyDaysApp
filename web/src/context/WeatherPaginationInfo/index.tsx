@@ -27,10 +27,10 @@ type ContextType = {
   paginationPageNumbers: number[];
 };
 
-const CurrentPaginationQueryOptionsContext = createContext<ContextType | null>(null);
+const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
 
 export const useWeatherPaginationInfo = (): ContextType => {
-  const paginationInfo = useContext(CurrentPaginationQueryOptionsContext);
+  const paginationInfo = useContext(WeatherPaginationInfoContext);
 
   if (!paginationInfo) {
     throw new Error(
@@ -86,8 +86,8 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   };
 
   return (
-    <CurrentPaginationQueryOptionsContext.Provider value={contextValue}>
+    <WeatherPaginationInfoContext.Provider value={contextValue}>
       {children}
-    </CurrentPaginationQueryOptionsContext.Provider>
+    </WeatherPaginationInfoContext.Provider>
   );
 };

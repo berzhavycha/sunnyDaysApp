@@ -6,3 +6,4 @@ export * from './Pagination';
 export * from './InputAutocomplete';
 export * from './Button';
 export * from './NoData';
+export * from './Compose'
