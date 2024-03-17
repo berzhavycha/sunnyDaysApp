@@ -13,7 +13,7 @@ export const CustomFlatList = <T,>({
   renderItem,
   listFooterComponent,
   className,
-  keyExtractor
+  keyExtractor,
 }: FlatListProps<T>): JSX.Element => {
   return (
     <div className={`w-full flex flex-col justify-between h-full ${className}`}>

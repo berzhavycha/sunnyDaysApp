@@ -28,12 +28,12 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
     mode: 'onSubmit',
     resolver: joiResolver(userSchema(authType)),
   });
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (data: UserDto): Promise<void> => {
     startTransition(() => {
-      authHandler(data)
-    })
+      authHandler(data);
+    });
   };
 
   return (

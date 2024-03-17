@@ -11,15 +11,17 @@ import { CurrentCityWeatherInfoProvider } from '../CurrentCityWeatherInfo';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Compose components={[
-      ApolloWrapper,
-      CurrentUserProvider,
-      CitySearchListProvider,
-      CurrentTempUnitProvider,
-      WeatherPaginationInfoProvider,
-      CurrentCityWeatherInfoProvider,
-      SubscriptionErrorProvider
-    ]}>
+    <Compose
+      components={[
+        ApolloWrapper,
+        CurrentUserProvider,
+        CitySearchListProvider,
+        CurrentTempUnitProvider,
+        WeatherPaginationInfoProvider,
+        CurrentCityWeatherInfoProvider,
+        SubscriptionErrorProvider,
+      ]}
+    >
       {children}
     </Compose>
   );

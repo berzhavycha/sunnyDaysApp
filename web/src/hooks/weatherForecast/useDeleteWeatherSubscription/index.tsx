@@ -3,13 +3,13 @@
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { env } from '@/core/env'
+import { env } from '@/core/env';
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
-import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
+import { DeleteWeatherSubscriptionDocument } from './mutations';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -18,8 +18,7 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount, totalPages } =
-    useWeatherPaginationInfo();
+  const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
 

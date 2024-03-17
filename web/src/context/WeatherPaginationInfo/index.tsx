@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
-import { env } from '@/core/env'
+import { env } from '@/core/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 

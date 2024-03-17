@@ -21,7 +21,7 @@ interface UsePaginationDependencies<
   TData extends Record<string, PaginationQueryData<TEdge> | string>,
   TVariables,
 > {
-  client: ApolloClient<object>,
+  client: ApolloClient<object>;
   query: DocumentNode;
   queryDataField: string;
   data: TData | null;
@@ -101,7 +101,9 @@ export const usePagination = <
 
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {
-      const isFetchSuccess = await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
+      const isFetchSuccess = await onFetchMore({
+        offset: paginationOptions.offset - paginationOptions.limit,
+      });
       if (isFetchSuccess) {
         onCurrentPageChange(currentPage - 1);
       }
@@ -112,7 +114,9 @@ export const usePagination = <
     if (currentPage !== totalPages) {
       const queryFieldData = data?.[queryDataField];
       if (queryFieldData && typeof queryFieldData !== 'string' && queryFieldData.edges) {
-        const isFetchSuccess = await onFetchMore({ offset: (queryFieldData.edges.length ?? 1) * currentPage });
+        const isFetchSuccess = await onFetchMore({
+          offset: (queryFieldData.edges.length ?? 1) * currentPage,
+        });
         if (isFetchSuccess) {
           onCurrentPageChange(currentPage + 1);
         }
@@ -122,7 +126,11 @@ export const usePagination = <
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    const isFetchSuccess = await onFetchMore({ offset, limit: paginationOptions.limit, order: paginationOptions.order });
+    const isFetchSuccess = await onFetchMore({
+      offset,
+      limit: paginationOptions.limit,
+      order: paginationOptions.order,
+    });
     if (isFetchSuccess) {
       onCurrentPageChange(page);
     }

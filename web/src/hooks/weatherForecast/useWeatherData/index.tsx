@@ -9,7 +9,7 @@ import {
 } from '@apollo/client';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
-import { env } from '@/core/env'
+import { env } from '@/core/env';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,

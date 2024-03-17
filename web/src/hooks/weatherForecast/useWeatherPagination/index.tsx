@@ -1,3 +1,5 @@
+import { useApolloClient } from '@apollo/client';
+
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { usePagination } from '@/hooks';
@@ -7,7 +9,6 @@ import {
   UserCitiesWeatherQuery,
   UserCitiesWeatherQueryVariables,
 } from '../useWeatherData/queries';
-import { useApolloClient } from '@apollo/client';
 
 interface HookReturn {
   onClickPrev: () => Promise<void>;
@@ -17,7 +18,7 @@ interface HookReturn {
 }
 
 export const useWeatherPagination = (): HookReturn => {
-  const client = useApolloClient()
+  const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
   const { handleError } = useSubscriptionError();
   const { totalPages, currentPage, setCurrentPage, paginationOptions, updatePaginationOptions } =

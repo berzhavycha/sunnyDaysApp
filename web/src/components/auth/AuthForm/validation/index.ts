@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 import { AuthType } from '@/hooks';
-import { env } from '@/core/env'
+import { env } from '@/core/env';
 
 export const userSchema = (actionType: AuthType): Joi.Schema => {
   let schema = Joi.object({

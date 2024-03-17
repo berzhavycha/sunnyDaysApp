@@ -11,7 +11,7 @@ export const WeatherCardList = (): JSX.Element => {
   const { renderItem } = useRenderWeatherCard();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationInfo();
   const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
-  const { loading } = useIsLoading(data, error)
+  const { loading } = useIsLoading(data, error);
 
   const listFooterComponent =
     totalPages > 1 ? (
@@ -26,24 +26,23 @@ export const WeatherCardList = (): JSX.Element => {
       />
     ) : null;
 
-  const keyExtractor = (item: { city: string }): string => item.city
+  const keyExtractor = (item: { city: string }): string => item.city;
 
   return (
     <div className="w-full h-full">
       {loading ? (
         <Spinner />
-      ) :
-        !data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
-          <NoData />
-        ) : (
-          <CustomFlatList
-            className="w-full flex flex-wrap gap-6"
-            data={data?.userCitiesWeather.edges}
-            renderItem={renderItem}
-            listFooterComponent={listFooterComponent}
-            keyExtractor={keyExtractor}
-          />
-        )}
+      ) : !data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
+        <NoData />
+      ) : (
+        <CustomFlatList
+          className="w-full flex flex-wrap gap-6"
+          data={data?.userCitiesWeather.edges}
+          renderItem={renderItem}
+          listFooterComponent={listFooterComponent}
+          keyExtractor={keyExtractor}
+        />
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 const { cookies } = require('next/headers');
 
 import { encrypt } from '@/shared';
-import { env } from '@/core/env'
+import { env } from '@/core/env';
 import { ApolloClientWrapper } from './components';
 
 export const ApolloWrapper = ({ children }: PropsWithChildren): JSX.Element => {

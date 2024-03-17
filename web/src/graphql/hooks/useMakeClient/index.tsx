@@ -36,15 +36,15 @@ export const useMakeClient = (): UseMakeClientReturn => {
     ]);
 
     client.setLink(
-      typeof window === "undefined"
+      typeof window === 'undefined'
         ? ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          forwardCookieLink,
-          apolloLinks,
-        ])
-        : apolloLinks
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            forwardCookieLink,
+            apolloLinks,
+          ])
+        : apolloLinks,
     );
 
     return client;

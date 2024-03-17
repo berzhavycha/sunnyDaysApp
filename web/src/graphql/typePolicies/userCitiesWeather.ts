@@ -15,9 +15,10 @@ export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastE
     const limit = context.args?.limit;
 
     let mergedEdges = existing ? [...existing.edges] : [];
-    const mergedPaginationInfo = existing && Object.keys(existing.paginationInfo).length !== 0
-      ? { ...existing.paginationInfo }
-      : { ...incoming?.paginationInfo };
+    const mergedPaginationInfo =
+      existing && Object.keys(existing.paginationInfo).length !== 0
+        ? { ...existing.paginationInfo }
+        : { ...incoming?.paginationInfo };
 
     incoming?.edges?.forEach((edge, index) => {
       mergedEdges[offset + index] = edge;

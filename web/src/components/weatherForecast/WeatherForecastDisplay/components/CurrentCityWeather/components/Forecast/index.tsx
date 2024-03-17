@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FC } from 'react';
 
@@ -15,7 +15,7 @@ export const Forecast: FC<Props> = ({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
   const { renderItem } = useRenderForecastItem();
 
-  const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek
+  const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
 
   return (
     <div className="bg-blue-600 rounded-3xl pt-4 py-2 px-3 h-full">

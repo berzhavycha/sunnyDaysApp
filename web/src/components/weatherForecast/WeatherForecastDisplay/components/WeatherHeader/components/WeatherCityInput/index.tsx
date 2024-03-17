@@ -18,7 +18,7 @@ export const WeatherCityInput = (): JSX.Element => {
   const { renderCityItem } = useRenderCityItem(addSubscription);
 
   const onAddSubscription = async (): Promise<void> => await addSubscription(city);
-  const keyExtractor = (item: { name: string }): string => item.name
+  const keyExtractor = (item: { name: string }): string => item.name;
 
   return (
     <div className="flex items-start w-3/5 justify-center gap-8 mb-2">
