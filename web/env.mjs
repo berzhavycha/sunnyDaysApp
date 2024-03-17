@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { clientSchema } from "./envValidation.mjs";
+import { clientSchema, serverSchema } from "./envValidation.mjs";
 
 /**
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
@@ -19,4 +19,9 @@ export const clientEnv = {
     NEXT_PUBLIC_FEATURE_CACHE_MINUTES_TIME: process.env.NEXT_PUBLIC_FEATURE_CACHE_MINUTES_TIME
 };
 
-export const serverEnv = {};
+/**
+ * @type {{ [k in keyof z.infer<typeof serverSchema>]: z.infer<typeof serverSchema>[k] | undefined }}
+ */
+export const serverEnv = {
+    SECRET_COOKIE_KEY: process.env.SECRET_COOKIE_KEY
+};

@@ -15,4 +15,6 @@ export const clientSchema = Joi.object({
     NEXT_PUBLIC_FEATURE_CACHE_MINUTES_TIME: Joi.number().default(15)
 });
 
-export const serverSchema = Joi.object({});
+export const serverSchema = Joi.object({
+    SECRET_COOKIE_KEY: Joi.string().required()
+});

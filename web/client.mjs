@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { clientSchema } from './envValidation.mjs';
 import { clientEnv } from './env.mjs';
 
