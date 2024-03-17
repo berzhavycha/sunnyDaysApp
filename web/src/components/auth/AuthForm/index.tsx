@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useTransition } from 'react';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
@@ -8,8 +8,8 @@ import { DocumentNode } from '@apollo/client';
 
 import { Input } from '@/components/common';
 import { AuthType, UserDto, useAuth } from '@/hooks';
-import { convertCamelToSpacedPascal } from '@/shared';
 import { userSchema } from './validation';
+import { SubmitButton } from './components';
 
 type Props = {
   title: string;
@@ -28,8 +28,13 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
     mode: 'onSubmit',
     resolver: joiResolver(userSchema(authType)),
   });
+  const [isPending, startTransition] = useTransition()
 
-  const onSubmit = async (data: UserDto): Promise<void> => await authHandler(data);
+  const onSubmit = async (data: UserDto): Promise<void> => {
+    startTransition(() => {
+      authHandler(data)
+    })
+  };
 
   return (
     <>
@@ -65,9 +70,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
               isSecured
             />
           )}
-          <button className="w-full bg-blue-700 text-white py-3 rounded-xl font-bold hover:bg-blue-800 transition-all">
-            {convertCamelToSpacedPascal(authType)}
-          </button>
+          <SubmitButton isPending={isPending} text={authType} />
         </form>
       </div>
     </>
