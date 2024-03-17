@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
-import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
+import { env } from '@/core/env'
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 
@@ -50,8 +50,8 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
-    limit: WEATHER_CITIES_LIMIT,
-    order: WEATHER_CITIES_ORDER,
+    limit: env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT,
+    order: env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
   });
 
   useEffect(() => {

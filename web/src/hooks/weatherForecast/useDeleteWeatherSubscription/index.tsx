@@ -3,13 +3,13 @@
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
+import { env } from '@/core/env'
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
-import { WEATHER_CITIES_LIMIT } from '@/global';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -82,7 +82,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             }
 
             if (
-              (totalCount - 1) % WEATHER_CITIES_LIMIT === 0 &&
+              (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
               currentPageCache?.userCitiesWeather.edges?.length === 1
             ) {
               await onClickPrev();

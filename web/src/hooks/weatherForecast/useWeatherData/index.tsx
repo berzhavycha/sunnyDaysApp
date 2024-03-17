@@ -9,7 +9,7 @@ import {
 } from '@apollo/client';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
-import { MAX_FORECAST_DAYS, WEATHER_FORECAST_CACHE_MINUTES_TIME } from '@/global';
+import { env } from '@/core/env'
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
@@ -68,11 +68,11 @@ export const useWeatherData = (): HookReturn => {
   const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
-      forecastDaysAmount: MAX_FORECAST_DAYS,
+      forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
     },
     fetchPolicy: getSuspenseFetchPolicyForKey(
       'weatherData',
-      ONE_MINUTE * WEATHER_FORECAST_CACHE_MINUTES_TIME,
+      ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
   });
 

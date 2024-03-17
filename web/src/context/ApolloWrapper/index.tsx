@@ -1,14 +1,14 @@
 import { PropsWithChildren } from 'react';
-
-import { ApolloClientWrapper } from './components';
-import { encrypt } from '@/shared';
-import { SECRET_COOKIE_KEY } from '@/global';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { cookies } = require('next/headers');
 
+import { encrypt } from '@/shared';
+import { env } from '@/core/env'
+import { ApolloClientWrapper } from './components';
+
 export const ApolloWrapper = ({ children }: PropsWithChildren): JSX.Element => {
   const cookiesStore = cookies();
-  const tokensHash = encrypt(cookiesStore.get('tokens')?.value, SECRET_COOKIE_KEY);
+  const tokensHash = encrypt(cookiesStore.get('tokens')?.value, 'key');
 
   return <ApolloClientWrapper tokensHash={tokensHash}>{children}</ApolloClientWrapper>;
 };

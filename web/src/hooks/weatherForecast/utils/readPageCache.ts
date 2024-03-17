@@ -1,12 +1,12 @@
 import { ApolloCache } from '@apollo/client';
 
 import { PaginationQueryOptionsState } from '@/shared';
+import { env } from '@/core/env'
 import {
   UserCitiesWeatherQueryVariables,
   UserCitiesWeatherQuery,
   UserCitiesWeatherDocument,
 } from '../useWeatherData/queries';
-import { MAX_FORECAST_DAYS } from '@/global';
 
 export const readPageCache = (
   cache: ApolloCache<object>,
@@ -17,7 +17,7 @@ export const readPageCache = (
     query: UserCitiesWeatherDocument,
     variables: {
       ...paginationOptions,
-      forecastDaysAmount: MAX_FORECAST_DAYS,
+      forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
       ...variables,
     },
   });
