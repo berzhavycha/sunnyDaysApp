@@ -28,7 +28,7 @@ export const WeatherCardList = (): JSX.Element => {
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         totalPages={totalPages}
-        onClickPageButton={onGoToPage}
+        onGoToPage={onGoToPage}
         onClickNext={onClickNext}
         onClickPrev={onClickPrev}
       />

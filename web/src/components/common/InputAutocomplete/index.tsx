@@ -3,9 +3,9 @@
 import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+import { useOutsideClick } from '@/hooks';
 import { Input } from '../Input';
 import { CustomFlatList } from '../CustomFlatList';
-import { useOutsideClick } from './hooks';
 
 type Props<TItem> = {
   loading: boolean;
