@@ -20,10 +20,7 @@ export const CurrentCityWeather = (): JSX.Element => {
     <div className="w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5">
       {loading ? (
         <Spinner />
-      ) : !data ||
-        !data.userCitiesWeather ||
-        !data.userCitiesWeather.edges.length ||
-        !currentCityWeatherInfo?.info ? (
+      ) : !currentCityWeatherInfo?.info ? (
         <NoData />
       ) : (
         <>

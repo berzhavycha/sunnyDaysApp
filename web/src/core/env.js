@@ -1,1 +1,1 @@
-export * from '../../server.mjs'
+export * from '../../serverEnvValidation.mjs'

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { clientSchema } from './envValidation.mjs';
+import { clientSchema } from './envSchemas.mjs';
 import { clientEnv } from './env.mjs';
 
 const { error: validationError, value: validatedEnv } = clientSchema.validate(clientEnv, {

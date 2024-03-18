@@ -1,6 +1,6 @@
-import { serverSchema } from './envValidation.mjs';
+import { serverSchema } from './envSchemas.mjs';
 import { serverEnv } from './env.mjs';
-import { env as clientEnv, formatErrors } from './client.mjs';
+import { env as clientEnv, formatErrors } from './clientEnvValidation.mjs';
 
 const { error: validationError, value: validatedServerEnv } = serverSchema.validate(serverEnv, {
     abortEarly: false,
