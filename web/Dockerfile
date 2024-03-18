@@ -7,9 +7,13 @@ COPY --chown=node:node . .
 EXPOSE 3000
 
 FROM base as development
+ENV NODE_ENV=development
 CMD ["npm", "run", "dev"]
 
 FROM base as production
+ENV NODE_ENV=production
+# During the build we have to use path alias and for that we need typescript which is devDependency
 RUN npm run build
+# We run `npm ci` to ensure that the node_modules directory is as optimized as possible
 RUN npm ci --omit=dev --omit=optional && npm cache clean --force
 CMD ["npm", "start"]

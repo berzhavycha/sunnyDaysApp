@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 
-import { InputAutocomplete, Button, ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components';
 import { useCitySearchList, useSubscriptionError } from '@/context';
 import { useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
+import { InputAutocomplete, Button } from '@/components/common';
+import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast'
 import { useRenderCityItem } from '../../hooks';
 
 export const WeatherCityInput = (): JSX.Element => {

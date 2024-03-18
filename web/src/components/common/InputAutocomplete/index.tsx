@@ -1,4 +1,6 @@
-import React, { ChangeEvent, useRef, memo } from 'react';
+'use client'
+
+import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { useOutsideClick } from '@/hooks';
@@ -21,7 +23,7 @@ type Props<TItem> = {
   keyExtractor: (item: TItem) => string;
 };
 
-const InputAutocomplete = memo(<TItem,>({
+export const InputAutocomplete = <TItem,>({
   loading,
   data,
   search,
@@ -69,6 +71,5 @@ const InputAutocomplete = memo(<TItem,>({
       )}
     </div>
   );
-});
+};
 
-export default InputAutocomplete;
