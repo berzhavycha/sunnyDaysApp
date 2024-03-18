@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren } from 'react';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -10,11 +9,6 @@ import { ProtectedLayout } from '../ProtectedLayout';
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Sunny Days',
-  description: 'Sunny Days App',
-};
 
 export const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   return (

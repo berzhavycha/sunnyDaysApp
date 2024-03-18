@@ -1,3 +1,5 @@
+'use client';
+
 import { RefObject, useEffect } from 'react';
 
 export const useOutsideClick = (ref: RefObject<HTMLDivElement>, handler: () => void): void => {

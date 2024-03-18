@@ -3,14 +3,14 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { env } from '@/core/env';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
+import { useWeatherPagination } from '../useWeatherPagination';
+import { clearPageCache } from '../utils';
 import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
-import { useWeatherPagination } from '..';
-import { clearPageCache } from '../utils';
-import { WEATHER_CITIES_LIMIT } from '@/global';
 
 type HookReturn = {
   addSubscription: (city: string) => Promise<void>;
@@ -24,7 +24,7 @@ export const useAddWeatherSubscription = (
   const { setError, handleError } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const { onGoToPage } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const useAddWeatherSubscription = (
         },
       });
 
-      const isAddingOnTheNextPage = (totalCount) % WEATHER_CITIES_LIMIT === 0
+      const isAddingOnTheNextPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
       if (currentPage !== totalPages || isAddingOnTheNextPage) {
         clearPageCache(client, {
           ...paginationOptions,

@@ -1,4 +1,6 @@
-import { FC } from 'react';
+'use client';
+
+import { FC, memo } from 'react';
 
 import { WeatherForecastDays } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
@@ -9,9 +11,11 @@ type Props = {
   info: WeatherForecastDays[];
 };
 
-export const Forecast: FC<Props> = ({ info }) => {
+export const Forecast: FC<Props> = memo(({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
   const { renderItem } = useRenderForecastItem();
+
+  const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
 
   return (
     <div className="bg-blue-600 rounded-3xl pt-4 py-2 px-3 h-full">
@@ -30,7 +34,8 @@ export const Forecast: FC<Props> = ({ info }) => {
         data={info}
         renderItem={renderItem}
         className={'flex flex-col justify-between'}
+        keyExtractor={keyExtractor}
       />
     </div>
   );
-};
+});

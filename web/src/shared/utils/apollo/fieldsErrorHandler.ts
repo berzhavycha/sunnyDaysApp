@@ -10,10 +10,7 @@ export const fieldsErrorHandler = <T>(
 
   if (errors.graphQLErrors.length) {
     errors.graphQLErrors.forEach((graphQLError) => {
-      if (
-        graphQLError.extensions?.code === 'BAD_REQUEST' &&
-        graphQLError.originalError?.message
-      ) {
+      if (graphQLError.extensions?.code === 'BAD_REQUEST' && graphQLError.originalError?.message) {
         const inputErrorMessages = graphQLError.originalError.message;
         fieldsError = pickErrorsCallback([inputErrorMessages]);
       } else if (

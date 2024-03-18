@@ -1,8 +1,8 @@
 import { HttpLink } from '@apollo/client';
 
-import { BASE_URL } from '@/global';
+import { env } from '@/core/env';
 
 export const mainHttpLink = new HttpLink({
-  uri: BASE_URL,
+  uri: env.NEXT_PUBLIC_BASE_URL,
   credentials: 'include',
 });

@@ -1,6 +1,5 @@
 'use client';
 
-import { WeatherForecast } from '@/hooks';
 import {
   FC,
   createContext,
@@ -11,6 +10,8 @@ import {
   SetStateAction,
   useEffect,
 } from 'react';
+
+import { WeatherForecast } from '@/hooks';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;

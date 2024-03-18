@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from 'react';
 import { faLocationPin } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

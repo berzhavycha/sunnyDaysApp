@@ -1,26 +1,30 @@
 'use client';
 
 import { useCurrentCityWeatherInfo } from '@/context';
-import { useDeleteWeatherSubscription, useWeatherData } from '@/hooks';
+import { useDeleteWeatherSubscription, useIsLoading, useWeatherData } from '@/hooks';
 import { NoData, Spinner } from '@/components';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
 export const CurrentCityWeather = (): JSX.Element => {
-  const { data } = useWeatherData();
+  const { data, error } = useWeatherData();
   const { currentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { deleteSubscription } = useDeleteWeatherSubscription();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
+  const { loading } = useIsLoading(data, error);
 
   const onDelete = async (): Promise<void> =>
     await deleteSubscription(currentCityWeatherInfo?.info.city ?? '');
 
   return (
     <div className="w-1/4 flex flex-col gap-5 bg-blue-800 rounded-3xl p-5">
-      {!data || !data.userCitiesWeather || !data.userCitiesWeather.edges.length ? (
-        <NoData />
-      ) : !currentCityWeatherInfo?.info ? (
+      {loading ? (
         <Spinner />
+      ) : !data ||
+        !data.userCitiesWeather ||
+        !data.userCitiesWeather.edges.length ||
+        !currentCityWeatherInfo?.info ? (
+        <NoData />
       ) : (
         <>
           <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />

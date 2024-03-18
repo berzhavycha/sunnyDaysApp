@@ -1,16 +1,17 @@
 'use client';
 
-import { useWeatherPaginationQueryOptions } from '@/context';
-import { useWeatherData, useWeatherPagination } from '@/hooks';
-import { CustomFlatList, NoData, PaginationButtonsPanel } from '@/components/common';
+import { useWeatherPaginationInfo } from '@/context';
+import { useIsLoading, useWeatherData, useWeatherPagination } from '@/hooks';
+import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/shared';
 import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardList = (): JSX.Element => {
-  const { data } = useWeatherData();
+  const { data, error } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationQueryOptions();
+  const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationInfo();
   const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
+  const { loading } = useIsLoading(data, error);
 
   const listFooterComponent =
     totalPages > 1 ? (
@@ -19,15 +20,19 @@ export const WeatherCardList = (): JSX.Element => {
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         totalPages={totalPages}
-        onClickPageButton={onGoToPage}
+        onGoToPage={onGoToPage}
         onClickNext={onClickNext}
         onClickPrev={onClickPrev}
       />
     ) : null;
 
+  const keyExtractor = (item: { city: string }): string => item.city;
+
   return (
     <div className="w-full h-full">
-      {!data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
+      {loading ? (
+        <Spinner />
+      ) : !data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
         <NoData />
       ) : (
         <CustomFlatList
@@ -35,6 +40,7 @@ export const WeatherCardList = (): JSX.Element => {
           data={data?.userCitiesWeather.edges}
           renderItem={renderItem}
           listFooterComponent={listFooterComponent}
+          keyExtractor={keyExtractor}
         />
       )}
     </div>

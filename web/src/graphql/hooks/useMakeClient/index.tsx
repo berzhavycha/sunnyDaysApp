@@ -32,16 +32,16 @@ export const useMakeClient = (): UseMakeClientReturn => {
         (operation) => operation.getContext().unauthenticated,
         refreshTokenLink(client),
       ),
-      forwardCookieLink,
       mainHttpLink,
     ]);
 
     client.setLink(
-      typeof window === undefined
+      typeof window === 'undefined'
         ? ApolloLink.from([
             new SSRMultipartLink({
               stripDefer: true,
             }),
+            forwardCookieLink,
             apolloLinks,
           ])
         : apolloLinks,

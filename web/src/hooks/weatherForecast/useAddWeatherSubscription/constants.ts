@@ -1,4 +1,4 @@
-import { MAX_WEATHER_CITIES_AMOUNT } from '@/global';
+import { env } from '@/core/env';
 import { UserCitiesWeatherQuery } from '../useWeatherData/queries';
 
 export const validateCityRules = [
@@ -8,8 +8,11 @@ export const validateCityRules = [
   },
   {
     validator: (_city: string, data: UserCitiesWeatherQuery | null): boolean => {
-      return (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) < MAX_WEATHER_CITIES_AMOUNT;
+      return (
+        (data?.userCitiesWeather.paginationInfo?.totalCount ?? 0) <
+        env.NEXT_PUBLIC_MAX_WEATHER_CITIES_AMOUNT
+      );
     },
-    message: `You cannot have more than ${MAX_WEATHER_CITIES_AMOUNT} cities.`,
+    message: `You cannot have more than ${env.NEXT_PUBLIC_MAX_WEATHER_CITIES_AMOUNT} cities.`,
   },
 ];

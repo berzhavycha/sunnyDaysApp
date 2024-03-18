@@ -1,19 +1,21 @@
-import { FC } from 'react';
+'use client';
+
+import { FC, memo } from 'react';
 import Image from 'next/image';
 
 import { WeatherForecast } from '@/hooks';
 import { TemperatureInfo } from '@/components/common';
+import { useCurrentTempUnit } from '@/context';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { useCurrentTempUnit } from '@/context';
 import { SubWeatherForecast } from '../SubWeatherForecast';
 
 type Props = WeatherForecast & {
   onClick: () => void;
 };
 
-export const WeatherCard: FC<Props> = ({ onClick, city, text, daysForecast, ...info }) => {
+export const WeatherCard: FC<Props> = memo(({ onClick, city, text, daysForecast, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
   const weatherIcon = pickWeatherIcon(text);
 
@@ -47,4 +49,4 @@ export const WeatherCard: FC<Props> = ({ onClick, city, text, daysForecast, ...i
       </div>
     </div>
   );
-};
+});

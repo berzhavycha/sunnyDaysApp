@@ -17,6 +17,10 @@ type SubscriptionErrorState = {
   message: string;
 };
 
+type OriginalError = {
+  message: string;
+};
+
 type ContextType = {
   error: SubscriptionErrorState;
   setError: Dispatch<SetStateAction<SubscriptionErrorState>>;
@@ -41,8 +45,14 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
   });
 
   const handleError = (error: ApolloError): void => {
-    if (error.graphQLErrors[0].originalError) {
-      setError({ message: error.graphQLErrors[0].originalError.message });
+    if (error.graphQLErrors[0]?.extensions.originalError) {
+      // Use type assertion to access the 'message' property.
+      // TypeScript infers the type of 'extensions' keys as 'unknown',
+      // so we need to assert the type to access specific properties.
+      const originalErrorMessage = (
+        error.graphQLErrors[0].extensions.originalError as OriginalError
+      ).message;
+      setError({ message: originalErrorMessage });
     } else {
       setError({ message: UNEXPECTED_ERROR_MESSAGE });
     }

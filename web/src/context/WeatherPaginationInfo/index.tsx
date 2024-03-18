@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
-import { WEATHER_CITIES_LIMIT, WEATHER_CITIES_ORDER } from '@/global';
+import { env } from '@/core/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
 
@@ -27,21 +27,21 @@ type ContextType = {
   paginationPageNumbers: number[];
 };
 
-const CurrentPaginationQueryOptionsContext = createContext<ContextType | null>(null);
+const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
 
-export const useWeatherPaginationQueryOptions = (): ContextType => {
-  const paginationOptionsContext = useContext(CurrentPaginationQueryOptionsContext);
+export const useWeatherPaginationInfo = (): ContextType => {
+  const paginationInfo = useContext(WeatherPaginationInfoContext);
 
-  if (!paginationOptionsContext) {
+  if (!paginationInfo) {
     throw new Error(
-      'useWeatherPaginationOptions must be used within an WeatherPaginationOptionsProvider',
+      'useWeatherPaginationInfo must be used within an WeatherPaginationInfoProvider',
     );
   }
 
-  return paginationOptionsContext;
+  return paginationInfo;
 };
 
-export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ children }) => {
+export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { currentUser } = useCurrentUser();
   const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -50,8 +50,8 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
-    limit: WEATHER_CITIES_LIMIT,
-    order: WEATHER_CITIES_ORDER,
+    limit: env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT,
+    order: env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
   });
 
   useEffect(() => {
@@ -86,8 +86,8 @@ export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ c
   };
 
   return (
-    <CurrentPaginationQueryOptionsContext.Provider value={contextValue}>
+    <WeatherPaginationInfoContext.Provider value={contextValue}>
       {children}
-    </CurrentPaginationQueryOptionsContext.Provider>
+    </WeatherPaginationInfoContext.Provider>
   );
 };
