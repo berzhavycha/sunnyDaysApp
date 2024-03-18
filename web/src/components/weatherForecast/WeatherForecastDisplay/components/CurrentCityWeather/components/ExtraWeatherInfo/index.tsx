@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -8,7 +8,7 @@ type Props = {
   infoType: string;
 };
 
-export const ExtraWeatherInfo: React.FC<Props> = ({ icon, data, infoType }) => {
+export const ExtraWeatherInfo: React.FC<Props> = memo(({ icon, data, infoType }) => {
   return (
     <div className="text-left px-4 w-[48%] flex flex-col items-center">
       <FontAwesomeIcon className="text-blue-300 text-[28px] mb-2" icon={icon} />
@@ -18,4 +18,4 @@ export const ExtraWeatherInfo: React.FC<Props> = ({ icon, data, infoType }) => {
       </div>
     </div>
   );
-};
+});

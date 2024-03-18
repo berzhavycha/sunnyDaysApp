@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { WeatherForecastDays } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
@@ -11,7 +11,7 @@ type Props = {
   info: WeatherForecastDays[];
 };
 
-export const Forecast: FC<Props> = ({ info }) => {
+export const Forecast: FC<Props> = memo(({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
   const { renderItem } = useRenderForecastItem();
 
@@ -38,4 +38,4 @@ export const Forecast: FC<Props> = ({ info }) => {
       />
     </div>
   );
-};
+});

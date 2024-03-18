@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import Image from 'next/image';
 
 import { WeatherForecast } from '@/hooks';
@@ -15,7 +15,7 @@ type Props = WeatherForecast & {
   onClick: () => void;
 };
 
-export const WeatherCard: FC<Props> = ({ onClick, city, text, daysForecast, ...info }) => {
+export const WeatherCard: FC<Props> = memo(({ onClick, city, text, daysForecast, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
   const weatherIcon = pickWeatherIcon(text);
 
@@ -49,4 +49,4 @@ export const WeatherCard: FC<Props> = ({ onClick, city, text, daysForecast, ...i
       </div>
     </div>
   );
-};
+});

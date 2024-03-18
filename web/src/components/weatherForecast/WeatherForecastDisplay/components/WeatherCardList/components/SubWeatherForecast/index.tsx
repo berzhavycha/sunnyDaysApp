@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import Image from 'next/image';
 
 import { TemperatureInfo, weatherIconMapping } from '@/components';
@@ -15,7 +15,7 @@ type Props = {
   dayOfWeek: string;
 };
 
-export const SubWeatherForecast: FC<Props> = ({ text, dayOfWeek, ...info }) => {
+export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
   const weatherIcon = pickWeatherIcon(text);
 
@@ -41,4 +41,4 @@ export const SubWeatherForecast: FC<Props> = ({ text, dayOfWeek, ...info }) => {
       <p className="text-white text-[12px]">{dayOfWeek}</p>
     </div>
   );
-};
+});

@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import Image from 'next/image';
 import { faWind, faCloudRain, faDroplet } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +15,7 @@ type Props = WeatherForecast & {
   dayOfWeek: string;
 };
 
-export const TodayWeatherInfo: FC<Props> = ({
+export const TodayWeatherInfo: FC<Props> = memo(({
   city,
   text,
   windSpeed,
@@ -60,4 +60,4 @@ export const TodayWeatherInfo: FC<Props> = ({
       </div>
     </div>
   );
-};
+});
