@@ -22,7 +22,7 @@ export const valueClassName: ValueClassName = {
     textColor: 'text-white',
   },
   medium: {
-    fontSize: 'text-3xl md:text-4xl',
+    fontSize: 'text-3xl xl:text-4xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
