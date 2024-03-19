@@ -12,6 +12,7 @@ import {
 } from 'react';
 
 import { WeatherForecast, useResizeWindow } from '@/hooks';
+import { MD_BREAKPOINT } from '@/shared';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -48,15 +49,21 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
   return context;
 };
 
+export const isWindowMoreThanMd = typeof window !== "undefined" && window.innerWidth > MD_BREAKPOINT
+
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
     useState<CurrentCityWeatherInfoState>();
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
-  const [isVisible, setIsVisible] = useState<boolean>(typeof window !== "undefined" && window.innerWidth > 768)
+  const [isVisible, setIsVisible] = useState<boolean>(true)
 
-  useResizeWindow(() => setIsVisible(typeof window !== "undefined" && window.innerWidth > 768))
+  useResizeWindow(() => setIsVisible(isWindowMoreThanMd))
+
+  useEffect(() => {
+    setIsVisible(isWindowMoreThanMd)
+  }, [])
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {

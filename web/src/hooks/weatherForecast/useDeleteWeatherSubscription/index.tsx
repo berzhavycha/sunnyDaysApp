@@ -10,6 +10,7 @@ import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
+import { MD_BREAKPOINT } from '@/shared';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -91,7 +92,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
       });
 
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
+      if (typeof window !== "undefined" && window.innerWidth < MD_BREAKPOINT) {
         setIsVisible(false)
       }
 

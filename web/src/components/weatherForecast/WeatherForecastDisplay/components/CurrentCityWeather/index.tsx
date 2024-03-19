@@ -7,6 +7,7 @@ import { useDeleteWeatherSubscription, useIsLoading, useOutsideClick, useResizeW
 import { CloseButton, NoData, Spinner } from '@/components';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
+import { MD_BREAKPOINT } from '@/shared';
 
 export const CurrentCityWeather = (): JSX.Element => {
   const { data, error } = useWeatherData();
@@ -19,7 +20,7 @@ export const CurrentCityWeather = (): JSX.Element => {
   useResizeWindow(() => setWindowWidth(typeof window !== "undefined" ? window.innerWidth : 0))
 
   const onCloseCurrentCityWeather = (): void => {
-    if (windowWidth <= 768) {
+    if (windowWidth <= MD_BREAKPOINT) {
       setIsVisible(false)
     }
   }
@@ -32,7 +33,7 @@ export const CurrentCityWeather = (): JSX.Element => {
 
   return (
     <>
-      {isVisible && windowWidth <= 768 && (
+      {isVisible && typeof window !== "undefined" && windowWidth < MD_BREAKPOINT && (
         <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-70 z-10">
           <div className="text-right p-4">
             <CloseButton onClick={onCloseCurrentCityWeather} />
