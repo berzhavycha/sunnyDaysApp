@@ -40,7 +40,7 @@ export const WeatherCard: FC<Props> = memo(({ onClick, city, text, daysForecast,
           width={120}
           height={120}
           alt={'weather-icon'}
-          className='mb-4 sm:w-20 sm:h-20 lg:w-28 lg:h-28'
+          className="mb-4 sm:w-20 sm:h-20 lg:w-28 lg:h-28"
         />
       </div>
       <div className="flex justify-between items-center gap-4">

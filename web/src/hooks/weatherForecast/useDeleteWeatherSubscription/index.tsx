@@ -4,7 +4,11 @@ import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { env } from '@/core/env';
-import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import {
+  useCurrentCityWeatherInfo,
+  useSubscriptionError,
+  useWeatherPaginationInfo,
+} from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { useWeatherData } from '../useWeatherData';
@@ -22,7 +26,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
   const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
-  const { setIsVisible } = useCurrentCityWeatherInfo()
+  const { setIsVisible } = useCurrentCityWeatherInfo();
 
   useEffect(() => {
     if (error) {
@@ -93,7 +97,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
       });
 
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
-        setIsVisible(false)
+        setIsVisible(false);
       }
 
       setError({ message: '' });

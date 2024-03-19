@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -58,8 +58,8 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
-        styles='text-xs sm:pl-11 sm:text-base sm:py-2'
-        iconStyles='top-2 text-xs sm:text-base md:text-md md:text-xl'
+        styles="text-xs sm:pl-11 sm:text-base sm:py-2"
+        iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
@@ -74,4 +74,3 @@ export const InputAutocomplete = <TItem,>({
     </div>
   );
 };
-

@@ -14,7 +14,9 @@ export const AuthWelcome = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-lg mb-1 md:text-2xl lg:text-4xl font-bold md:mb-4 text-white">{signInMessage}</h1>
+      <h1 className="text-lg mb-1 md:text-2xl lg:text-4xl font-bold md:mb-4 text-white">
+        {signInMessage}
+      </h1>
       <p className="text-xs mb-3 md:text-sm lg:text-lg md:mb-6 text-white font-light">
         Enter your personal details to use all of the site features
       </p>

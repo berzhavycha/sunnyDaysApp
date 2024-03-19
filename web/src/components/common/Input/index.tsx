@@ -28,7 +28,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative w-full">
         {label && (
-          <label className="block text-left mb-2 text-xs md:text-lg  font-bold text-blue-900">{label}</label>
+          <label className="block text-left mb-2 text-xs md:text-lg  font-bold text-blue-900">
+            {label}
+          </label>
         )}
         <FontAwesomeIcon
           className={label ? iconClassWithLabel : iconClassWithoutLabel}
@@ -42,7 +44,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {isSecured && (
-          <button type="button" className="absolute top-7 md:top-12 right-3" onClick={toggleShowPassword}>
+          <button
+            type="button"
+            className="absolute top-7 md:top-12 right-3"
+            onClick={toggleShowPassword}
+          >
             <FontAwesomeIcon
               className="text-gray-500 text-sm sm:text-md md:text-xl"
               icon={isPasswordShown ? faEye : faEyeSlash}

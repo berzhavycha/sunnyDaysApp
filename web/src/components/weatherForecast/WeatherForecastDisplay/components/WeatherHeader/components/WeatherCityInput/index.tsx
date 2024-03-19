@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useCitySearchList, useSubscriptionError } from '@/context';
 import { useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { InputAutocomplete, Button } from '@/components/common';
-import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast'
+import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
 import { useRenderCityItem } from '../../hooks';
 
 export const WeatherCityInput = (): JSX.Element => {
@@ -38,7 +38,11 @@ export const WeatherCityInput = (): JSX.Element => {
         onEnter={onAddSubscription}
         keyExtractor={keyExtractor}
       />
-      <Button content={ADD_SUBSCRIPTION_BTN_CONTENT} onClick={onAddSubscription} styles='text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4'/>
+      <Button
+        content={ADD_SUBSCRIPTION_BTN_CONTENT}
+        onClick={onAddSubscription}
+        styles="text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4"
+      />
     </div>
   );
 };
