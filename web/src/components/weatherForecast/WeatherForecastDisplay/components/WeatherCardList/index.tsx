@@ -2,8 +2,8 @@
 
 import { useWeatherPaginationInfo } from '@/context';
 import { useIsLoading, useWeatherData, useWeatherPagination } from '@/hooks';
-import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/shared';
+import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardList = (): JSX.Element => {

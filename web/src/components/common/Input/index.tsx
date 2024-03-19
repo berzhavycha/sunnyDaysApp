@@ -28,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative w-full">
         {label && (
-          <label className="block text-left mb-2 text-xs md:text-lg  font-bold text-blue-900">
+          <label className="block text-left mb-2 text-xs  font-bold text-blue-900 md:text-lg">
             {label}
           </label>
         )}
@@ -46,7 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {isSecured && (
           <button
             type="button"
-            className="absolute top-7 md:top-12 right-3"
+            className="absolute top-7 right-3 md:top-12"
             onClick={toggleShowPassword}
           >
             <FontAwesomeIcon

@@ -15,7 +15,7 @@ export const CityAutocompleteItem: FC<Props> = ({ name, country, onClick }) => {
 
   return (
     <div
-      className="text-xs sm:text-base text-black py-3 px-4 flex gap-2 items-center transition-colors duration-300 hover:bg-gray-200 cursor-pointer"
+      className="text-xs text-black py-3 px-4 flex gap-2 items-center transition-colors duration-300 hover:bg-gray-200 cursor-pointer sm:text-base"
       onClick={onItemClick}
     >
       <FontAwesomeIcon className="text-blue-600" icon={faLocationPin} />

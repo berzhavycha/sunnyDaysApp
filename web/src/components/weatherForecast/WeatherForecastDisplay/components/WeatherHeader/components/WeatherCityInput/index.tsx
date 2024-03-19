@@ -22,7 +22,7 @@ export const WeatherCityInput = (): JSX.Element => {
   const keyExtractor = (item: { name: string }): string => item.name;
 
   return (
-    <div className="w-full flex items-start justify-between gap-4 sm:gap-8 mb-2 md:max-xl:mb-0">
+    <div className="w-full flex items-start justify-between mb-2 gap-4 sm:gap-8 md:max-xl:mb-0">
       <InputAutocomplete
         loading={loading}
         data={data}

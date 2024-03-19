@@ -23,11 +23,11 @@ export const TodayWeatherInfo: FC<Props> = memo(
     return (
       <div className="bg-blue-600 rounded-3xl p-5">
         <p className="text-white font-bold text-sm md:text-md lg:text-lg">{city}</p>
-        <p className="text-white font-light text-xs lg:text-sm mb-2">
+        <p className="text-white font-light text-xs mb-2 lg:text-sm">
           {dayOfWeek}
           {time && `, ${time}`}
         </p>
-        <div className="flex md:max-lg:flex-col justify-between pr-3 items-center mb-6">
+        <div className="flex justify-between pr-3 items-center mb-6 md:max-lg:flex-col">
           <Image
             src={weatherIconMapping[weatherIcon]}
             width={120}
@@ -43,7 +43,7 @@ export const TodayWeatherInfo: FC<Props> = memo(
               size="large"
               fontWeight="bold"
             />
-            <p className="md:max-lg:text-sm xl:text-lg text-sm text-white font-light">{text}</p>
+            <p className="text-sm text-white font-light md:max-lg:text-sm xl:text-lg">{text}</p>
           </div>
         </div>
         <div className="flex justify-between">

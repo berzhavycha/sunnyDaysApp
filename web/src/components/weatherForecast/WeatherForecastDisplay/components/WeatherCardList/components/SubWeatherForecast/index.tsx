@@ -27,9 +27,9 @@ export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, ...info })
           width={65}
           height={65}
           alt={'subweather-icon'}
-          className="w-14 h-14 sm:w-12 sm:h-12 md:w-18 md:h-18 absolute top-[-24px] left-1/5"
+          className="w-14 h-14 absolute top-[-24px] left-1/5 sm:w-12 sm:h-12 md:w-18 md:h-18"
         />
-        <div className="mt-8 sm:mt-6 pb-1">
+        <div className="mt-8 pb-1 sm:mt-6">
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}

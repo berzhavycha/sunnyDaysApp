@@ -31,7 +31,7 @@ export const valueClassName: ValueClassName = {
     textColor: 'text-white',
   },
   large: {
-    fontSize: 'text-2xl sm:text-2xl md:max-lg:text-3xl md:text-5xl',
+    fontSize: 'text-2xl sm:text-2xl md:text-5xl md:max-lg:text-3xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
