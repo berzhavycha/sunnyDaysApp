@@ -30,8 +30,8 @@ export const TodayWeatherInfo: FC<Props> = memo(({
 
   return (
     <div className="bg-blue-600 rounded-3xl p-5">
-      <p className="text-white font-bold text-sm md:text-lg">{city}</p>
-      <p className="text-white font-light text-xs sm:text-sm mb-2">
+      <p className="text-white font-bold text-sm md:text-md lg:text-lg">{city}</p>
+      <p className="text-white font-light text-xs lg:text-sm mb-2">
         {dayOfWeek}
         {time && `, ${time}`}
       </p>
@@ -48,7 +48,7 @@ export const TodayWeatherInfo: FC<Props> = memo(({
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
-            size="medium"
+            size="large"
             fontWeight="bold"
           />
           <p className="md:max-lg:text-sm xl:text-lg text-sm text-white font-light">{text}</p>

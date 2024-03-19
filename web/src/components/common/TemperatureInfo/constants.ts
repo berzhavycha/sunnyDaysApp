@@ -1,6 +1,19 @@
-export const valueClassName = {
+export type Size = 'small' | 'medium' | 'large';
+export type FontWeight = 'normal' | 'light' | 'bold';
+
+type ValueClassName = {
+  [key in Size]: {
+    fontSize: string;
+    fontWeight: {
+      [key in FontWeight]: string;
+    };
+    textColor: string;
+  };
+};
+
+export const valueClassName: ValueClassName = {
   small: {
-    fontSize: 'md',
+    fontSize: 'text-xs sm:text-sm md:text-md',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
@@ -9,7 +22,7 @@ export const valueClassName = {
     textColor: 'text-white',
   },
   medium: {
-    fontSize: '4xl',
+    fontSize: 'text-md sm:text-xl md:text-4xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
@@ -18,7 +31,7 @@ export const valueClassName = {
     textColor: 'text-white',
   },
   large: {
-    fontSize: '5xl',
+    fontSize: 'text-md sm:text-2xl md:max-lg:text-2xl md:text-5xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
