@@ -1,5 +1,3 @@
-'use client';
-
 import { FC, memo } from 'react';
 import Image from 'next/image';
 import { faWind, faCloudRain, faDroplet } from '@fortawesome/free-solid-svg-icons';

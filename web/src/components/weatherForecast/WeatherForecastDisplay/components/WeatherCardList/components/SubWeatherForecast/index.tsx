@@ -1,5 +1,3 @@
-'use client';
-
 import React, { FC, memo } from 'react';
 import Image from 'next/image';
 
