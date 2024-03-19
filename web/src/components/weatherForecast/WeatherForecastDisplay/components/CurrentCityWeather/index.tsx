@@ -50,7 +50,7 @@ export const CurrentCityWeather = (): JSX.Element => {
             <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
             <button
               onClick={onDelete}
-              className="text-center border border-red-500 w-full rounded-xl text-red-400 p-2 transition-all hover:bg-red-500 hover:text-white"
+              className="text-center text-xs sm:text-sm md:text-base border border-red-500 w-full rounded-xl text-red-400 p-2 transition-all hover:bg-red-500 hover:text-white"
             >
               Delete City
             </button>

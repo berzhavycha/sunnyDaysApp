@@ -54,9 +54,9 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
-  const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 768)
+  const [isVisible, setIsVisible] = useState<boolean>(typeof window !== "undefined" && window.innerWidth > 768)
 
-  useResizeWindow(() => setIsVisible(window.innerWidth > 768))
+  useResizeWindow(() => setIsVisible(typeof window !== "undefined" && window.innerWidth > 768))
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
