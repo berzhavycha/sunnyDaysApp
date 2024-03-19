@@ -16,13 +16,13 @@ export const CustomFlatList = <T,>({
   keyExtractor,
 }: FlatListProps<T>): JSX.Element => {
   return (
-    <div className={`w-full flex flex-col justify-between h-full ${className}`}>
+    <div className="w-full flex flex-col justify-between h-full">
       <div className={className}>
         {data.map((item) => (
           <Fragment key={keyExtractor(item)}>{renderItem(item)}</Fragment>
         ))}
       </div>
-      {listFooterComponent && <div className="mb-12">{listFooterComponent}</div>}
+      {listFooterComponent && <div className="sm:max-md:mb-20 lg:mb-20">{listFooterComponent}</div>}
     </div>
   );
 };

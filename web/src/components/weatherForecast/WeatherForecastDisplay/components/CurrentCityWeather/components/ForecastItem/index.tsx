@@ -27,9 +27,9 @@ export const ForecastItem: FC<Props> = memo(({ onClick, text, dayOfWeek, ...info
   return (
     <div
       onClick={onClick}
-      className={`${currentForecastDay === dayOfWeek && 'bg-blue-700'} flex justify-between items-center rounded-xl transition hover:bg-blue-700 p-4 cursor-pointer`}
+      className={`${currentForecastDay === dayOfWeek && 'bg-blue-700'} flex justify-between items-center rounded-xl transition hover:bg-blue-700 md:px-2 p-4 cursor-pointer`}
     >
-      <Image src={weatherIconMapping[weatherIcon]} width={45} height={45} alt={'weather-icon'} />
+      <Image src={weatherIconMapping[weatherIcon]} width={45} height={45} alt={'weather-icon'} className='w-8 h-8 md:w-12 md:h-12'  />
       <div className="flex items-center">
         <TemperatureInfo
           value={maxTemp}
@@ -45,7 +45,7 @@ export const ForecastItem: FC<Props> = memo(({ onClick, text, dayOfWeek, ...info
           fontWeight="light"
         />
       </div>
-      <p className="text-white font-light w-1/3 text-left">{dayOfWeek}</p>
+      <p className="text-white font-light w-1/3 text-left text-xs md:text-sm lg:text-base">{dayOfWeek}</p>
     </div>
   );
 });

@@ -30,27 +30,28 @@ export const TodayWeatherInfo: FC<Props> = memo(({
 
   return (
     <div className="bg-blue-600 rounded-3xl p-5">
-      <p className="text-white font-bold text-lg">{city}</p>
-      <p className="text-white font-light text-sm mb-2">
+      <p className="text-white font-bold text-sm md:text-lg">{city}</p>
+      <p className="text-white font-light text-xs sm:text-sm mb-2">
         {dayOfWeek}
         {time && `, ${time}`}
       </p>
-      <div className="flex justify-between pr-3 items-center mb-6">
+      <div className="flex md:max-lg:flex-col justify-between pr-3 items-center mb-6">
         <Image
           src={weatherIconMapping[weatherIcon]}
           width={120}
           height={120}
           priority
           alt={'today-weather-icon'}
+          className='w-16 h-16 sm:w-28 sm:h-28 md:mb-2'
         />
-        <div className="text-right">
+        <div className="text-right md:max-lg:text-center">
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
             size="medium"
             fontWeight="bold"
           />
-          <p className="text-lg text-white font-light">{text}</p>
+          <p className="md:max-lg:text-sm xl:text-lg text-sm text-white font-light">{text}</p>
         </div>
       </div>
       <div className="flex justify-between">

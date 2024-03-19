@@ -11,7 +11,7 @@ import {
   useEffect,
 } from 'react';
 
-import { WeatherForecast } from '@/hooks';
+import { WeatherForecast, useResizeWindow } from '@/hooks';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -30,6 +30,8 @@ type ContextType = {
   onTodayCurrentWeather: () => void;
   currentForecastDay: string;
   setCurrentForecastDay: Dispatch<SetStateAction<string>>;
+  isVisible: boolean,
+  setIsVisible: Dispatch<SetStateAction<boolean>>
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -52,6 +54,9 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(window.innerWidth > 768)
+
+  useResizeWindow(() => setIsVisible(window.innerWidth > 768))
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
@@ -76,6 +81,8 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     onTodayCurrentWeather,
     currentForecastDay,
     setCurrentForecastDay,
+    isVisible,
+    setIsVisible
   };
 
   return (

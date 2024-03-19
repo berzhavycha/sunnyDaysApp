@@ -36,7 +36,7 @@ export const WeatherCardList = (): JSX.Element => {
         <NoData />
       ) : (
         <CustomFlatList
-          className="w-full flex flex-wrap gap-6"
+          className="w-full flex flex-wrap gap-6 sm:gap-5 xl:gap-4 2xl:gap-5"
           data={data?.userCitiesWeather.edges}
           renderItem={renderItem}
           listFooterComponent={listFooterComponent}

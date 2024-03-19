@@ -7,3 +7,4 @@ export * from './InputAutocomplete';
 export * from './Button';
 export * from './NoData';
 export * from './Compose';
+export * from './CloseButton'

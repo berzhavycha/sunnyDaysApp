@@ -22,24 +22,25 @@ export const WeatherCard: FC<Props> = memo(({ onClick, city, text, daysForecast,
   return (
     <div
       onClick={onClick}
-      className="w-[32%] p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow"
+      className="w-full flex flex-col justify-between sm:w-[48%] lg:w-[48%] 2xl:w-[32%] md:w-full p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow"
     >
       <div className="flex justify-between items-center mb-8">
         <div className="flex flex-col gap-2 text-left">
-          <p className="text-white text-md">{city}</p>
+          <p className="text-sm sm:text-sm md:text-md text-white">{city}</p>
           <TemperatureInfo
             value={info[currentTempUnit.name]}
             tempSign={tempUnitSigns[currentTempUnit.name]}
             size="medium"
             fontWeight="normal"
           />
-          <p className="text-white text-sm mb-2">{text}</p>
+          <p className="text-xs text-white sm:text-xs mb-2">{text}</p>
         </div>
         <Image
           src={weatherIconMapping[weatherIcon]}
           width={120}
           height={120}
           alt={'weather-icon'}
+          className='mb-4 sm:w-20 sm:h-20 lg:w-28 lg:h-28'
         />
       </div>
       <div className="flex justify-between items-center gap-4">

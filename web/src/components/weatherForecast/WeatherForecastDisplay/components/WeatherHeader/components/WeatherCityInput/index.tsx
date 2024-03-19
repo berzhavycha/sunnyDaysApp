@@ -22,7 +22,7 @@ export const WeatherCityInput = (): JSX.Element => {
   const keyExtractor = (item: { name: string }): string => item.name;
 
   return (
-    <div className="flex items-start w-3/5 justify-center gap-8 mb-2">
+    <div className="w-full flex items-start justify-between gap-4 sm:gap-8 mb-2 md:max-xl:mb-0">
       <InputAutocomplete
         loading={loading}
         data={data}
@@ -38,7 +38,7 @@ export const WeatherCityInput = (): JSX.Element => {
         onEnter={onAddSubscription}
         keyExtractor={keyExtractor}
       />
-      <Button content={ADD_SUBSCRIPTION_BTN_CONTENT} onClick={onAddSubscription} />
+      <Button content={ADD_SUBSCRIPTION_BTN_CONTENT} onClick={onAddSubscription} styles='text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4'/>
     </div>
   );
 };

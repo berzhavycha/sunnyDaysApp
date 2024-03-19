@@ -14,13 +14,13 @@ export const AuthWelcome = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold mb-4 text-white">{signInMessage}</h1>
-      <p className="text-md mb-6 text-white font-light">
+      <h1 className="text-lg mb-1 md:text-2xl lg:text-4xl font-bold md:mb-4 text-white">{signInMessage}</h1>
+      <p className="text-xs mb-3 md:text-sm lg:text-lg md:mb-6 text-white font-light">
         Enter your personal details to use all of the site features
       </p>
-      <p className="text-md text-white mb-4 font-bold">{signUpMessage}</p>
+      <p className="text-sm md:text-xl text-white mb-4 font-bold">{signUpMessage}</p>
       <Link
-        className="w-36 py-2 text-center rounded-xl border border-blue-500 text-white text-sm hover:bg-blue-500 transition-all"
+        className="w-36 py-2 text-center rounded-xl border border-blue-500 text-white text-xs md:text-lg hover:bg-blue-500 transition-all"
         href={altPath}
       >
         {convertPathToPascal(altPath)}

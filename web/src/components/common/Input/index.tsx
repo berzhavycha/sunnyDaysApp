@@ -10,23 +10,25 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   icon: IconDefinition;
   isDark?: boolean;
   isSecured?: boolean;
+  iconStyles?: string;
+  styles?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, label, error, isSecured, icon, ...props }, ref) => {
+  ({ placeholder, label, error, isSecured, icon, styles, iconStyles, ...props }, ref) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
     const toggleShowPassword = (): void => {
       setIsPasswordShown((prevIsPasswordShown) => !prevIsPasswordShown);
     };
 
-    const iconClassWithLabel = `absolute top-10 left-3 text-gray-500`;
-    const iconClassWithoutLabel = `absolute top-3 left-3 text-gray-500`;
+    const iconClassWithLabel = `absolute left-3 text-gray-500 ${iconStyles}`;
+    const iconClassWithoutLabel = `absolute left-3 text-gray-500 ${iconStyles}`;
 
     return (
       <div className="relative w-full">
         {label && (
-          <label className="block text-left mb-2 text-sm font-bold text-blue-900">{label}</label>
+          <label className="block text-left mb-2 text-xs md:text-lg  font-bold text-blue-900">{label}</label>
         )}
         <FontAwesomeIcon
           className={label ? iconClassWithLabel : iconClassWithoutLabel}
@@ -36,13 +38,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           type={isPasswordShown ? 'password' : 'text'}
           placeholder={placeholder}
-          className={`w-full bg-slate-200 pl-11 pr-4 placeholder-gray-500 py-2 rounded-md outline-none`}
+          className={`text-sm w-full bg-slate-200 pl-8 pr-4 placeholder-gray-500 py-2 rounded-md outline-none ${styles}`}
           {...props}
         />
         {isSecured && (
-          <button type="button" className="absolute top-9 right-3" onClick={toggleShowPassword}>
+          <button type="button" className="absolute top-7 md:top-12 right-3" onClick={toggleShowPassword}>
             <FontAwesomeIcon
-              className="text-gray-500"
+              className="text-gray-500 text-sm sm:text-md md:text-xl"
               icon={isPasswordShown ? faEye : faEyeSlash}
             />
           </button>

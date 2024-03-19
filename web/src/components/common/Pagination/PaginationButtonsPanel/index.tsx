@@ -36,7 +36,7 @@ export const PaginationButtonsPanel: FC<Props> = ({
         content={prevBtnContent}
         onClick={onClickPrev}
         isDisabled={!isPrevBtnActive}
-        styles="w-12"
+        styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
       />
       <PaginationPageButtons
         currentPage={currentPage}
@@ -47,7 +47,7 @@ export const PaginationButtonsPanel: FC<Props> = ({
         content={nextBtnContent}
         onClick={onClickNext}
         isDisabled={!isNextBtnActive}
-        styles="w-12"
+        styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
       />
     </div>
   );

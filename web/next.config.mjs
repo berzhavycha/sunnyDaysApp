@@ -1,4 +1,5 @@
-import { env } from './server.mjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { env } from './serverEnvValidation.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
