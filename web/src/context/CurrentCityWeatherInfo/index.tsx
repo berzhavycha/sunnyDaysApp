@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { WeatherForecast, useResizeWindow } from '@/hooks';
-import { MD_BREAKPOINT } from '@/shared';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -49,7 +49,7 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
   return context;
 };
 
-export const isWindowMoreThanMd = typeof window !== "undefined" && window.innerWidth > MD_BREAKPOINT
+export const isWindowMoreThanMd = IS_CLIENT && window.innerWidth > MD_BREAKPOINT
 
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =

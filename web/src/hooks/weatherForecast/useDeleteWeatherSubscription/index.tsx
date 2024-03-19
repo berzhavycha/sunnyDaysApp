@@ -6,11 +6,11 @@ import { useMutation } from '@apollo/client';
 import { env } from '@/core/env';
 import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
-import { MD_BREAKPOINT } from '@/shared';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -92,7 +92,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
       });
 
-      if (typeof window !== "undefined" && window.innerWidth < MD_BREAKPOINT) {
+      if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
         setIsVisible(false)
       }
 
