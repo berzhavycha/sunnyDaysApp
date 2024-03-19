@@ -13,7 +13,7 @@ type ValueClassName = {
 
 export const valueClassName: ValueClassName = {
   small: {
-    fontSize: 'text-xs sm:max-xl:text-sm xl:text-xl',
+    fontSize: 'text-sm sm:max-xl:text-sm xl:text-xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
@@ -31,7 +31,7 @@ export const valueClassName: ValueClassName = {
     textColor: 'text-white',
   },
   large: {
-    fontSize: 'text-md sm:text-2xl md:max-lg:text-2xl md:text-5xl',
+    fontSize: 'text-2xl sm:text-2xl md:max-lg:text-3xl md:text-5xl',
     fontWeight: {
       normal: 'font-normal',
       light: 'font-light',
