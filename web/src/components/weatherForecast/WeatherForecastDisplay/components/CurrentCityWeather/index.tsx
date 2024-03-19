@@ -3,11 +3,11 @@
 import { useRef, useState } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { useDeleteWeatherSubscription, useIsLoading, useOutsideClick, useResizeWindow, useWeatherData } from '@/hooks';
 import { NoData, Spinner, ModalBackground } from '@/components/common';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
 export const CurrentCityWeather = (): JSX.Element => {
   const { data, error } = useWeatherData();
@@ -24,6 +24,7 @@ export const CurrentCityWeather = (): JSX.Element => {
       setIsVisible(false)
     }
   }
+
   const currentWeatherRef = useRef<HTMLDivElement>(null);
   useOutsideClick(currentWeatherRef, onCloseCurrentCityWeather);
 

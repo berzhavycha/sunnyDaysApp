@@ -49,8 +49,6 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
   return context;
 };
 
-export const isWindowMoreThanMd = IS_CLIENT && window.innerWidth > MD_BREAKPOINT
-
 export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
     useState<CurrentCityWeatherInfoState>();
@@ -59,10 +57,10 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
-  useResizeWindow(() => setIsVisible(isWindowMoreThanMd))
+  useResizeWindow(() => setIsVisible(IS_CLIENT && window.innerWidth > MD_BREAKPOINT))
 
   useEffect(() => {
-    setIsVisible(isWindowMoreThanMd)
+    setIsVisible(IS_CLIENT && window.innerWidth > MD_BREAKPOINT)
   }, [])
 
   useEffect(() => {
