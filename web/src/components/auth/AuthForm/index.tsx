@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useTransition } from 'react';
+import { FC } from 'react';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation }) => {
-  const { authHandler, fieldsError } = useAuth(authMutation);
+  const { authHandler, fieldsError, loading } = useAuth(authMutation);
   const {
     register,
     handleSubmit,
@@ -28,12 +28,9 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
     mode: 'onSubmit',
     resolver: joiResolver(userSchema(authType)),
   });
-  const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (data: UserDto): Promise<void> => {
-    startTransition(() => {
-      authHandler(data);
-    });
+    await authHandler(data);
   };
 
   const inputStyles = "pl-9 md:pl-10 md:pl-12 sm:text-sm md:text-lg xl:text-xl"
@@ -81,7 +78,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
               isSecured
             />
           )}
-          <SubmitButton isPending={isPending} text={authType} />
+          <SubmitButton isPending={loading} text={authType} />
         </form>
       </div>
     </>
