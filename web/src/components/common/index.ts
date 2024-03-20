@@ -10,3 +10,4 @@ export * from './Compose';
 export * from './CloseButton';
 export * from './ModalBackground';
 export * from './PageLoading'
+export * from './ErrorBoundary'
