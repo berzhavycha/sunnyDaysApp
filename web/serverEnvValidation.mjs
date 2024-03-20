@@ -1,14 +1,14 @@
 import { serverSchema } from './envSchemas.mjs';
 import { serverEnv } from './env.mjs';
-import { env as clientEnv, formatErrors } from './clientEnvValidation.mjs';
+import { formatErrors } from './clientEnvValidation.mjs';
 
-const { error: validationError, value: validatedServerEnv } = serverSchema.validate(serverEnv, {
+const { error: validationError, value: validatedEnv } = serverSchema.validate(serverEnv, {
     abortEarly: false,
     allowUnknown: true,
 });
 
 if (typeof window === "undefined") {
-    for (const key of Object.keys(validatedServerEnv)) {
+    for (const key of Object.keys(validatedEnv)) {
         if (key.startsWith('NEXT_PUBLIC_')) {
             console.warn('❌ You are exposing a server-side env:\n', key);
             throw new Error('You are exposing a server-side env');
@@ -21,4 +21,4 @@ if (typeof window === "undefined") {
     }
 }
 
-export const env = { ...validatedServerEnv, ...clientEnv };
+export const serverValidatedEnv = validatedEnv;

@@ -1,9 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { env } from './serverEnvValidation.mjs';
+import { serverValidatedEnv } from './serverEnvValidation.mjs';
+import { clientValidatedEnv } from './clientEnvValidation.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
     async redirects() {
         return [
             {

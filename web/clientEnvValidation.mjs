@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 import { clientSchema } from './envSchemas.mjs';
 import { clientEnv } from './env.mjs';
 
@@ -25,4 +22,4 @@ for (const key of Object.keys(validatedEnv)) {
     }
 }
 
-export const env = validatedEnv;
+export const clientValidatedEnv = validatedEnv;
