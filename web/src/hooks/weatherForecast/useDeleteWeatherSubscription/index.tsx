@@ -10,7 +10,7 @@ import {
   useWeatherPaginationInfo,
 } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+import { Direction, IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
@@ -65,7 +65,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             if (
               !isPageContentCached({
                 offset: paginationOptions.offset + paginationOptions.limit - 1,
-              }) &&
+              }, Direction.FORWARD) &&
               currentPage !== totalPages
             ) {
               await fetchMore({

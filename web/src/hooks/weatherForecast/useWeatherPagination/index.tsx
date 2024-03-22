@@ -1,6 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import { Direction } from '@/shared'
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { usePagination } from '@/hooks';
 import { useWeatherData } from '../useWeatherData';
@@ -14,7 +15,7 @@ interface HookReturn {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>) => boolean;
+  isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => boolean;
 }
 
 export const useWeatherPagination = (): HookReturn => {
