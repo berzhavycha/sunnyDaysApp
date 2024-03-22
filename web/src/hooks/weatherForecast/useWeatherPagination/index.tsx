@@ -16,6 +16,7 @@ interface HookReturn {
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
   isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => boolean;
+  onPrefetch: (variables: Partial<UserCitiesWeatherQueryVariables>) => Promise<void>
 }
 
 export const useWeatherPagination = (): HookReturn => {
@@ -43,5 +44,9 @@ export const useWeatherPagination = (): HookReturn => {
     totalPages,
   });
 
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
+  const onPrefetch = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
+    await fetchMore({ variables });
+  }
+
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
 };

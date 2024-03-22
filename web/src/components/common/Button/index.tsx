@@ -11,9 +11,10 @@ type Props = {
   isActive?: boolean;
   isDisabled?: boolean;
   styles?: string;
+  onPrefetch?: () => Promise<void> 
 };
 
-export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styles }) => {
+export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styles, onPrefetch }) => {
   const onPress = async (): Promise<void> => {
     if (!isDisabled) {
       await onClick();
@@ -30,6 +31,7 @@ export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styl
       className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${styles}`}
       onClick={onPress}
       disabled={isDisabled}
+      onMouseOver={onPrefetch}
     >
       {content}
     </button>
