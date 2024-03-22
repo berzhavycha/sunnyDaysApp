@@ -70,14 +70,14 @@ export const usePagination = <
       const queryFieldData = cachedData?.[queryDataField];
       if (typeof queryFieldData !== 'string' && queryFieldData.edges.length) {
         const isValueCorrect = queryFieldData.edges.some((edge) => !!edge);
-        return isValueCorrect && (
-          direction === Direction.FORWARD ?
-            currentPage + 1 !== totalPages && queryFieldData.edges.length < env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT ?
-              false
-              :
-              true
-            : true
-        )
+        if (isValueCorrect) {
+          if (direction === Direction.FORWARD) {
+            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT) {
+              return false;
+            }
+          }
+          return true;
+        }
       }
     }
 
