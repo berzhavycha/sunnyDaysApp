@@ -12,7 +12,7 @@ CMD ["npm", "run", "dev"]
 
 FROM base as production
 ENV NODE_ENV=production
-# During the build we have to use path alias and for that we need typescript which is devDependency
+# During the build we have to resolve path alias and for that we need typescript which is a devDependency
 RUN npm run build
 # We run `npm ci` to ensure that the node_modules directory is as optimized as possible
 RUN npm ci --omit=dev --omit=optional && npm cache clean --force

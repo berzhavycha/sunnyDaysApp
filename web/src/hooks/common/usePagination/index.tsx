@@ -114,6 +114,7 @@ export const usePagination = <
       const isFetchSuccess = await onFetchMore({
         offset: paginationOptions.offset - paginationOptions.limit,
       }, Direction.BACKWARD);
+
       if (isFetchSuccess) {
         onCurrentPageChange(currentPage - 1);
       }
@@ -127,6 +128,7 @@ export const usePagination = <
         const isFetchSuccess = await onFetchMore({
           offset: (queryFieldData.edges.length ?? 1) * currentPage,
         }, Direction.FORWARD);
+
         if (isFetchSuccess) {
           onCurrentPageChange(currentPage + 1);
         }
@@ -143,6 +145,7 @@ export const usePagination = <
     },
       currentPage < page ? Direction.FORWARD : Direction.BACKWARD
     );
+    
     if (isFetchSuccess) {
       onCurrentPageChange(page);
     }
