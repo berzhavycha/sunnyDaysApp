@@ -8,13 +8,13 @@ import {
 } from '@apollo/client';
 
 import { Direction, PaginationQueryData, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
-import { env } from '@/core/env';
 
 interface HookReturn<TVariables> {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
   isPageContentCached: (variables: Partial<PaginationQueryOptionsState & TVariables>, direction: Direction) => boolean;
+  onPrefetch: (variables: PaginationQueryOptionsState & TVariables, direction: Direction) => Promise<void>
 }
 
 interface UsePaginationDependencies<
@@ -72,7 +72,7 @@ export const usePagination = <
         const isValueCorrect = queryFieldData.edges.some((edge) => !!edge);
         if (isValueCorrect) {
           if (direction === Direction.FORWARD) {
-            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT) {
+            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < paginationOptions.limit) {
               return false;
             }
           }
@@ -138,18 +138,24 @@ export const usePagination = <
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    const isFetchSuccess = await onFetchMore({
-      offset,
-      limit: paginationOptions.limit,
-      order: paginationOptions.order,
-    },
+    const isFetchSuccess = await onFetchMore({ offset },
       currentPage < page ? Direction.FORWARD : Direction.BACKWARD
     );
-    
+
     if (isFetchSuccess) {
       onCurrentPageChange(page);
     }
   };
 
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
+  const onPrefetch = async (variables: PaginationQueryOptionsState & TVariables, direction: Direction): Promise<void> => {
+    if (!isPageContentCached(variables, direction)) {
+      await client.query({
+        query,
+        variables,
+        fetchPolicy: 'network-only'
+      })
+    }
+  }
+
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
 };
