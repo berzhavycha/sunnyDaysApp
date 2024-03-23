@@ -2,9 +2,10 @@ import { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import { Direction, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { Direction, PaginationQueryOptionsState } from '@/shared';
 import { PaginationPageButtons } from '../PaginationPageButtons';
 import { Button } from '../../Button';
+import { usePrefetch } from '../hooks';
 
 type Props = {
   paginationOptions: PaginationQueryOptionsState,
@@ -29,35 +30,19 @@ export const PaginationButtonsPanel: FC<Props> = ({
   onClickPrev,
   onPrefetch
 }): JSX.Element => {
+  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePrefetch({
+    paginationOptions,
+    startPageNumber,
+    currentPage,
+    totalPages,
+    onPrefetch
+  })
+
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;
 
   const prevBtnContent = <FontAwesomeIcon icon={faArrowLeft} />;
   const nextBtnContent = <FontAwesomeIcon icon={faArrowRight} />;
-
-  const onPrevPrefetch = async (): Promise<void> => {
-    if (currentPage !== START_PAGE_NUMBER && onPrefetch) {
-      await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit }, Direction.BACKWARD)
-    }
-  }
-
-  const onNextPrefetch = async (): Promise<void> => {
-    if (currentPage !== totalPages && onPrefetch) {
-      await onPrefetch({ offset: paginationOptions.offset + paginationOptions.limit }, Direction.FORWARD)
-    }
-  }
-
-  const onGoToPagePrefetch = async (page: number): Promise<void> => {
-    if (onPrefetch) {
-      const offset = (page - 1) * paginationOptions.limit;
-
-      await onPrefetch({
-        offset,
-      },
-        currentPage < page ? Direction.FORWARD : Direction.BACKWARD
-      );
-    }
-  }
 
   return (
     <div className="w-full flex flex-row justify-center pb-4 gap-3">

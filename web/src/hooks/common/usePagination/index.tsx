@@ -8,7 +8,6 @@ import {
 } from '@apollo/client';
 
 import { Direction, PaginationQueryData, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
-import { env } from '@/core/env';
 
 interface HookReturn<TVariables> {
   onClickPrev: () => Promise<void>;
@@ -73,7 +72,7 @@ export const usePagination = <
         const isValueCorrect = queryFieldData.edges.some((edge) => !!edge);
         if (isValueCorrect) {
           if (direction === Direction.FORWARD) {
-            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT) {
+            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < paginationOptions.limit) {
               return false;
             }
           }
