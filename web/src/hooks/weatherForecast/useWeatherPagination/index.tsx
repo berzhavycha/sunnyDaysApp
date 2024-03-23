@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
-import { Direction } from '@/shared'
+import { Direction, PaginationQueryOptionsState } from '@/shared'
 import { usePagination } from '@/hooks';
 import { env } from '@/core/env'
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
@@ -12,12 +12,14 @@ import {
   UserCitiesWeatherQueryVariables,
 } from '../useWeatherData/queries';
 
-interface HookReturn {
+export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>, direction: Direction) => Promise<void>
+
+type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
   isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => boolean;
-  onPrefetch: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => Promise<void>
+  onPrefetch: OnPrefetch
 }
 
 export const useWeatherPagination = (): HookReturn => {
@@ -45,7 +47,7 @@ export const useWeatherPagination = (): HookReturn => {
     totalPages,
   });
 
-  const onWeatherPagePrefetch = async (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction): Promise<void> => {
+  const onWeatherPagePrefetch = async (variables: Partial<PaginationQueryOptionsState>, direction: Direction): Promise<void> => {
     await onPrefetch({
       ...paginationOptions,
       ...variables,

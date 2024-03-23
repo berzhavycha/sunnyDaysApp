@@ -1,3 +1,4 @@
+import { OnPrefetch } from "@/hooks";
 import { Direction, PaginationQueryOptionsState } from "@/shared";
 
 type Params = {
@@ -5,7 +6,7 @@ type Params = {
     startPageNumber: number;
     currentPage: number;
     totalPages: number;
-    onPrefetch?: (variables: Partial<PaginationQueryOptionsState>, direction: Direction) => Promise<void>
+    onPrefetch?: OnPrefetch
 }
 
 type HookReturn = {
