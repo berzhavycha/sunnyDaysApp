@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { Direction, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
 import { PaginationPageButtons } from '../PaginationPageButtons';
 import { Button } from '../../Button';
 
@@ -15,7 +15,7 @@ type Props = {
   onGoToPage: (page: number) => Promise<void>;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
-  onPrefetch?: (variables: Partial<PaginationQueryOptionsState>) => Promise<void>
+  onPrefetch?: (variables: Partial<PaginationQueryOptionsState>, direction: Direction) => Promise<void>
 };
 
 export const PaginationButtonsPanel: FC<Props> = ({
@@ -37,13 +37,13 @@ export const PaginationButtonsPanel: FC<Props> = ({
 
   const onPrevPrefetch = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER && onPrefetch) {
-      await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit })
+      await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit }, Direction.BACKWARD)
     }
   }
 
   const onNextPrefetch = async (): Promise<void> => {
     if (currentPage !== totalPages && onPrefetch) {
-      await onPrefetch({ offset: paginationOptions.offset + paginationOptions.limit })
+      await onPrefetch({ offset: paginationOptions.offset + paginationOptions.limit }, Direction.FORWARD)
     }
   }
 
@@ -53,9 +53,9 @@ export const PaginationButtonsPanel: FC<Props> = ({
 
       await onPrefetch({
         offset,
-        limit: paginationOptions.limit,
-        order: paginationOptions.order,
-      });
+      },
+        currentPage < page ? Direction.FORWARD : Direction.BACKWARD
+      );
     }
   }
 
@@ -66,7 +66,7 @@ export const PaginationButtonsPanel: FC<Props> = ({
         onClick={onClickPrev}
         isDisabled={!isPrevBtnActive}
         styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
-        onPrefetch={onPrevPrefetch}
+        onMouseOver={onPrevPrefetch}
       />
       <PaginationPageButtons
         currentPage={currentPage}
@@ -79,7 +79,7 @@ export const PaginationButtonsPanel: FC<Props> = ({
         onClick={onClickNext}
         isDisabled={!isNextBtnActive}
         styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
-        onPrefetch={onNextPrefetch}
+        onMouseOver={onNextPrefetch}
       />
     </div>
   );

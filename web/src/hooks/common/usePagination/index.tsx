@@ -15,6 +15,7 @@ interface HookReturn<TVariables> {
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
   isPageContentCached: (variables: Partial<PaginationQueryOptionsState & TVariables>, direction: Direction) => boolean;
+  onPrefetch: (variables: PaginationQueryOptionsState & TVariables, direction: Direction) => Promise<void>
 }
 
 interface UsePaginationDependencies<
@@ -138,18 +139,24 @@ export const usePagination = <
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    const isFetchSuccess = await onFetchMore({
-      offset,
-      limit: paginationOptions.limit,
-      order: paginationOptions.order,
-    },
+    const isFetchSuccess = await onFetchMore({ offset },
       currentPage < page ? Direction.FORWARD : Direction.BACKWARD
     );
-    
+
     if (isFetchSuccess) {
       onCurrentPageChange(page);
     }
   };
 
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
+  const onPrefetch = async (variables: PaginationQueryOptionsState & TVariables, direction: Direction): Promise<void> => {
+    if (!isPageContentCached(variables, direction)) {
+      await client.query({
+        query,
+        variables,
+        fetchPolicy: 'network-only'
+      })
+    }
+  }
+
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
 };

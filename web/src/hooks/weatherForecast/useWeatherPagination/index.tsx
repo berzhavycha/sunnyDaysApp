@@ -2,8 +2,9 @@ import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { Direction } from '@/shared'
-import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { usePagination } from '@/hooks';
+import { env } from '@/core/env'
+import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { useWeatherData } from '../useWeatherData';
 import {
   UserCitiesWeatherDocument,
@@ -16,7 +17,7 @@ interface HookReturn {
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
   isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => boolean;
-  onPrefetch: (variables: Partial<UserCitiesWeatherQueryVariables>) => Promise<void>
+  onPrefetch: (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction) => Promise<void>
 }
 
 export const useWeatherPagination = (): HookReturn => {
@@ -26,7 +27,7 @@ export const useWeatherPagination = (): HookReturn => {
   const { totalPages, currentPage, setCurrentPage, paginationOptions, updatePaginationOptions } =
     useWeatherPaginationInfo();
 
-  const { onGoToPage, onClickNext, onClickPrev, isPageContentCached } = usePagination<
+  const { onGoToPage, onClickNext, onClickPrev, isPageContentCached, onPrefetch } = usePagination<
     WeatherForecastEdge,
     UserCitiesWeatherQuery,
     UserCitiesWeatherQueryVariables
@@ -44,9 +45,13 @@ export const useWeatherPagination = (): HookReturn => {
     totalPages,
   });
 
-  const onPrefetch = async (variables: Partial<UserCitiesWeatherQueryVariables>): Promise<void> => {
-    await fetchMore({ variables });
+  const onWeatherPagePrefetch = async (variables: Partial<UserCitiesWeatherQueryVariables>, direction: Direction): Promise<void> => {
+    await onPrefetch({
+      ...paginationOptions,
+      ...variables,
+      forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
+    }, direction)
   }
 
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch: onWeatherPagePrefetch };
 };
