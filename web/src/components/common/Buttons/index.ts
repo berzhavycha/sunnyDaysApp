@@ -1,3 +1,3 @@
-export * from './Button'
-export * from './CloseButton'
-export * from './DeleteButton'
+export * from './Button';
+export * from './CloseButton';
+export * from './DeleteButton';

@@ -15,7 +15,8 @@ export const WeatherHeader = (): JSX.Element => {
 
   const onSignOutBtnContent = <FontAwesomeIcon icon={faSignOut} className="text-white text-md" />;
 
-  const utilButtonStyles = "text-sm w-1/2 py-1 px-2 sm:text-base sm:w-auto sm:py-2 sm:px-4 md:max-xl:w-1/2"
+  const utilButtonStyles =
+    'text-sm w-1/2 py-1 px-2 sm:text-base sm:w-auto sm:py-2 sm:px-4 md:max-xl:w-1/2';
 
   return (
     <header className="w-full flex flex-col gap-0 mb-4 items-baseline sm:mb-0 sm:flex-row sm:gap-6 sm:justify-between md:max-xl:flex-col md:max-xl:gap-0 xl:justify-between xl:flex-row">
@@ -26,11 +27,7 @@ export const WeatherHeader = (): JSX.Element => {
           content={tempUnitSigns[currentTempUnit.name]}
           onClick={onTempUnitChange}
         />
-        <Button
-          styles={utilButtonStyles}
-          content={onSignOutBtnContent}
-          onClick={signOutHandler}
-        />
+        <Button styles={utilButtonStyles} content={onSignOutBtnContent} onClick={signOutHandler} />
       </div>
     </header>
   );

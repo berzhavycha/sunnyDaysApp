@@ -11,10 +11,17 @@ type Props = {
   isActive?: boolean;
   isDisabled?: boolean;
   styles?: string;
-  onMouseOver?: () => Promise<void>
+  onMouseOver?: () => Promise<void>;
 };
 
-export const Button: FC<Props> = ({ content, onClick, isActive, isDisabled, styles, onMouseOver }) => {
+export const Button: FC<Props> = ({
+  content,
+  onClick,
+  isActive,
+  isDisabled,
+  styles,
+  onMouseOver,
+}) => {
   const onPress = async (): Promise<void> => {
     if (!isDisabled) {
       await onClick();

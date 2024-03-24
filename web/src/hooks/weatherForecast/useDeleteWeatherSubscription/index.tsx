@@ -63,9 +63,12 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             });
 
             if (
-              !isPageContentCached({
-                offset: paginationOptions.offset + paginationOptions.limit - 1,
-              }, Direction.FORWARD) &&
+              !isPageContentCached(
+                {
+                  offset: paginationOptions.offset + paginationOptions.limit - 1,
+                },
+                Direction.FORWARD,
+              ) &&
               currentPage !== totalPages
             ) {
               await fetchMore({

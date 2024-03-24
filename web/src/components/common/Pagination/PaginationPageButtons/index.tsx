@@ -8,14 +8,14 @@ type Props = {
   currentPage: number;
   paginationPageNumbers: number[];
   onGoToPage: (page: number) => Promise<void>;
-  onPrefetch?: (page: number) => Promise<void>
+  onPrefetch?: (page: number) => Promise<void>;
 };
 
 export const PaginationPageButtons: FC<Props> = ({
   currentPage,
   paginationPageNumbers,
   onGoToPage,
-  onPrefetch
+  onPrefetch,
 }): JSX.Element => {
   return (
     <div className="flex gap-3">
@@ -24,9 +24,9 @@ export const PaginationPageButtons: FC<Props> = ({
         const onClick = async (): Promise<void> => await onGoToPage(page);
         const onPagePrefetch = async (): Promise<void> => {
           if (onPrefetch) {
-            await onPrefetch(page)
+            await onPrefetch(page);
           }
-        }
+        };
 
         return (
           <Button
