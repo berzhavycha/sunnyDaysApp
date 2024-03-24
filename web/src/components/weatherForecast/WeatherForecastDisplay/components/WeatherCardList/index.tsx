@@ -9,7 +9,8 @@ import { useRenderWeatherCard } from './hooks';
 export const WeatherCardList = (): JSX.Element => {
   const { data, error } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { totalPages, paginationPageNumbers, currentPage, paginationOptions } = useWeatherPaginationInfo();
+  const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =
+    useWeatherPaginationInfo();
   const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
   const { loading } = useIsLoading(data, error);
 

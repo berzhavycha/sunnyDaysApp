@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import { PaginationQueryOptionsState } from '@/shared';
-import { OnPrefetch,  usePaginationPrefetch } from '@/hooks';
+import { OnPrefetch, usePaginationPrefetch } from '@/hooks';
 import { PaginationPageButtons } from '../PaginationPageButtons';
 import { Button } from '../../Buttons';
 
 type Props = {
-  paginationOptions: PaginationQueryOptionsState,
+  paginationOptions: PaginationQueryOptionsState;
   startPageNumber: number;
   currentPage: number;
   paginationPageNumbers: number[];
@@ -16,7 +16,7 @@ type Props = {
   onGoToPage: (page: number) => Promise<void>;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
-  onPrefetch?: OnPrefetch
+  onPrefetch?: OnPrefetch;
 };
 
 export const PaginationButtonsPanel: FC<Props> = ({
@@ -28,15 +28,15 @@ export const PaginationButtonsPanel: FC<Props> = ({
   onGoToPage,
   onClickNext,
   onClickPrev,
-  onPrefetch
+  onPrefetch,
 }): JSX.Element => {
   const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber,
     currentPage,
     totalPages,
-    onPrefetch
-  })
+    onPrefetch,
+  });
 
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;

@@ -7,6 +7,6 @@ export * from './InputAutocomplete';
 export * from './NoData';
 export * from './Compose';
 export * from './ModalBackground';
-export * from './PageLoading'
-export * from './ErrorBoundary'
-export * from './Buttons'
+export * from './PageLoading';
+export * from './ErrorBoundary';
+export * from './Buttons';
