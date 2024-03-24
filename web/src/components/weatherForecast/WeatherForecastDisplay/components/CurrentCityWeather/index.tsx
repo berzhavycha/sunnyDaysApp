@@ -11,7 +11,7 @@ import {
   useResizeWindow,
   useWeatherData,
 } from '@/hooks';
-import { NoData, Spinner, ModalBackground } from '@/components/common';
+import { NoData, Spinner, ModalBackground, DeleteButton } from '@/components/common';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
@@ -37,6 +37,7 @@ export const CurrentCityWeather = (): JSX.Element => {
   const onDelete = async (): Promise<void> =>
     await deleteSubscription(currentCityWeatherInfo?.info.city ?? '');
 
+
   return (
     <>
       <ModalBackground
@@ -55,12 +56,7 @@ export const CurrentCityWeather = (): JSX.Element => {
           <>
             <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
             <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-            <button
-              onClick={onDelete}
-              className="text-center text-xs border border-red-500 w-full rounded-xl text-red-400 p-2 transition-all hover:bg-red-500 hover:text-white sm:text-sm md:text-base"
-            >
-              Delete City
-            </button>
+            <DeleteButton text='Delete City' onClick={onDelete} />
           </>
         )}
       </div>

@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import { Button } from '../../Button';
+import { Button } from '../../Buttons/Button';
 
 type Props = {
   currentPage: number;

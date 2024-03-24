@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import { PaginationPageButtons } from '../PaginationPageButtons';
-import { Button } from '../../Button';
+import { Button } from '../../Buttons/Button';
 
 type Props = {
   startPageNumber: number;
