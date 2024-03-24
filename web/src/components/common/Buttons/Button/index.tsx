@@ -11,7 +11,7 @@ type Props = {
   isActive?: boolean;
   isDisabled?: boolean;
   styles?: string;
-  onMouseOver?: () => Promise<void>;
+  onMouseOver?: () => Promise<void> | void;
 };
 
 export const Button: FC<Props> = ({

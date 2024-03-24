@@ -69,12 +69,14 @@ export const usePagination = <
     variables: Partial<PaginationQueryOptionsState | TVariables>,
     direction: Direction,
   ): boolean => {
+    const queryVariables = {
+      ...paginationOptions,
+      ...variables,
+    }
+
     const cachedData = client.cache.readQuery<TData>({
       query: query,
-      variables: {
-        ...paginationOptions,
-        ...variables,
-      },
+      variables: queryVariables
     });
 
     if (cachedData) {
@@ -84,7 +86,7 @@ export const usePagination = <
         if (isValueCorrect) {
           if (direction === Direction.FORWARD) {
             if (
-              currentPage + 1 !== totalPages &&
+              Math.ceil(queryVariables.offset / queryVariables.limit + 1) !== totalPages &&
               queryFieldData.edges.length < paginationOptions.limit
             ) {
               return false;
