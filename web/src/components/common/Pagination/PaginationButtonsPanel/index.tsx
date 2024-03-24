@@ -5,7 +5,7 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { PaginationQueryOptionsState } from '@/shared';
 import { OnPrefetch } from '@/hooks';
 import { PaginationPageButtons } from '../PaginationPageButtons';
-import { Button } from '../../Buttons';
+import { Button } from '../../Button';
 import { usePrefetch } from '../hooks';
 
 type Props = {
