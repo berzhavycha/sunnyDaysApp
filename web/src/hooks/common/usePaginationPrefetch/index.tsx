@@ -15,7 +15,7 @@ type HookReturn = {
     onGoToPagePrefetch: (page: number) => Promise<void>
 }
 
-export const usePrefetch = ({ onPrefetch, currentPage, startPageNumber, paginationOptions, totalPages }: Params): HookReturn => {
+export const usePaginationPrefetch = ({ onPrefetch, currentPage, startPageNumber, paginationOptions, totalPages }: Params): HookReturn => {
     const onPrevPrefetch = async (): Promise<void> => {
         if (currentPage !== startPageNumber && onPrefetch) {
             await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit }, Direction.BACKWARD)

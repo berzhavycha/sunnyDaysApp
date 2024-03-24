@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import { PaginationQueryOptionsState } from '@/shared';
-import { OnPrefetch } from '@/hooks';
+import { OnPrefetch,  usePaginationPrefetch } from '@/hooks';
 import { PaginationPageButtons } from '../PaginationPageButtons';
 import { Button } from '../../Buttons';
-import { usePrefetch } from '../hooks';
 
 type Props = {
   paginationOptions: PaginationQueryOptionsState,
@@ -31,7 +30,7 @@ export const PaginationButtonsPanel: FC<Props> = ({
   onClickPrev,
   onPrefetch
 }): JSX.Element => {
-  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePrefetch({
+  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber,
     currentPage,

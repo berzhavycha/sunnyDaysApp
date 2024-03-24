@@ -2,14 +2,16 @@
 
 import { useRef, useState } from 'react';
 
-import { useCurrentCityWeatherInfo } from '@/context';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
+import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER } from '@/shared';
 import {
   useDeleteWeatherSubscription,
   useIsLoading,
   useOutsideClick,
+  usePaginationPrefetch,
   useResizeWindow,
   useWeatherData,
+  useWeatherPagination,
 } from '@/hooks';
 import { NoData, Spinner, ModalBackground, DeleteButton } from '@/components/common';
 import { TodayWeatherInfo, Forecast } from './components';
@@ -21,6 +23,15 @@ export const CurrentCityWeather = (): JSX.Element => {
   const { deleteSubscription } = useDeleteWeatherSubscription();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
   const { loading } = useIsLoading(data, error);
+  const { onPrefetch } = useWeatherPagination()
+  const { paginationOptions, currentPage, totalPages } = useWeatherPaginationInfo()
+  const { onNextPrefetch } = usePaginationPrefetch({
+    paginationOptions,
+    startPageNumber: START_PAGE_NUMBER,
+    currentPage,
+    totalPages,
+    onPrefetch
+  })
 
   const [windowWidth, setWindowWidth] = useState(IS_CLIENT ? window.innerWidth : 0);
   useResizeWindow(() => setWindowWidth(IS_CLIENT ? window.innerWidth : 0));
@@ -56,7 +67,7 @@ export const CurrentCityWeather = (): JSX.Element => {
           <>
             <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
             <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-            <DeleteButton text='Delete City' onClick={onDelete} />
+            <DeleteButton text='Delete City' onClick={onDelete} onMouseOver={onNextPrefetch} />
           </>
         )}
       </div>
