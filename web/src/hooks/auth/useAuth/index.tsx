@@ -52,6 +52,9 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
       setCurrentUser(data);
     } catch (error) {
       if (error instanceof ApolloError) {
+        console.log(error)
+        console.log(error.message)
+        console.log(error.name)
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);
         setFieldsError((prevState) => ({
           ...prevState,

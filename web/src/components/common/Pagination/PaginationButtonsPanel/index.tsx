@@ -2,10 +2,14 @@ import { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+import { PaginationQueryOptionsState } from '@/shared';
+import { OnPrefetch } from '@/hooks';
 import { PaginationPageButtons } from '../PaginationPageButtons';
-import { Button } from '../../Buttons/Button';
+import { Button } from '../../Button';
+import { usePrefetch } from '../hooks';
 
 type Props = {
+  paginationOptions: PaginationQueryOptionsState,
   startPageNumber: number;
   currentPage: number;
   paginationPageNumbers: number[];
@@ -13,9 +17,11 @@ type Props = {
   onGoToPage: (page: number) => Promise<void>;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
+  onPrefetch?: OnPrefetch
 };
 
 export const PaginationButtonsPanel: FC<Props> = ({
+  paginationOptions,
   startPageNumber,
   currentPage,
   paginationPageNumbers,
@@ -23,7 +29,16 @@ export const PaginationButtonsPanel: FC<Props> = ({
   onGoToPage,
   onClickNext,
   onClickPrev,
+  onPrefetch
 }): JSX.Element => {
+  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePrefetch({
+    paginationOptions,
+    startPageNumber,
+    currentPage,
+    totalPages,
+    onPrefetch
+  })
+
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;
 
@@ -37,17 +52,20 @@ export const PaginationButtonsPanel: FC<Props> = ({
         onClick={onClickPrev}
         isDisabled={!isPrevBtnActive}
         styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
+        onMouseOver={onPrevPrefetch}
       />
       <PaginationPageButtons
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
         onGoToPage={onGoToPage}
+        onPrefetch={onGoToPagePrefetch}
       />
       <Button
         content={nextBtnContent}
         onClick={onClickNext}
         isDisabled={!isNextBtnActive}
         styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
+        onMouseOver={onNextPrefetch}
       />
     </div>
   );

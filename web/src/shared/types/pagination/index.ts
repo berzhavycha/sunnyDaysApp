@@ -12,3 +12,8 @@ export type PaginationQueryOptionsState = {
   limit: number;
   order: string;
 };
+
+export enum Direction {
+  FORWARD = "forward",
+  BACKWARD = "backward"
+}

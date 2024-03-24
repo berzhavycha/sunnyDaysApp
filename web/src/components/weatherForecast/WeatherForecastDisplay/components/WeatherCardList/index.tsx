@@ -9,13 +9,14 @@ import { useRenderWeatherCard } from './hooks';
 export const WeatherCardList = (): JSX.Element => {
   const { data, error } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
-  const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationInfo();
-  const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
+  const { totalPages, paginationPageNumbers, currentPage, paginationOptions } = useWeatherPaginationInfo();
+  const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
   const { loading } = useIsLoading(data, error);
 
   const listFooterComponent =
     totalPages > 1 ? (
       <PaginationButtonsPanel
+        paginationOptions={paginationOptions}
         startPageNumber={START_PAGE_NUMBER}
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
@@ -23,6 +24,7 @@ export const WeatherCardList = (): JSX.Element => {
         onGoToPage={onGoToPage}
         onClickNext={onClickNext}
         onClickPrev={onClickPrev}
+        onPrefetch={onPrefetch}
       />
     ) : null;
 

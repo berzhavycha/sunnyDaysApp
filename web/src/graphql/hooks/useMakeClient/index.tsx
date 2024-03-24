@@ -5,6 +5,7 @@ import {
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
 
+import { IS_CLIENT } from '@/shared';
 import { resolvers } from '../../resolvers';
 import { errorLink, refreshTokenLink, mainHttpLink, forwardCookieLink } from '../../links';
 import { typePolicies } from '../../typePolicies';
@@ -36,14 +37,14 @@ export const useMakeClient = (): UseMakeClientReturn => {
     ]);
 
     client.setLink(
-      typeof window === 'undefined'
+      !IS_CLIENT
         ? ApolloLink.from([
-            new SSRMultipartLink({
-              stripDefer: true,
-            }),
-            forwardCookieLink,
-            apolloLinks,
-          ])
+          new SSRMultipartLink({
+            stripDefer: true,
+          }),
+          forwardCookieLink,
+          apolloLinks,
+        ])
         : apolloLinks,
     );
 

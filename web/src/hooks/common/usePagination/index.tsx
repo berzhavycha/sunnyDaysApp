@@ -7,13 +7,14 @@ import {
   OperationVariables,
 } from '@apollo/client';
 
-import { PaginationQueryData, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { Direction, PaginationQueryData, PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
 
 interface HookReturn<TVariables> {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  isPageContentCached: (variables: Partial<PaginationQueryOptionsState & TVariables>) => boolean;
+  isPageContentCached: (variables: Partial<PaginationQueryOptionsState & TVariables>, direction: Direction) => boolean;
+  onPrefetch: (variables: PaginationQueryOptionsState & TVariables, direction: Direction) => Promise<void>
 }
 
 interface UsePaginationDependencies<
@@ -55,6 +56,7 @@ export const usePagination = <
 }: UsePaginationDependencies<TEdge, TData, TVariables>): HookReturn<TVariables> => {
   const isPageContentCached = (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
+    direction: Direction
   ): boolean => {
     const cachedData = client.cache.readQuery<TData>({
       query: query,
@@ -68,7 +70,14 @@ export const usePagination = <
       const queryFieldData = cachedData?.[queryDataField];
       if (typeof queryFieldData !== 'string' && queryFieldData.edges.length) {
         const isValueCorrect = queryFieldData.edges.some((edge) => !!edge);
-        return isValueCorrect;
+        if (isValueCorrect) {
+          if (direction === Direction.FORWARD) {
+            if (currentPage + 1 !== totalPages && queryFieldData.edges.length < paginationOptions.limit) {
+              return false;
+            }
+          }
+          return true;
+        }
       }
     }
 
@@ -77,9 +86,10 @@ export const usePagination = <
 
   const onFetchMore = async (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
+    direction: Direction
   ): Promise<boolean> => {
     try {
-      if (!isPageContentCached(variables)) {
+      if (!isPageContentCached(variables, direction)) {
         const { errors } = await fetchMore({ variables });
 
         if (errors?.length) {
@@ -103,7 +113,8 @@ export const usePagination = <
     if (currentPage !== START_PAGE_NUMBER) {
       const isFetchSuccess = await onFetchMore({
         offset: paginationOptions.offset - paginationOptions.limit,
-      });
+      }, Direction.BACKWARD);
+
       if (isFetchSuccess) {
         onCurrentPageChange(currentPage - 1);
       }
@@ -116,7 +127,8 @@ export const usePagination = <
       if (queryFieldData && typeof queryFieldData !== 'string' && queryFieldData.edges) {
         const isFetchSuccess = await onFetchMore({
           offset: (queryFieldData.edges.length ?? 1) * currentPage,
-        });
+        }, Direction.FORWARD);
+
         if (isFetchSuccess) {
           onCurrentPageChange(currentPage + 1);
         }
@@ -126,15 +138,24 @@ export const usePagination = <
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    const isFetchSuccess = await onFetchMore({
-      offset,
-      limit: paginationOptions.limit,
-      order: paginationOptions.order,
-    });
+    const isFetchSuccess = await onFetchMore({ offset },
+      currentPage < page ? Direction.FORWARD : Direction.BACKWARD
+    );
+
     if (isFetchSuccess) {
       onCurrentPageChange(page);
     }
   };
 
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
+  const onPrefetch = async (variables: PaginationQueryOptionsState & TVariables, direction: Direction): Promise<void> => {
+    if (!isPageContentCached(variables, direction)) {
+      await client.query({
+        query,
+        variables,
+        fetchPolicy: 'network-only'
+      })
+    }
+  }
+
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
 };
