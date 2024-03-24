@@ -59,7 +59,7 @@ export const useAddWeatherSubscription = (
         });
         await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
       } else {
-        refetch();
+        await refetch();
       }
 
       setCity('');
