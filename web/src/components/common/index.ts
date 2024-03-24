@@ -4,10 +4,9 @@ export * from './CustomFlatList';
 export * from './Spinner';
 export * from './Pagination';
 export * from './InputAutocomplete';
-export * from './Button';
 export * from './NoData';
 export * from './Compose';
-export * from './CloseButton';
 export * from './ModalBackground';
 export * from './PageLoading'
 export * from './ErrorBoundary'
+export * from './Buttons'

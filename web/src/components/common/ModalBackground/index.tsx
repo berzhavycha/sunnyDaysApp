@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CloseButton } from '../CloseButton';
+import { CloseButton } from '../Buttons/CloseButton';
 
 type Props = {
   isVisible: boolean;
