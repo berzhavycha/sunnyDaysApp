@@ -55,6 +55,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
             icon={faEnvelope}
             styles={inputStyles}
             iconStyles={inputIconStyles}
+            autoComplete='off'
           />
           <Input
             {...register('password')}
@@ -64,6 +65,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
             icon={faLock}
             styles={inputStyles}
             iconStyles={inputIconStyles}
+            autoComplete='off'
             isSecured
           />
           {authType === AuthType.SIGN_UP && (
@@ -75,6 +77,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
               icon={faKey}
               styles={inputStyles}
               iconStyles={inputIconStyles}
+              autoComplete='off'
               isSecured
             />
           )}
