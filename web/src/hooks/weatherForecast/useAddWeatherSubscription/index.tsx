@@ -1,10 +1,10 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, startTransition, useEffect } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 
 import { env } from '@/core/env';
-import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
 import { useWeatherPagination } from '../useWeatherPagination';
@@ -26,6 +26,7 @@ export const useAddWeatherSubscription = (
   const { onGoToPage } = useWeatherPagination();
   const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
+  const { setIsAddingCard } = useWeatherCardsList()
 
   useEffect(() => {
     if (error) {
@@ -59,7 +60,10 @@ export const useAddWeatherSubscription = (
         });
         await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
       } else {
-        await refetch();
+        setIsAddingCard(true)
+        startTransition(() => {
+          refetch().then(() => setIsAddingCard(false));
+        })
       }
 
       setCity('');

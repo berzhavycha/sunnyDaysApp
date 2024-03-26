@@ -21,11 +21,6 @@ export const useMakeClient = (): UseMakeClientReturn => {
         typePolicies,
       }),
       resolvers,
-      defaultOptions: {
-        watchQuery: {
-          errorPolicy: 'all',
-        },
-      },
     });
 
     const apolloLinks = ApolloLink.from([

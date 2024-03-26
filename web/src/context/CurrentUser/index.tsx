@@ -47,6 +47,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setCurrentUser(data.currentUser);
       }
     },
+    errorPolicy: 'all'
   });
 
   useEffect(() => {

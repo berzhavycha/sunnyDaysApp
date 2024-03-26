@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   ApolloError,
   ApolloQueryResult,
@@ -13,6 +13,7 @@ import { env } from '@/core/env';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
+  useWeatherCardsList,
   useWeatherPaginationInfo,
 } from '@/context';
 import { getSuspenseFetchPolicyForKey, ONE_MINUTE } from '@/shared';
@@ -26,11 +27,11 @@ type HookReturn = {
   data: UserCitiesWeatherQuery | null;
   error?: ApolloError;
   fetchMore: (
-    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
-  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery | undefined>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery | undefined>>;
   refetch: (
     refetchOptions?: Partial<UserCitiesWeatherQueryVariables>,
-  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery | undefined>>;
 };
 
 export type WeatherForecast = {
@@ -44,6 +45,8 @@ export type WeatherForecast = {
   windSpeed: number;
   time?: string;
   daysForecast?: WeatherForecastDays[];
+  _deleted?: boolean;
+  _loading?: boolean;
 };
 
 export type WeatherForecastDays = {
@@ -64,7 +67,7 @@ export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const { paginationOptions, setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
+  const { weatherData, setWeatherData } = useWeatherCardsList()
   const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -74,6 +77,7 @@ export const useWeatherData = (): HookReturn => {
       'weatherData',
       ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
+    errorPolicy: 'all'
   });
 
   useEffect(() => {

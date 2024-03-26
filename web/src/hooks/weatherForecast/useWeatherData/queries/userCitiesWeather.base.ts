@@ -25,6 +25,7 @@ const WeatherForecastFragment = gql`
       minFahrenheit
       maxFahrenheit
     }
+    _loading @client
     _deleted @client
   }
 `;
