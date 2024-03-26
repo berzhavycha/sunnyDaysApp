@@ -1,7 +1,7 @@
 'use client';
 
-import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { MOCKED_WEATHER_CARD } from '@/shared';
+import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
 import {
     FC,
     createContext,
@@ -41,21 +41,22 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
     useEffect(() => {
         if (isAddingCard) {
             setWeatherData(prevData => {
-                const updatedEdges = [...(prevData?.userCitiesWeather.edges ?? [])];
-
-                updatedEdges.push({
-                    ...MOCKED_WEATHER_CARD,
-                    _loading: true,
-                });
-
-                return {
-                    ...prevData,
-                    userCitiesWeather: {
-                        ...(prevData?.userCitiesWeather ?? { paginationInfo: { totalCount: 0 } }),
-                        edges: updatedEdges
-                    }
-                };
+                if (prevData) {
+                    return {
+                        ...prevData,
+                        userCitiesWeather: {
+                            ...prevData.userCitiesWeather,
+                            edges: [...prevData.userCitiesWeather.edges, {
+                                ...MOCKED_WEATHER_CARD,
+                                _loading: true,
+                            }]
+                        }
+                    };
+                }
+                
+                return null;
             });
+
         }
     }, [isAddingCard]);
 
