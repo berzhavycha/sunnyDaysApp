@@ -44,10 +44,9 @@ export class SubscriptionsService {
     cityName: string,
     userId: string,
   ): Promise<Subscription> {
-    const city = await this.citiesService.findByName(cityName);
-
     const subscription = await this.subscriptionRepository.findOne({
-      where: { cityId: city.id, userId },
+      where: { city: { name: cityName.toLowerCase() }, userId },
+      relations: ['city']
     });
     await this.subscriptionRepository.delete({ id: subscription.id });
     return subscription;
@@ -86,4 +85,5 @@ export class SubscriptionsService {
       },
     });
   }
+
 }
