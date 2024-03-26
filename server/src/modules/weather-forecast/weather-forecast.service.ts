@@ -23,21 +23,23 @@ export class WeatherForecastService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) { }
 
-  async getUserCitiesWeather(
-    userId: string,
-    offset: number,
-    limit: number,
-    order: Order,
-    forecastDaysAmount: number,
-  ): Promise<PaginatedWeatherForecast> {
+  async getUserCitiesWeather(options: {
+    userId: string;
+    offset: number;
+    limit: number;
+    order: Order;
+    forecastDaysAmount: number;
+  }): Promise<PaginatedWeatherForecast> {
+    const { userId, offset, limit, order, forecastDaysAmount } = options;
+
     let problematicCity: string;
     const userSubscriptions =
-      await this.subscriptionsService.getPaginatedSubscriptionsByUserId(
+      await this.subscriptionsService.getPaginatedSubscriptionsByUserId({
         userId,
-        offset,
-        limit,
+        take: offset,
+        skip: limit,
         order,
-      );
+      });
 
     if (userSubscriptions.length === 0) {
       return {

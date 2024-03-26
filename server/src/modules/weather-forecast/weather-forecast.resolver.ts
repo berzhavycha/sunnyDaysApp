@@ -16,12 +16,12 @@ export class WeatherForecastResolver {
     @Args() forecastParams: ForecastParamArgsDto,
     @CurrentUser('id') id: string,
   ): Promise<PaginatedWeatherForecast> {
-    return this.weatherForecastService.getUserCitiesWeather(
-      id,
-      forecastParams.limit,
-      forecastParams.offset,
-      forecastParams.order,
-      forecastParams.forecastDaysAmount,
-    );
+    return this.weatherForecastService.getUserCitiesWeather({
+      userId: id,
+      limit: forecastParams.limit,
+      offset: forecastParams.offset,
+      order: forecastParams.order,
+      forecastDaysAmount: forecastParams.forecastDaysAmount,
+    });
   }
 }

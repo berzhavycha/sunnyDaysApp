@@ -13,7 +13,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
@@ -67,13 +67,15 @@ export class SubscriptionsService {
     });
   }
 
-  async getPaginatedSubscriptionsByUserId(
-    userId: string,
-    take: number,
-    skip: number,
-    order: Order = DEFAULT_ORDER,
-    orderColumn: string = DEFAULT_ORDER_COLUMN,
-  ): Promise<Subscription[]> {
+  async getPaginatedSubscriptionsByUserId(options: {
+    userId: string;
+    take: number;
+    skip: number;
+    order?: Order;
+    orderColumn?: string;
+  }): Promise<Subscription[]> {
+    const { userId, take, skip, order = DEFAULT_ORDER, orderColumn = DEFAULT_ORDER_COLUMN } = options;
+
     return this.subscriptionRepository.find({
       where: { userId },
       relations: ['city'],
