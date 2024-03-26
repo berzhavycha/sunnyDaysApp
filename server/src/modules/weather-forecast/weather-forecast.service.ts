@@ -24,20 +24,20 @@ export class WeatherForecastService {
   ) { }
 
   async getUserCitiesWeather(options: {
-    userId: string;
-    offset: number;
-    limit: number;
-    order: Order;
-    forecastDaysAmount: number;
+    userId: string,
+    offset: number,
+    limit: number,
+    order: Order,
+    forecastDaysAmount: number,
   }): Promise<PaginatedWeatherForecast> {
-    const { userId, offset, limit, order, forecastDaysAmount } = options;
+    const { userId, offset, limit, order, forecastDaysAmount } = options
 
     let problematicCity: string;
     const userSubscriptions =
       await this.subscriptionsService.getPaginatedSubscriptionsByUserId({
         userId,
-        take: offset,
-        skip: limit,
+        skip: offset,
+        take: limit,
         order,
       });
 

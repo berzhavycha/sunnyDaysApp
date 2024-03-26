@@ -14,14 +14,11 @@ export class WeatherForecastResolver {
   @Query(() => PaginatedWeatherForecast!, { name: 'userCitiesWeather' })
   async getUserCitiesWeather(
     @Args() forecastParams: ForecastParamArgsDto,
-    @CurrentUser('id') id: string,
+    @CurrentUser('id') userId: string,
   ): Promise<PaginatedWeatherForecast> {
     return this.weatherForecastService.getUserCitiesWeather({
-      userId: id,
-      limit: forecastParams.limit,
-      offset: forecastParams.offset,
-      order: forecastParams.order,
-      forecastDaysAmount: forecastParams.forecastDaysAmount,
+      userId,
+      ...forecastParams
     });
   }
 }
