@@ -1,11 +1,12 @@
 'use client';
 
+import { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { convertPathToPascal } from '@/shared';
 
-export const AuthWelcome = (): JSX.Element => {
+export const AuthWelcome: FC = () => {
   const pathname = usePathname();
   const altPath = pathname === '/sign-in' ? '/sign-up' : '/sign-in';
 

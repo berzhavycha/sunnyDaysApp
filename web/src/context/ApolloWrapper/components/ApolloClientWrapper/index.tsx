@@ -10,7 +10,7 @@ type Props = PropsWithChildren & {
   tokensHash: string;
 };
 
-export const ApolloClientWrapper: FC<Props> = ({ children, tokensHash }): JSX.Element => {
+export const ApolloClientWrapper: FC<Props> = ({ children, tokensHash }) => {
   const { makeClient } = useMakeClient();
 
   return (

@@ -9,7 +9,7 @@ export type ErrorBoundaryProps = {
   reset: () => void;
 };
 
-const Error: FC<ErrorBoundaryProps> = ({ error, reset }): JSX.Element => {
+const Error: FC<ErrorBoundaryProps> = ({ error, reset }) => {
   return <ErrorBoundary error={error} reset={reset} />;
 };
 

@@ -14,7 +14,7 @@ type Props = WeatherForecast & {
 };
 
 export const TodayWeatherInfo: FC<Props> = memo(
-  ({ city, text, windSpeed, dayOfWeek, time, precip, humidity, ...info }): JSX.Element => {
+  ({ city, text, windSpeed, dayOfWeek, time, precip, humidity, ...info }) => {
     const { currentTempUnit } = useCurrentTempUnit();
     const weatherIcon = pickWeatherIcon(text);
 

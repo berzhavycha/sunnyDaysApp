@@ -1,5 +1,9 @@
+import { FC } from 'react';
+
 import { PageLoading } from '@/components/common';
 
-export default function Loading(): JSX.Element {
+const Loading: FC = () => {
   return <PageLoading />;
 }
+
+export default Loading

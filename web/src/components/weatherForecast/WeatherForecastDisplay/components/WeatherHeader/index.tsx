@@ -1,5 +1,6 @@
 'use client';
 
+import { FC } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,7 +10,7 @@ import { Button } from '@/components/common';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 import { WeatherCityInput } from './components';
 
-export const WeatherHeader = (): JSX.Element => {
+export const WeatherHeader: FC = () => {
   const { signOutHandler } = useSignOut();
   const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit();
 

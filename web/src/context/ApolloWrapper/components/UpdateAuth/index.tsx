@@ -7,7 +7,7 @@ type Props = PropsWithChildren & {
   tokensHash: string;
 };
 
-export const UpdateAuth: FC<Props> = ({ children, tokensHash }): JSX.Element => {
+export const UpdateAuth: FC<Props> = ({ children, tokensHash }) => {
   const client = useApolloClient();
   client.defaultContext.tokensHash = tokensHash;
 

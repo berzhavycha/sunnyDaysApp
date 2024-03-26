@@ -1,8 +1,10 @@
+import { FC } from 'react';
+
 import { AuthForm } from '@/components';
 import { AuthType } from '@/hooks';
 import { SignInDocument } from '@/hooks/auth/useAuth/mutations';
 
-const SignIn = (): JSX.Element => {
+const SignIn: FC = () => {
   return (
     <AuthForm
       title="Sign In"

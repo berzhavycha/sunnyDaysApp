@@ -17,7 +17,7 @@ type Props = {
   currentWeatherRef: RefObject<HTMLDivElement>;
 };
 
-export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef }): JSX.Element => {
+export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef }) => {
   const { data, error } = useWeatherData();
   const { loading } = useIsLoading(data, error);
 

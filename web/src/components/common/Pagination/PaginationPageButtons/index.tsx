@@ -16,7 +16,7 @@ export const PaginationPageButtons: FC<Props> = ({
   paginationPageNumbers,
   onGoToPage,
   onPrefetch,
-}): JSX.Element => {
+}) => {
   return (
     <div className="flex gap-3">
       {paginationPageNumbers.map((page) => {

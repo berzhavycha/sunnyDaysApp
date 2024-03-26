@@ -1,12 +1,14 @@
 'use client';
 
+import { FC } from 'react';
+
 import { useWeatherPaginationInfo } from '@/context';
 import { useIsLoading, useWeatherData, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
 import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { useRenderWeatherCard } from './hooks';
 
-export const WeatherCardList = (): JSX.Element => {
+export const WeatherCardList: FC = () => {
   const { data, error } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
   const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =

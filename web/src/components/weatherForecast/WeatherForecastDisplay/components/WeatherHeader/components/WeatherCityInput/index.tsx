@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
 import { useCitySearchList, useSubscriptionError } from '@/context';
 import { useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
@@ -6,7 +6,7 @@ import { InputAutocomplete, Button } from '@/components/common';
 import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
 import { useRenderCityItem } from '../../hooks';
 
-export const WeatherCityInput = (): JSX.Element => {
+export const WeatherCityInput: FC = () => {
   const [city, setCity] = useState<string>('');
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { data, loading } = useCityInputComplete(city);

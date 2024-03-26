@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import { WeatherForecastDisplay } from '@/components';
 
-const WeatherForecast = (): JSX.Element => {
+const WeatherForecast: FC = () => {
   return <WeatherForecastDisplay />;
 };
 
