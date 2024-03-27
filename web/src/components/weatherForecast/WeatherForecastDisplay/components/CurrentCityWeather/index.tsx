@@ -1,10 +1,10 @@
 'use client';
 
-import { FC, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
-import { useOutsideClick, useResizeWindow } from '@/hooks';
+import { useResizeWindow } from '@/hooks';
 import { ModalBackground } from '@/components/common';
 import { CurrentWeatherDetails, DeletionModal } from './components';
 
@@ -29,17 +29,21 @@ export const CurrentCityWeather: FC = () => {
 
   const onDeletionModalClose = (): void => setIsDeleting(false)
 
-  const currentWeatherRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(currentWeatherRef, onCloseModalBackground);
-
   return (
     <>
       <ModalBackground
         isVisible={isVisible && IS_CLIENT && windowWidth < MD_BREAKPOINT}
         onClose={onCloseModalBackground}
-      />
-      <CurrentWeatherDetails currentWeatherRef={currentWeatherRef} onDelete={onDelete} />
-      {isDeleting && <DeletionModal city={cityToDelete} onClose={onDeletionModalClose} />}
+      >
+        <CurrentWeatherDetails onDelete={onDelete} />
+        <ModalBackground
+          isVisible={isDeleting}
+          onClose={onDeletionModalClose}
+          zIndex={30}
+        >
+          <DeletionModal isVisible={isDeleting} city={cityToDelete} onClose={onDeletionModalClose} />
+        </ModalBackground>
+      </ModalBackground>
     </>
   );
 };
