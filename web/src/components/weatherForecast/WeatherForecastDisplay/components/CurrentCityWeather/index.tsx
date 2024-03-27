@@ -16,28 +16,28 @@ export const CurrentCityWeather: FC = () => {
   const [windowWidth, setWindowWidth] = useState(IS_CLIENT ? window.innerWidth : 0);
   useResizeWindow(() => setWindowWidth(IS_CLIENT ? window.innerWidth : 0));
 
-  const onCloseModalBackground = (): void => {
+  const onCloseWeatherModal = (): void => {
     if (windowWidth <= MD_BREAKPOINT) {
       setIsVisibleBelowMedium(false);
     }
   };
+
+  const onCloseDeletionModal = (): void => setIsDeleting(false);
 
   const onDelete = (city: string): void => {
     setIsDeleting(true);
     setCityToDelete(city);
   };
 
-  const onDeletionModalClose = (): void => setIsDeleting(false);
-
   return (
     <>
-      <ModalBackground isVisible={isVisibleBelowMedium} onClose={onCloseModalBackground}>
+      <ModalBackground isVisible={isVisibleBelowMedium} onClose={onCloseWeatherModal}>
         <CurrentWeatherDetails onDelete={onDelete} />
-        <ModalBackground isVisible={isDeleting} onClose={onDeletionModalClose} zIndex={30}>
+        <ModalBackground isVisible={isDeleting} onClose={onCloseDeletionModal} zIndex={30}>
           <DeletionModal
             isVisible={isDeleting}
             city={cityToDelete}
-            onClose={onDeletionModalClose}
+            onClose={onCloseDeletionModal}
           />
         </ModalBackground>
       </ModalBackground>
