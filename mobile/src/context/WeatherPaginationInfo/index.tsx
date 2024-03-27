@@ -9,94 +9,85 @@ import {
   SetStateAction,
 } from 'react';
 
+import { PaginationQueryOptionsState } from '@/shared';
 import { Env } from '@/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
-import { useCurrentUser } from '../CurrentUser';
-import { START_PAGE_NUMBER } from './constants';
-
-export type WeatherPaginationQueryOptionsState = {
-  offset: number;
-  limit: number;
-  order: string;
-};
 
 type ContextType = {
-  paginationOptions: WeatherPaginationQueryOptionsState;
+  paginationOptions: PaginationQueryOptionsState;
+  setPaginationOptions: Dispatch<SetStateAction<PaginationQueryOptionsState>>;
   updatePaginationOptions: (newOptions: Partial<UserCitiesWeatherQueryVariables>) => void;
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
-  isFetching: boolean;
-  setIsFetching: Dispatch<SetStateAction<boolean>>;
   totalCount: number;
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
   paginationPageNumbers: number[];
+  isFetching: boolean,
+  setIsFetching: Dispatch<SetStateAction<boolean>>
 };
 
-const CurrentPaginationQueryOptionsContext = createContext<ContextType | null>(null);
+const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
 
-export const useWeatherPaginationQueryOptions = (): ContextType => {
-  const paginationOptionsContext = useContext(CurrentPaginationQueryOptionsContext);
+export const useWeatherPaginationInfo = (): ContextType => {
+  const paginationInfo = useContext(WeatherPaginationInfoContext);
 
-  if (!paginationOptionsContext) {
+  if (!paginationInfo) {
     throw new Error(
-      'useWeatherPaginationOptions must be used within an WeatherPaginationOptionsProvider',
+      'useWeatherPaginationInfo must be used within an WeatherPaginationInfoProvider',
     );
   }
 
-  return paginationOptionsContext;
+  return paginationInfo;
 };
 
-export const WeatherPaginationQueryOptionsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { currentUser } = useCurrentUser();
-  const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(false)
 
-  const [paginationOptions, setPaginationOptions] = useState<WeatherPaginationQueryOptionsState>({
+  const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
     limit: Env.WEATHER_CITIES_LIMIT,
     order: Env.WEATHER_CITIES_ORDER,
   });
 
+  const [currentPage, setCurrentPage] = useState<number>(
+    paginationOptions.offset / paginationOptions.limit + 1,
+  );
+
   useEffect(() => {
+    setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1);
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
     setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
   }, [paginationOptions, totalCount]);
 
-  useEffect(() => {
-    setPaginationOptions((prevState) => ({
-      ...prevState,
-      offset: 0,
-    }));
-  }, [currentUser]);
-
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
-    setPaginationOptions((prevState) => ({
-      ...prevState,
+    setPaginationOptions({
+      ...paginationOptions,
       ...newOptions,
-    }));
+    });
   };
 
   const contextValue: ContextType = {
     paginationOptions,
     updatePaginationOptions,
+    setPaginationOptions,
     currentPage,
     setCurrentPage,
-    isFetching,
-    setIsFetching,
     totalCount,
     setTotalCount,
     totalPages,
     paginationPageNumbers,
+    isFetching,
+    setIsFetching
   };
 
   return (
-    <CurrentPaginationQueryOptionsContext.Provider value={contextValue}>
+    <WeatherPaginationInfoContext.Provider value={contextValue}>
       {children}
-    </CurrentPaginationQueryOptionsContext.Provider>
+    </WeatherPaginationInfoContext.Provider>
   );
 };

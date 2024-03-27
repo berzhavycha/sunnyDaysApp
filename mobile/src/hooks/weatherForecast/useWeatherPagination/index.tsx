@@ -1,7 +1,9 @@
-import { ApolloError, useApolloClient } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
-import { START_PAGE_NUMBER } from '@/context/WeatherPaginationOptions/constants';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import { Direction } from '@/shared';
+import { usePagination } from '@/hooks';
+import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { useWeatherData } from '../useWeatherData';
 import {
   UserCitiesWeatherDocument,
@@ -9,81 +11,45 @@ import {
   UserCitiesWeatherQueryVariables,
 } from '../useWeatherData/queries';
 
+
 type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  isPageContentCached: (variables: Partial<UserCitiesWeatherQueryVariables>) => boolean;
+  isPageContentCached: (
+    variables: Partial<UserCitiesWeatherQueryVariables>,
+    direction: Direction,
+  ) => boolean;
 };
 
 export const useWeatherPagination = (): HookReturn => {
   const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
   const { handleError } = useSubscriptionError();
-  const {
+  const { totalPages, currentPage, paginationOptions, updatePaginationOptions } =
+    useWeatherPaginationInfo();
+
+  const { onGoToPage, onClickNext, onClickPrev, isPageContentCached } = usePagination<
+    WeatherForecastEdge,
+    UserCitiesWeatherQuery,
+    UserCitiesWeatherQueryVariables
+  >({
+    client,
+    query: UserCitiesWeatherDocument,
+    data,
+    queryDataField: 'userCitiesWeather',
+    fetchMore,
+    onError: handleError,
     paginationOptions,
-    currentPage,
-    setCurrentPage,
-    setIsFetching,
     updatePaginationOptions,
+    currentPage,
     totalPages,
-  } = useWeatherPaginationQueryOptions();
+  });
 
-  const isPageContentCached = (variables: Partial<UserCitiesWeatherQueryVariables>): boolean => {
-    const cachedData = client.readQuery<UserCitiesWeatherQuery>({
-      query: UserCitiesWeatherDocument,
-      variables: {
-        ...paginationOptions,
-        ...variables,
-      },
-    });
-
-    if (cachedData?.userCitiesWeather.edges?.length) {
-      const isValueCorrect = cachedData.userCitiesWeather.edges?.some((edge) => !!edge);
-      return isValueCorrect;
-    }
-
-    return false;
+  return {
+    onClickPrev,
+    onClickNext,
+    onGoToPage,
+    isPageContentCached,
   };
-
-  const onFetchMore = async (
-    variables: Partial<UserCitiesWeatherQueryVariables>,
-  ): Promise<void> => {
-    try {
-      if (!isPageContentCached(variables)) {
-        setIsFetching(true);
-        await fetchMore({ variables });
-        setIsFetching(false);
-      }
-
-      updatePaginationOptions(variables);
-    } catch (error) {
-      if (error instanceof ApolloError) {
-        handleError(error);
-        setIsFetching(false);
-      }
-    }
-  };
-
-  const onClickPrev = async (): Promise<void> => {
-    if (currentPage !== START_PAGE_NUMBER) {
-      await onFetchMore({ offset: paginationOptions.offset - paginationOptions.limit });
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
-
-  const onClickNext = async (): Promise<void> => {
-    if (currentPage !== totalPages) {
-      await onFetchMore({ offset: (data?.userCitiesWeather.edges?.length ?? 1) * currentPage });
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const onGoToPage = async (page: number): Promise<void> => {
-    const offset = (page - 1) * paginationOptions.limit;
-    await onFetchMore({ offset });
-    setCurrentPage(page);
-  };
-
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
 };

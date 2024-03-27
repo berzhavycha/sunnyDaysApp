@@ -9,7 +9,7 @@ import {
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { Env } from '@/env';
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
 type HookReturn = {
@@ -42,7 +42,7 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationInfo();
   const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,

@@ -1,23 +1,23 @@
-import { ApolloCache, NormalizedCache } from '@apollo/client';
+import { ApolloCache } from '@apollo/client';
 
-import { Env } from '@/env';
-import { WeatherPaginationQueryOptionsState } from '@/context';
+import { PaginationQueryOptionsState } from '@/shared';
+import { env } from '@/core/env';
 import {
   UserCitiesWeatherQueryVariables,
   UserCitiesWeatherQuery,
   UserCitiesWeatherDocument,
-} from '../../useWeatherData/queries';
+} from '../useWeatherData/queries';
 
 export const readPageCache = (
-  cache: ApolloCache<NormalizedCache>,
-  paginationOptions: WeatherPaginationQueryOptionsState,
+  cache: ApolloCache<object>,
+  paginationOptions: PaginationQueryOptionsState,
   variables?: Partial<UserCitiesWeatherQueryVariables>,
 ): UserCitiesWeatherQuery | null => {
   return cache.readQuery({
     query: UserCitiesWeatherDocument,
     variables: {
       ...paginationOptions,
-      forecastDaysAmount: Env.MAX_FORECAST_DAYS,
+      forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
       ...variables,
     },
   });

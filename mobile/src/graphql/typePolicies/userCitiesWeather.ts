@@ -1,31 +1,24 @@
 import { FieldPolicy } from '@apollo/client';
 
 import { WeatherForecast } from '@/hooks';
+import { PaginationQueryData } from '@/shared';
 
-type PaginationInfo = {
-  totalCount: number;
-};
+export type WeatherForecastEdge = WeatherForecast | { _deleted: boolean };
 
-type Edge = WeatherForecast | { _deleted: boolean };
-
-type PaginationResult = {
-  edges: Edge[];
-  paginationInfo: PaginationInfo;
-};
-
-const isPageGap = (edges: Edge[]): boolean => {
+const isPageGap = (edges: WeatherForecastEdge[]): boolean => {
   return !edges?.some((edge) => !!edge);
 };
 
-export const userCitiesWeather: FieldPolicy<PaginationResult> = {
+export const userCitiesWeather: FieldPolicy<PaginationQueryData<WeatherForecastEdge>> = {
   merge(existing, incoming, context) {
     const offset = context.args?.offset;
     const limit = context.args?.limit;
 
     let mergedEdges = existing ? [...existing.edges] : [];
-    const mergedPaginationInfo = existing
-      ? { ...existing.paginationInfo }
-      : { ...incoming.paginationInfo };
+    const mergedPaginationInfo =
+      existing && Object.keys(existing.paginationInfo).length !== 0
+        ? { ...existing.paginationInfo }
+        : { ...incoming?.paginationInfo };
 
     incoming?.edges?.forEach((edge, index) => {
       mergedEdges[offset + index] = edge;

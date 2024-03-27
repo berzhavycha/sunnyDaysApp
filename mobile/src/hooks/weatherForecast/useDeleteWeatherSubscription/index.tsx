@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { Env } from '@/env';
-import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
+import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
-import { purgePageCache, readPageCache, writePageCache } from './utils';
+import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
+import { Direction } from '@/shared/types';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -16,7 +17,7 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount } = useWeatherPaginationQueryOptions();
+  const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
 
@@ -55,9 +56,13 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
             });
 
             if (
-              !isPageContentCached({
-                offset: paginationOptions.offset + paginationOptions.limit - 1,
-              })
+              !isPageContentCached(
+                {
+                  offset: paginationOptions.offset + paginationOptions.limit - 1,
+                },
+                Direction.FORWARD,
+              ) &&
+              currentPage !== totalPages
             ) {
               await fetchMore({
                 variables: { offset: paginationOptions.limit * currentPage },

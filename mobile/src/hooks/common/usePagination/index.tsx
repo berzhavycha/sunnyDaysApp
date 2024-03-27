@@ -22,10 +22,6 @@ interface HookReturn<TVariables> {
     variables: Partial<PaginationQueryOptionsState & TVariables>,
     direction: Direction,
   ) => boolean;
-  onPrefetch: (
-    variables: PaginationQueryOptionsState & TVariables,
-    direction: Direction,
-  ) => Promise<void>;
 }
 
 interface UsePaginationDependencies<
@@ -36,7 +32,7 @@ interface UsePaginationDependencies<
   client: ApolloClient<object>;
   query: DocumentNode;
   queryDataField: string;
-  data: TData | null;
+  data: TData | undefined;
   fetchMore: (
     fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, TData | undefined>,
   ) => Promise<ApolloQueryResult<TData | undefined>>;
@@ -153,18 +149,5 @@ export const usePagination = <
     await onFetchMore({ offset }, currentPage < page ? Direction.FORWARD : Direction.BACKWARD);
   };
 
-  const onPrefetch = async (
-    variables: PaginationQueryOptionsState & TVariables,
-    direction: Direction,
-  ): Promise<void> => {
-    if (!isPageContentCached(variables, direction)) {
-      await client.query({
-        query,
-        variables,
-        fetchPolicy: 'network-only',
-      });
-    }
-  };
-
-  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached, onPrefetch };
+  return { onClickPrev, onClickNext, onGoToPage, isPageContentCached };
 };
