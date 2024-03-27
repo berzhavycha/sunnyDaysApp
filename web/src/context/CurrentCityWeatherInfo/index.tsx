@@ -11,8 +11,7 @@ import {
   useEffect,
 } from 'react';
 
-import { WeatherForecast, useResizeWindow } from '@/hooks';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+import { WeatherForecast } from '@/hooks';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -31,8 +30,8 @@ type ContextType = {
   onTodayCurrentWeather: () => void;
   currentForecastDay: string;
   setCurrentForecastDay: Dispatch<SetStateAction<string>>;
-  isVisible: boolean;
-  setIsVisible: Dispatch<SetStateAction<boolean>>;
+  isVisibleBelowMedium: boolean;
+  setIsVisibleBelowMedium: Dispatch<SetStateAction<boolean>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -55,13 +54,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-
-  useResizeWindow(() => setIsVisible(IS_CLIENT && window.innerWidth > MD_BREAKPOINT));
-
-  useEffect(() => {
-    setIsVisible(IS_CLIENT && window.innerWidth > MD_BREAKPOINT);
-  }, []);
+  const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false)
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
@@ -86,8 +79,8 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     onTodayCurrentWeather,
     currentForecastDay,
     setCurrentForecastDay,
-    isVisible,
-    setIsVisible,
+    isVisibleBelowMedium,
+    setIsVisibleBelowMedium,
   };
 
   return (

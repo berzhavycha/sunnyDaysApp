@@ -26,7 +26,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
   const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   const { isPageContentCached, onClickPrev } = useWeatherPagination();
-  const { setIsVisible } = useCurrentCityWeatherInfo();
+  const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
 
   useEffect(() => {
     if (error) {
@@ -100,7 +100,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
       });
 
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
-        setIsVisible(false);
+        setIsVisibleBelowMedium(false);
       }
 
       setError({ message: '' });

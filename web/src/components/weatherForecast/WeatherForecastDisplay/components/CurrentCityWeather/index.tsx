@@ -9,7 +9,7 @@ import { ModalBackground } from '@/components/common';
 import { CurrentWeatherDetails, DeletionModal } from './components';
 
 export const CurrentCityWeather: FC = () => {
-  const { isVisible, setIsVisible } = useCurrentCityWeatherInfo();
+  const { isVisibleBelowMedium, setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
   const [cityToDelete, setCityToDelete] = useState<string>('')
 
@@ -18,7 +18,7 @@ export const CurrentCityWeather: FC = () => {
 
   const onCloseModalBackground = (): void => {
     if (windowWidth <= MD_BREAKPOINT) {
-      setIsVisible(false);
+      setIsVisibleBelowMedium(false);
     }
   };
 
@@ -32,7 +32,7 @@ export const CurrentCityWeather: FC = () => {
   return (
     <>
       <ModalBackground
-        isVisible={isVisible && IS_CLIENT && windowWidth < MD_BREAKPOINT}
+        isVisible={isVisibleBelowMedium}
         onClose={onCloseModalBackground}
       >
         <CurrentWeatherDetails onDelete={onDelete} />
