@@ -7,7 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { Button, ControlledInput, Spinner } from '@/components/common';
 import { AuthType, UserDto, useAuth } from '@/hooks';
-import { convertCamelToSpacedPascal } from '@/utils';
+import { convertCamelToSpacedPascal } from '@/shared';
 import { userSchema } from './validation';
 
 export type AuthFormProps = {

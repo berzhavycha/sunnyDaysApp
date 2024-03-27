@@ -7,7 +7,7 @@ import {
   useQuery,
 } from '@apollo/client';
 
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/utils';
+import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { Env } from '@/env';
 import { useSubscriptionError, useWeatherPaginationQueryOptions } from '@/context';
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';

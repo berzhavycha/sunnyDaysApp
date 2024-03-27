@@ -2,7 +2,7 @@ import { FC, memo, useState } from 'react';
 import { View, TextInput, Text, TextInputProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { upperCaseFirstLetter } from '@/utils';
+import { upperCaseFirstLetter } from '@/shared';
 import { CustomTouchable } from '../CustomTouchable';
 import { ActiveOpacity } from '../CustomTouchable/constants';
 

@@ -2,8 +2,6 @@ import { WatchQueryFetchPolicy } from '@apollo/client';
 
 const keys = new Map<string, number>();
 
-export const ONE_MINUTE = 1000 * 60;
-
 export const getFetchPolicyForKey = (key: string, expirationMs: number): WatchQueryFetchPolicy => {
   const lastFetchTimestamp = keys.get(key);
   const diffFromNow = lastFetchTimestamp
