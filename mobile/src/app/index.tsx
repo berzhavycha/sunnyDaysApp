@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import { Spinner } from '@/components';
 
-const StartPage = (): JSX.Element => {
+const StartPage: FC = () => {
   return <Spinner />;
 };
 

@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
 
 import { useCurrentUser } from '@/context';
 
-export const InitialLayout = (): JSX.Element => {
+export const InitialLayout: FC = () => {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
   const segments = useSegments();

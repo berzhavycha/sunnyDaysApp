@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { View } from 'react-native';
 
 import { WeatherHeaderTop, WeatherHeaderDown } from './components';
 
-export const WeatherHeader = (): JSX.Element => {
+export const WeatherHeader: FC = () => {
   return (
     <View>
       <WeatherHeaderTop />
