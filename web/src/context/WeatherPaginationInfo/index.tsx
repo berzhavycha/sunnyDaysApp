@@ -11,10 +11,11 @@ import {
   SetStateAction,
 } from 'react';
 
-import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { PaginationQueryOptionsState } from '@/shared';
 import { env } from '@/core/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;
@@ -43,18 +44,24 @@ export const useWeatherPaginationInfo = (): ContextType => {
 
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { currentUser } = useCurrentUser();
-  const [currentPage, setCurrentPage] = useState<number>(START_PAGE_NUMBER);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams();
+
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
-    offset: 0,
-    limit: env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT,
-    order: env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
+    offset: +(searchParams.get('offset') ?? 0),
+    limit: +(searchParams.get('limit') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT),
+    order: searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
   });
 
+  const [currentPage, setCurrentPage] = useState<number>(paginationOptions.offset / paginationOptions.limit + 1);
+
   useEffect(() => {
+    setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1)
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
     setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
@@ -65,13 +72,27 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
       ...prevState,
       offset: 0,
     }));
-  }, [currentUser]);
+
+  }, [currentUser?.email]);
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
-    setPaginationOptions((prevState) => ({
-      ...prevState,
-      ...newOptions,
-    }));
+    const updatedPaginationOptions = {
+      ...paginationOptions,
+      ...newOptions
+    }
+
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+
+    current.set('offset', `${updatedPaginationOptions.offset}`)
+    current.set('limit', `${updatedPaginationOptions.limit}`)
+    current.set('order', updatedPaginationOptions.order)
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
+
+    setPaginationOptions(updatedPaginationOptions);
   };
 
   const contextValue: ContextType = {

@@ -38,13 +38,12 @@ interface UsePaginationDependencies<
   queryDataField: string;
   data: TData | null;
   fetchMore: (
-    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, TData>,
-  ) => Promise<ApolloQueryResult<TData>>;
+    fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, TData | undefined>,
+  ) => Promise<ApolloQueryResult<TData | undefined>>;
   onError: (error: ApolloError) => void;
   paginationOptions: PaginationQueryOptionsState;
   updatePaginationOptions: (newOptions: Partial<PaginationQueryOptionsState | TVariables>) => void;
   currentPage: number;
-  onCurrentPageChange: (page: number) => void;
   totalPages: number;
 }
 
@@ -62,7 +61,6 @@ export const usePagination = <
   paginationOptions,
   updatePaginationOptions,
   currentPage,
-  onCurrentPageChange,
   totalPages,
 }: UsePaginationDependencies<TEdge, TData, TVariables>): HookReturn<TVariables> => {
   const isPageContentCached = (
@@ -127,16 +125,12 @@ export const usePagination = <
 
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {
-      const isFetchSuccess = await onFetchMore(
+      await onFetchMore(
         {
           offset: paginationOptions.offset - paginationOptions.limit,
         },
         Direction.BACKWARD,
       );
-
-      if (isFetchSuccess) {
-        onCurrentPageChange(currentPage - 1);
-      }
     }
   };
 
@@ -144,30 +138,22 @@ export const usePagination = <
     if (currentPage !== totalPages) {
       const queryFieldData = data?.[queryDataField];
       if (queryFieldData && typeof queryFieldData !== 'string' && queryFieldData.edges) {
-        const isFetchSuccess = await onFetchMore(
+        await onFetchMore(
           {
             offset: (queryFieldData.edges.length ?? 1) * currentPage,
           },
           Direction.FORWARD,
         );
-
-        if (isFetchSuccess) {
-          onCurrentPageChange(currentPage + 1);
-        }
       }
     }
   };
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    const isFetchSuccess = await onFetchMore(
+    await onFetchMore(
       { offset },
       currentPage < page ? Direction.FORWARD : Direction.BACKWARD,
     );
-
-    if (isFetchSuccess) {
-      onCurrentPageChange(page);
-    }
   };
 
   const onPrefetch = async (
