@@ -12,17 +12,17 @@ type HookReturn = {
 
 export const useSignOut = (): HookReturn => {
   const { onSignOut } = useCurrentUser();
-  const { setPaginationOptions } = useWeatherPaginationInfo()
+  const { setPaginationOptions } = useWeatherPaginationInfo();
   const [signOutMutation, { loading }] = useMutation(SignOutDocument);
 
   const signOutHandler = async (): Promise<void> => {
     await onSignOut();
     await signOutMutation();
-    
-    setPaginationOptions(prev => ({
+
+    setPaginationOptions((prev) => ({
       ...prev,
-      offset: 0
-    }))
+      offset: 0,
+    }));
   };
 
   return {

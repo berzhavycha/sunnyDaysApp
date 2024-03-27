@@ -54,7 +54,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
-  const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false)
+  const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {

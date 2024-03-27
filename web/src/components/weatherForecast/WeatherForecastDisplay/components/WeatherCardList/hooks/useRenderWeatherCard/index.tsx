@@ -17,7 +17,7 @@ export const useRenderWeatherCard = (): HookReturn => {
       setIsVisibleBelowMedium(true);
     };
 
-    return <WeatherCard {...props} onClick={onClick} />
+    return <WeatherCard {...props} onClick={onClick} />;
   }
 
   return { renderItem };

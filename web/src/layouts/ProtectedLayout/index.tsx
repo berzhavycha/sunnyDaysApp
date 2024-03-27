@@ -10,12 +10,12 @@ export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { currentUser, loadingUser } = useCurrentUser();
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const offset = searchParams.get('offset') ?? 0
-    const limit = searchParams.get('limit') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT
-    const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER
+    const offset = searchParams.get('offset') ?? 0;
+    const limit = searchParams.get('limit') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
+    const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
     if (!currentUser && !loadingUser) {
       router.replace('/sign-in');

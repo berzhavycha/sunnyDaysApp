@@ -1,19 +1,14 @@
 import { FC } from 'react';
 
 import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
-import {
-  useWeatherData,
-  useIsLoading,
-  useWeatherPagination,
-  usePaginationPrefetch,
-} from '@/hooks';
+import { useWeatherData, useIsLoading, useWeatherPagination, usePaginationPrefetch } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
 import { Spinner, NoData, DeleteButton } from '@/components/common';
 import { TodayWeatherInfo, Forecast } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
 type Props = {
-  onDelete: (city: string) => void
+  onDelete: (city: string) => void;
 };
 
 export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
@@ -33,7 +28,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
     onPrefetch,
   });
 
-  const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info.city ?? '')
+  const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info.city ?? '');
 
   return (
     <div

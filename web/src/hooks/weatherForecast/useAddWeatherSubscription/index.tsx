@@ -26,7 +26,7 @@ export const useAddWeatherSubscription = (
   const { onGoToPage } = useWeatherPagination();
   const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
-  const { setIsAddingCard } = useWeatherCardsList()
+  const { setIsAddingCard } = useWeatherCardsList();
 
   useEffect(() => {
     if (error) {
@@ -60,10 +60,10 @@ export const useAddWeatherSubscription = (
         });
         await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
       } else {
-        setIsAddingCard(true)
+        setIsAddingCard(true);
         startTransition(() => {
           refetch().then(() => setIsAddingCard(false));
-        })
+        });
       }
 
       setCity('');

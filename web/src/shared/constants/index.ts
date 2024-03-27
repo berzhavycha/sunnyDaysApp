@@ -29,4 +29,4 @@ export const MOCKED_WEATHER_CARD = {
   daysForecast: [],
   _deleted: false,
   _loading: false,
-}
+};

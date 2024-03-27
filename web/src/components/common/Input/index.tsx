@@ -15,7 +15,10 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, label, error, isSecured, icon, styles, iconStyles, autoComplete, ...props }, ref) => {
+  (
+    { placeholder, label, error, isSecured, icon, styles, iconStyles, autoComplete, ...props },
+    ref,
+  ) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
 
     const toggleShowPassword = (): void => {

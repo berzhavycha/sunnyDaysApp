@@ -4,6 +4,6 @@ import { PageLoading } from '@/components/common';
 
 const Loading: FC = () => {
   return <PageLoading />;
-}
+};
 
-export default Loading
+export default Loading;

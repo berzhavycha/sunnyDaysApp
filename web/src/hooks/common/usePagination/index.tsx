@@ -70,11 +70,11 @@ export const usePagination = <
     const queryVariables = {
       ...paginationOptions,
       ...variables,
-    }
+    };
 
     const cachedData = client.cache.readQuery<TData>({
       query: query,
-      variables: queryVariables
+      variables: queryVariables,
     });
 
     if (cachedData) {
@@ -150,10 +150,7 @@ export const usePagination = <
 
   const onGoToPage = async (page: number): Promise<void> => {
     const offset = (page - 1) * paginationOptions.limit;
-    await onFetchMore(
-      { offset },
-      currentPage < page ? Direction.FORWARD : Direction.BACKWARD,
-    );
+    await onFetchMore({ offset }, currentPage < page ? Direction.FORWARD : Direction.BACKWARD);
   };
 
   const onPrefetch = async (

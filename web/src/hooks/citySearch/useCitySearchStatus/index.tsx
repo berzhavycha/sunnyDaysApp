@@ -16,7 +16,7 @@ export const useCitySearchStatus = (): HookReturn => {
       'citySearchStatus',
       ONE_MINUTE * env.FEATURE_CACHE_MINUTES_TIME,
     ),
-    errorPolicy: 'all'
+    errorPolicy: 'all',
   });
 
   return {

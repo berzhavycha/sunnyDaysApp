@@ -6,4 +6,4 @@ export * from './SubscriptionError';
 export * from './CurrentTempUnit';
 export * from './WeatherPaginationInfo';
 export * from './CurrentCityWeatherInfo';
-export * from './WeatherCardsListProvider'
+export * from './WeatherCardsListProvider';

@@ -10,4 +10,4 @@ export * from './ModalBackground';
 export * from './PageLoading';
 export * from './ErrorBoundary';
 export * from './Buttons';
-export * from './ModalBackground'
+export * from './ModalBackground';

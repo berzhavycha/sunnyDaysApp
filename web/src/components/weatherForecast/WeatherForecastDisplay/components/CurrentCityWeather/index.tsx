@@ -10,8 +10,8 @@ import { CurrentWeatherDetails, DeletionModal } from './components';
 
 export const CurrentCityWeather: FC = () => {
   const { isVisibleBelowMedium, setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
-  const [isDeleting, setIsDeleting] = useState<boolean>(false)
-  const [cityToDelete, setCityToDelete] = useState<string>('')
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [cityToDelete, setCityToDelete] = useState<string>('');
 
   const [windowWidth, setWindowWidth] = useState(IS_CLIENT ? window.innerWidth : 0);
   useResizeWindow(() => setWindowWidth(IS_CLIENT ? window.innerWidth : 0));
@@ -23,25 +23,22 @@ export const CurrentCityWeather: FC = () => {
   };
 
   const onDelete = (city: string): void => {
-    setIsDeleting(true)
-    setCityToDelete(city)
-  }
+    setIsDeleting(true);
+    setCityToDelete(city);
+  };
 
-  const onDeletionModalClose = (): void => setIsDeleting(false)
+  const onDeletionModalClose = (): void => setIsDeleting(false);
 
   return (
     <>
-      <ModalBackground
-        isVisible={isVisibleBelowMedium}
-        onClose={onCloseModalBackground}
-      >
+      <ModalBackground isVisible={isVisibleBelowMedium} onClose={onCloseModalBackground}>
         <CurrentWeatherDetails onDelete={onDelete} />
-        <ModalBackground
-          isVisible={isDeleting}
-          onClose={onDeletionModalClose}
-          zIndex={30}
-        >
-          <DeletionModal isVisible={isDeleting} city={cityToDelete} onClose={onDeletionModalClose} />
+        <ModalBackground isVisible={isDeleting} onClose={onDeletionModalClose} zIndex={30}>
+          <DeletionModal
+            isVisible={isDeleting}
+            city={cityToDelete}
+            onClose={onDeletionModalClose}
+          />
         </ModalBackground>
       </ModalBackground>
     </>
