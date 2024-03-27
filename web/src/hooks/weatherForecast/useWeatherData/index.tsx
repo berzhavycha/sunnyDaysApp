@@ -6,12 +6,14 @@ import {
   ApolloQueryResult,
   FetchMoreQueryOptions,
   OperationVariables,
+  skipToken,
 } from '@apollo/client';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
 import { env } from '@/core/env';
 import {
   useCurrentCityWeatherInfo,
+  useCurrentUser,
   useSubscriptionError,
   useWeatherCardsList,
   useWeatherPaginationInfo,
@@ -65,10 +67,11 @@ export type WeatherForecastDays = {
 
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
+  const { currentUser } = useCurrentUser()
   const { paginationOptions, setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { weatherData, setWeatherData } = useWeatherCardsList()
-  const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, {
+  const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, currentUser ? {
     variables: {
       ...paginationOptions,
       forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
@@ -77,8 +80,8 @@ export const useWeatherData = (): HookReturn => {
       'weatherData',
       ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
     ),
-    errorPolicy: 'all'
-  });
+    errorPolicy: 'all',
+  } : skipToken);
 
   useEffect(() => {
     if (error) {
