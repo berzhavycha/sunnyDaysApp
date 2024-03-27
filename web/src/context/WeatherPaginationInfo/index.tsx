@@ -15,7 +15,7 @@ import { PaginationQueryOptionsState } from '@/shared';
 import { env } from '@/core/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
 import { useCurrentUser } from '../CurrentUser';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useQueryParams } from '@/hooks';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;
@@ -48,14 +48,12 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams();
-
+  const { queryParams, updateQueryParams } = useQueryParams()
+  
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
-    offset: +(searchParams.get('offset') ?? 0),
-    limit: +(searchParams.get('limit') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT),
-    order: searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
+    offset: +(queryParams.offset ?? 0),
+    limit: +(queryParams.limit ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT),
+    order: (queryParams.order ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER).toString(),
   });
 
   const [currentPage, setCurrentPage] = useState<number>(paginationOptions.offset / paginationOptions.limit + 1);
@@ -76,23 +74,11 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   }, [currentUser?.email]);
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
-    const updatedPaginationOptions = {
+    updateQueryParams(newOptions)
+    setPaginationOptions({
       ...paginationOptions,
       ...newOptions
-    }
-
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
-
-    current.set('offset', `${updatedPaginationOptions.offset}`)
-    current.set('limit', `${updatedPaginationOptions.limit}`)
-    current.set('order', updatedPaginationOptions.order)
-
-    const search = current.toString();
-    const query = search ? `?${search}` : "";
-
-    router.push(`${pathname}${query}`);
-
-    setPaginationOptions(updatedPaginationOptions);
+    });
   };
 
   const contextValue: ContextType = {
