@@ -4,7 +4,6 @@ import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
 import {
   useWeatherData,
   useIsLoading,
-  useDeleteWeatherSubscription,
   useWeatherPagination,
   usePaginationPrefetch,
 } from '@/hooks';
@@ -15,16 +14,16 @@ import { useCurrentWeatherTime } from './hooks';
 
 type Props = {
   currentWeatherRef: RefObject<HTMLDivElement>;
+  onDelete: (city: string) => void
 };
 
-export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef }) => {
+export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef, onDelete }) => {
   const { data, error } = useWeatherData();
   const { loading } = useIsLoading(data, error);
 
   const { currentCityWeatherInfo, isVisible } = useCurrentCityWeatherInfo();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
 
-  const { deleteSubscription } = useDeleteWeatherSubscription();
   const { onPrefetch } = useWeatherPagination();
   const { paginationOptions, currentPage, totalPages } = useWeatherPaginationInfo();
   const { onNextPrefetch } = usePaginationPrefetch({
@@ -35,8 +34,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef }) => {
     onPrefetch,
   });
 
-  const onDelete = async (): Promise<void> =>
-    await deleteSubscription(currentCityWeatherInfo?.info.city ?? '');
+  const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info.city ?? '')
 
   return (
     <div
@@ -51,7 +49,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ currentWeatherRef }) => {
         <>
           <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
           <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-          <DeleteButton text="Delete City" onClick={onDelete} onMouseOver={onNextPrefetch} />
+          <DeleteButton text="Delete City" onClick={onDeleteCity} onMouseOver={onNextPrefetch} />
         </>
       )}
     </div>
