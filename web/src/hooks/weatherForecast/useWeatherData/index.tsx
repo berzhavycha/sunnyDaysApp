@@ -71,6 +71,9 @@ export const useWeatherData = (): HookReturn => {
   const { paginationOptions, setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { weatherData, setWeatherData } = useWeatherCardsList()
+
+  // The use of skipToken prevents a request from being triggered during the sign-out process 
+  // when paginationOptions are about to be reset
   const { data, error, fetchMore, refetch } = useSuspenseQuery(UserCitiesWeatherDocument, currentUser ? {
     variables: {
       ...paginationOptions,
