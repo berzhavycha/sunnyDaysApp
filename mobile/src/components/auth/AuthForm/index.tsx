@@ -75,7 +75,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
             <View className="justify-center items-center">
               <Text className="text-gray-400 mt-8">
                 {authType === AuthType.SIGN_IN ? 'Don`t have an account? ' : 'Have an account? '}
-                <Link href="/sign-up/" className="font-bold text-blue-500">
+                <Link href={authType === AuthType.SIGN_IN ? "/sign-up/" : "/sign-in/"} className="font-bold text-blue-500">
                   {convertCamelToSpacedPascal(
                     authType === AuthType.SIGN_IN ? AuthType.SIGN_UP : AuthType.SIGN_IN,
                   )}

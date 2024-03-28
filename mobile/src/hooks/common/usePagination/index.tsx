@@ -6,6 +6,7 @@ import {
   FetchMoreQueryOptions,
   OperationVariables,
 } from '@apollo/client';
+import { Dispatch, SetStateAction } from 'react';
 
 import {
   Direction,
@@ -41,6 +42,7 @@ interface UsePaginationDependencies<
   updatePaginationOptions: (newOptions: Partial<PaginationQueryOptionsState | TVariables>) => void;
   currentPage: number;
   totalPages: number;
+  setIsFetching: Dispatch<SetStateAction<boolean>>
 }
 
 export const usePagination = <
@@ -58,6 +60,7 @@ export const usePagination = <
   updatePaginationOptions,
   currentPage,
   totalPages,
+  setIsFetching
 }: UsePaginationDependencies<TEdge, TData, TVariables>): HookReturn<TVariables> => {
   const isPageContentCached = (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
@@ -100,21 +103,24 @@ export const usePagination = <
   ): Promise<boolean> => {
     try {
       if (!isPageContentCached(variables, direction)) {
+        setIsFetching(true)
         const { errors } = await fetchMore({ variables });
-
+        
         if (errors?.length) {
           throw new ApolloError(errors[0].extensions);
         }
       }
-
+      
       updatePaginationOptions(variables);
-
+      
+      setIsFetching(false)
       return true;
     } catch (error) {
       if (error instanceof ApolloError) {
         onError(error);
       }
 
+      setIsFetching(false)
       return false;
     }
   };
