@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 
 import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
-import { useCitySearchList, useSubscriptionError } from '@/context';
+import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
 import { useCitySelection } from './hooks';
 
@@ -14,6 +14,7 @@ export const WeatherHeaderDown: FC = () => {
   const { renderCityItem } = useCitySelection(addSubscription);
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
+  const { isDeleting } = useWeatherCardsList()
 
   const onPressAddSubscription = async (): Promise<void> => await addSubscription(city);
 
@@ -32,6 +33,7 @@ export const WeatherHeaderDown: FC = () => {
           onPressOutside={onPressOutside}
           isAutocompleteShown={listState.isVisible}
           isAutocompleteEnabled={listState.isEnabled}
+          zIndex={isDeleting ? 0 : 100}
         />
       </View>
       <View className="w-14">

@@ -1,4 +1,4 @@
-export * from './Button';
+export * from './Buttons';
 export * from './Input';
 export * from './InputAutocomplete';
 export * from './Spinners';
@@ -8,3 +8,4 @@ export * from './ControlledInput';
 export * from './CustomTouchable';
 export * from './Pagination';
 export * from './Compose'
+export * from './ModalBackground'

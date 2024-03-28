@@ -17,7 +17,7 @@ export const ModalBackground: FC<Props> = ({ isVisible, onClose, zIndex, childre
 
   return (
     <>
-      {isVisible ? (
+      {isVisible && (
         <div
           className={`fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-70 z-${zIndex ?? 10}`}
         >
@@ -25,7 +25,7 @@ export const ModalBackground: FC<Props> = ({ isVisible, onClose, zIndex, childre
             <CloseButton onClick={onClose} />
           </div>
         </div>
-      ) : null}
+      )}
       <div ref={modalRef}>{children}</div>
     </>
   );

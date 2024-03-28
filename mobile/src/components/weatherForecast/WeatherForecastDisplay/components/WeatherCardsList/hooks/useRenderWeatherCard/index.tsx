@@ -1,4 +1,5 @@
-import { WeatherForecast, useDeleteWeatherSubscription } from '@/hooks';
+import { useWeatherCardsList } from '@/context';
+import { WeatherForecast } from '@/hooks';
 import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
 
 type RenderItemProps = {
@@ -10,10 +11,13 @@ type HookReturn = {
 };
 
 export const useRenderWeatherCard = (): HookReturn => {
-  const { deleteSubscription } = useDeleteWeatherSubscription();
+  const { setIsDeleting, setCityToDelete } = useWeatherCardsList()
 
   function renderItem({ item }: RenderItemProps): JSX.Element {
-    const onDelete = async (): Promise<void> => await deleteSubscription(item.city);
+    const onDelete = (): void => {
+      setIsDeleting(true)
+      setCityToDelete(item.city)
+    };
 
     return <SwipeableWeatherCard item={item} onDelete={onDelete} />;
   }
