@@ -10,7 +10,11 @@ import {
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { Env } from '@/env';
 import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from './queries';
+import {
+  UserCitiesWeatherDocument,
+  UserCitiesWeatherQuery,
+  UserCitiesWeatherQueryVariables,
+} from './queries';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;

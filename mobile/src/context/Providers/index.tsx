@@ -21,7 +21,7 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
         CurrentTempUnitProvider,
         WeatherCardsListProvider,
         WeatherPaginationInfoProvider,
-        EventProvider
+        EventProvider,
       ]}
     >
       {children}

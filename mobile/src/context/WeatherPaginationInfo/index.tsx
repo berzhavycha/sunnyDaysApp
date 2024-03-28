@@ -23,8 +23,8 @@ type ContextType = {
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
   paginationPageNumbers: number[];
-  isFetching: boolean,
-  setIsFetching: Dispatch<SetStateAction<boolean>>
+  isFetching: boolean;
+  setIsFetching: Dispatch<SetStateAction<boolean>>;
 };
 
 const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
@@ -45,7 +45,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
@@ -82,7 +82,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     totalPages,
     paginationPageNumbers,
     isFetching,
-    setIsFetching
+    setIsFetching,
   };
 
   return (

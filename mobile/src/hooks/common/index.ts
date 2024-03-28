@@ -1,2 +1,2 @@
 export * from './useInputCompleteQuery';
-export * from './usePagination'
+export * from './usePagination';

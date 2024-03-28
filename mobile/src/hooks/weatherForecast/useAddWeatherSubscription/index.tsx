@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
-import { Env } from '@/env'
+import { Env } from '@/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
 import { useWeatherPagination } from '../useWeatherPagination';

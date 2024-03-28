@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-import { Button, ControlledInput, Spinner } from '@/components/common';
+import { Button, ControlledInput, BackgroundSpinner } from '@/components/common';
 import { AuthType, UserDto, useAuth } from '@/hooks';
 import { convertCamelToSpacedPascal } from '@/shared';
 import { userSchema } from './validation';
@@ -29,7 +29,7 @@ export const AuthForm: FC<AuthFormProps> = ({ title, subTitle, authType, authMut
   return (
     <>
       {loading ? (
-        <Spinner />
+        <BackgroundSpinner />
       ) : (
         <View className="flex-1 justify-center items-center bg-gray-900">
           <Image

@@ -11,7 +11,6 @@ import {
   UserCitiesWeatherQueryVariables,
 } from '../useWeatherData/queries';
 
-
 type HookReturn = {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;

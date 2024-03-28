@@ -15,7 +15,7 @@ type Props<TItem> = {
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
   isAutocompleteEnabled?: boolean;
-  zIndex: number
+  zIndex: number;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -30,13 +30,10 @@ export const InputAutocomplete = <TItem,>({
   onInputFocus,
   isAutocompleteShown,
   isAutocompleteEnabled,
-  zIndex
+  zIndex,
 }: Props<TItem>): JSX.Element => {
   return (
-    <OutsidePressHandler
-      onOutsidePress={onPressOutside}
-      style={{ position: 'relative', zIndex }}
-    >
+    <OutsidePressHandler onOutsidePress={onPressOutside} style={{ position: 'relative', zIndex }}>
       <Input
         value={search}
         onChangeText={onSearchChange}

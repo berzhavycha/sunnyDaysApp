@@ -13,13 +13,13 @@ import {
 
 type ContextType = {
   isAddingCard: boolean;
-  setIsAddingCard: Dispatch<SetStateAction<boolean>>
+  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
   weatherData: UserCitiesWeatherQuery | undefined;
   setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | undefined>>;
   isDeleting: boolean;
   setIsDeleting: Dispatch<SetStateAction<boolean>>;
   cityToDelete: string;
-  setCityToDelete: Dispatch<SetStateAction<string>>
+  setCityToDelete: Dispatch<SetStateAction<string>>;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -37,8 +37,8 @@ export const useWeatherCardsList = (): ContextType => {
 export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) => {
   const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery>();
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false)
-  const [cityToDelete, setCityToDelete] = useState<string>('')
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [cityToDelete, setCityToDelete] = useState<string>('');
 
   useEffect(() => {
     if (isAddingCard) {
@@ -70,7 +70,7 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
     isDeleting,
     setIsDeleting,
     cityToDelete,
-    setCityToDelete
+    setCityToDelete,
   };
 
   return (

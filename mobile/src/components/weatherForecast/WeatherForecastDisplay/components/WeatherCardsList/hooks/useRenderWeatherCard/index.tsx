@@ -11,12 +11,12 @@ type HookReturn = {
 };
 
 export const useRenderWeatherCard = (): HookReturn => {
-  const { setIsDeleting, setCityToDelete } = useWeatherCardsList()
+  const { setIsDeleting, setCityToDelete } = useWeatherCardsList();
 
   function renderItem({ item }: RenderItemProps): JSX.Element {
     const onDelete = (): void => {
-      setIsDeleting(true)
-      setCityToDelete(item.city)
+      setIsDeleting(true);
+      setCityToDelete(item.city);
     };
 
     return <SwipeableWeatherCard item={item} onDelete={onDelete} />;

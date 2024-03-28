@@ -14,7 +14,7 @@ export const WeatherCardsList: FC = () => {
   const { renderItem } = useRenderWeatherCard();
   const { onGoToPage, onClickNext, onClickPrev } = useWeatherPagination();
   const { totalPages, paginationPageNumbers, currentPage } = useWeatherPaginationInfo();
-  const { cityToDelete, isDeleting, setIsDeleting } = useWeatherCardsList()
+  const { cityToDelete, isDeleting, setIsDeleting } = useWeatherCardsList();
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
@@ -31,7 +31,7 @@ export const WeatherCardsList: FC = () => {
       />
     ) : null;
 
-  const onDeletingModalClose = (): void => setIsDeleting(false)
+  const onDeletingModalClose = (): void => setIsDeleting(false);
 
   return (
     <>
@@ -50,10 +50,7 @@ export const WeatherCardsList: FC = () => {
             showsVerticalScrollIndicator={false}
           />
           <ModalBackground isVisible={isDeleting} onClose={onDeletingModalClose} zIndex={65000}>
-            <DeletionModal
-              city={cityToDelete}
-              onClose={onDeletingModalClose}
-            />
+            <DeletionModal city={cityToDelete} onClose={onDeletingModalClose} />
           </ModalBackground>
         </>
       )}

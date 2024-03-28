@@ -14,7 +14,7 @@ export const WeatherHeaderDown: FC = () => {
   const { renderCityItem } = useCitySelection(addSubscription);
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { isDeleting } = useWeatherCardsList()
+  const { isDeleting } = useWeatherCardsList();
 
   const onPressAddSubscription = async (): Promise<void> => await addSubscription(city);
 

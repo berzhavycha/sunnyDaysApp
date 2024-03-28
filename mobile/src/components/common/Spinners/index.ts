@@ -1,2 +1,2 @@
-export * from './BackgroundSpinner'
-export * from './PlainSpinner'
+export * from './BackgroundSpinner';
+export * from './PlainSpinner';

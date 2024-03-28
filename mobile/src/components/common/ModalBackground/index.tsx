@@ -22,13 +22,9 @@ export const ModalBackground: FC<Props> = ({ isVisible, onClose, zIndex, childre
           <View className="absolute top-4 right-2 p-4">
             <CloseButton onPress={onClose} />
           </View>
-          <View className='w-full h-full flex justify-center items-center'>
-            <OutsidePressHandler
-              onOutsidePress={onClose}
-            >
-              <View>
-                {children}
-              </View>
+          <View className="w-full h-full flex justify-center items-center">
+            <OutsidePressHandler onOutsidePress={onClose}>
+              <View>{children}</View>
             </OutsidePressHandler>
           </View>
         </View>
