@@ -121,7 +121,6 @@ Before you start developing for calculator, make sure you have the following too
 2. Git
 
 ### File Structure
-.
  * [docker](./docker)
    * [scripts](./docker/scripts)
    * [docker-compose-dev.yml](./docker/docker-compose-dev.yml)
