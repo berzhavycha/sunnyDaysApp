@@ -1,5 +1,3 @@
-import { MOCKED_WEATHER_CARD } from '@/shared';
-import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
 import {
   FC,
   createContext,
@@ -10,6 +8,9 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
+
+import { MOCKED_WEATHER_CARD } from '@/shared';
+import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
 
 type ContextType = {
   isAddingCard: boolean;

@@ -3,8 +3,8 @@ import { FlatList } from 'react-native';
 
 import { useWeatherData, useWeatherPagination } from '@/hooks';
 import { useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
-import { ModalBackground, NoData, PaginationButtons } from '@/components/common';
 import { START_PAGE_NUMBER } from '@/shared';
+import { ModalBackground, NoData, PaginationButtons } from '@/components/common';
 import { SpinnerView } from '../SpinnerView';
 import { useRenderWeatherCard } from './hooks';
 import { DeletionModal } from '../DeletionModal';
@@ -31,7 +31,7 @@ export const WeatherCardsList: FC = () => {
       />
     ) : null;
 
-  const onDeletingModalClose = (): void => setIsDeleting(false);
+  const onDeletionModalClose = (): void => setIsDeleting(false);
 
   return (
     <>
@@ -49,8 +49,8 @@ export const WeatherCardsList: FC = () => {
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
-          <ModalBackground isVisible={isDeleting} onClose={onDeletingModalClose} zIndex={65000}>
-            <DeletionModal city={cityToDelete} onClose={onDeletingModalClose} />
+          <ModalBackground isVisible={isDeleting} onClose={onDeletionModalClose} zIndex={65000}>
+            <DeletionModal city={cityToDelete} onClose={onDeletionModalClose} />
           </ModalBackground>
         </>
       )}

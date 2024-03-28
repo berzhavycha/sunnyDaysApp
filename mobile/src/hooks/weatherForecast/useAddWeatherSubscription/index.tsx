@@ -18,10 +18,10 @@ type HookReturn = {
 export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
+  const client = useApolloClient();
   const { setError, handleError } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
-  const client = useApolloClient();
   const { onGoToPage } = useWeatherPagination();
   const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
   const { setIsAddingCard } = useWeatherCardsList();
@@ -59,9 +59,7 @@ export const useAddWeatherSubscription = (
         await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
       } else {
         setIsAddingCard(true);
-        setTimeout(async () => {
-          await refetch();
-        }, 2000);
+        await refetch();
         setIsAddingCard(false);
       }
 

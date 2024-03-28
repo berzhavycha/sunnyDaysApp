@@ -17,7 +17,7 @@ export const ModalBackground: FC<Props> = ({ isVisible, onClose, zIndex, childre
     <>
       {isVisible && (
         <View
-          className={`absolute top-0 left-0 w-screen h-screen bg-black/[.6] z-${zIndex ?? 1000}`}
+          className={`absolute top-0 left-0 w-screen h-screen bg-black/[.6] z-${zIndex ?? 10}`}
         >
           <View className="absolute top-4 right-2 p-4">
             <CloseButton onPress={onClose} />

@@ -1,11 +1,11 @@
 import { memo, FC } from 'react';
 import { View, Text, Image } from 'react-native';
 
+import { WeatherForecast } from '@/hooks';
 import { useCurrentTempUnit } from '@/context';
 import { PlainSpinner } from '@/components/common';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { WeatherForecast } from '@/hooks';
 import { SubWeatherForecastDay } from '../SubWeatherForecastDay';
 import { pickWeatherIcon } from '../../utils';
 

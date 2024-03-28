@@ -12,6 +12,7 @@ import {
 import { PaginationQueryOptionsState } from '@/shared';
 import { Env } from '@/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { useCurrentUser } from '../CurrentUser';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;
@@ -23,8 +24,6 @@ type ContextType = {
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
   paginationPageNumbers: number[];
-  isFetching: boolean;
-  setIsFetching: Dispatch<SetStateAction<boolean>>;
 };
 
 const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
@@ -42,10 +41,10 @@ export const useWeatherPaginationInfo = (): ContextType => {
 };
 
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+  const { currentUser } = useCurrentUser()
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
@@ -56,6 +55,13 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const [currentPage, setCurrentPage] = useState<number>(
     paginationOptions.offset / paginationOptions.limit + 1,
   );
+
+  useEffect(() => {
+    setPaginationOptions((prev) => ({
+      ...prev,
+      offset: 0,
+    }));
+  }, [currentUser])
 
   useEffect(() => {
     setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1);
@@ -81,8 +87,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     setTotalCount,
     totalPages,
     paginationPageNumbers,
-    isFetching,
-    setIsFetching,
   };
 
   return (
