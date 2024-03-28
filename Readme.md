@@ -8,6 +8,9 @@ Welcome to SunnyDayApp! SunnyDayApp is your go-to application for checking the w
 - [Usage](#usage)
   - [Installation](#installation)
   - [Commands](#commands)
+- [Building Docker Containers](#building-docker-containers)
+  - [Development Mode](#development-mode)
+  - [Production Mode](#production-mode)
 - [Development](#development)
   - [Pre-Requisites](#pre-requisites)
   - [File Structure](#file-structure)
@@ -31,7 +34,9 @@ To use SunnyDayApp, follow these installation steps:
 ```
 3. Install dependencies: 
 ```
-\$ cd client 
+\$ cd web 
+\$ npm install 
+\$ cd mobile 
 \$ npm install 
 \$ cd server 
 \$ npm install 
@@ -39,18 +44,73 @@ To use SunnyDayApp, follow these installation steps:
 
 
 ### Commands
-1. To run SunnyDayApp client: 
+1. To run SunnyDayApp mobile: 
 ```
-\$ cd client 
+\$ cd mobile
 \$ npm run start
 ```
-2. To run SunnyDayApp server: 
+2. To run SunnyDayApp web: 
+```
+\$ cd web
+\$ npm run dev
+```
+3. To run SunnyDayApp server: 
 ```
 \$ cd server 
 \$ npm run start:dev 
 ```
 
 Make sure you have looked to the .env.example file in both client and server and assigned in your .env file in both client and server values for each of the environment variable.
+
+## Building Docker Containers
+
+- Pre-Requisites
+1. Docker Desktop installed on your machine.
+
+### Development Mode
+
+Steps to Build Docker Container in Development Mode using docker-compose:
+1. Navigate to the project directory: 
+```
+\$ cd sunnydaysapp
+```
+
+2. Navigate to the docker directory: 
+```
+\$ cd docker
+```
+
+3. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
+```
+chmod +x ./up_fullstack_dev.sh
+```
+
+4. Build and run docker containers by running up_fullstack_dev.sh file: 
+```
+\$ ./up_fullstack_dev.sh
+```
+
+### Production Mode
+
+1. Navigate to the project directory: 
+```
+\$ cd sunnydaysapp
+```
+
+2. Navigate to the docker directory: 
+```
+\$ cd docker
+```
+
+3. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
+```
+chmod +x ./up_fullstack_prod.sh
+```
+
+4. Build and run docker containers by running up_fullstack_prod.sh file: 
+```
+\$ ./up_fullstack_prod.sh
+```
 
 
 ## Development
@@ -62,38 +122,40 @@ Before you start developing for calculator, make sure you have the following too
 
 ### File Structure
 .
- * [client](./client)
-   * [.expo](./client/.expo)
-   * [src](./client/src)
-      * [app](./client/src/app)
-      * [assets](./client/src/assets)
-      * [components](./client/src/components)
-      * [context](./client/src/context)
-      * [core](./client/src/core)
-      * [graphql](./client/src/graphql)
-      * [hooks](./client/src/hooks)
-      * [layouts](./client/src/layouts)
-      * [regex](./client/src/regex)
-      * [utils](./client/src/utils)
-   * [app.json](./client/app.json)
-   * [babel.config.js](./client/babel.config.js)
-   * [index.tsx](./client/index.tsx)
-   * [package-lock.json](./client/package-lock.json)
-   * [package.json](./client/package.json)
-   * [metro.config.js](./client/metro.config.js)
-   * [tailwind.config.js](./client/tailwind.config.js)
-   * [tsconfig.json](./client/tsconfig.json)
- * [server](./docker)
+ * [docker](./docker)
+   * [scripts](./docker/scripts)
    * [docker-compose-dev.yml](./docker/docker-compose-dev.yml)
    * [docker-compose-prod.yml](./docker/docker-compose-prod.yml)
+ * [mobile](./web)
+   * [.expo](./mobile/.expo)
+   * [src](./mobile/src)
+      * [app](./mobile/src/app)
+      * [assets](./mobile/src/assets)
+      * [components](./mobile/src/components)
+      * [context](./mobile/src/context)
+      * [core](./mobile/src/core)
+      * [graphql](./mobile/src/graphql)
+      * [hooks](./mobile/src/hooks)
+      * [layouts](./mobile/src/layouts)
+      * [regex](./mobile/src/regex)
+      * [shared](./mobile/src/shared)
+   * [app.json](./mobile/app.json)
+   * [babel.config.js](./mobile/babel.config.js)
+   * [index.tsx](./mobile/index.tsx)
+   * [package-lock.json](./mobile/package-lock.json)
+   * [package.json](./mobile/package.json)
+   * [metro.config.js](./mobile/metro.config.js)
+   * [tailwind.config.js](./mobile/tailwind.config.js)
+   * [tsconfig.json](./mobile/tsconfig.json)
  * [server](./server)
    * [src](./server/src)
       * [modules](./server/src/modules)
         * [auth](./server/src/modules/auth)
         * [cities](./server/src/modules/cities)
+        * [city-search](./server/src/modules/city-search)
         * [config](./server/src/modules/config)
         * [database](./server/src/modules/database)
-        * [geodb](./server/src/modules/geodb)
+        * [features](./server/src/modules/features)
         * [graphql](./server/src/modules/graphql)
         * [redis](./server/src/modules/redis)
         * [subscriptions](./server/src/modules/subscriptions)
@@ -101,7 +163,9 @@ Before you start developing for calculator, make sure you have the following too
         * [weather-forecast](./server/src/modules/weather-forecast)
       * [shared](./server/src/shared)
         * [constants](./server/src/shared/constants)
+        * [pagination](./server/src/shared/pagination/)
         * [regex](./server/src/shared/regex)
+        * [types](./server/src/shared/types)
         * [utils](./server/src/shared/utils)
         * [index.ts](./server/src/shared/index)
       * [app.module.ts](./server/src/app.module.ts)
@@ -109,6 +173,26 @@ Before you start developing for calculator, make sure you have the following too
    * [package-lock.json](./server/package-lock.json)
    * [package.json](./server/package.json)
    * [nest-cli.json](./server/nest-cli.json)
+   * [Dockrfile](./server/Dockerfile)
    * [webpack.config.js](./server/tsconfig.build.json)
    * [tsconfig.json](./server/tsconfig.json)
+ * [web](./web)
+   * [.next](./web/.next)
+   * [public](./web/public)
+   * [src](./web/src)
+      * [app](./web/src/app)
+      * [components](./web/src/components)
+      * [context](./web/src/context)
+      * [core](./web/src/core)
+      * [graphql](./web/src/graphql)
+      * [hooks](./web/src/hooks)
+      * [layouts](./web/src/layouts)
+      * [regex](./web/src/regex)
+      * [shared](./web/src/shared)
+   * [package-lock.json](./web/package-lock.json)
+   * [package.json](./web/package.json)
+   * [next.config.mjs](./web/next.config.mjs)
+   * [Dockrfile](./web/Dockerfile)
+   * [tailwind.config.js](./web/tailwind.config.js)
+   * [tsconfig.json](./web/tsconfig.json)
  * [README.md](./Readme.md)
