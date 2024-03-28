@@ -73,7 +73,7 @@ export const usePagination = <
     };
 
     const cachedData = client.cache.readQuery<TData>({
-      query: query,
+      query,
       variables: queryVariables,
     });
 

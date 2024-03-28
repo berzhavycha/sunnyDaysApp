@@ -1,7 +1,9 @@
-import { Spinner } from '@/components';
+import { FC } from 'react';
 
-const StartPage = (): JSX.Element => {
-  return <Spinner />;
+import { BackgroundSpinner } from '@/components';
+
+const StartPage: FC = () => {
+  return <BackgroundSpinner />;
 };
 
 export default StartPage;

@@ -17,6 +17,7 @@ export const WeatherForecastFragment = gql`
       dayOfWeek
     }
     _deleted @client
+    _loading @client
   }
 `;
 

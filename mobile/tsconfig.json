@@ -51,11 +51,11 @@
       "@/regex": [
         "./src/regex"
       ],
-      "@/utils/*": [
-        "./src/utils/*"
+      "@/shared/*": [
+        "./src/shared/*"
       ],
-      "@/utils": [
-        "./src/utils"
+      "@/shared": [
+        "./src/shared"
       ],
       "@/layouts/*": [
         "./src/layouts/*"

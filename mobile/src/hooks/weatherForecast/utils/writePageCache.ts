@@ -1,12 +1,12 @@
-import { ApolloCache, NormalizedCache } from '@apollo/client';
+import { ApolloCache } from '@apollo/client';
 
+import { PaginationQueryOptionsState } from '@/shared';
 import { Env } from '@/env';
-import { WeatherPaginationQueryOptionsState } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from '../../useWeatherData/queries';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from '../useWeatherData/queries';
 
 export const writePageCache = (
-  cache: ApolloCache<NormalizedCache>,
-  paginationOptions: WeatherPaginationQueryOptionsState,
+  cache: ApolloCache<object>,
+  paginationOptions: PaginationQueryOptionsState,
   data: UserCitiesWeatherQuery['userCitiesWeather'],
 ): void => {
   cache.writeQuery({

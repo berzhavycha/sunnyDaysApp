@@ -15,7 +15,7 @@ import {
 
 type ContextType = {
   isAddingCard: boolean;
-  setIsAddingCard: (isAdding: boolean) => void;
+  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
   weatherData: UserCitiesWeatherQuery | null;
   setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
 };

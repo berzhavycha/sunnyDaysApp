@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
 
 import { useCurrentUser } from '@/context';
-import { fieldsErrorHandler } from '@/utils';
+import { fieldsErrorHandler } from '@/shared';
 import { pickUserErrorMessages } from '../utils';
 import { SignInDocument } from './mutations';
 

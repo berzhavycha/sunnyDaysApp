@@ -1,28 +1,30 @@
 import { FC, PropsWithChildren } from 'react';
-import { ApolloProvider } from '@apollo/client';
 import { EventProvider } from 'react-native-outside-press';
 
-import { apolloClient } from '@/graphql';
+import { Compose } from '@/components/common';
 import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentUserProvider } from '../CurrentUser';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
 import { CurrentTempUnitProvider } from '../CurrentTempUnit';
-import { WeatherPaginationQueryOptionsProvider } from '../WeatherPaginationOptions';
+import { WeatherCardsListProvider } from '../WeatherCardsListProvider';
+import { WeatherPaginationInfoProvider } from '../WeatherPaginationInfo';
+import { ApolloWrapper } from '../ApolloWrapper';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <CurrentUserProvider>
-        <CitySearchListProvider>
-          <SubscriptionErrorProvider>
-            <CurrentTempUnitProvider>
-              <WeatherPaginationQueryOptionsProvider>
-                <EventProvider>{children}</EventProvider>
-              </WeatherPaginationQueryOptionsProvider>
-            </CurrentTempUnitProvider>
-          </SubscriptionErrorProvider>
-        </CitySearchListProvider>
-      </CurrentUserProvider>
-    </ApolloProvider>
+    <Compose
+      components={[
+        ApolloWrapper,
+        CurrentUserProvider,
+        CitySearchListProvider,
+        SubscriptionErrorProvider,
+        CurrentTempUnitProvider,
+        WeatherCardsListProvider,
+        WeatherPaginationInfoProvider,
+        EventProvider
+      ]}
+    >
+      {children}
+    </Compose>
   );
 };
