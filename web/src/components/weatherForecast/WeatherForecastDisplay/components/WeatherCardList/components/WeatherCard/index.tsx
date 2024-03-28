@@ -21,7 +21,7 @@ export const WeatherCard: FC<Props> = memo(
     return (
       <div
         onClick={onClick}
-        className="w-full flex flex-col justify-between p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow sm:w-[48%] md:w-full lg:w-[48%] 2xl:w-[32%]"
+        className="w-full min-h-72 flex flex-col justify-between p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow sm:max-md:min-h-60 sm:w-[48%] md:w-full lg:w-[48%] 2xl:w-[32%]"
       >
         {_loading ? (
           <Spinner />

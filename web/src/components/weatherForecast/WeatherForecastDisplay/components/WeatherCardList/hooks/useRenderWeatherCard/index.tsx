@@ -1,3 +1,4 @@
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { WeatherForecast } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherCard } from '../../components';
@@ -14,7 +15,10 @@ export const useRenderWeatherCard = (): HookReturn => {
     const onClick = (): void => {
       setShownWeatherInfo(props);
       setCurrentCityWeatherInfo({ info: props });
-      setIsVisibleBelowMedium(true);
+      
+      if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
+        setIsVisibleBelowMedium(true);
+      }
     };
 
     return <WeatherCard {...props} onClick={onClick} />;

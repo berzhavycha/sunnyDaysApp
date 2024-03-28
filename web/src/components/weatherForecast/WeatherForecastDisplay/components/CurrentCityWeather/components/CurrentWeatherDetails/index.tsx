@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { env } from '@/core/env';
 import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
 import { useWeatherData, useIsLoading, useWeatherPagination, usePaginationPrefetch } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
@@ -19,8 +20,8 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
 
   const { onPrefetch } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages } = useWeatherPaginationInfo();
-  const { onNextPrefetch } = usePaginationPrefetch({
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
+  const { onNextPrefetch, onPrevPrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber: START_PAGE_NUMBER,
     currentPage,
@@ -29,6 +30,17 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
   });
 
   const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info.city ?? '');
+
+  const onMouseOverDeleteBtn = async (): Promise<void> => {
+    if (
+      (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
+      data?.userCitiesWeather.edges?.length === 1
+    ) {
+      await onPrevPrefetch();
+    } else {
+      await onNextPrefetch()
+    }
+  }
 
   return (
     <div
@@ -42,7 +54,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
         <>
           <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
           <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-          <DeleteButton text="Delete City" onClick={onDeleteCity} onMouseOver={onNextPrefetch} />
+          <DeleteButton text="Delete City" onClick={onDeleteCity} onMouseOver={onMouseOverDeleteBtn} />
         </>
       )}
     </div>
