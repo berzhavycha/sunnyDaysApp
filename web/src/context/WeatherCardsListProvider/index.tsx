@@ -19,7 +19,7 @@ type ContextType = {
   setIsAddingCard: Dispatch<SetStateAction<boolean>>;
   weatherData: UserCitiesWeatherQuery | null;
   setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
-  handleLoadingCardOnError: () => void
+  handleLoadingCardOnError: () => void;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -69,21 +69,21 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
           ...prevData,
           userCitiesWeather: {
             ...prevData.userCitiesWeather,
-            edges: [...prevData.userCitiesWeather.edges].filter(edge => !edge._loading),
+            edges: [...prevData.userCitiesWeather.edges].filter((edge) => !edge._loading),
           },
         };
       }
 
       return null;
     });
-  }
+  };
 
   const contextValue: ContextType = {
     isAddingCard,
     setIsAddingCard,
     weatherData,
     setWeatherData,
-    handleLoadingCardOnError
+    handleLoadingCardOnError,
   };
 
   return (

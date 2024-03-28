@@ -15,7 +15,7 @@ export const useRenderWeatherCard = (): HookReturn => {
     const onClick = (): void => {
       setShownWeatherInfo(props);
       setCurrentCityWeatherInfo({ info: props });
-      
+
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
         setIsVisibleBelowMedium(true);
       }

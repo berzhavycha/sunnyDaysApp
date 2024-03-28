@@ -38,9 +38,9 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
     ) {
       await onPrevPrefetch();
     } else {
-      await onNextPrefetch()
+      await onNextPrefetch();
     }
-  }
+  };
 
   return (
     <div
@@ -54,7 +54,11 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
         <>
           <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
           <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-          <DeleteButton text="Delete City" onClick={onDeleteCity} onMouseOver={onMouseOverDeleteBtn} />
+          <DeleteButton
+            text="Delete City"
+            onClick={onDeleteCity}
+            onMouseOver={onMouseOverDeleteBtn}
+          />
         </>
       )}
     </div>
