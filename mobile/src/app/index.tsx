@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { Spinner } from '@/components';
+import { BackgroundSpinner } from '@/components';
 
 const StartPage: FC = () => {
-  return <Spinner />;
+  return <BackgroundSpinner />;
 };
 
 export default StartPage;

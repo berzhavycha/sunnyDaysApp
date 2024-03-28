@@ -14,8 +14,8 @@ import {
 type ContextType = {
   isAddingCard: boolean;
   setIsAddingCard: (isAdding: boolean) => void;
-  weatherData: UserCitiesWeatherQuery | null;
-  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
+  weatherData: UserCitiesWeatherQuery | undefined;
+  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | undefined>>;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -31,7 +31,7 @@ export const useWeatherCardsList = (): ContextType => {
 };
 
 export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery>();
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
 
   useEffect(() => {
@@ -52,8 +52,6 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
             },
           };
         }
-
-        return null;
       });
     }
   }, [isAddingCard]);

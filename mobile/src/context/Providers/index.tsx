@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import { EventProvider } from 'react-native-outside-press';
 
-import { Compose } from '@/components';
+import { Compose } from '@/components/common';
 import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentUserProvider } from '../CurrentUser';
 import { SubscriptionErrorProvider } from '../SubscriptionError';

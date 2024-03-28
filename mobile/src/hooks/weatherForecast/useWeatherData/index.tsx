@@ -9,8 +9,8 @@ import {
 
 import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
 import { Env } from '@/env';
-import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
+import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery, UserCitiesWeatherQueryVariables } from './queries';
 
 type HookReturn = {
   data?: UserCitiesWeatherQuery;
@@ -19,6 +19,9 @@ type HookReturn = {
   fetchMore: (
     fetchMoreOptions: FetchMoreQueryOptions<OperationVariables, UserCitiesWeatherQuery>,
   ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery>>;
+  refetch: (
+    refetchOptions?: Partial<UserCitiesWeatherQueryVariables>,
+  ) => Promise<ApolloQueryResult<UserCitiesWeatherQuery | undefined>>;
 };
 
 export type WeatherForecast = {
@@ -29,6 +32,8 @@ export type WeatherForecast = {
   humidity: number;
   text: string;
   daysForecast: WeatherForecastDays[];
+  _deleted?: boolean;
+  _loading?: boolean;
 };
 
 export type WeatherForecastDays = {
@@ -43,7 +48,8 @@ export type WeatherForecastDays = {
 export const useWeatherData = (): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
   const { paginationOptions, isFetching, setTotalCount } = useWeatherPaginationInfo();
-  const { data, loading, error, fetchMore } = useQuery(UserCitiesWeatherDocument, {
+  const { weatherData, setWeatherData } = useWeatherCardsList();
+  const { data, loading, error, fetchMore, refetch } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
       forecastDaysAmount: Env.MAX_FORECAST_DAYS,
@@ -64,10 +70,12 @@ export const useWeatherData = (): HookReturn => {
       handleError(error);
     }
 
-    if (data) {
+    if (data && data.userCitiesWeather) {
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
+      setError({ message: '' });
+      setWeatherData(data);
     }
   }, [data, loading, error]);
 
-  return { data, loading: loading || isFetching, error, fetchMore };
+  return { data: weatherData, loading: loading || isFetching, error, fetchMore, refetch };
 };

@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 
-import { useSubscriptionError } from '@/context';
+import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
+import { Env } from '@/env'
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { useWeatherData } from '../useWeatherData';
-import { UserCitiesWeatherDocument } from '../useWeatherData/queries';
+import { useWeatherPagination } from '../useWeatherPagination';
+import { clearPageCache } from '../utils';
 import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
 
@@ -17,10 +19,12 @@ export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
   const { setError, handleError } = useSubscriptionError();
-  const { data } = useWeatherData();
-  const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument, {
-    refetchQueries: [UserCitiesWeatherDocument],
-  });
+  const { data, refetch } = useWeatherData();
+  const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
+  const client = useApolloClient();
+  const { onGoToPage } = useWeatherPagination();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
+  const { setIsAddingCard } = useWeatherCardsList();
 
   useEffect(() => {
     if (error) {
@@ -45,6 +49,21 @@ export const useAddWeatherSubscription = (
           },
         },
       });
+
+      const isAddingOnTheNextPage = totalCount % Env.WEATHER_CITIES_LIMIT === 0;
+      if (currentPage !== totalPages || isAddingOnTheNextPage) {
+        clearPageCache(client, {
+          ...paginationOptions,
+          offset: (totalPages - 1) * paginationOptions.limit,
+        });
+        await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
+      } else {
+        setIsAddingCard(true);
+        setTimeout(async () => {
+          await refetch();
+        }, 2000);
+        setIsAddingCard(false);
+      }
 
       setCity('');
     } catch (err) {

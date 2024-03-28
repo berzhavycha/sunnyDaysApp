@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
 import { Direction } from '@/shared';
-import { usePagination } from '@/hooks';
+import { usePagination } from '@/hooks/common';
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
 import { useWeatherData } from '../useWeatherData';
 import {

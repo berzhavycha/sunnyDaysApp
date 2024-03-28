@@ -3,12 +3,12 @@ import { useMutation } from '@apollo/client';
 
 import { Env } from '@/env';
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import { Direction } from '@/shared';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 import { useWeatherData } from '../useWeatherData';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
-import { Direction } from '@/shared/types';
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
