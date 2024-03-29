@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 
-import './style/index.css'
+import './style/index.css';
 
 import { WeatherForecastDays } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
@@ -16,7 +16,8 @@ export const Forecast: FC<Props> = memo(({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
   const { renderItem } = useRenderForecastItem();
 
-  const isScrollable = env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE
+  const isScrollable =
+    env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
 
   const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
 
