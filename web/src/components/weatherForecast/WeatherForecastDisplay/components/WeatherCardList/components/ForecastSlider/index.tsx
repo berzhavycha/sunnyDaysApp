@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/controller';
-import './swiper.css'
+import './style/index.css'
 
 import { WeatherForecastDays } from '@/hooks';
 import { env } from '@/core/env';
