@@ -11,12 +11,12 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   isDark?: boolean;
   isSecured?: boolean;
   iconStyles?: string;
-  styles?: string;
+  className?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { placeholder, label, error, isSecured, icon, styles, iconStyles, autoComplete, ...props },
+    { placeholder, label, error, isSecured, icon, className, iconStyles, ...props },
     ref,
   ) => {
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(Boolean(isSecured));
@@ -43,8 +43,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           type={isPasswordShown ? 'password' : 'text'}
           placeholder={placeholder}
-          className={`text-sm w-full bg-slate-200 pl-8 pr-4 placeholder-gray-500 py-2 rounded-md outline-none ${styles}`}
-          autoComplete={autoComplete}
+          className={`text-sm w-full bg-slate-200 pl-8 pr-4 placeholder-gray-500 py-2 rounded-md outline-none ${className}`}
           {...props}
         />
         {isSecured && (

@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { MainLayout } from '@/layouts';
-import './globals.css';
 import { FC, PropsWithChildren } from 'react';
+
+import { MainLayout } from '@/layouts';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Sunny Days',

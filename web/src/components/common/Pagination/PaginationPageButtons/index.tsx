@@ -34,7 +34,7 @@ export const PaginationPageButtons: FC<Props> = ({
             content={page}
             isActive={isActive}
             onClick={onClick}
-            styles="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
+            className="w-10 h-10 px-2 text-xs md:w-12 md:h-12 md:text-base"
             onMouseOver={onPagePrefetch}
           />
         );

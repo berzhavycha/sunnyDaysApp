@@ -10,7 +10,7 @@ type Props = {
   onClick: () => Promise<void> | void;
   isActive?: boolean;
   isDisabled?: boolean;
-  styles?: string;
+  className?: string;
   onMouseOver?: () => Promise<void> | void;
 };
 
@@ -19,7 +19,7 @@ export const Button: FC<Props> = ({
   onClick,
   isActive,
   isDisabled,
-  styles,
+  className,
   onMouseOver,
 }) => {
   const onPress = async (): Promise<void> => {
@@ -35,7 +35,7 @@ export const Button: FC<Props> = ({
 
   return (
     <button
-      className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${styles}`}
+      className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${className}`}
       onClick={onPress}
       disabled={isDisabled}
       onMouseOver={onMouseOver}

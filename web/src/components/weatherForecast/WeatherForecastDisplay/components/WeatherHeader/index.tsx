@@ -24,11 +24,11 @@ export const WeatherHeader: FC = () => {
       <WeatherCityInput />
       <div className="-mt-2 w-full flex gap-6 sm:w-auto sm:mt-0 sm:gap-6 md:max-xl:w-full md:max-xl:mb-6">
         <Button
-          styles={utilButtonStyles}
+          className={utilButtonStyles}
           content={tempUnitSigns[currentTempUnit.name]}
           onClick={onTempUnitChange}
         />
-        <Button styles={utilButtonStyles} content={onSignOutBtnContent} onClick={signOutHandler} />
+        <Button className={utilButtonStyles} content={onSignOutBtnContent} onClick={signOutHandler} />
       </div>
     </header>
   );

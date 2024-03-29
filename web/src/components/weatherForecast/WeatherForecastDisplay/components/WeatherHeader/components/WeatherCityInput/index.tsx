@@ -39,7 +39,7 @@ export const WeatherCityInput: FC = () => {
       <Button
         content={ADD_SUBSCRIPTION_BTN_CONTENT}
         onClick={onAddSubscription}
-        styles="text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4"
+        className="text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4"
       />
     </div>
   );

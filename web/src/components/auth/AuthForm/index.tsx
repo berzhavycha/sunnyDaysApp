@@ -53,7 +53,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
             placeholder="Enter your email"
             error={errors.email?.message ?? fieldsError.email ?? ''}
             icon={faEnvelope}
-            styles={inputStyles}
+            className={inputStyles}
             iconStyles={inputIconStyles}
             autoComplete="off"
           />
@@ -63,7 +63,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
             placeholder="Enter your password"
             error={errors.password?.message ?? fieldsError.password ?? ''}
             icon={faLock}
-            styles={inputStyles}
+            className={inputStyles}
             iconStyles={inputIconStyles}
             autoComplete="off"
             isSecured
@@ -75,7 +75,7 @@ export const AuthForm: FC<Props> = ({ title, authType, subtitle, authMutation })
               placeholder="Enter confirm password"
               error={errors?.confirmPassword?.message ?? fieldsError.confirmPassword ?? ''}
               icon={faKey}
-              styles={inputStyles}
+              className={inputStyles}
               iconStyles={inputIconStyles}
               autoComplete="off"
               isSecured
