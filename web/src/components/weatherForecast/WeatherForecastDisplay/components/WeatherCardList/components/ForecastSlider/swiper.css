@@ -1,0 +1,15 @@
+:root {
+    --active-bullet-bg: rgb(20, 20, 196);
+    --regular-bullet-bg: rgb(142, 142, 245);
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--active-bullet-bg);
+    opacity: 1;
+}
+
+.swiper-pagination-bullet {
+    background-color: var(--regular-bullet-bg);
+    padding: 6px;
+    opacity: 1;
+}

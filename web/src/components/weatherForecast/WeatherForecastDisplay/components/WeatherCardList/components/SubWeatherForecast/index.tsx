@@ -18,8 +18,8 @@ export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, ...info })
   const weatherIcon = pickWeatherIcon(text);
 
   return (
-    <div className="w-1/3 text-center">
-      <div className="w-full mb-2 flex flex-col items-center justify-between bg-gradient-to-t from-blue-800 to-blue-600 rounded-xl p-2 text-center relative">
+    <div className="w-full text-center relative">
+      <div className="w-full mb-2 flex flex-col items-center justify-between bg-gradient-to-t from-blue-800 to-blue-600 rounded-xl p-2 text-center">
         <Image
           src={weatherIconMapping[weatherIcon]}
           width={65}

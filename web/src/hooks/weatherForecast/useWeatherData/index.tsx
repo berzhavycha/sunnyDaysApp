@@ -79,16 +79,16 @@ export const useWeatherData = (): HookReturn => {
     UserCitiesWeatherDocument,
     currentUser
       ? {
-          variables: {
-            ...paginationOptions,
-            forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
-          },
-          fetchPolicy: getSuspenseFetchPolicyForKey(
-            'weatherData',
-            ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
-          ),
-          errorPolicy: 'all',
-        }
+        variables: {
+          ...paginationOptions,
+          forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
+        },
+        fetchPolicy: getSuspenseFetchPolicyForKey(
+          'weatherData',
+          ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
+        ),
+        errorPolicy: 'all',
+      }
       : skipToken,
   );
 

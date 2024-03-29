@@ -58,7 +58,7 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
-        styles="text-xs sm:pl-11 sm:text-base sm:py-2"
+        className="text-xs sm:pl-11 sm:text-base sm:py-2"
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
       />
       {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (

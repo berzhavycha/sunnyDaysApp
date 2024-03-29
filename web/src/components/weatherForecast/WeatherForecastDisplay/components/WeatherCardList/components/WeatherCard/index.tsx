@@ -7,7 +7,7 @@ import { useCurrentTempUnit } from '@/context';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { SubWeatherForecast } from '../SubWeatherForecast';
+import { ForecastSlider } from '../ForecastSlider';
 
 type Props = WeatherForecast & {
   onClick: () => void;
@@ -27,7 +27,7 @@ export const WeatherCard: FC<Props> = memo(
           <Spinner />
         ) : (
           <>
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-2">
               <div className="flex flex-col gap-2 text-left">
                 <p className="text-sm text-white sm:text-sm md:text-md">{city}</p>
                 <TemperatureInfo
@@ -47,9 +47,7 @@ export const WeatherCard: FC<Props> = memo(
               />
             </div>
             <div className="flex justify-between items-center gap-4">
-              {daysForecast?.map((item, index) => {
-                return <SubWeatherForecast key={index} {...item} />;
-              })}
+              <ForecastSlider forecasts={daysForecast} />
             </div>
           </>
         )}
