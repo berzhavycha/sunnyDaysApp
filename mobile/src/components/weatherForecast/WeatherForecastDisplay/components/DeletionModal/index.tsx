@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { CustomTouchable } from '@/components/common';
+import { ActiveOpacity, CustomTouchable } from '@/components/common';
 import { useDeleteWeatherSubscription } from '@/hooks';
 
 type Props = {
@@ -21,10 +21,10 @@ export const DeletionModal: FC<Props> = ({ city, onClose }) => {
     <View className="flex w-60 bg-white flex-col items-center p-3 pb-2 rounded-md shadow-lg">
       <Text className="mb-6 text-md">Are you sure you want to delete {city}?</Text>
       <View className="w-full flex flex-row gap-2 justify-end">
-        <CustomTouchable onPress={onDelete} style={styles.okButton}>
+        <CustomTouchable onPress={onDelete} style={styles.okButton} activeOpacity={ActiveOpacity.MEDIUM}>
           <Text className="text-white">Ok</Text>
         </CustomTouchable>
-        <CustomTouchable onPress={onClose} style={styles.cancelButton}>
+        <CustomTouchable onPress={onClose} style={styles.cancelButton} activeOpacity={ActiveOpacity.MEDIUM}>
           <Text>Cancel</Text>
         </CustomTouchable>
       </View>
