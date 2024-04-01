@@ -68,7 +68,7 @@ export const useWeatherData = (): HookReturn => {
   useEffect(() => {
     if (error) {
       handleError(error);
-      handleLoadingCardOnError()
+      handleLoadingCardOnError();
     }
 
     if (data && data.userCitiesWeather) {
@@ -77,6 +77,5 @@ export const useWeatherData = (): HookReturn => {
     }
   }, [data, loading, error]);
 
-  return { data: weatherData, loading: loading || isFetching, error, fetchMore, refetch
-};
+  return { data: weatherData, loading: loading || isFetching, error, fetchMore, refetch };
 };

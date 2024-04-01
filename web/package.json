@@ -32,7 +32,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
     "react-spinners": "^0.13.8",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "swiper": "^11.1.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",

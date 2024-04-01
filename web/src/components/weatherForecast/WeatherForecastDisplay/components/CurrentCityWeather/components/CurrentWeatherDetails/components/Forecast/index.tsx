@@ -1,8 +1,11 @@
 import { FC, memo } from 'react';
 
+import './style/index.css';
+
 import { WeatherForecastDays } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
 import { CustomFlatList } from '@/components';
+import { env } from '@/core/env';
 import { useRenderForecastItem } from './hooks';
 
 type Props = {
@@ -12,6 +15,9 @@ type Props = {
 export const Forecast: FC<Props> = memo(({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
   const { renderItem } = useRenderForecastItem();
+
+  const isScrollable =
+    env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
 
   const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
 
@@ -31,7 +37,7 @@ export const Forecast: FC<Props> = memo(({ info }) => {
       <CustomFlatList
         data={info}
         renderItem={renderItem}
-        className={'flex flex-col justify-between md:gap-1 lg:gap-3'}
+        className={`custom-scroll ${isScrollable && 'pr-3'} flex flex-col justify-between h-64 overflow-scroll md:gap-1 lg:gap-2`}
         keyExtractor={keyExtractor}
       />
     </div>
