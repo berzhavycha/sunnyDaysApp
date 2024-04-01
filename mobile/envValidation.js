@@ -10,6 +10,7 @@ const envSchema = Joi.object({
     WEATHER_CITIES_ORDER: Joi.string().default('ASC'),
     MAX_WEATHER_CITIES_AMOUNT: Joi.number().default(10),
     MAX_FORECAST_DAYS: Joi.number().default(3),
+    FORECAST_DAYS_PER_SLIDE: Joi.number().default(3),
     WEATHER_FORECAST_CACHE_MINUTES_TIME: Joi.number().default(30),
     PASSWORD_MIN_LENGTH: Joi.number().default(8),
     FEATURE_CACHE_MINUTES_TIME: Joi.number().default(15)

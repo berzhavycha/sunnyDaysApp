@@ -17,6 +17,7 @@ const _clientEnv = {
     MAX_WEATHER_CITIES_AMOUNT: parseInt(process.env.MAX_WEATHER_CITIES_AMOUNT ?? '', 10),
     WEATHER_CITIES_ORDER: process.env.WEATHER_CITIES_ORDER,
     MAX_FORECAST_DAYS: parseInt(process.env.MAX_FORECAST_DAYS ?? '', 10),
+    FORECAST_DAYS_PER_SLIDE: parseInt(process.env.FORECAST_DAYS_PER_SLIDE ?? '', 10),
     WEATHER_FORECAST_CACHE_MINUTES_TIME: parseInt(process.env.WEATHER_FORECAST_CACHE_MINUTES_TIME ?? '', 10),
     PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH ?? '', 10),
     FEATURE_CACHE_MINUTES_TIME: parseInt(process.env.FEATURE_CACHE_MINUTES_TIME ?? '', 10)

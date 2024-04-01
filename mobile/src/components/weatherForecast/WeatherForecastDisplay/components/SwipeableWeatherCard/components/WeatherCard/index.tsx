@@ -6,8 +6,8 @@ import { useCurrentTempUnit } from '@/context';
 import { PlainSpinner } from '@/components/common';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { SubWeatherForecastDay } from '../SubWeatherForecastDay';
 import { pickWeatherIcon } from '../../utils';
+import { ForecastSlider } from '../ForecastSlider';
 
 type Props = {
   info: WeatherForecast;
@@ -20,7 +20,7 @@ export const WeatherCard: FC<Props> = memo(({ info }) => {
   const weatherIcon = pickWeatherIcon(text);
 
   return (
-    <View className="flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl h-80">
+    <View className="flex p-4 pt-2 mb-4 items-center bg-blue-800 rounded-xl min-h-80">
       {_loading ? (
         <View className="w-full h-full flex justify-center items-center">
           <PlainSpinner />
@@ -41,10 +41,8 @@ export const WeatherCard: FC<Props> = memo(({ info }) => {
               style={{ width: 112, height: 112 }}
             />
           </View>
-          <View className="w-full mt-2 flex-row justify-between">
-            {daysForecast.map((dayForecast, index) => {
-              return <SubWeatherForecastDay key={index} info={dayForecast} />;
-            })}
+          <View className="w-full mt-2 flex-row">
+            <ForecastSlider forecasts={daysForecast} />
           </View>
         </>
       )}

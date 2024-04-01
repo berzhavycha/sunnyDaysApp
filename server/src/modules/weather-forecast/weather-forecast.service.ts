@@ -158,6 +158,23 @@ export class WeatherForecastService {
             },
             avghumidity: 0,
           }
+        } as IForecastDay,
+        {
+          date: '2005-01-01',
+          day: {
+            avgtemp_c: 0,
+            avgtemp_f: 0,
+            maxtemp_c: 0,
+            maxtemp_f: 0,
+            mintemp_c: 0,
+            mintemp_f: 0,
+            totalprecip_mm: 0,
+            maxwind_kph: 0,
+            condition: {
+              text: 'Sunny',
+            },
+            avghumidity: 0,
+          }
         } as IForecastDay]),
       };
     });
