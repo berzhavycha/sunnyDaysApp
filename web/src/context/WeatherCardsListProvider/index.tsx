@@ -11,7 +11,7 @@ import {
   useState,
 } from 'react';
 
-import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { UserCitiesWeatherQuery } from '@/hooks';
 import { MOCKED_WEATHER_CARD } from '@/shared';
 
 type ContextType = {
