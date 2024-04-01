@@ -1,12 +1,13 @@
 import { FC, memo } from 'react';
 
-import './style/index.css';
-
-import { WeatherForecastDays } from '@/hooks';
-import { useCurrentCityWeatherInfo } from '@/context';
 import { CustomFlatList } from '@/components';
+import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
+import { WeatherForecastDays } from '@/hooks';
+
 import { useRenderForecastItem } from './hooks';
+
+import './style/index.css';
 
 type Props = {
   info: WeatherForecastDays[];

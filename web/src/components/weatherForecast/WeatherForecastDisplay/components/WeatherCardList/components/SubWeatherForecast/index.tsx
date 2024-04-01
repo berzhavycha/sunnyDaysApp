@@ -1,10 +1,9 @@
-import React, { FC, memo } from 'react';
 import Image from 'next/image';
+import React, { FC, memo } from 'react';
 
 import { TemperatureInfo, weatherIconMapping } from '@/components';
-import { useCurrentTempUnit } from '@/context';
+import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
 
 type Props = {
   celsius: number;

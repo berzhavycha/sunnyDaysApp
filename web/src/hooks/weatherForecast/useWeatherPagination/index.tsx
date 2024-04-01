@@ -1,16 +1,17 @@
 import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
-import { Direction, PaginationQueryOptionsState } from '@/shared';
-import { usePagination } from '@/hooks';
 import { env } from '@/core/env';
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
-import { useWeatherData } from '../useWeatherData';
+import { usePagination } from '@/hooks';
+import { Direction, PaginationQueryOptionsState } from '@/shared';
+
 import {
+  useWeatherData,
   UserCitiesWeatherDocument,
   UserCitiesWeatherQuery,
   UserCitiesWeatherQueryVariables,
-} from '../useWeatherData/queries';
+} from '../useWeatherData';
 
 export type OnPrefetch = (
   variables: Partial<PaginationQueryOptionsState>,

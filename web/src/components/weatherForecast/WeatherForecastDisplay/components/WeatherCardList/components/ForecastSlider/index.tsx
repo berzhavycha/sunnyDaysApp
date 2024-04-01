@@ -1,15 +1,16 @@
 import { FC } from 'react';
+import 'swiper/css';
+import 'swiper/css/controller';
+import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/controller';
-import './style/index.css';
-
-import { WeatherForecastDays } from '@/hooks';
 import { env } from '@/core/env';
+import { WeatherForecastDays } from '@/hooks';
+
 import { SubWeatherForecast } from '../SubWeatherForecast';
+
+import './style/index.css';
 
 type Props = {
   forecasts?: WeatherForecastDays[];

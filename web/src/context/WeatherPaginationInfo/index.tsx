@@ -1,21 +1,20 @@
 'use client';
 
-import {
-  FC,
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from 'react';
 import { useSearchParams } from 'next/navigation';
+import {
+  createContext,
+  Dispatch,
+  FC,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-import { useQueryParams } from '@/hooks';
-import { PaginationQueryOptionsState } from '@/shared';
 import { env } from '@/core/env';
-import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { useQueryParams, UserCitiesWeatherQueryVariables } from '@/hooks';
+import { PaginationQueryOptionsState } from '@/shared';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;

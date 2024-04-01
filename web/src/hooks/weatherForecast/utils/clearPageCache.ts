@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/client';
 
-import { PaginationQueryOptionsState } from '@/shared';
 import { env } from '@/core/env';
+import { PaginationQueryOptionsState } from '@/shared';
 
 export const clearPageCache = (
   client: ApolloClient<object>,

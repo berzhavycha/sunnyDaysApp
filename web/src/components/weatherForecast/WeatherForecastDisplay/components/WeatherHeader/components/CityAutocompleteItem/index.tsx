@@ -1,6 +1,6 @@
-import { FC } from 'react';
 import { faLocationPin } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC } from 'react';
 
 type Props = {
   name: string;

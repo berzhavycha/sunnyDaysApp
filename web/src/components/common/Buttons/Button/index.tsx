@@ -3,6 +3,7 @@
 import { FC } from 'react';
 
 import { convertObjectToTailwind } from '@/shared';
+
 import { buttonStyle } from './constants';
 
 type Props = {

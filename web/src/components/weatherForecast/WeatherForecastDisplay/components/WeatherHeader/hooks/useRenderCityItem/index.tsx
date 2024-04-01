@@ -1,5 +1,6 @@
 import { useCitySearchList } from '@/context';
 import { City } from '@/hooks';
+
 import { CityAutocompleteItem } from '../../components';
 
 type HookReturn = {

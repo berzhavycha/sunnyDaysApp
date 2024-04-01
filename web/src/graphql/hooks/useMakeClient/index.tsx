@@ -1,4 +1,4 @@
-import { NormalizedCacheObject, ApolloLink } from '@apollo/client';
+import { ApolloLink, NormalizedCacheObject } from '@apollo/client';
 import {
   NextSSRApolloClient,
   NextSSRInMemoryCache,
@@ -6,8 +6,9 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr';
 
 import { IS_CLIENT } from '@/shared';
+
+import { errorLink, forwardCookieLink, mainHttpLink, refreshTokenLink } from '../../links';
 import { resolvers } from '../../resolvers';
-import { errorLink, refreshTokenLink, mainHttpLink, forwardCookieLink } from '../../links';
 import { typePolicies } from '../../typePolicies';
 
 type UseMakeClientReturn = {

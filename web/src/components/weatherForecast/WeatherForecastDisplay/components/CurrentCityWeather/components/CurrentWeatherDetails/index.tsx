@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
-import { env } from '@/core/env';
+import { DeleteButton, NoData, Spinner } from '@/components/common';
 import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
-import { useWeatherData, useIsLoading, useWeatherPagination, usePaginationPrefetch } from '@/hooks';
+import { env } from '@/core/env';
+import { useIsLoading, usePaginationPrefetch, useWeatherData, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
-import { Spinner, NoData, DeleteButton } from '@/components/common';
-import { TodayWeatherInfo, Forecast } from './components';
+
+import { Forecast, TodayWeatherInfo } from './components';
 import { useCurrentWeatherTime } from './hooks';
 
 type Props = {

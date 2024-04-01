@@ -1,11 +1,12 @@
 'use client';
 
-import React, { ChangeEvent, useRef } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import React, { ChangeEvent, useRef } from 'react';
 
 import { useOutsideClick } from '@/hooks';
-import { Input } from '../Input';
+
 import { CustomFlatList } from '../CustomFlatList';
+import { Input } from '../Input';
 
 type Props<TItem> = {
   loading: boolean;

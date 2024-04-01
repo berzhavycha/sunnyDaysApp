@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import {
   ApolloError,
   ApolloQueryResult,
@@ -9,8 +8,8 @@ import {
   skipToken,
 } from '@apollo/client';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { useEffect } from 'react';
 
-import { env } from '@/core/env';
 import {
   useCurrentCityWeatherInfo,
   useCurrentUser,
@@ -18,7 +17,9 @@ import {
   useWeatherCardsList,
   useWeatherPaginationInfo,
 } from '@/context';
+import { env } from '@/core/env';
 import { getSuspenseFetchPolicyForKey, ONE_MINUTE } from '@/shared';
+
 import {
   UserCitiesWeatherDocument,
   UserCitiesWeatherQuery,

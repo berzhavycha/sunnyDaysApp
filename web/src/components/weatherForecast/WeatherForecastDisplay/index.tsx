@@ -1,6 +1,7 @@
 import { FC, Suspense } from 'react';
 
 import { Spinner } from '@/components/common';
+
 import { CurrentCityWeather, WeatherCardList, WeatherHeader } from './components';
 
 export const WeatherForecastDisplay: FC = () => {

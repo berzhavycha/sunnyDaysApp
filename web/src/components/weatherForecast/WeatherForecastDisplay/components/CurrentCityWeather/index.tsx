@@ -2,10 +2,11 @@
 
 import { FC, useState } from 'react';
 
-import { useCurrentCityWeatherInfo } from '@/context';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
-import { useResizeWindow } from '@/hooks';
 import { ModalBackground } from '@/components/common';
+import { useCurrentCityWeatherInfo } from '@/context';
+import { useResizeWindow } from '@/hooks';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+
 import { CurrentWeatherDetails, DeletionModal } from './components';
 
 export const CurrentCityWeather: FC = () => {

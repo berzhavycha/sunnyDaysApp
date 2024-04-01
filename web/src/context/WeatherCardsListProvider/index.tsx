@@ -1,18 +1,18 @@
 'use client';
 
 import {
-  FC,
   createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-  useEffect,
   Dispatch,
+  FC,
+  PropsWithChildren,
   SetStateAction,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
-import { MOCKED_WEATHER_CARD } from '@/shared';
 import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
+import { MOCKED_WEATHER_CARD } from '@/shared';
 
 type ContextType = {
   isAddingCard: boolean;

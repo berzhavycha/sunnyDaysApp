@@ -1,9 +1,10 @@
-import { FC, PropsWithChildren } from 'react';
-import { Inter } from 'next/font/google';
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { Inter } from 'next/font/google';
+import { FC, PropsWithChildren } from 'react';
 
 import { Providers } from '@/context';
+
 import { ProtectedLayout } from '../ProtectedLayout';
 
 config.autoAddCss = false;

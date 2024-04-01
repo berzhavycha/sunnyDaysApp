@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Size, FontWeight, valueClassName } from './constants';
+import { FontWeight, Size, valueClassName } from './constants';
 
 type Props = {
   value: number;

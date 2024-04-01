@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CurrentCityWeatherInfoState } from '@/context';
 import { daysOfWeek, getTimeFormat } from '@/shared';

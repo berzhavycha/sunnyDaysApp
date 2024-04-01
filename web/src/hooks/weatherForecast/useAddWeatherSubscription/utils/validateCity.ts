@@ -1,4 +1,4 @@
-import { UserCitiesWeatherQuery } from '../../useWeatherData/queries';
+import { UserCitiesWeatherQuery } from '../../useWeatherData';
 import { validateCityRules } from '../constants';
 
 export const validateCity = (city: string, data: UserCitiesWeatherQuery | null): string | void => {

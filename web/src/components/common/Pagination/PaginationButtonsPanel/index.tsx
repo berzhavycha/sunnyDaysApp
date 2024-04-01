@@ -1,11 +1,12 @@
-import { FC } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC } from 'react';
 
-import { PaginationQueryOptionsState } from '@/shared';
 import { OnPrefetch, usePaginationPrefetch } from '@/hooks';
-import { PaginationPageButtons } from '../PaginationPageButtons';
+import { PaginationQueryOptionsState } from '@/shared';
+
 import { Button } from '../../Buttons';
+import { PaginationPageButtons } from '../PaginationPageButtons';
 
 type Props = {
   paginationOptions: PaginationQueryOptionsState;

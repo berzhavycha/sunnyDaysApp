@@ -1,12 +1,13 @@
-import { FC, memo } from 'react';
+import { faCloudRain, faDroplet, faWind } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { faWind, faCloudRain, faDroplet } from '@fortawesome/free-solid-svg-icons';
+import { FC, memo } from 'react';
 
-import { useCurrentTempUnit } from '@/context';
 import { TemperatureInfo, weatherIconMapping } from '@/components';
-import { WeatherForecast } from '@/hooks';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
+import { useCurrentTempUnit } from '@/context';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+import { WeatherForecast } from '@/hooks';
+
 import { ExtraWeatherInfo } from '../ExtraWeatherInfo';
 
 type Props = WeatherForecast & {

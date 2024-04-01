@@ -1,14 +1,16 @@
 'use client';
 
-import { Dispatch, SetStateAction, startTransition, useEffect } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
+import { Dispatch, SetStateAction, startTransition, useEffect } from 'react';
 
-import { env } from '@/core/env';
 import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
+import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+
 import { useWeatherData } from '../useWeatherData';
 import { useWeatherPagination } from '../useWeatherPagination';
 import { clearPageCache } from '../utils';
+
 import { AddWeatherSubscriptionDocument } from './mutations';
 import { validateCity } from './utils';
 

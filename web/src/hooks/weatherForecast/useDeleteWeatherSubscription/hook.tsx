@@ -1,19 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
+import { useEffect } from 'react';
 
-import { env } from '@/core/env';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
   useWeatherPaginationInfo,
 } from '@/context';
+import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { Direction, IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+
 import { useWeatherData } from '../useWeatherData';
-import { purgePageCache, readPageCache, writePageCache } from '../utils';
 import { useWeatherPagination } from '../useWeatherPagination';
+import { purgePageCache, readPageCache, writePageCache } from '../utils';
+
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
 type HookReturn = {

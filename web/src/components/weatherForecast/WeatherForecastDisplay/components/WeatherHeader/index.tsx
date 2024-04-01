@@ -1,13 +1,13 @@
 'use client';
 
-import { FC } from 'react';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC } from 'react';
 
-import { useSignOut } from '@/hooks';
-import { useCurrentTempUnit } from '@/context';
 import { Button } from '@/components/common';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+import { useCurrentTempUnit, tempUnitSigns } from '@/context';
+import { useSignOut } from '@/hooks';
+
 import { WeatherCityInput } from './components';
 
 export const WeatherHeader: FC = () => {

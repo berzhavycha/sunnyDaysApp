@@ -1,12 +1,12 @@
-import { FC, memo } from 'react';
 import Image from 'next/image';
+import { FC, memo } from 'react';
 
+import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { WeatherForecast } from '@/hooks';
 import { Spinner, TemperatureInfo } from '@/components/common';
-import { useCurrentTempUnit } from '@/context';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+
 import { ForecastSlider } from '../ForecastSlider';
 
 type Props = WeatherForecast & {

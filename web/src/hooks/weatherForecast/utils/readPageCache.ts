@@ -1,11 +1,12 @@
 import { ApolloCache } from '@apollo/client';
 
-import { PaginationQueryOptionsState } from '@/shared';
 import { env } from '@/core/env';
+import { PaginationQueryOptionsState } from '@/shared';
+
 import {
-  UserCitiesWeatherQueryVariables,
-  UserCitiesWeatherQuery,
   UserCitiesWeatherDocument,
+  UserCitiesWeatherQuery,
+  UserCitiesWeatherQueryVariables,
 } from '../useWeatherData/queries';
 
 export const readPageCache = (

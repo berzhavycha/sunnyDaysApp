@@ -1,5 +1,5 @@
-import { FC, PropsWithChildren } from 'react';
 import Image from 'next/image';
+import { FC, PropsWithChildren } from 'react';
 
 import { AuthWelcome } from './components';
 

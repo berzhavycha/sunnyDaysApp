@@ -1,6 +1,7 @@
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+
 import * as Types from '@/graphql/__generated__/types';
 
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type CitiesQueryVariables = Types.Exact<{
   prefix: Types.Scalars['String']['input'];
   sort: Types.Scalars['String']['input'];

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { FC } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { FC } from 'react';
 
 type Props = {
   className?: string;

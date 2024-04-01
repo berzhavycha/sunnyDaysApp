@@ -1,15 +1,16 @@
 'use client';
 
-import { FC } from 'react';
+import { DocumentNode } from '@apollo/client';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { DocumentNode } from '@apollo/client';
 
-import { AuthType, UserDto, useAuth } from '@/hooks';
 import { Input } from '@/components/common';
-import { userSchema } from './validation';
+import { AuthType, useAuth, UserDto } from '@/hooks';
+
 import { SubmitButton } from './components';
+import { userSchema } from './validation';
 
 type Props = {
   title: string;

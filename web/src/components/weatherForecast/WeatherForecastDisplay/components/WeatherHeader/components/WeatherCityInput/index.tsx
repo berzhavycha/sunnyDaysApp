@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 
-import { useCitySearchList, useSubscriptionError } from '@/context';
-import { useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
-import { InputAutocomplete, Button } from '@/components/common';
+import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
+import { useCitySearchList, useSubscriptionError } from '@/context';
+import { useAddWeatherSubscription, useCityInputComplete } from '@/hooks';
+
 import { useRenderCityItem } from '../../hooks';
 
 export const WeatherCityInput: FC = () => {

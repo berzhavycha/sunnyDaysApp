@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
 import { useApolloClient } from '@apollo/client';
+import { FC, PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren & {
   tokensHash: string;

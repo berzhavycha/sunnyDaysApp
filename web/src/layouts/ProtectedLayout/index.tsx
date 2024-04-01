@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, PropsWithChildren, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { FC, PropsWithChildren, useEffect } from 'react';
 
 import { useCurrentUser } from '@/context';
 import { env } from '@/core/env';

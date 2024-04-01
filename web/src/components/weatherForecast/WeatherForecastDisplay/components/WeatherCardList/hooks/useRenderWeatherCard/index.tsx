@@ -1,6 +1,7 @@
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
-import { WeatherForecast } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '@/context';
+import { WeatherForecast } from '@/hooks';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+
 import { WeatherCard } from '../../components';
 
 type HookReturn = {

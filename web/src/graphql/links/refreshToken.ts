@@ -1,4 +1,4 @@
-import { ApolloLink, ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloLink, NormalizedCacheObject } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 import { refreshAccessToken } from '../utils';

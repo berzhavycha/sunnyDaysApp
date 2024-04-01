@@ -1,9 +1,10 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
+import { FC, PropsWithChildren } from 'react';
 
 import { useMakeClient } from '@/graphql';
+
 import { UpdateAuth } from '../UpdateAuth';
 
 type Props = PropsWithChildren & {
