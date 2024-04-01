@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   ApolloError,
   ApolloQueryResult,
@@ -6,10 +5,12 @@ import {
   OperationVariables,
   useQuery,
 } from '@apollo/client';
+import { useEffect } from 'react';
 
-import { ONE_MINUTE, getFetchPolicyForKey } from '@/shared';
-import { Env } from '@/env';
 import { useSubscriptionError, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
+import { Env } from '@/env';
+import { getFetchPolicyForKey, ONE_MINUTE } from '@/shared';
+
 import {
   UserCitiesWeatherDocument,
   UserCitiesWeatherQuery,

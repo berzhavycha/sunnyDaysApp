@@ -1,8 +1,7 @@
 import { FC } from 'react';
 
 import { AuthForm } from '@/components';
-import { AuthType } from '@/hooks';
-import { SignInDocument } from '@/hooks/auth/useAuth/mutations';
+import { AuthType, SignInDocument } from '@/hooks';
 
 const SignInScreen: FC = () => {
   return (

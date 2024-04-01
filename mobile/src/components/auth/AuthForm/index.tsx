@@ -1,13 +1,14 @@
-import { FC } from 'react';
-import { DocumentNode } from 'graphql';
-import { View, Text, Image } from 'react-native';
-import { Link } from 'expo-router';
-import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Link } from 'expo-router';
+import { DocumentNode } from 'graphql';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { Image, Text, View } from 'react-native';
 
-import { Button, ControlledInput, BackgroundSpinner } from '@/components/common';
-import { AuthType, UserDto, useAuth } from '@/hooks';
+import { BackgroundSpinner, Button, ControlledInput } from '@/components/common';
+import { AuthType, useAuth, UserDto } from '@/hooks';
 import { convertCamelToSpacedPascal } from '@/shared';
+
 import { userSchema } from './validation';
 
 export type AuthFormProps = {

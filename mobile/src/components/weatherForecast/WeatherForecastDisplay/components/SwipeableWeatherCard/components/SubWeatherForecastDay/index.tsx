@@ -1,10 +1,10 @@
-import { memo, FC } from 'react';
-import { View, Text, Image } from 'react-native';
+import { FC, memo } from 'react';
+import { Image, Text, View } from 'react-native';
 
-import { useCurrentTempUnit } from '@/context';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
+import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { WeatherForecastDays } from '@/hooks';
+
 import { pickWeatherIcon } from '../../utils';
 
 type Props = {

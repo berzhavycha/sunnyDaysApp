@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { CustomTouchable } from '../../CustomTouchable';
-import { ActiveOpacity } from '../../CustomTouchable/constants';
+import { CustomTouchable, ActiveOpacity } from '../../CustomTouchable';
 
 type Props = {
   onClick: () => Promise<void>;

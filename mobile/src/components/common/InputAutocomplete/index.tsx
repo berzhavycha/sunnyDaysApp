@@ -1,4 +1,4 @@
-import { View, FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import OutsidePressHandler from 'react-native-outside-press';
 
 import { Input } from '../Input';

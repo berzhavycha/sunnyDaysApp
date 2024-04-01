@@ -1,4 +1,4 @@
-import { UseControllerProps, Controller, FieldValues } from 'react-hook-form';
+import { Controller, FieldValues, UseControllerProps } from 'react-hook-form';
 
 import { Input, InputProps } from '@/components/common/Input';
 

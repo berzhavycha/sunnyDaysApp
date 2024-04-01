@@ -1,15 +1,16 @@
 import { useApolloClient } from '@apollo/client';
 
 import { useSubscriptionError, useWeatherPaginationInfo } from '@/context';
-import { Direction } from '@/shared';
-import { usePagination } from '@/hooks/common';
 import { WeatherForecastEdge } from '@/graphql/typePolicies/userCitiesWeather';
-import { useWeatherData } from '../useWeatherData';
+import { usePagination } from '@/hooks/common';
+import { Direction } from '@/shared';
+
 import {
+  useWeatherData,
   UserCitiesWeatherDocument,
   UserCitiesWeatherQuery,
   UserCitiesWeatherQueryVariables,
-} from '../useWeatherData/queries';
+} from '../useWeatherData';
 
 type HookReturn = {
   onClickPrev: () => Promise<void>;

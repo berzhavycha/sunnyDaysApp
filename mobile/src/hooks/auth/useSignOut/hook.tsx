@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 
 import { useCurrentUser } from '@/context';
+
 import { SignOutDocument } from './mutations';
 
 type HookReturn = {

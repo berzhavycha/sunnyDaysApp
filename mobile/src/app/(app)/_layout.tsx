@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { Stack } from 'expo-router';
+import { FC } from 'react';
 
 const AppLayout: FC = () => {
   return (

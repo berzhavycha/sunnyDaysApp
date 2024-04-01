@@ -1,13 +1,15 @@
 import { FC } from 'react';
 import { FlatList } from 'react-native';
 
-import { useWeatherData, useWeatherPagination } from '@/hooks';
-import { useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
-import { START_PAGE_NUMBER } from '@/shared';
 import { ModalBackground, NoData, PaginationButtons } from '@/components/common';
-import { SpinnerView } from '../SpinnerView';
-import { useRenderWeatherCard } from './hooks';
+import { useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
+import { useWeatherData, useWeatherPagination } from '@/hooks';
+import { START_PAGE_NUMBER } from '@/shared';
+
 import { DeletionModal } from '../DeletionModal';
+import { SpinnerView } from '../SpinnerView';
+
+import { useRenderWeatherCard } from './hooks';
 
 export const WeatherCardsList: FC = () => {
   const { data, loading } = useWeatherData();

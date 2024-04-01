@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useInputCompleteQuery } from '@/hooks/common';
+
 import { DEBOUNCE_DELAY } from '../constants';
-import { getCitiesQueryVariables, extractData } from '../utils';
+import { extractData, getCitiesQueryVariables } from '../utils';
+
 import { CitiesDocument, CitiesQuery, CitiesQueryVariables } from './queries';
 
 export type City = {

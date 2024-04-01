@@ -1,9 +1,8 @@
+import { Feather } from '@expo/vector-icons';
 import React, { FC, memo } from 'react';
 import { StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 
-import { CustomTouchable } from '../../CustomTouchable';
-import { ActiveOpacity } from '../../CustomTouchable/constants';
+import { CustomTouchable, ActiveOpacity } from '../../CustomTouchable';
 
 type Props = {
   onPress: () => void;

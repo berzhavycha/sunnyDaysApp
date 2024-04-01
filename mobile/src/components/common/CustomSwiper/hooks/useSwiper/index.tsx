@@ -1,5 +1,5 @@
 import { Dispatch, RefObject, SetStateAction } from 'react';
-import { NativeSyntheticEvent, NativeScrollEvent, ScrollView } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
 
 type Params = {
   currentPage: number;

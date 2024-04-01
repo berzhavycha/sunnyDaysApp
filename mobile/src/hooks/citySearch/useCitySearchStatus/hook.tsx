@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 
 import { Env } from '@/env';
 import { getFetchPolicyForKey, ONE_MINUTE } from '@/shared';
+
 import { CitySearchStatusDocument } from './queries';
 
 type HookReturn = {

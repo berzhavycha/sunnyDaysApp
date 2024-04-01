@@ -1,18 +1,19 @@
 import {
-  FC,
   createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-  useEffect,
   Dispatch,
+  FC,
+  PropsWithChildren,
   SetStateAction,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
-import { PaginationQueryOptionsState } from '@/shared';
 import { Env } from '@/env';
-import { UserCitiesWeatherQueryVariables } from '@/hooks/weatherForecast/useWeatherData/queries';
-import { useCurrentUser } from '../CurrentUser';
+import { UserCitiesWeatherQueryVariables } from '@/hooks';
+import { PaginationQueryOptionsState } from '@/shared';
+
+import { useCurrentUser } from '../CurrentUser/component';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;

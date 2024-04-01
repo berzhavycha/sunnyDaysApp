@@ -1,10 +1,10 @@
-import { FC, memo, useState } from 'react';
-import { View, TextInput, Text, TextInputProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { FC, memo, useState } from 'react';
+import { Text, TextInput, TextInputProps, View } from 'react-native';
 
 import { upperCaseFirstLetter } from '@/shared';
-import { CustomTouchable } from '../CustomTouchable';
-import { ActiveOpacity } from '../CustomTouchable/constants';
+
+import { CustomTouchable, ActiveOpacity } from '../CustomTouchable';
 
 export interface InputProps extends TextInputProps {
   icon: 'mail' | 'lock' | 'key' | 'search';

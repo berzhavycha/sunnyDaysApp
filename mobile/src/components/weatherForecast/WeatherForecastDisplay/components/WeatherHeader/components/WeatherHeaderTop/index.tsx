@@ -1,12 +1,10 @@
-import { FC } from 'react';
-import { View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { FC } from 'react';
+import { Text, View } from 'react-native';
 
-import { useCurrentTempUnit } from '@/context';
+import { CustomTouchable, ActiveOpacity } from '@/components/common';
+import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { useSignOut } from '@/hooks';
-import { CustomTouchable } from '@/components/common';
-import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { ActiveOpacity } from '@/components/common/CustomTouchable/constants';
 
 export const WeatherHeaderTop: FC = () => {
   const { signOutHandler } = useSignOut();

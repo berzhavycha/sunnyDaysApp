@@ -9,4 +9,4 @@ export * from './CustomTouchable';
 export * from './Pagination';
 export * from './Compose';
 export * from './ModalBackground';
-export * from './CustomSwiper'
+export * from './CustomSwiper';

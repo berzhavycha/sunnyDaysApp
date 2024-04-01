@@ -1,10 +1,11 @@
-import { View } from 'react-native';
 import { FC, useState } from 'react';
+import { View } from 'react-native';
 
-import { City, useCityInputComplete, useAddWeatherSubscription } from '@/hooks';
 import { Button, InputAutocomplete } from '@/components/common';
-import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { ADD_CITY_BTN_TEXT } from '@/components/weatherForecast/constants';
+import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
+import { City, useAddWeatherSubscription, useCityInputComplete } from '@/hooks';
+
 import { useCitySelection } from './hooks';
 
 export const WeatherHeaderDown: FC = () => {

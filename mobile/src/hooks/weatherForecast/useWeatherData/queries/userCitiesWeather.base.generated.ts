@@ -1,6 +1,7 @@
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+
 import * as Types from '@/graphql/__generated__/types';
 
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type WeatherForecastFragment = {
   __typename?: 'WeatherForecast';
   id: string;

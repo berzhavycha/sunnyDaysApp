@@ -1,5 +1,6 @@
 import { useWeatherCardsList } from '@/context';
 import { WeatherForecast } from '@/hooks';
+
 import { SwipeableWeatherCard } from '../../../SwipeableWeatherCard';
 
 type RenderItemProps = {

@@ -1,4 +1,4 @@
-import { FC, createContext, PropsWithChildren, useState, useContext, useEffect } from 'react';
+import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { useCitySearchStatus } from '@/hooks/citySearch';
 

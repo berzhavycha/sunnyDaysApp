@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
+import { Dimensions, ScrollView, View } from 'react-native';
 
 import { CustomTouchable } from '../CustomTouchable';
+
 import { useSwiper } from './hooks';
 
 type Props<T> = {

@@ -1,8 +1,7 @@
 import { FC, memo } from 'react';
 import { Text, View } from 'react-native';
 
-import { CustomTouchable } from '../CustomTouchable';
-import { ActiveOpacity } from '../CustomTouchable/constants';
+import { CustomTouchable, ActiveOpacity } from '../CustomTouchable';
 
 type Props = {
   content: string;

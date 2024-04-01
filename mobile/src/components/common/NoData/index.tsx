@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { View, Text, Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
 type Props = {
   message: string;

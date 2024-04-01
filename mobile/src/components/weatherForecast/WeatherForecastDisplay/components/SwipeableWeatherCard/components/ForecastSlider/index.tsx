@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 
-import { WeatherForecastDays } from '@/hooks';
-import { useRenderSubForecast } from './hooks';
 import { CustomSwiper } from '@/components/common';
 import { Env } from '@/env';
+import { WeatherForecastDays } from '@/hooks';
+
+import { useRenderSubForecast } from './hooks';
 
 type Props = {
   forecasts?: WeatherForecastDays[];

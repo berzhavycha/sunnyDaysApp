@@ -1,11 +1,11 @@
-import { FC, memo } from 'react';
-import { Text, Animated } from 'react-native';
-import { Swipeable } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
+import { FC, memo } from 'react';
+import { Animated, Text } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 
+import { CustomTouchable, ActiveOpacity } from '@/components/common';
 import { WeatherForecast } from '@/hooks';
-import { CustomTouchable } from '@/components/common';
-import { ActiveOpacity } from '@/components/common/CustomTouchable/constants';
+
 import { WeatherCard } from './components';
 
 type Props = {

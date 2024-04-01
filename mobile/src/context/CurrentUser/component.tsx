@@ -1,13 +1,13 @@
-import { useLazyQuery, useApolloClient } from '@apollo/client';
+import { useApolloClient, useLazyQuery } from '@apollo/client';
 import {
-  FC,
   createContext,
   Dispatch,
+  FC,
   PropsWithChildren,
   SetStateAction,
-  useState,
   useContext,
   useEffect,
+  useState,
 } from 'react';
 
 import { CurrentUserDocument } from './queries';

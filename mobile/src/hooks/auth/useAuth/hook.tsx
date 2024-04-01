@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
+import { useState } from 'react';
 
 import { useCurrentUser } from '@/context';
 import { fieldsErrorHandler } from '@/shared';
+
 import { pickUserErrorMessages } from '../utils';
+
 import { SignInDocument } from './mutations';
 
 export type UserDto = {

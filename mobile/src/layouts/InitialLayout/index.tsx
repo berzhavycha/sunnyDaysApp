@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
+import { FC, useEffect } from 'react';
 
 import { useCurrentUser } from '@/context';
 

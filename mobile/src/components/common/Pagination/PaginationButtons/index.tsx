@@ -1,9 +1,9 @@
+import { Feather } from '@expo/vector-icons';
 import { FC } from 'react';
 import { View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 
-import { TouchablePaginationButton } from '../TouchablePaginationButton';
 import { PaginationPageButtons } from '../PaginationPageButtons';
+import { TouchablePaginationButton } from '../TouchablePaginationButton';
 
 type Props = {
   startPageNumber: number;

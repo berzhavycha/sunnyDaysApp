@@ -1,4 +1,4 @@
-import { FC, createContext, PropsWithChildren, useContext, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
 
 import { TempUnits } from './constants';
 

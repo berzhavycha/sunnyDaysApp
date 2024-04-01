@@ -1,16 +1,16 @@
 import {
-  FC,
   createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-  useEffect,
   Dispatch,
+  FC,
+  PropsWithChildren,
   SetStateAction,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
+import { UserCitiesWeatherQuery } from '@/hooks';
 import { MOCKED_WEATHER_CARD } from '@/shared';
-import { UserCitiesWeatherQuery } from '@/hooks/weatherForecast/useWeatherData/queries';
 
 type ContextType = {
   isAddingCard: boolean;

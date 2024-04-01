@@ -1,5 +1,6 @@
-import { UserDto } from '@/hooks';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+import { UserDto } from '@/hooks';
+
 import { FieldErrorsState } from '../useAuth';
 
 export const pickUserErrorMessages = (inputErrorMessages: string[]): FieldErrorsState<UserDto> => {

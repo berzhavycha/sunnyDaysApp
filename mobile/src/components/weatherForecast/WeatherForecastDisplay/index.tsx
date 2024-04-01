@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { View } from 'react-native';
 
-import { WeatherHeader, WeatherCardsList } from './components';
+import { WeatherCardsList, WeatherHeader } from './components';
 
 export const WeatherForecastDisplay: FC = () => {
   return (

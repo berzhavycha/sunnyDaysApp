@@ -1,5 +1,5 @@
-import { FC, PropsWithChildren } from 'react';
 import { ApolloProvider } from '@apollo/client';
+import { FC, PropsWithChildren } from 'react';
 
 import { apolloClient } from '@/graphql';
 
