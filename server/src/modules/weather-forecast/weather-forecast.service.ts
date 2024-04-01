@@ -55,13 +55,13 @@ export class WeatherForecastService {
     for (const subscription of userSubscriptions) {
       const { name } = subscription.city;
 
-      // const cachedForecast = await this.cacheManager.get<WeatherForecast>(
-      //   `weather_forecast:${name}`,
-      // );
-      // if (cachedForecast) {
-      //   cachedForecasts.push(cachedForecast);
-      //   continue;
-      // }
+      const cachedForecast = await this.cacheManager.get<WeatherForecast>(
+        `weather_forecast:${name}`,
+      );
+      if (cachedForecast) {
+        cachedForecasts.push(cachedForecast);
+        continue;
+      }
 
       cities.push(name);
 
@@ -142,40 +142,7 @@ export class WeatherForecastService {
         precip: data.current.precip_mm,
         windSpeed: data.current.wind_kph,
         time: data.location.localtime,
-        daysForecast: this.mapForecastDays([...data.forecast.forecastday, {
-          date: '2005-01-01',
-          day: {
-            avgtemp_c: 0,
-            avgtemp_f: 0,
-            maxtemp_c: 0,
-            maxtemp_f: 0,
-            mintemp_c: 0,
-            mintemp_f: 0,
-            totalprecip_mm: 0,
-            maxwind_kph: 0,
-            condition: {
-              text: 'Sunny',
-            },
-            avghumidity: 0,
-          }
-        } as IForecastDay,
-        {
-          date: '2005-01-01',
-          day: {
-            avgtemp_c: 0,
-            avgtemp_f: 0,
-            maxtemp_c: 0,
-            maxtemp_f: 0,
-            mintemp_c: 0,
-            mintemp_f: 0,
-            totalprecip_mm: 0,
-            maxwind_kph: 0,
-            condition: {
-              text: 'Sunny',
-            },
-            avghumidity: 0,
-          }
-        } as IForecastDay]),
+        daysForecast: this.mapForecastDays(data.forecast.forecastday),
       };
     });
   }
