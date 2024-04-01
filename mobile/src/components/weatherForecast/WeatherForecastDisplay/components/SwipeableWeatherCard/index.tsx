@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { FC, memo } from 'react';
-import { Animated, Text } from 'react-native';
+import { Animated, StyleSheet, Text } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 
 import { CustomTouchable, ActiveOpacity } from '@/components/common';
@@ -17,17 +17,10 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
   return (
     <Swipeable
       renderRightActions={() => (
-        <Animated.View
-          style={[{ backgroundColor: 'red', width: 80, height: '95%', borderRadius: 10 }]}
-        >
+        <Animated.View style={styles.rightActions}>
           <CustomTouchable
             activeOpacity={ActiveOpacity.MEDIUM}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100%',
-            }}
+            style={styles.touchable}
             onPress={onDelete}
           >
             <Text className="text-white">
@@ -41,6 +34,22 @@ export const SwipeableWeatherCard: FC<Props> = memo(({ item, onDelete }): JSX.El
       <Animated.View>
         <WeatherCard key={item.city} info={item} />
       </Animated.View>
-    </Swipeable>
+    </Swipeable >
   );
+});
+
+
+const styles = StyleSheet.create({
+  rightActions: {
+    backgroundColor: 'red',
+    width: 80,
+    height: '95%',
+    borderRadius: 10,
+  },
+  touchable: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
 });

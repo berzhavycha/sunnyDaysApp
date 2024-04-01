@@ -13,7 +13,7 @@ import { Env } from '@/env';
 import { UserCitiesWeatherQueryVariables } from '@/hooks';
 import { PaginationQueryOptionsState } from '@/shared';
 
-import { useCurrentUser } from '../CurrentUser/component';
+import { useCurrentUser } from '../CurrentUser';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;

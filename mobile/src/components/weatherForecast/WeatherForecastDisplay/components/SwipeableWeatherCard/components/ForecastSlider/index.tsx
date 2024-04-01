@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { View } from 'react-native';
 
 import { CustomSwiper } from '@/components/common';
@@ -11,7 +11,7 @@ type Props = {
   forecasts?: WeatherForecastDays[];
 };
 
-export const ForecastSlider: FC<Props> = ({ forecasts }) => {
+export const ForecastSlider: FC<Props> = memo(({ forecasts }) => {
   const { renderItem } = useRenderSubForecast();
 
   return (
@@ -24,4 +24,4 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
       />
     </View>
   );
-};
+});
