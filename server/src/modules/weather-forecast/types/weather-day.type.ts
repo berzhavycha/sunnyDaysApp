@@ -1,4 +1,4 @@
-import { ObjectType, Field, Float, Int, ID } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class WeatherDay {
@@ -19,7 +19,7 @@ export class WeatherDay {
 
   @Field(() => Float)
   minFahrenheit: number;
-  
+
   @Field(() => Float)
   maxFahrenheit: number;
 

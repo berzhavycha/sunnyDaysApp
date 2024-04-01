@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CitiesModule } from '@modules/cities';
-import { SubscriptionsService } from './subscriptions.service';
-import { SubscriptionsResolver } from './subscriptions.resolver';
+
 import { Subscription } from './entities';
+import { SubscriptionsResolver } from './subscriptions.resolver';
+import { SubscriptionsService } from './subscriptions.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Subscription]), CitiesModule],

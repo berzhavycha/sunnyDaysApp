@@ -1,13 +1,13 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
+  Entity,
   ManyToMany,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Subscription } from '@modules/subscriptions/entities';
 import { City } from '@modules/cities/entities';
+import { Subscription } from '@modules/subscriptions/entities';
 
 @Entity({ name: 'users' })
 export class User {

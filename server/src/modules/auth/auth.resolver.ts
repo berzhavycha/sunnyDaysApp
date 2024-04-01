@@ -1,12 +1,13 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser } from '@modules/users';
+
 import { AuthService } from './auth.service';
-import { UserDto } from './dtos';
-import { LocalAuthGuard, JwtRefreshTokenGuard } from './guards';
 import { CurrentUser, Public } from './decorators';
+import { UserDto } from './dtos';
+import { JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
 import { Message, UserPayload } from './types';
 
 @Resolver()
@@ -45,7 +46,7 @@ export class AuthResolver {
     @Context() context: ExtendedGraphQLContext,
   ): Promise<Message> {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
-    
+
     if (!refreshToken) {
       throw new Error('Refresh token not found in cookies.');
     }

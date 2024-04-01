@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { ConfigService } from '@nestjs/config';
 
 import { SafeUser } from '@modules/users';
+
 import { AuthService } from '../auth.service';
 
 @Injectable()

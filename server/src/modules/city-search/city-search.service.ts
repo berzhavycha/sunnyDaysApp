@@ -1,13 +1,14 @@
-import { Injectable, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
+import { Cache } from 'cache-manager';
 
 import { TOO_MANY_REQUESTS_ERROR_CODE } from '@shared';
+
 import { CitySearchRepository } from './city-search.repository';
-import { SearchedCity } from './types';
 import { CityPrefixArgsDto } from './dtos';
+import { SearchedCity } from './types';
 
 @Injectable()
 export class CitySearchService {
@@ -15,7 +16,7 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -35,8 +36,9 @@ export class CitySearchService {
       const sortedCities = cities.data.data.reverse();
       const topCities = sortedCities.slice(0, cityPrefixArgs.limit);
 
-      const uniqueCities = topCities.filter((city, index, self) =>
-        self.findIndex(c => c.name === city.name) === index
+      const uniqueCities = topCities.filter(
+        (city, index, self) =>
+          self.findIndex((c) => c.name === city.name) === index,
       );
 
       await this.cacheManager.set(

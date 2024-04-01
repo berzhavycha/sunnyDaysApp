@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Order, upperCaseEveryFirstLetter } from '@shared';
+
 import { CitiesService } from '@modules/cities';
-import { Subscription } from './entities';
+
 import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN } from './constants';
+import { Subscription } from './entities';
 
 @Injectable()
 export class SubscriptionsService {
@@ -13,7 +15,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async createSubscription(
     cityName: string,
@@ -46,7 +48,7 @@ export class SubscriptionsService {
   ): Promise<Subscription> {
     const subscription = await this.subscriptionRepository.findOne({
       where: { city: { name: cityName.toLowerCase() }, userId },
-      relations: ['city']
+      relations: ['city'],
     });
     await this.subscriptionRepository.delete({ id: subscription.id });
     return subscription;
@@ -73,7 +75,13 @@ export class SubscriptionsService {
     order?: Order;
     orderColumn?: string;
   }): Promise<Subscription[]> {
-    const { userId, take, skip, order = DEFAULT_ORDER, orderColumn = DEFAULT_ORDER_COLUMN } = options;
+    const {
+      userId,
+      take,
+      skip,
+      order = DEFAULT_ORDER,
+      orderColumn = DEFAULT_ORDER_COLUMN,
+    } = options;
 
     return this.subscriptionRepository.find({
       where: { userId },
@@ -85,5 +93,4 @@ export class SubscriptionsService {
       },
     });
   }
-
 }

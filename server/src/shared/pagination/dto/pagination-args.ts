@@ -1,5 +1,5 @@
-import { Field, Int, ArgsType } from '@nestjs/graphql';
-import { IsInt, IsNotEmpty, IsString, Max, Min, IsIn } from 'class-validator';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
+import { IsIn, IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 
 import { Order } from '../../types';
 

@@ -1,8 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
+import { Field, ObjectType } from '@nestjs/graphql';
 
-import { PaginationInfo } from './types';
 import { PaginatedType } from './interfaces';
+import { PaginationInfo } from './types';
 
 export function Paginated<T>(classRef: Type<T>): Type<PaginatedType<T>> {
   @ObjectType({ isAbstract: true })

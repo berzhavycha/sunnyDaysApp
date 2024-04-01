@@ -1,17 +1,19 @@
-import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Order, daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
-import { SubscriptionsService } from '@modules/subscriptions';
+import { daysOfWeek, Order, upperCaseEveryFirstLetter } from '@shared';
+
 import { CitiesService } from '@modules/cities';
-import { IWeatherApiResponse, IForecastDay } from './interfaces';
-import { WeatherDay, WeatherForecast, PaginatedWeatherForecast } from './types';
-import { WeatherForecastRepository } from './weather-forecast.repository';
+import { SubscriptionsService } from '@modules/subscriptions';
+
 import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
+import { IForecastDay, IWeatherApiResponse } from './interfaces';
+import { PaginatedWeatherForecast, WeatherDay, WeatherForecast } from './types';
+import { WeatherForecastRepository } from './weather-forecast.repository';
 
 @Injectable()
 export class WeatherForecastService {
@@ -21,16 +23,16 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(options: {
-    userId: string,
-    offset: number,
-    limit: number,
-    order: Order,
-    forecastDaysAmount: number,
+    userId: string;
+    offset: number;
+    limit: number;
+    order: Order;
+    forecastDaysAmount: number;
   }): Promise<PaginatedWeatherForecast> {
-    const { userId, offset, limit, order, forecastDaysAmount } = options
+    const { userId, offset, limit, order, forecastDaysAmount } = options;
 
     let problematicCity: string;
     const userSubscriptions =

@@ -4,7 +4,7 @@ export interface IWeatherApiResponse {
   location: {
     name: string;
     country: string;
-    localtime: string
+    localtime: string;
   };
   current: {
     temp_c: number;

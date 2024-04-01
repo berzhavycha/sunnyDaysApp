@@ -1,5 +1,5 @@
-import { Request, Response } from 'express-serve-static-core';
 import { GraphQLExecutionContext } from '@nestjs/graphql';
+import { Request, Response } from 'express-serve-static-core';
 
 import { SafeUser } from '@modules/users';
 

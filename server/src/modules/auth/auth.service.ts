@@ -1,19 +1,21 @@
 import {
-  Injectable,
-  UnauthorizedException,
   ConflictException,
   HttpException,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { ONE_DAY } from '@shared';
-import { SafeUser, UsersService } from '@modules/users';
+
 import { ExtendedGraphQLContext } from '@modules/graphql';
-import { AuthResult, ITokens, JwtPayload } from './interfaces';
-import { UserDto } from './dtos';
+import { SafeUser, UsersService } from '@modules/users';
+
 import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
+import { UserDto } from './dtos';
+import { AuthResult, ITokens, JwtPayload } from './interfaces';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +23,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -85,7 +87,7 @@ export class AuthService {
       return this.generateTokens(decoded.sub, decoded.email);
     } catch (error) {
       if (error instanceof HttpException) {
-        console.log(error.message)
+        console.log(error.message);
       }
     }
   }

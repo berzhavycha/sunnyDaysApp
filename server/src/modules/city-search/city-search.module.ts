@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
+import { Module } from '@nestjs/common';
 
-import { CitySearchService } from './city-search.service';
-import { CitySearchResolver } from './city-search.resolver';
 import { CitySearchRepository } from './city-search.repository';
+import { CitySearchResolver } from './city-search.resolver';
+import { CitySearchService } from './city-search.service';
 
 @Module({
   imports: [HttpModule],

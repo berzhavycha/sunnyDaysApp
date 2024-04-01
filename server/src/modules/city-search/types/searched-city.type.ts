@@ -1,4 +1,4 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class SearchedCity {
@@ -6,5 +6,5 @@ export class SearchedCity {
   name: string;
 
   @Field(() => String)
-  country: string
+  country: string;
 }

@@ -1,6 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
-import { GqlOptionsFactory, GqlModuleAsyncOptions } from '@nestjs/graphql';
+import { GqlModuleAsyncOptions, GqlOptionsFactory } from '@nestjs/graphql';
 import { Request, Response } from 'express-serve-static-core';
 
 class GraphQLConfig implements GqlOptionsFactory {

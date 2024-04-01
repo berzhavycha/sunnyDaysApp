@@ -1,11 +1,12 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 
 import { Public } from '@modules/auth';
+
 import { FeaturesService } from './features.service';
 
 @Resolver()
 export class FeaturesResolver {
-  constructor(private readonly featuresService: FeaturesService) { }
+  constructor(private readonly featuresService: FeaturesService) {}
 
   @Public()
   @Query(() => Boolean, { name: 'citySearchStatus' })

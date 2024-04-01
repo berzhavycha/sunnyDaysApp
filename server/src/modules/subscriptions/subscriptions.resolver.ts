@@ -1,9 +1,10 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { CurrentUser } from '@modules/auth/decorators';
-import { SubscriptionsService } from './subscriptions.service';
-import { Subscription } from './entities';
+
 import { CityDto } from './dtos';
+import { Subscription } from './entities';
+import { SubscriptionsService } from './subscriptions.service';
 
 @Resolver()
 export class SubscriptionsResolver {

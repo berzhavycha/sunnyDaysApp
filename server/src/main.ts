@@ -1,6 +1,6 @@
-import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({
     origin: 'http://localhost:3000',
-    credentials: true, 
+    credentials: true,
   });
 
   const configService = app.get(ConfigService);
@@ -21,4 +21,5 @@ async function bootstrap(): Promise<void> {
 
   await app.listen(port);
 }
+
 bootstrap();
