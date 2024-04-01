@@ -54,10 +54,8 @@ export const CustomSwiper = <T,>({ data, renderItem, itemsPerPage, showPaginatio
             if (currentPage !== numPages - 1) {
                 setCurrentPage(currentPage + 1);
             }
-        } else if (offsetX < currentThresholdX) {
-            if (currentPage) {
-                setCurrentPage(currentPage - 1);
-            }
+        } else if (scrollEndX < currentThresholdX && currentPage) {
+            setCurrentPage(currentPage - 1);
         }
     };
 
