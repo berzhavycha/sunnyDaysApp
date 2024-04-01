@@ -1,1 +1,1 @@
-export * from './useRenderSubForecast'
+export * from './useRenderSubForecast';

@@ -43,7 +43,7 @@ export const useWeatherPagination = (): HookReturn => {
     updatePaginationOptions,
     currentPage,
     totalPages,
-    setIsFetching
+    setIsFetching,
   });
 
   return {

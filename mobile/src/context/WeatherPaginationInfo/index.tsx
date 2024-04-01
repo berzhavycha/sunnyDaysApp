@@ -43,11 +43,11 @@ export const useWeatherPaginationInfo = (): ContextType => {
 };
 
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { currentUser } = useCurrentUser()
+  const { currentUser } = useCurrentUser();
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset: 0,
@@ -64,7 +64,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
       ...prev,
       offset: 0,
     }));
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
     setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1);
@@ -91,7 +91,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     totalPages,
     paginationPageNumbers,
     isFetching,
-    setIsFetching
+    setIsFetching,
   };
 
   return (
