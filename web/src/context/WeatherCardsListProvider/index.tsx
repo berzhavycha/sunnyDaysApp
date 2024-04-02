@@ -19,7 +19,7 @@ type ContextType = {
   setIsAddingCard: Dispatch<SetStateAction<boolean>>;
   weatherData: UserCitiesWeatherQuery | null;
   setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
-  handleLoadingCardOnError: () => void;
+  loadingCardErrorHandler: () => void;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -62,7 +62,7 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
     }
   }, [isAddingCard]);
 
-  const handleLoadingCardOnError = (): void => {
+  const loadingCardErrorHandler = (): void => {
     setWeatherData((prevData) => {
       if (prevData) {
         return {
@@ -83,7 +83,7 @@ export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) =>
     setIsAddingCard,
     weatherData,
     setWeatherData,
-    handleLoadingCardOnError,
+    loadingCardErrorHandler,
   };
 
   return (

@@ -69,11 +69,11 @@ export type WeatherForecastDays = {
 };
 
 export const useWeatherData = (): HookReturn => {
-  const { setError, handleError } = useSubscriptionError();
+  const { setError, errorHandler } = useSubscriptionError();
   const { currentUser } = useCurrentUser();
   const { paginationOptions, setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { weatherData, setWeatherData, handleLoadingCardOnError } = useWeatherCardsList();
+  const { weatherData, setWeatherData, loadingCardErrorHandler } = useWeatherCardsList();
 
   // The use of skipToken prevents a request from being triggered during the sign-out process
   // when paginationOptions are about to be reset
@@ -81,23 +81,23 @@ export const useWeatherData = (): HookReturn => {
     UserCitiesWeatherDocument,
     currentUser
       ? {
-          variables: {
-            ...paginationOptions,
-            forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
-          },
-          fetchPolicy: getSuspenseFetchPolicyForKey(
-            'weatherData',
-            ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
-          ),
-          errorPolicy: 'all',
-        }
+        variables: {
+          ...paginationOptions,
+          forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
+        },
+        fetchPolicy: getSuspenseFetchPolicyForKey(
+          'weatherData',
+          ONE_MINUTE * env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME,
+        ),
+        errorPolicy: 'all',
+      }
       : skipToken,
   );
 
   useEffect(() => {
     if (error) {
-      handleError(error);
-      handleLoadingCardOnError();
+      errorHandler(error);
+      loadingCardErrorHandler();
     }
 
     if (data && data.userCitiesWeather) {

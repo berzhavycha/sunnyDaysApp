@@ -21,7 +21,7 @@ export const useAddWeatherSubscription = (
   setCity: Dispatch<SetStateAction<string>>,
 ): HookReturn => {
   const client = useApolloClient();
-  const { setError, handleError } = useSubscriptionError();
+  const { setError, errorHandler } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
   const { onGoToPage } = useWeatherPagination();
@@ -30,7 +30,7 @@ export const useAddWeatherSubscription = (
 
   useEffect(() => {
     if (error) {
-      handleError(error);
+      errorHandler(error);
     }
   }, [data, loading, error]);
 

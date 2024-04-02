@@ -51,9 +51,9 @@ export type WeatherForecastDays = {
 };
 
 export const useWeatherData = (): HookReturn => {
-  const { handleError } = useSubscriptionError();
+  const { errorHandler } = useSubscriptionError();
   const { paginationOptions, setTotalCount, isFetching } = useWeatherPaginationInfo();
-  const { weatherData, setWeatherData, handleLoadingCardOnError } = useWeatherCardsList();
+  const { weatherData, setWeatherData, loadingCardErrorHandler } = useWeatherCardsList();
   const { data, loading, error, fetchMore, refetch } = useQuery(UserCitiesWeatherDocument, {
     variables: {
       ...paginationOptions,
@@ -68,8 +68,8 @@ export const useWeatherData = (): HookReturn => {
 
   useEffect(() => {
     if (error) {
-      handleError(error);
-      handleLoadingCardOnError();
+      errorHandler(error);
+      loadingCardErrorHandler();
     }
 
     if (data && data.userCitiesWeather) {

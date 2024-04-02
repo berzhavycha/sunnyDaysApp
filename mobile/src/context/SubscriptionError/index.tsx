@@ -18,7 +18,7 @@ type SubscriptionErrorState = {
 type ContextType = {
   error: SubscriptionErrorState;
   setError: Dispatch<SetStateAction<SubscriptionErrorState>>;
-  handleError: (error: ApolloError) => void;
+  errorHandler: (error: ApolloError) => void;
 };
 
 const SubscriptionErrorContext = createContext<ContextType | null>(null);
@@ -38,7 +38,7 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
     message: '',
   });
 
-  const handleError = (error: ApolloError): void => {
+  const errorHandler = (error: ApolloError): void => {
     if (error.graphQLErrors[0]?.extensions.originalError) {
       setError({ message: error.graphQLErrors[0].extensions.originalError.message });
     } else {
@@ -49,7 +49,7 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
   const contextValue: ContextType = {
     error,
     setError,
-    handleError,
+    errorHandler,
   };
 
   return (

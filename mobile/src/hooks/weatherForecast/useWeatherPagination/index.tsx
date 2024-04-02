@@ -25,7 +25,7 @@ type HookReturn = {
 export const useWeatherPagination = (): HookReturn => {
   const client = useApolloClient();
   const { data, fetchMore } = useWeatherData();
-  const { handleError } = useSubscriptionError();
+  const { errorHandler } = useSubscriptionError();
   const { totalPages, currentPage, paginationOptions, updatePaginationOptions, setIsFetching } =
     useWeatherPaginationInfo();
 
@@ -39,7 +39,7 @@ export const useWeatherPagination = (): HookReturn => {
     data,
     queryDataField: 'userCitiesWeather',
     fetchMore,
-    onError: handleError,
+    onError: errorHandler,
     paginationOptions,
     updatePaginationOptions,
     currentPage,

@@ -23,7 +23,7 @@ type HookReturn = {
 };
 
 export const useDeleteWeatherSubscription = (): HookReturn => {
-  const { setError, handleError } = useSubscriptionError();
+  const { setError, errorHandler } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
   const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
@@ -32,7 +32,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
 
   useEffect(() => {
     if (error) {
-      handleError(error);
+      errorHandler(error);
     }
   }, [error]);
 
