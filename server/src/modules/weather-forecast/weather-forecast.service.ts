@@ -23,7 +23,7 @@ export class WeatherForecastService {
     private readonly configService: ConfigService,
     private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getUserCitiesWeather(options: {
     userId: string;
@@ -115,6 +115,7 @@ export class WeatherForecastService {
     } catch (error) {
       this.citiesService.deleteCity(problematicCity);
       if (
+        error.response.data.error &&
         error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
       ) {
         throw new BadRequestException(
