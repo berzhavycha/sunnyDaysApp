@@ -30,9 +30,9 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
       modules={[Pagination]}
       className={`w-full ${isSwiperActive ? 'h-40 -mb-6' : 'h-full'}`}
     >
-      {forecasts?.map((props, index) => (
-        <SwiperSlide className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`} key={index}>
-          <SubWeatherForecast key={index} {...props} />
+      {forecasts?.map((props) => (
+        <SwiperSlide className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`} key={props.id}>
+          <SubWeatherForecast {...props} />
         </SwiperSlide>
       ))}
     </Swiper>
