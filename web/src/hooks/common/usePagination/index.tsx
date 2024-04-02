@@ -101,7 +101,7 @@ export const usePagination = <
   const onFetchMore = async (
     variables: Partial<PaginationQueryOptionsState | TVariables>,
     direction: Direction,
-  ): Promise<boolean> => {
+  ): Promise<void> => {
     try {
       if (!isPageContentCached(variables, direction)) {
         const { errors } = await fetchMore({ variables });
@@ -113,13 +113,10 @@ export const usePagination = <
 
       updatePaginationOptions(variables);
 
-      return true;
     } catch (error) {
       if (error instanceof ApolloError) {
         onError(error);
       }
-
-      return false;
     }
   };
 
