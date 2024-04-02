@@ -1,6 +1,5 @@
 import {
   ConflictException,
-  HttpException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -23,7 +22,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -77,19 +76,13 @@ export class AuthService {
   }
 
   async refreshAccessToken(refreshToken: string): Promise<ITokens> {
-    try {
-      const decoded = await this.jwtService.verifyAsync(refreshToken, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      });
+    const decoded = await this.jwtService.verifyAsync(refreshToken, {
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+    });
 
-      await this.validateRefreshToken(decoded.sub, refreshToken);
+    await this.validateRefreshToken(decoded.sub, refreshToken);
 
-      return this.generateTokens(decoded.sub, decoded.email);
-    } catch (error) {
-      if (error instanceof HttpException) {
-        console.log(error.message);
-      }
-    }
+    return this.generateTokens(decoded.sub, decoded.email);
   }
 
   setCookies(response: ExtendedGraphQLContext['res'], tokens: ITokens): void {
