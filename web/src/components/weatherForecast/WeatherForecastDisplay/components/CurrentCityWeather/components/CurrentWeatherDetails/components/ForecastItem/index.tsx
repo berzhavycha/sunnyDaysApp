@@ -35,14 +35,14 @@ export const ForecastItem: FC<Props> = memo(({ onClick, text, dayOfWeek, ...info
       />
       <div className="flex items-center">
         <TemperatureInfo
-          value={maxTemp}
+          value={maxTemp as number}
           tempSign={tempUnitSigns[currentTempUnit.name]}
           size="small"
           fontWeight="bold"
         />
         <span className="text-white mx-1">/</span>
         <TemperatureInfo
-          value={minTemp}
+          value={minTemp as number}
           tempSign={tempUnitSigns[currentTempUnit.name]}
           size="small"
           fontWeight="light"
