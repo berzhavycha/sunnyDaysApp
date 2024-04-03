@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -50,6 +50,11 @@ export class SubscriptionsService {
       where: { city: { name: cityName.toLowerCase() }, userId },
       relations: ['city'],
     });
+
+    if (!subscription) {
+      throw new NotFoundException(`Subscription not found for city '${cityName}'`);
+    }
+
     await this.subscriptionRepository.delete({ id: subscription.id });
     return subscription;
   }
