@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { ONE_DAY_MILLISECONDS } from '@shared';
+import { NODE_ENV, ONE_DAY_MILLISECONDS } from '@shared';
 
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser, UsersService } from '@modules/users';
@@ -91,7 +91,7 @@ export class AuthService {
       maxAge:
         ONE_DAY_MILLISECONDS * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
-      secure: this.configService.get<string>('NODE_ENV') === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }
 
@@ -99,7 +99,7 @@ export class AuthService {
     response.clearCookie('tokens', {
       httpOnly: true,
       sameSite: 'none',
-      secure: this.configService.get<string>('NODE_ENV') === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }
 
