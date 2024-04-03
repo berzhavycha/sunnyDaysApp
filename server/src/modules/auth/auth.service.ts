@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { ONE_DAY } from '@shared';
+import { ONE_DAY_MILLISECONDS } from '@shared';
 
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser, UsersService } from '@modules/users';
@@ -89,7 +89,7 @@ export class AuthService {
     response.cookie('tokens', tokens, {
       httpOnly: true,
       maxAge:
-        ONE_DAY * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
+        ONE_DAY_MILLISECONDS * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
       secure: true,
     });
