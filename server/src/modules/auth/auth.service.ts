@@ -91,7 +91,7 @@ export class AuthService {
       maxAge:
         ONE_DAY_MILLISECONDS * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
       sameSite: 'none',
-      secure: true,
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
     });
   }
 
@@ -99,7 +99,7 @@ export class AuthService {
     response.clearCookie('tokens', {
       httpOnly: true,
       sameSite: 'none',
-      secure: true,
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
     });
   }
 
