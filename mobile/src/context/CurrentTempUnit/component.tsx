@@ -1,4 +1,5 @@
-import { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { TempUnits } from './constants';
 
@@ -24,9 +25,26 @@ export const useCurrentTempUnit = (): ContextType => {
 };
 
 export const CurrentTempUnitProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>({
-    name: TempUnits.CELSIUS,
-  });
+  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>({ name: TempUnits.CELSIUS });
+
+  useEffect(() => {
+    const fetchTempUnit = async (): Promise<void> => {
+      try {
+        const savedTempUnit = await AsyncStorage.getItem('tempUnit');
+        if (savedTempUnit) {
+          setCurrentTempUnit({ name: savedTempUnit as TempUnits });
+        }
+      } catch (error) {
+        setCurrentTempUnit({ name: TempUnits.CELSIUS });
+      }
+    };
+
+    fetchTempUnit();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('tempUnit', currentTempUnit.name);
+  }, [currentTempUnit]);
 
   const onCelsius = (): void => {
     setCurrentTempUnit({
