@@ -58,6 +58,7 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
+      setCurrentForecastDay('');
       setShownWeatherInfo(currentCityWeatherInfo.info);
     }
   }, [currentCityWeatherInfo?.info?.city]);
