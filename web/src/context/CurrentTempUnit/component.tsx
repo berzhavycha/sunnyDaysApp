@@ -1,6 +1,8 @@
 'use client';
 
-import { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+
+import { IS_CLIENT } from '@/shared';
 
 import { TempUnits } from './constants';
 
@@ -26,9 +28,14 @@ export const useCurrentTempUnit = (): ContextType => {
 };
 
 export const CurrentTempUnitProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>({
-    name: TempUnits.CELSIUS,
+  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>(() => {
+    const savedTempUnit = IS_CLIENT && localStorage.getItem('tempUnit');
+    return savedTempUnit ? { name: savedTempUnit as TempUnits } : { name: TempUnits.CELSIUS };
   });
+
+  useEffect(() => {
+    localStorage.setItem('tempUnit', currentTempUnit.name);
+  }, [currentTempUnit]);
 
   const onCelsius = (): void => {
     setCurrentTempUnit({
