@@ -23,7 +23,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^3.3.4",
-    "apollo-link-context": "^1.0.20",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
@@ -33,7 +32,8 @@
     "react-hook-form": "^7.51.0",
     "react-spinners": "^0.13.8",
     "sharp": "^0.33.2",
-    "swiper": "^11.1.0"
+    "swiper": "^11.1.0",
+    "joi": "^17.12.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
@@ -48,7 +48,6 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.1",
-    "joi": "^17.12.2",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.3.0",
