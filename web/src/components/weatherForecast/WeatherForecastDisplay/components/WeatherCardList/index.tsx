@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
 import { useWeatherPaginationInfo } from '@/context';
-import { useIsLoading, useWeatherData, useWeatherPagination } from '@/hooks';
+import { useIsLoading, usePaginationPrefetch, useWeatherData, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
 
 import { useRenderWeatherCard } from './hooks';
@@ -15,12 +15,18 @@ export const WeatherCardList: FC = () => {
   const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =
     useWeatherPaginationInfo();
   const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
+  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
+    currentPage,
+    paginationOptions,
+    totalPages,
+    onPrefetch,
+    startPageNumber: START_PAGE_NUMBER
+  })
   const { loading } = useIsLoading(data, error);
 
   const listFooterComponent =
     totalPages > 1 ? (
       <PaginationButtonsPanel
-        paginationOptions={paginationOptions}
         startPageNumber={START_PAGE_NUMBER}
         currentPage={currentPage}
         paginationPageNumbers={paginationPageNumbers}
@@ -28,7 +34,9 @@ export const WeatherCardList: FC = () => {
         onGoToPage={onGoToPage}
         onClickNext={onClickNext}
         onClickPrev={onClickPrev}
-        onPrefetch={onPrefetch}
+        onGoToPagePrefetch={onGoToPagePrefetch}
+        onNextPrefetch={onNextPrefetch}
+        onPrevPrefetch={onPrevPrefetch}
       />
     ) : null;
 
