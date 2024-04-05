@@ -13,9 +13,9 @@ type Props = {
   onGoToPage: (page: number) => Promise<void>;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
-  onPrevPrefetch: () => Promise<void>;
-  onNextPrefetch: () => Promise<void>;
-  onGoToPagePrefetch: (page: number) => Promise<void>;
+  onPrevPrefetch?: () => Promise<void>;
+  onNextPrefetch?: () => Promise<void>;
+  onGoToPagePrefetch?: (page: number) => Promise<void>;
 };
 
 export const PaginationButtonsPanel: FC<Props> = ({
