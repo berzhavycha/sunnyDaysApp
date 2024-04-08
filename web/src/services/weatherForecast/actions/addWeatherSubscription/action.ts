@@ -2,18 +2,34 @@
 
 import { getClient } from "@/graphql/utils/getClient"
 import { ApolloError } from "@apollo/client"
-import { revalidateTag } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { UserCitiesWeatherQuery } from "../../fetchers"
 import { AddWeatherSubscriptionDocument } from "./mutations"
 import { validateCity } from "./utils"
+import { PaginationQueryOptionsState } from "@/shared"
+import { redirect } from "next/navigation"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { headers } = require('next/headers');
 
 type AddSubscriptionState = {
-    weatherData: UserCitiesWeatherQuery | null
+    weatherData: UserCitiesWeatherQuery
     error: string
 }
 
 export const addWeatherSubscription = async (prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
+    const { weatherData } = prevData
+
+    const url = new URL(headers().get('x-url')!);
+    const searchParams = url.searchParams;
+
+    const paginationOptions: PaginationQueryOptionsState = {
+        offset: +(searchParams.get('page') ?? 0),
+        limit: +(searchParams.get('perPage') ?? 6),
+        order: searchParams.get('order') ?? "ASC"
+    }
+
     try {
+
         const city = {
             name: formData.get('city') as string,
         }
@@ -34,12 +50,25 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
         if (errors?.length) {
             throw new ApolloError({ graphQLErrors: errors })
         }
-
-        revalidateTag('forecasts')
-        return { ...prevData, error: '' }
     } catch (error) {
         // We have to stringify ApolloError instance due to this issue:
         // https://stackoverflow.com/a/78265128
         return { ...prevData, error: JSON.stringify(error) }
     }
+
+    const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
+    const totalPages = Math.ceil(totalCount / paginationOptions.limit)
+    const isAddingNewPage = totalCount / 6 === 0
+    if (paginationOptions.offset / paginationOptions.limit !== totalPages) {
+        const offset = isAddingNewPage ? totalPages : totalPages - 1
+        const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
+        revalidatePath(path)
+
+        // Redirect should be used outside of try...catch block:
+        // https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
+        redirect(path)
+    }
+
+    revalidateTag('forecasts')
+    return { ...prevData, error: '' }
 }

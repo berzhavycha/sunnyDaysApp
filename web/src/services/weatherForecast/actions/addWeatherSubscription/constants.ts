@@ -1,6 +1,6 @@
 import { env } from '@/core/env';
 
-import { UserCitiesWeatherQuery } from '../../fetchers/index-server';
+import { UserCitiesWeatherQuery } from '../../fetchers';
 
 export const validateCityRules = [
   {

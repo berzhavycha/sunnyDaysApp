@@ -43,7 +43,7 @@ type Props = PropsWithChildren & {
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
   const { setTotalCount } = useWeatherPaginationInfo()
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(weatherResponse.data);
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
   const { errorHandler } = useSubscriptionError()
