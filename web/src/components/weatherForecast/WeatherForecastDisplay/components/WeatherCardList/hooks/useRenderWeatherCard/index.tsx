@@ -2,7 +2,6 @@ import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherForecast } from '@/hooks';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
-import { WeatherCard } from '../../components';
 
 type HookReturn = {
   renderItem(props: WeatherForecast): JSX.Element;
@@ -22,7 +21,7 @@ export const useRenderWeatherCard = (): HookReturn => {
       }
     };
 
-    return <WeatherCard {...props} onClick={onClick} />;
+    return <></>;
   }
 
   return { renderItem };

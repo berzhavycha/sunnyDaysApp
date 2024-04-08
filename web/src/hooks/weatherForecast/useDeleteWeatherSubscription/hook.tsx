@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useMutation } from '@apollo/client';
@@ -27,7 +28,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
   const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
-  const { isPageContentCached, onClickPrev } = useWeatherPagination();
+  // const { isPageContentCached, onClickPrev } = useWeatherPagination();
   const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
 
   useEffect(() => {
@@ -53,51 +54,51 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         async update(cache) {
           const currentPageCache = readPageCache(cache, paginationOptions);
 
-          if (currentPageCache) {
-            const clearedCurrentPage = purgePageCache(
-              currentPageCache.userCitiesWeather.edges,
-              cityName,
-            );
+          // if (currentPageCache) {
+          //   const clearedCurrentPage = purgePageCache(
+          //     currentPageCache.userCitiesWeather.edges,
+          //     cityName,
+          //   );
 
-            writePageCache(cache, paginationOptions, {
-              ...currentPageCache.userCitiesWeather,
-              edges: clearedCurrentPage ?? [],
-            });
+          //   writePageCache(cache, paginationOptions, {
+          //     ...currentPageCache.userCitiesWeather,
+          //     edges: clearedCurrentPage ?? [],
+          //   });
 
-            if (
-              !isPageContentCached(
-                {
-                  offset: paginationOptions.offset + paginationOptions.limit - 1,
-                },
-                Direction.FORWARD,
-              ) &&
-              currentPage !== totalPages
-            ) {
-              await fetchMore({
-                variables: { offset: paginationOptions.limit * currentPage },
-              });
+          //   if (
+          //     !isPageContentCached(
+          //       {
+          //         offset: paginationOptions.offset + paginationOptions.limit - 1,
+          //       },
+          //       Direction.FORWARD,
+          //     ) &&
+          //     currentPage !== totalPages
+          //   ) {
+          //     await fetchMore({
+          //       variables: { offset: paginationOptions.limit * currentPage },
+          //     });
 
-              const newCurrentPageCache = readPageCache(cache, paginationOptions);
-              if (newCurrentPageCache) {
-                const newClearedData = purgePageCache(
-                  newCurrentPageCache.userCitiesWeather.edges,
-                  cityName,
-                );
+          //     const newCurrentPageCache = readPageCache(cache, paginationOptions);
+          //     if (newCurrentPageCache) {
+          //       const newClearedData = purgePageCache(
+          //         newCurrentPageCache.userCitiesWeather.edges,
+          //         cityName,
+          //       );
 
-                writePageCache(cache, paginationOptions, {
-                  ...newCurrentPageCache.userCitiesWeather,
-                  edges: newClearedData ?? [],
-                });
-              }
-            }
+          //       writePageCache(cache, paginationOptions, {
+          //         ...newCurrentPageCache.userCitiesWeather,
+          //         edges: newClearedData ?? [],
+          //       });
+          //     }
+          //   }
 
-            if (
-              (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
-              currentPageCache?.userCitiesWeather.edges?.length === 1
-            ) {
-              await onClickPrev();
-            }
-          }
+          //   if (
+          //     (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
+          //     currentPageCache?.userCitiesWeather.edges?.length === 1
+          //   ) {
+          //     await onClickPrev();
+          //   }
+          // }
         },
       });
 

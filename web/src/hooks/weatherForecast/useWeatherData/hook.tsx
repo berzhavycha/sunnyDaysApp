@@ -102,7 +102,7 @@ export const useWeatherData = (): HookReturn => {
 
     if (data && data.userCitiesWeather) {
       setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
-      setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+      // setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
       setError({ message: '' });
       setWeatherData(data);
     }

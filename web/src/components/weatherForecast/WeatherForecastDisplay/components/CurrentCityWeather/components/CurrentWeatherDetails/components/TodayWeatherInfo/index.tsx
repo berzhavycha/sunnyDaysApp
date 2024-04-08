@@ -2,7 +2,8 @@ import { faCloudRain, faDroplet, faWind } from '@fortawesome/free-solid-svg-icon
 import Image from 'next/image';
 import { FC, memo } from 'react';
 
-import { TemperatureInfo, weatherIconMapping } from '@/components';
+import { TemperatureInfo } from '@/components';
+import {weatherIconMapping} from '@/components/weatherForecast'
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { useCurrentTempUnit } from '@/context';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';

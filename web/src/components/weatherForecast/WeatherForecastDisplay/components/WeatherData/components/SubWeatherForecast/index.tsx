@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import React, { FC, memo } from 'react';
 
-import { TemperatureInfo, weatherIconMapping } from '@/components';
+import { TemperatureInfo } from '@/components';
+import {weatherIconMapping} from '@/components/weatherForecast/constants'
 import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 

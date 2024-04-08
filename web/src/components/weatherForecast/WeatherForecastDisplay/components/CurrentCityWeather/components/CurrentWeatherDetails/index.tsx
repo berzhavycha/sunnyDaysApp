@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import { DeleteButton, NoData, Spinner } from '@/components/common';
-import { useCurrentCityWeatherInfo, useWeatherPaginationInfo } from '@/context';
+import { useCurrentCityWeatherInfo, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
 import { env } from '@/core/env';
-import { useIsLoading, usePaginationPrefetch, useWeatherData, useWeatherPagination } from '@/hooks';
+import { useIsLoading, usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
 
 import { Forecast, TodayWeatherInfo } from './components';
@@ -14,9 +14,8 @@ type Props = {
 };
 
 export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
-  const { data, error } = useWeatherData();
-  const { loading } = useIsLoading(data, error);
-
+  const { weatherData } = useWeatherCardsList()
+  const { loading } = useIsLoading(weatherData);
   const { currentCityWeatherInfo, isVisibleBelowMedium } = useCurrentCityWeatherInfo();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
 
@@ -35,7 +34,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
   const onMouseOverDeleteBtn = async (): Promise<void> => {
     if (
       (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
-      data?.userCitiesWeather.edges?.length === 1
+      weatherData?.userCitiesWeather.edges?.length === 1
     ) {
       await onPrevPrefetch();
     } else {

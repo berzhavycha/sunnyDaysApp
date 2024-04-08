@@ -12,12 +12,14 @@ import {
 } from 'react';
 
 import { UserCitiesWeatherQuery } from '@/hooks';
-import { MOCKED_WEATHER_CARD } from '@/shared';
+import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
+import { ApolloError, ApolloQueryResult } from '@apollo/client';
+import { useSubscriptionError } from '../SubscriptionError';
 
 type ContextType = {
   isAddingCard: boolean;
   setIsAddingCard: Dispatch<SetStateAction<boolean>>;
-  weatherData: UserCitiesWeatherQuery | null;
+  weatherData: UserCitiesWeatherQuery | null
   setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
   loadingCardErrorHandler: () => void;
 };
@@ -34,48 +36,38 @@ export const useWeatherCardsList = (): ContextType => {
   return context;
 };
 
-export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) => {
+type Props = PropsWithChildren & {
+  weatherResponse: ApolloQueryResult<UserCitiesWeatherQuery>
+}
+
+export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
   const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
+  const { errorHandler } = useSubscriptionError()
+
 
   useEffect(() => {
-    if (isAddingCard) {
-      setWeatherData((prevData) => {
-        if (prevData) {
-          return {
-            ...prevData,
-            userCitiesWeather: {
-              ...prevData.userCitiesWeather,
-              edges: [
-                ...prevData.userCitiesWeather.edges,
-                {
-                  ...MOCKED_WEATHER_CARD,
-                  _loading: true,
-                },
-              ],
-            },
-          };
-        }
+    try {
+      const { data, errors } = weatherResponse
 
-        return null;
-      });
-    }
-  }, [isAddingCard]);
-
-  const loadingCardErrorHandler = (): void => {
-    setWeatherData((prevData) => {
-      if (prevData) {
-        return {
-          ...prevData,
-          userCitiesWeather: {
-            ...prevData.userCitiesWeather,
-            edges: [...prevData.userCitiesWeather.edges].filter((edge) => !edge._loading),
-          },
-        };
+      if (errors?.length) {
+        throw new ApolloError({ graphQLErrors: errors })
       }
 
-      return null;
-    });
+      if (data.userCitiesWeather) {
+        setWeatherData(data)
+        setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] })
+      }
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        errorHandler(error)
+      }
+    }
+  }, [weatherResponse])
+
+  const loadingCardErrorHandler = (): void => {
+
   };
 
   const contextValue: ContextType = {

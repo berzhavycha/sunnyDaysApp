@@ -9,6 +9,7 @@ import { CustomFlatList } from '../CustomFlatList';
 import { Input } from '../Input';
 
 type Props<TItem> = {
+  name: string;
   loading: boolean;
   data: TItem[];
   search: string;
@@ -25,6 +26,7 @@ type Props<TItem> = {
 };
 
 export const InputAutocomplete = <TItem,>({
+  name,
   loading,
   data,
   search,
@@ -52,6 +54,7 @@ export const InputAutocomplete = <TItem,>({
   return (
     <div className="relative w-full" ref={autocompleteRef}>
       <Input
+        name={name}
         value={search}
         onChange={onChange}
         onKeyDown={onKeyDown}

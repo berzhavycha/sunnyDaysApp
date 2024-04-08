@@ -47,7 +47,7 @@ interface UsePaginationDependencies<
   totalPages: number;
 }
 
-export const usePagination = <
+export const useClientPagination = <
   TEdge,
   TData extends Record<string, PaginationQueryData<TEdge> | string>,
   TVariables,
