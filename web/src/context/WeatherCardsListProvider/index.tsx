@@ -78,6 +78,14 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
     setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
   }, [paginationOptions, totalCount]);
 
+  useEffect(() => {
+    setPaginationOptions({
+      offset: +(searchParams.get('page') ?? 0),
+      limit: +(searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT),
+      order: searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
+    })
+  }, [searchParams.get('page'), searchParams.get('perPage'), searchParams.get('order')])
+
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
     const { offset, limit, ...restOptions } = newOptions;
 

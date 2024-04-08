@@ -12,13 +12,10 @@ import { redirect } from "next/navigation"
 const { headers } = require('next/headers');
 
 type AddSubscriptionState = {
-    weatherData: UserCitiesWeatherQuery
     error: string
 }
 
-export const addWeatherSubscription = async (prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
-    const { weatherData } = prevData
-
+export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery, prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
     const url = new URL(headers().get('x-url')!);
     const searchParams = url.searchParams;
 
@@ -57,7 +54,6 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
 
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    console.log(totalCount, paginationOptions.limit, Math.ceil(totalCount / paginationOptions.limit))
     const isAddingNewPage = (paginationOptions.offset / paginationOptions.limit + 1) * paginationOptions.limit / totalCount === 1
     if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
         console.log(totalPages, isAddingNewPage)

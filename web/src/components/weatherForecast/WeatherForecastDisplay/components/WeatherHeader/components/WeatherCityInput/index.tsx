@@ -15,9 +15,9 @@ import { ApolloError } from '@apollo/client';
 export const WeatherCityInput: FC = () => {
   const { weatherData } = useWeatherCardsList()
   const { error, setError, errorHandler } = useSubscriptionError();
+  const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [addSubscriptionState, addSubscriptionAction] = useFormState(addWeatherSubscription, {
-    weatherData,
+  const [addSubscriptionState, addSubscriptionAction] = useFormState(addWeatherSubscriptionWithParams, {
     error: '',
   })
 
