@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { WeatherCardsListProvider } from '@/context';
 import { WeatherData, CurrentCityWeather, WeatherHeader } from './components';
-import { getWeatherForecasts } from '@/shared/queries';
+import { getWeatherForecasts } from '@/services/index-server';
 
 
 export const WeatherForecastDisplay: FC = async () => {

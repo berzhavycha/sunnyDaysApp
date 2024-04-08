@@ -1,5 +1,5 @@
 import { getClient } from "@/graphql/utils/getClient"
-import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from "@/hooks"
+import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from "./queries"
 import { PaginationQueryOptionsState } from "@/shared"
 import { ApolloQueryResult } from "@apollo/client"
 // eslint-disable-next-line @typescript-eslint/no-var-requires

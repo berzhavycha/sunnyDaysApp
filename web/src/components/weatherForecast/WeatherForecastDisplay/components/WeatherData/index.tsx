@@ -4,7 +4,7 @@ import { NoData, CustomFlatList } from "@/components/common";
 import { WeatherForecast } from "@/hooks";
 import { WeatherCardInfo, WeatherCard, PaginationPanel } from "./components";
 import { TempUnits } from "@/context";
-import { getWeatherForecasts } from "@/shared/queries";
+import { getWeatherForecasts } from "@/services/index-server";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { headers } = require('next/headers');

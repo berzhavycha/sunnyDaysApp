@@ -9,14 +9,14 @@ import { useCityInputComplete } from '@/hooks';
 
 import { useRenderCityItem } from '../../hooks';
 import { useFormState } from 'react-dom';
-import { addSubscription } from '@/shared/actions/weatherForecast/addSubscription';
+import { addWeatherSubscription } from '@/services';
 import { ApolloError } from '@apollo/client';
 
 export const WeatherCityInput: FC = () => {
   const { weatherData } = useWeatherCardsList()
   const { error, setError, errorHandler } = useSubscriptionError();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [addSubscriptionState, addSubscriptionAction] = useFormState(addSubscription, {
+  const [addSubscriptionState, addSubscriptionAction] = useFormState(addWeatherSubscription, {
     weatherData,
     error: '',
   })

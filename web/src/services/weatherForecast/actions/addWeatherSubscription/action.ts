@@ -1,16 +1,18 @@
 'use server'
 
 import { getClient } from "@/graphql/utils/getClient"
-import { AddWeatherSubscriptionDocument, UserCitiesWeatherQuery, validateCity } from "@/hooks"
 import { ApolloError } from "@apollo/client"
 import { revalidateTag } from "next/cache"
+import { UserCitiesWeatherQuery } from "../../fetchers/index-server"
+import { AddWeatherSubscriptionDocument } from "./mutations"
+import { validateCity } from "./utils"
 
 type AddSubscriptionState = {
     weatherData: UserCitiesWeatherQuery | null
     error: string
 }
 
-export const addSubscription = async (prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
+export const addWeatherSubscription = async (prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
     try {
         const city = {
             name: formData.get('city') as string,
