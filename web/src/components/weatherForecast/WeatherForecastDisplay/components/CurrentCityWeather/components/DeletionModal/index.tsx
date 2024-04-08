@@ -1,7 +1,7 @@
 import { FC, startTransition } from 'react';
 
 import { deleteWeatherSubscription } from '@/services';
-import { useSubscriptionError } from '@/context';
+import { useSubscriptionError, useWeatherCardsList } from '@/context';
 import { ApolloError } from '@apollo/client';
 
 type Props = {
@@ -12,10 +12,11 @@ type Props = {
 
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
   const { errorHandler } = useSubscriptionError();
+  const { weatherData } = useWeatherCardsList()
 
   const onDelete = (): void => {
     startTransition(() => {
-      deleteWeatherSubscription(city)
+      deleteWeatherSubscription(weatherData, city)
         .catch((error) => {
           if (error instanceof ApolloError) {
             errorHandler(error)

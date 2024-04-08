@@ -20,8 +20,8 @@ import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
 type ContextType = {
   isAddingCard: boolean;
   setIsAddingCard: Dispatch<SetStateAction<boolean>>;
-  weatherData: UserCitiesWeatherQuery | null
-  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
+  weatherData: UserCitiesWeatherQuery
+  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery>>;
   loadingCardErrorHandler: () => void;
 };
 
@@ -43,7 +43,7 @@ type Props = PropsWithChildren & {
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
   const { setTotalCount } = useWeatherPaginationInfo()
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(weatherResponse.data);
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery>(weatherResponse.data);
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
   const { errorHandler } = useSubscriptionError()
