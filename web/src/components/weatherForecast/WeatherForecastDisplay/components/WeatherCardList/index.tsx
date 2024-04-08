@@ -3,7 +3,7 @@
 import { FC } from 'react';
 
 import { CustomFlatList, NoData, PaginationButtonsPanel, Spinner } from '@/components/common';
-import { useWeatherPaginationInfo } from '@/context';
+import { useWeatherCardsList } from '@/context';
 import { useIsLoading, usePaginationPrefetch, useWeatherData, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
 
@@ -13,7 +13,7 @@ export const WeatherCardList: FC = () => {
   const { data, error } = useWeatherData();
   const { renderItem } = useRenderWeatherCard();
   const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =
-    useWeatherPaginationInfo();
+    useWeatherCardsList();
   const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
   const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
     currentPage,

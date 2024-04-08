@@ -36,11 +36,11 @@ export const deleteWeatherSubscription = async (weatherData: UserCitiesWeatherQu
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
 
     if (
-        (totalCount - 1) % 6 === 0 && (totalCount - 1) > 0
+        (totalCount - 1) % 6 === 0 && weatherData.userCitiesWeather.edges.length === 1 && (totalCount - 1) > 0
     ) {
         const path = `/weather-forecast?page=${paginationOptions.offset - paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
         redirect(path)
+    } else {
+        revalidateTag('forecasts')
     }
-
-    revalidateTag('forecasts')
 }

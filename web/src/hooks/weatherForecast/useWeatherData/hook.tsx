@@ -11,11 +11,9 @@ import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 import { useEffect } from 'react';
 
 import {
-  useCurrentCityWeatherInfo,
   useCurrentUser,
   useSubscriptionError,
   useWeatherCardsList,
-  useWeatherPaginationInfo,
 } from '@/context';
 import { env } from '@/core/env';
 import { getSuspenseFetchPolicyForKey, ONE_MINUTE } from '@/shared';
@@ -71,9 +69,7 @@ export type WeatherForecastDays = {
 export const useWeatherData = (): HookReturn => {
   const { setError, errorHandler } = useSubscriptionError();
   const { currentUser } = useCurrentUser();
-  const { paginationOptions, setTotalCount } = useWeatherPaginationInfo();
-  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { weatherData, setWeatherData, loadingCardErrorHandler } = useWeatherCardsList();
+  const { weatherData, setWeatherData, paginationOptions, setTotalCount } = useWeatherCardsList();
 
   // The use of skipToken prevents a request from being triggered during the sign-out process
   // when paginationOptions are about to be reset

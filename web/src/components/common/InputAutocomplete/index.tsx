@@ -62,6 +62,7 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
+        autoComplete='off'
         className="text-xs sm:pl-11 sm:text-base sm:py-2"
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
       />

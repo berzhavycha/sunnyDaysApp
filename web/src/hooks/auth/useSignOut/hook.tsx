@@ -2,7 +2,7 @@
 
 import { useMutation } from '@apollo/client';
 
-import { useCurrentUser, useWeatherPaginationInfo } from '@/context';
+import { useCurrentUser, useWeatherCardsList } from '@/context';
 
 import { SignOutDocument } from './mutations';
 
@@ -13,7 +13,7 @@ type HookReturn = {
 
 export const useSignOut = (): HookReturn => {
   const { onSignOut } = useCurrentUser();
-  const { setPaginationOptions } = useWeatherPaginationInfo();
+  const { setPaginationOptions } = useWeatherCardsList();
   const [signOutMutation, { loading }] = useMutation(SignOutDocument);
 
   const signOutHandler = async (): Promise<void> => {

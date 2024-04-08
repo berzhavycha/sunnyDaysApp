@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
-  useWeatherPaginationInfo,
 } from '@/context';
 import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
@@ -26,7 +25,7 @@ type HookReturn = {
 export const useDeleteWeatherSubscription = (): HookReturn => {
   const { setError, errorHandler } = useSubscriptionError();
   const [deleteWeatherSubscription, { error }] = useMutation(DeleteWeatherSubscriptionDocument);
-  const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
+  // const { paginationOptions, currentPage, totalCount, totalPages } = useWeatherPaginationInfo();
   const { fetchMore } = useWeatherData();
   // const { isPageContentCached, onClickPrev } = useWeatherPagination();
   const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
@@ -52,7 +51,7 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
           },
         },
         async update(cache) {
-          const currentPageCache = readPageCache(cache, paginationOptions);
+          // const currentPageCache = readPageCache(cache, paginationOptions);
 
           // if (currentPageCache) {
           //   const clearedCurrentPage = purgePageCache(

@@ -1,14 +1,14 @@
 'use client'
 
 import { PaginationButtonsPanel } from "@/components/common";
-import { useWeatherPaginationInfo } from "@/context";
+import { useWeatherCardsList } from "@/context";
 import { useWeatherPagination, usePaginationPrefetch } from "@/hooks";
 import { START_PAGE_NUMBER } from "@/shared";
 import { FC } from "react";
 
 export const PaginationPanel: FC = () => {
     const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =
-        useWeatherPaginationInfo();
+        useWeatherCardsList();
     const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
     const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
         currentPage,

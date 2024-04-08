@@ -29,12 +29,11 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
     }
 
     try {
-
         const city = {
             name: formData.get('city') as string,
         }
 
-        const errorMessage = validateCity(city.name, prevData.weatherData);
+        const errorMessage = validateCity(city.name, weatherData);
 
         if (errorMessage) {
             return { ...prevData, error: errorMessage };
@@ -58,8 +57,10 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
 
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    const isAddingNewPage = totalCount / 6 === 0
-    if (paginationOptions.offset / paginationOptions.limit !== totalPages) {
+    console.log(totalCount, paginationOptions.limit, Math.ceil(totalCount / paginationOptions.limit))
+    const isAddingNewPage = (paginationOptions.offset / paginationOptions.limit + 1) * paginationOptions.limit / totalCount === 1
+    if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
+        console.log(totalPages, isAddingNewPage)
         const offset = isAddingNewPage ? totalPages : totalPages - 1
         const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
         revalidatePath(path)
@@ -67,8 +68,9 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
         // Redirect should be used outside of try...catch block:
         // https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
         redirect(path)
+    } else {
+        revalidateTag('forecasts')
     }
 
-    revalidateTag('forecasts')
     return { ...prevData, error: '' }
 }
