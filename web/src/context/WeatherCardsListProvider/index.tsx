@@ -15,6 +15,7 @@ import { UserCitiesWeatherQuery } from '@/hooks';
 import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
 import { ApolloError, ApolloQueryResult } from '@apollo/client';
 import { useSubscriptionError } from '../SubscriptionError';
+import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
 
 type ContextType = {
   isAddingCard: boolean;
@@ -41,6 +42,7 @@ type Props = PropsWithChildren & {
 }
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
+  const { setTotalCount } = useWeatherPaginationInfo()
   const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo()
@@ -57,6 +59,7 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
 
       if (data.userCitiesWeather) {
         setWeatherData(data)
+        setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
         setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] })
       }
     } catch (error) {

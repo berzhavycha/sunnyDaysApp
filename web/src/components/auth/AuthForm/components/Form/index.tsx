@@ -11,6 +11,8 @@ import { AuthType, useAuth, UserDto } from '@/hooks';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
+import { onAuthCachePurge } from '@/services';
+
 
 type Props = {
     authType: AuthType;
@@ -29,6 +31,7 @@ export const Form: FC<Props> = ({ authType, authMutation }) => {
     });
 
     const onSubmit = async (data: UserDto): Promise<void> => {
+        await onAuthCachePurge()
         await authHandler(data);
     };
 
