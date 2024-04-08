@@ -1,6 +1,8 @@
-import { FC } from 'react';
+import { FC, startTransition } from 'react';
 
-import { useDeleteWeatherSubscription } from '@/hooks';
+import { deleteWeatherSubscription } from '@/services';
+import { useSubscriptionError } from '@/context';
+import { ApolloError } from '@apollo/client';
 
 type Props = {
   isVisible: boolean;
@@ -9,12 +11,21 @@ type Props = {
 };
 
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
-  const { deleteSubscription } = useDeleteWeatherSubscription();
+  const { errorHandler } = useSubscriptionError();
 
-  const onDelete = async (): Promise<void> => {
-    onClose();
-    await deleteSubscription(city);
-  };
+  const onDelete = (): void => {
+    startTransition(() => {
+      deleteWeatherSubscription(city)
+        .catch((error) => {
+          if (error instanceof ApolloError) {
+            errorHandler(error)
+          }
+        })
+        .finally(() => {
+          onClose()
+        })
+    })
+  }
 
   return (
     <div

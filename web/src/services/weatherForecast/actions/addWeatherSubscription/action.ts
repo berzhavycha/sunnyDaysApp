@@ -3,7 +3,7 @@
 import { getClient } from "@/graphql/utils/getClient"
 import { ApolloError } from "@apollo/client"
 import { revalidateTag } from "next/cache"
-import { UserCitiesWeatherQuery } from "../../fetchers/index-server"
+import { UserCitiesWeatherQuery } from "../../fetchers"
 import { AddWeatherSubscriptionDocument } from "./mutations"
 import { validateCity } from "./utils"
 
@@ -28,7 +28,7 @@ export const addWeatherSubscription = async (prevData: AddSubscriptionState, for
             mutation: AddWeatherSubscriptionDocument,
             variables: {
                 city
-            }
+            },
         })
 
         if (errors?.length) {
