@@ -15,6 +15,7 @@ export const getWeatherForecasts = async (): Promise<ApolloQueryResult<UserCitie
         context: {
             fetchOptions: {
                 next: {
+                    revalidate: 1800,
                     tags: ['forecasts']
                 }
             }

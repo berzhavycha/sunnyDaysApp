@@ -5,6 +5,7 @@ import { FC, PropsWithChildren, useEffect } from 'react';
 
 import { useCurrentUser } from '@/context';
 import { env } from '@/core/env';
+import { START_PAGE_NUMBER } from '@/shared';
 
 export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const page = searchParams.get('page') ?? 0;
+    const page = searchParams.get('page') ?? START_PAGE_NUMBER;
     const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
     const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
