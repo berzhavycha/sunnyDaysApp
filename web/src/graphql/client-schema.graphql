@@ -1,6 +1,0 @@
-directive @client on FIELD
-
-extend type WeatherForecast {
-    _loading: Boolean!
-    _deleted: Boolean!
-}

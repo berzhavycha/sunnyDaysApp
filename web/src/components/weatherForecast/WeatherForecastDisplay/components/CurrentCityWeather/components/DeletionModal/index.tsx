@@ -1,8 +1,9 @@
 import { ApolloError } from '@apollo/client';
 import { FC } from 'react';
 
-import { useSubscriptionError, useWeatherCardsList } from '@/context';
+import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { deleteWeatherSubscription } from '@/services';
+import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
 type Props = {
   isVisible: boolean;
@@ -11,12 +12,18 @@ type Props = {
 };
 
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
-  const { errorHandler } = useSubscriptionError();
+  const { errorHandler, setError } = useSubscriptionError();
   const { weatherData } = useWeatherCardsList();
+  const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo()
 
   const onDelete = async (): Promise<void> => {
     try {
       await deleteWeatherSubscription(weatherData, city)
+
+      if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
+        setIsVisibleBelowMedium(false);
+      }
+      setError({ message: '' });
     } catch (error) {
       if (error instanceof ApolloError) {
         errorHandler(error);

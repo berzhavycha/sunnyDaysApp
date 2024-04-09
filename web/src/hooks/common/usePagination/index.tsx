@@ -1,12 +1,9 @@
-import { useRouter } from 'next/navigation';
-
 import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
 
 interface HookReturn {
   onClickPrev: () => Promise<void>;
   onClickNext: () => Promise<void>;
   onGoToPage: (page: number) => Promise<void>;
-  onPrefetch: (variables: PaginationQueryOptionsState) => Promise<void>;
 }
 
 interface UsePaginationDependencies<TVariables> {
@@ -16,14 +13,12 @@ interface UsePaginationDependencies<TVariables> {
   updatePaginationOptions: (newOptions: Partial<PaginationQueryOptionsState | TVariables>) => void;
 }
 
-export const useServerPagination = <TVariables,>({
+export const usePagination = <TVariables,>({
   paginationOptions,
   updatePaginationOptions,
   currentPage,
   totalPages,
 }: UsePaginationDependencies<TVariables>): HookReturn => {
-  const router = useRouter();
-
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {
       updatePaginationOptions({
@@ -46,11 +41,6 @@ export const useServerPagination = <TVariables,>({
     });
   };
 
-  const onPrefetch = async (variables: PaginationQueryOptionsState): Promise<void> => {
-    router.prefetch(
-      `/weather-forecast?page=${variables.offset}&perPage=${variables.limit}&order=${variables.order}`,
-    );
-  };
 
-  return { onClickPrev, onClickNext, onGoToPage, onPrefetch };
+  return { onClickPrev, onClickNext, onGoToPage };
 };

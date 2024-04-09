@@ -1,6 +1,7 @@
 import { useWeatherPaginationInfo } from '@/context';
-import { useServerPagination } from '@/hooks';
+import { usePagination } from '@/hooks/common';
 import { PaginationQueryOptionsState } from '@/shared';
+import { useRouter } from 'next/navigation';
 
 export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>) => Promise<void>;
 
@@ -12,10 +13,11 @@ type HookReturn = {
 };
 
 export const useWeatherPagination = (): HookReturn => {
+  const router = useRouter()
   const { totalPages, currentPage, paginationOptions, updatePaginationOptions } =
     useWeatherPaginationInfo();
 
-  const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useServerPagination({
+  const { onGoToPage, onClickNext, onClickPrev } = usePagination({
     paginationOptions,
     updatePaginationOptions,
     currentPage,
@@ -25,10 +27,16 @@ export const useWeatherPagination = (): HookReturn => {
   const onWeatherPagePrefetch = async (
     variables: Partial<PaginationQueryOptionsState>,
   ): Promise<void> => {
-    await onPrefetch({
+    const prefetchPaginationOptions = {
       ...paginationOptions,
-      ...variables,
-    });
+      ...variables
+    }
+
+    const page = prefetchPaginationOptions.offset / prefetchPaginationOptions.limit + 1
+
+    router.prefetch(
+      `/weather-forecast?page=${page}&perPage=${prefetchPaginationOptions.limit}&order=${prefetchPaginationOptions.order}`,
+    );
   };
 
   return {

@@ -9,9 +9,6 @@ export type WeatherForecast = {
   windSpeed: number;
   time?: string;
   daysForecast?: WeatherForecastDays[];
-  _deleted?: boolean;
-  _loading?: boolean;
-  isMocked?: boolean;
 };
 
 export type WeatherForecastDays = {
