@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
@@ -11,7 +11,6 @@ import { useRenderCityItem } from '../../hooks';
 import { useFormState } from 'react-dom';
 import { addWeatherSubscription } from '@/services';
 import { ApolloError } from '@apollo/client';
-import { useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
@@ -20,13 +19,13 @@ type Props = {
 
 export const WeatherCityInput: FC<Props> = ({ data }) => {
   const { weatherData } = useWeatherCardsList()
+  const [city, setCity] = useState<string>('')
   const { error, setError, errorHandler } = useSubscriptionError();
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [addSubscriptionState, addSubscriptionAction] = useFormState(addWeatherSubscriptionWithParams, {
     error: '',
   })
-  const searchParams = useSearchParams();
 
   const { updateQueryParams, deleteQueryParam } = useQueryParams()
 
@@ -39,6 +38,10 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
       }
 
       setError({ message: addSubscriptionState.error })
+
+      if (!addSubscriptionState.error) {
+        setCity('')
+      }
     } catch (error) {
       if (error instanceof ApolloError) {
         errorHandler(error)
@@ -48,13 +51,18 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
 
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
 
-  const handleSearch = useDebouncedCallback((text: string): void => {
+  const queryParamsHandler = useDebouncedCallback((text: string): void => {
     if (text) {
       updateQueryParams({ citySearch: text })
     } else {
       deleteQueryParam('citySearch')
     }
   }, DEBOUNCE_DELAY)
+
+  const searchHandler = (text: string): void => {
+    setCity(text)
+    // queryParamsHandler(text)
+  }
 
   const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => console.log(text));
 
@@ -66,7 +74,8 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
       <InputAutocomplete
         name='city'
         data={data}
-        onSearchChange={handleSearch}
+        search={city}
+        onSearchChange={searchHandler}
         placeholder={'Enter your city'}
         error={error.message}
         onPressOutside={onPressOutside}
@@ -76,7 +85,6 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
         onRenderItem={renderCityItem}
         onEnter={onAddSubscription}
         keyExtractor={keyExtractor}
-        defaultValue={searchParams.get('citySearch')?.toString()}
       />
       <Button
         type='submit'

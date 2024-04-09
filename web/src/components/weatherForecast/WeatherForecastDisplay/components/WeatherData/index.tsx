@@ -9,7 +9,7 @@ import { getPaginationParams } from "@/shared";
 
 export const WeatherData: FC = async () => {
     const { data } = await getWeatherForecasts()
-    const paginationOptions = getPaginationParams()
+    const { paginationOptions } = getPaginationParams()
 
     function renderItem(props: WeatherForecast): JSX.Element {
         return (

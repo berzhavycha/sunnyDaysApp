@@ -15,7 +15,7 @@ type AddSubscriptionState = {
 }
 
 export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery, prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
-    const paginationOptions = getPaginationParams()
+    const { paginationOptions } = getPaginationParams()
 
     try {
         const city = {
@@ -48,8 +48,8 @@ export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
     const isAddingNewPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0
     if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
-        const offset = isAddingNewPage ? totalPages : totalPages - 1
-        const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
+        const page = isAddingNewPage ? totalPages + 1 : totalPages
+        const path = `/weather-forecast?page=${page}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
         revalidatePath(path)
 
         // Redirect should be used outside of try...catch block:

@@ -5,7 +5,7 @@ import { ApolloQueryResult } from "@apollo/client"
 import { env } from "@/core/env"
 
 export const getWeatherForecasts = async (): Promise<ApolloQueryResult<UserCitiesWeatherQuery>> => {
-    const paginationOptions = getPaginationParams()
+    const { paginationOptions } = getPaginationParams()
 
     const data = await getClient().query({
         query: UserCitiesWeatherDocument,
@@ -16,7 +16,6 @@ export const getWeatherForecasts = async (): Promise<ApolloQueryResult<UserCitie
         context: {
             fetchOptions: {
                 next: {
-                    revalidate: env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_SECONDS_TIME,
                     tags: ['forecasts']
                 }
             }

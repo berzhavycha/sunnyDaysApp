@@ -4,7 +4,12 @@ import { PaginationQueryOptionsState } from "@/shared/types";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { headers } = require('next/headers');
 
-export const getPaginationParams = (): PaginationQueryOptionsState => {
+type FetchReturn = {
+    page: number,
+    paginationOptions: PaginationQueryOptionsState
+}
+
+export const getPaginationParams = (): FetchReturn => {
     const url = new URL(headers().get('x-url'));
     const searchParams = url.searchParams;
 
@@ -18,5 +23,8 @@ export const getPaginationParams = (): PaginationQueryOptionsState => {
         order
     }
 
-    return paginationOptions
+    return {
+        page,
+        paginationOptions
+    }
 }

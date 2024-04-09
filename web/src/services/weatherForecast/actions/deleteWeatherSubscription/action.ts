@@ -11,7 +11,7 @@ import { env } from "@/core/env"
 
 
 export const deleteWeatherSubscription = async (weatherData: UserCitiesWeatherQuery, cityName: string): Promise<void> => {
-    const paginationOptions = getPaginationParams()
+    const { page, paginationOptions } = getPaginationParams()
 
     const { errors } = await getClient().mutate({
         mutation: DeleteWeatherSubscriptionDocument,
@@ -31,7 +31,7 @@ export const deleteWeatherSubscription = async (weatherData: UserCitiesWeatherQu
     if (
         (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 && weatherData.userCitiesWeather.edges.length === 1 && (totalCount - 1) > 0
     ) {
-        const path = `/weather-forecast?page=${paginationOptions.offset - paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
+        const path = `/weather-forecast?page=${page - 1}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
         redirect(path)
     } else {
         revalidateTag('forecasts')
