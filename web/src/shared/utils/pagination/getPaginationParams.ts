@@ -2,6 +2,7 @@ import { env } from '@/core/env';
 import { START_PAGE_NUMBER } from '@/shared/constants';
 import { PaginationQueryOptionsState } from '@/shared/types';
 
+// GitHub issue - https://github.com/vercel/next.js/issues/49757#issuecomment-1894910792
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { headers } = require('next/headers');
 

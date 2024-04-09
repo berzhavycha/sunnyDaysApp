@@ -21,7 +21,7 @@ type Props<TItem> = {
   onInputFocus: () => void;
   isAutocompleteShown: boolean;
   isAutocompleteEnabled?: boolean;
-  onEnter: () => Promise<void>;
+  onEnter?: () => Promise<void>;
   keyExtractor: (item: TItem) => string;
   defaultValue?: string;
 };
@@ -47,7 +47,7 @@ export const InputAutocomplete = <TItem,>({
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
   const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>): Promise<void> => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && onEnter) {
       await onEnter();
     }
   };

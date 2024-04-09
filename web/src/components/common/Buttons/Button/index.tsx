@@ -8,7 +8,7 @@ import { buttonStyle } from './constants';
 
 type Props = {
   content: string | number | JSX.Element;
-  onClick: () => Promise<void> | void;
+  onClick?: () => Promise<void> | void;
   isActive?: boolean;
   isDisabled?: boolean;
   className?: string;
@@ -26,7 +26,7 @@ export const Button: FC<Props> = ({
   type,
 }) => {
   const onPress = async (): Promise<void> => {
-    if (!isDisabled) {
+    if (!isDisabled && onClick) {
       await onClick();
     }
   };

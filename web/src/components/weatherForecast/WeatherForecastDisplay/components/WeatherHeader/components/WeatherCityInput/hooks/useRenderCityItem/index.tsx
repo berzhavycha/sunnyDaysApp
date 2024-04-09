@@ -1,7 +1,7 @@
 import { useCitySearchList } from '@/context';
 import { City } from '@/hooks';
 
-import { CityAutocompleteItem } from '../../components';
+import { CityAutocompleteItem } from '../../../CityAutocompleteItem';
 
 type HookReturn = {
   renderCityItem: (args: City) => JSX.Element;

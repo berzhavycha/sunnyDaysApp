@@ -5,6 +5,7 @@ import { getClient } from '@/graphql/utils/getClient';
 
 import { CitiesDocument, CitiesQuery } from './queries';
 
+// GitHub issue - https://github.com/vercel/next.js/issues/49757#issuecomment-1894910792
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { headers } = require('next/headers');
 
