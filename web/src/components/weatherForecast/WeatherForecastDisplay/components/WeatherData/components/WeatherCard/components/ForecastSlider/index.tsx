@@ -13,6 +13,7 @@ import { WeatherForecastDays } from '@/hooks';
 import { SubWeatherForecast } from '../SubWeatherForecast';
 
 import './style/index.css';
+import { ForecastPreview } from '../ForecastPreview';
 
 type Props = {
   forecasts?: WeatherForecastDays[];
@@ -22,7 +23,7 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
   const [isSwiperMounted, setIsSwiperMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    // we want to show the preview of forecast info instead of loader before swiper is mounted,
+    // we want to show the preview of forecast info instead of loader before swiper is mounted during SSR
     setIsSwiperMounted(true);
   }, []);
 
@@ -32,17 +33,7 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
   return (
     <>
       {!isSwiperMounted ? (
-        <div className="w-full flex flex-row gap-4 pt-5">
-          {forecasts
-            ?.slice(0, env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE)
-            ?.map((props) => (
-              <SubWeatherForecast
-                key={props.id}
-                {...props}
-                className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}`}
-              />
-            ))}
-        </div>
+        <ForecastPreview forecasts={forecasts}/>
       ) : (
         <Swiper
           spaceBetween={16}

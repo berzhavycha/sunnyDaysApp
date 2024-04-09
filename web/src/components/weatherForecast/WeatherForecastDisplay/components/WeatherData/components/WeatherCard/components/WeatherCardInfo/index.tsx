@@ -7,7 +7,7 @@ import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { TempUnits, tempUnitSigns } from '@/context';
 import { WeatherForecast } from '@/hooks';
 
-import { ForecastSlider } from '../../../ForecastSlider';
+import { ForecastSlider } from '../ForecastSlider';
 
 type Props = WeatherForecast & {
   unit: TempUnits;
