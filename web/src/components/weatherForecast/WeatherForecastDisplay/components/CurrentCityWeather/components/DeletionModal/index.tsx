@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client';
-import { FC, startTransition } from 'react';
+import { FC } from 'react';
 
 import { useSubscriptionError, useWeatherCardsList } from '@/context';
 import { deleteWeatherSubscription } from '@/services';
@@ -14,18 +14,16 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
   const { errorHandler } = useSubscriptionError();
   const { weatherData } = useWeatherCardsList();
 
-  const onDelete = (): void => {
-    startTransition(() => {
-      deleteWeatherSubscription(weatherData, city)
-        .catch((error) => {
-          if (error instanceof ApolloError) {
-            errorHandler(error);
-          }
-        })
-        .finally(() => {
-          onClose();
-        });
-    });
+  const onDelete = async (): Promise<void> => {
+    try {
+      await deleteWeatherSubscription(weatherData, city)
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        errorHandler(error);
+      }
+    } finally {
+      onClose();
+    };
   };
 
   return (
