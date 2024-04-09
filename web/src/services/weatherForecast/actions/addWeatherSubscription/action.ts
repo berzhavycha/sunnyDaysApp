@@ -6,24 +6,15 @@ import { revalidatePath, revalidateTag } from "next/cache"
 import { UserCitiesWeatherQuery } from "../../fetchers"
 import { AddWeatherSubscriptionDocument } from "./mutations"
 import { validateCity } from "./utils"
-import { PaginationQueryOptionsState } from "@/shared"
+import { getPaginationParams } from "@/shared"
 import { redirect } from "next/navigation"
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { headers } = require('next/headers');
 
 type AddSubscriptionState = {
     error: string
 }
 
 export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery, prevData: AddSubscriptionState, formData: FormData): Promise<AddSubscriptionState> => {
-    const url = new URL(headers().get('x-url')!);
-    const searchParams = url.searchParams;
-
-    const paginationOptions: PaginationQueryOptionsState = {
-        offset: +(searchParams.get('page') ?? 0),
-        limit: +(searchParams.get('perPage') ?? 6),
-        order: searchParams.get('order') ?? "ASC"
-    }
+    const paginationOptions = getPaginationParams()
 
     try {
         const city = {
@@ -54,7 +45,7 @@ export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery
 
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    const isAddingNewPage =  totalCount % 6 === 0
+    const isAddingNewPage = totalCount % 6 === 0
     if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
         const offset = isAddingNewPage ? totalPages : totalPages - 1
         const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`

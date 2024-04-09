@@ -5,17 +5,11 @@ import { WeatherForecast } from "@/hooks";
 import { WeatherCardInfo, WeatherCard, PaginationPanel } from "./components";
 import { TempUnits } from "@/context";
 import { getWeatherForecasts } from "@/services/index-server";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { headers } = require('next/headers');
+import { getPaginationParams } from "@/shared";
 
 export const WeatherData: FC = async () => {
     const { data } = await getWeatherForecasts()
-
-    const url = new URL(headers().get('x-url')!);
-    const searchParams = url.searchParams;
-
-    const limit = +(searchParams.get('perPage') ?? 6)
+    const paginationOptions = getPaginationParams()
 
     function renderItem(props: WeatherForecast): JSX.Element {
         return (
@@ -26,7 +20,7 @@ export const WeatherData: FC = async () => {
     }
 
     const totalCount = data?.userCitiesWeather?.paginationInfo.totalCount ?? 0
-    const totalPages = Math.ceil(totalCount / limit)
+    const totalPages = Math.ceil(totalCount / paginationOptions.limit)
     const listFooterComponent = totalPages > 1 ? <PaginationPanel /> : null
 
     const keyExtractor = (item: { city: string }): string => item.city;

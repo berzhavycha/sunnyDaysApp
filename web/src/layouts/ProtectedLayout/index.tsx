@@ -13,14 +13,14 @@ export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const offset = searchParams.get('page') ?? 0;
+    const page = searchParams.get('page') ?? 0;
     const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
     const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
     if (!currentUser && !loadingUser) {
       router.replace('/sign-in');
     } else {
-      router.replace(`/weather-forecast?page=${offset}&perPage=${limit}&order=${order}`);
+      router.replace(`/weather-forecast?page=${page}&perPage=${limit}&order=${order}`);
     }
   }, [currentUser, router, loadingUser]);
 
