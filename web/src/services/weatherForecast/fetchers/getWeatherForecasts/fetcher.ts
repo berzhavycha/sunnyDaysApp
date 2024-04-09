@@ -2,6 +2,7 @@ import { getClient } from "@/graphql/utils/getClient"
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from "./queries"
 import { getPaginationParams } from "@/shared"
 import { ApolloQueryResult } from "@apollo/client"
+import { env } from "@/core/env"
 
 export const getWeatherForecasts = async (): Promise<ApolloQueryResult<UserCitiesWeatherQuery>> => {
     const paginationOptions = getPaginationParams()
@@ -10,12 +11,12 @@ export const getWeatherForecasts = async (): Promise<ApolloQueryResult<UserCitie
         query: UserCitiesWeatherDocument,
         variables: {
             ...paginationOptions,
-            forecastDaysAmount: 3
+            forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS
         },
         context: {
             fetchOptions: {
                 next: {
-                    revalidate: 1800,
+                    revalidate: env.NEXT_PUBLIC_WEATHER_FORECAST_CACHE_SECONDS_TIME,
                     tags: ['forecasts']
                 }
             }

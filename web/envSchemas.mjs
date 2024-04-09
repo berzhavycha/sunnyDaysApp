@@ -11,7 +11,7 @@ export const clientSchema = Joi.object({
     NEXT_PUBLIC_MAX_WEATHER_CITIES_AMOUNT: Joi.number().default(10),
     NEXT_PUBLIC_MAX_FORECAST_DAYS: Joi.number().default(3),
     NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE: Joi.number().default(3),
-    NEXT_PUBLIC_WEATHER_FORECAST_CACHE_MINUTES_TIME: Joi.number().default(30),
+    NEXT_PUBLIC_WEATHER_FORECAST_CACHE_SECONDS_TIME: Joi.number().default(1800),
     NEXT_PUBLIC_PASSWORD_MIN_LENGTH: Joi.number().default(8),
     NEXT_PUBLIC_FEATURE_CACHE_MINUTES_TIME: Joi.number().default(15)
 });

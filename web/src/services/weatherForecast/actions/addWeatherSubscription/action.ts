@@ -8,6 +8,7 @@ import { AddWeatherSubscriptionDocument } from "./mutations"
 import { validateCity } from "./utils"
 import { getPaginationParams } from "@/shared"
 import { redirect } from "next/navigation"
+import { env } from "@/core/env"
 
 type AddSubscriptionState = {
     error: string
@@ -45,7 +46,7 @@ export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery
 
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    const isAddingNewPage = totalCount % 6 === 0
+    const isAddingNewPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0
     if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
         const offset = isAddingNewPage ? totalPages : totalPages - 1
         const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
