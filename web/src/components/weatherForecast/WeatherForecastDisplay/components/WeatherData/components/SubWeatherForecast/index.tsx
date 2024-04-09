@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { FC, memo } from 'react';
 
 import { TemperatureInfo } from '@/components';
-import {weatherIconMapping} from '@/components/weatherForecast/constants'
+import { weatherIconMapping } from '@/components/weatherForecast/constants'
 import { useCurrentTempUnit, tempUnitSigns } from '@/context';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 
@@ -11,14 +11,15 @@ type Props = {
   fahrenheit: number;
   text: string;
   dayOfWeek: string;
+  className: string;
 };
 
-export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, ...info }) => {
+export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, className, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
   const weatherIcon = pickWeatherIcon(text);
 
   return (
-    <div className="w-full text-center relative">
+    <div className={`${className} text-center relative`}>
       <div className="w-full mb-2 flex flex-col items-center justify-between bg-gradient-to-t from-blue-800 to-blue-600 rounded-xl p-2 text-center">
         <Image
           src={weatherIconMapping[weatherIcon]}

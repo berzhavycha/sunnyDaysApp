@@ -1,6 +1,6 @@
 'use client'
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/controller';
 import 'swiper/css/pagination';
@@ -19,24 +19,41 @@ type Props = {
 };
 
 export const ForecastSlider: FC<Props> = ({ forecasts }) => {
+  const [isSwiperMounted, setIsSwiperMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    // we want to show the preview of forecast info instead of loader before swiper is mounted,
+    setIsSwiperMounted(true);
+  }, []);
+
   const isSwiperActive =
     env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
 
   return (
-    <Swiper
-      spaceBetween={20}
-      slidesPerView={env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Pagination]}
-      className={`w-full ${isSwiperActive ? 'h-40 -mb-6' : 'h-full'}`}
-    >
-      {forecasts?.map((props) => (
-        <SwiperSlide className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`} key={props.id}>
-          <SubWeatherForecast {...props} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  );
+    <>
+      {!isSwiperMounted ? (
+        <div className="w-full flex flex-row gap-4 pt-5">
+          {forecasts?.slice(0, env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE)?.map(props => (
+            <SubWeatherForecast key={props.id} {...props} className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}`} />
+          ))}
+        </div>
+      ) : (
+        <Swiper
+          spaceBetween={16}
+          slidesPerView={env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className={`w-full ${isSwiperActive ? 'h-40 -mb-6' : 'h-full'}`}
+        >
+          {forecasts?.map((props) => (
+            <SwiperSlide className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`} key={props.id}>
+              <SubWeatherForecast className='w-full' {...props} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
+    </>
+  )
 };
