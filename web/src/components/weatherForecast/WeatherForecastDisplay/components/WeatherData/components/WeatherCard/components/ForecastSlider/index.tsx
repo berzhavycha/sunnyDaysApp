@@ -10,10 +10,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { env } from '@/core/env';
 import { WeatherForecastDays } from '@/hooks';
 
+import { ForecastPreview } from '../ForecastPreview';
 import { SubWeatherForecast } from '../SubWeatherForecast';
 
 import './style/index.css';
-import { ForecastPreview } from '../ForecastPreview';
 
 type Props = {
   forecasts?: WeatherForecastDays[];
@@ -33,7 +33,7 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
   return (
     <>
       {!isSwiperMounted ? (
-        <ForecastPreview forecasts={forecasts}/>
+        <ForecastPreview forecasts={forecasts} />
       ) : (
         <Swiper
           spaceBetween={16}

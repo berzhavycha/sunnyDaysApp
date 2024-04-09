@@ -7,7 +7,7 @@ import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
 import { useCitySearchList, useSubscriptionError } from '@/context';
 import { City } from '@/shared';
 
-import { useRenderCityItem, useCitySearch } from './hooks';
+import { useCitySearch, useRenderCityItem } from './hooks';
 
 type Props = {
   data?: City[];
@@ -17,7 +17,7 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
   const [city, setCity] = useState<string>('');
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { queryParamsHandler, addSubscriptionAction } = useCitySearch()
+  const { queryParamsHandler, addSubscriptionAction } = useCitySearch();
 
   const searchHandler = (text: string): void => {
     setCity(text);
@@ -25,18 +25,16 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
   };
 
   const onFormAction = (formData: FormData): void => {
-    addSubscriptionAction(formData)
-    queryParamsHandler('')
-    setCity('')
-  }
+    addSubscriptionAction(formData);
+    queryParamsHandler('');
+    setCity('');
+  };
 
-  const { renderCityItem } = useRenderCityItem(
-    async (text: string): Promise<void> => {
-      const formData = new FormData()
-      formData.append('city', text);
-      onFormAction(formData)
-    },
-  );
+  const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => {
+    const formData = new FormData();
+    formData.append('city', text);
+    onFormAction(formData);
+  });
 
   const keyExtractor = (item: { name: string }): string => item.name;
 

@@ -50,7 +50,6 @@ export const addWeatherSubscription = async (
     // https://stackoverflow.com/a/78265128
     return { ...prevData, error: JSON.stringify(error) };
   }
- 
 
   const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount;
   const totalPages = Math.ceil(totalCount / paginationOptions.limit);

@@ -14,11 +14,11 @@ type Props = {
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
   const { errorHandler, setError } = useSubscriptionError();
   const { weatherData } = useWeatherCardsList();
-  const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo()
+  const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
 
   const onDelete = async (): Promise<void> => {
     try {
-      await deleteWeatherSubscription(weatherData, city)
+      await deleteWeatherSubscription(weatherData, city);
 
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
         setIsVisibleBelowMedium(false);
@@ -30,7 +30,7 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
       }
     } finally {
       onClose();
-    };
+    }
   };
 
   return (

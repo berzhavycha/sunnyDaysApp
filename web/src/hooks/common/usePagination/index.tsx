@@ -41,6 +41,5 @@ export const usePagination = <TVariables,>({
     });
   };
 
-
   return { onClickPrev, onClickNext, onGoToPage };
 };

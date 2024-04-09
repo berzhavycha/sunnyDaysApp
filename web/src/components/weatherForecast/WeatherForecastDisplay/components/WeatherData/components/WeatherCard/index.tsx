@@ -1,5 +1,6 @@
-import { WeatherForecast } from "@/shared";
-import { WeatherCardInfo, InteractiveWeatherCard } from "./components";
+import { WeatherForecast } from '@/shared';
+
+import { InteractiveWeatherCard, WeatherCardInfo } from './components';
 
 export const WeatherCard = (props: WeatherForecast): JSX.Element => {
   return (
@@ -7,4 +8,4 @@ export const WeatherCard = (props: WeatherForecast): JSX.Element => {
       <WeatherCardInfo {...props} />
     </InteractiveWeatherCard>
   );
-}
+};

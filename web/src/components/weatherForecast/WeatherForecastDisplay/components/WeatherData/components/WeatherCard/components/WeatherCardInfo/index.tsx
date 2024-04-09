@@ -8,7 +8,7 @@ import { WeatherForecast } from '@/hooks';
 import { ForecastSlider } from '../ForecastSlider';
 import { TodaysTemperature } from '../TodaysTemperature';
 
-type Props = WeatherForecast
+type Props = WeatherForecast;
 
 export const WeatherCardInfo: FC<Props> = memo(({ city, text, daysForecast, ...info }) => {
   const weatherIcon = pickWeatherIcon(text);
