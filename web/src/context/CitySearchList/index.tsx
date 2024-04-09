@@ -2,7 +2,8 @@
 
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-import { useCitySearchStatus } from '@/hooks/citySearch';
+import { CitySearchStatusQuery } from '@/services';
+import { ApolloQueryResult } from '@apollo/client';
 
 type CitySearchListState = {
   isVisible: boolean;
@@ -27,9 +28,11 @@ export const useCitySearchList = (): ContextType => {
   return citySearchListContext;
 };
 
-export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { isEnabled } = useCitySearchStatus();
+type Props = PropsWithChildren & {
+  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery>
+}
 
+export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusData }) => {
   const [listState, setListState] = useState<CitySearchListState>({
     isVisible: false,
     isEnabled: false,
@@ -38,9 +41,9 @@ export const CitySearchListProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     setListState((prevState) => ({
       ...prevState,
-      isEnabled,
+      isEnabled: citySearchStatusData.data.citySearchStatus ?? false,
     }));
-  }, [isEnabled]);
+  }, [citySearchStatusData]);
 
   const onPressOutside = (): void => {
     setListState((prevState) => ({

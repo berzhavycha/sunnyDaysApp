@@ -3,7 +3,6 @@ import { FC, PropsWithChildren } from 'react';
 import { Compose } from '@/components';
 
 import { ApolloWrapper } from '../ApolloWrapper';
-import { CitySearchListProvider } from '../CitySearchList';
 import { CurrentCityWeatherInfoProvider } from '../CurrentCityWeatherInfo';
 import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 import { CurrentUserProvider } from '../CurrentUser';
@@ -16,7 +15,6 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
       components={[
         ApolloWrapper,
         CurrentUserProvider,
-        CitySearchListProvider,
         WeatherPaginationInfoProvider,
         CurrentTempUnitProvider,
         CurrentCityWeatherInfoProvider,
