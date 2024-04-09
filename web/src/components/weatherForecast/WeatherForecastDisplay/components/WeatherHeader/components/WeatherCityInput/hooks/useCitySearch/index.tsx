@@ -1,5 +1,6 @@
+import { DEBOUNCE_DELAY } from "@/components/weatherForecast/constants";
 import { useSubscriptionError, useWeatherCardsList } from "@/context";
-import { useQueryParams, DEBOUNCE_DELAY } from "@/hooks";
+import { useQueryParams } from "@/hooks";
 import { addWeatherSubscription } from "@/services";
 import { ApolloError } from "@apollo/client";
 import { useEffect } from "react";
