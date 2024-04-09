@@ -12,6 +12,8 @@ import {
 } from 'react';
 
 import { WeatherForecast } from '@/hooks';
+import { ApolloQueryResult } from '@apollo/client';
+import { UserCitiesWeatherQuery } from '@/services';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -22,8 +24,8 @@ export type CurrentCityWeatherInfoState = {
 };
 
 type ContextType = {
-  currentCityWeatherInfo: CurrentCityWeatherInfoState | undefined;
-  setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState | undefined>>;
+  currentCityWeatherInfo: CurrentCityWeatherInfoState;
+  setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState>>;
   isTodayCurrentWeather: boolean;
   setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
   setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
@@ -48,9 +50,15 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
   return context;
 };
 
-export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+type Props = PropsWithChildren & {
+  weatherResponse: ApolloQueryResult<UserCitiesWeatherQuery>
+}
+
+export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
-    useState<CurrentCityWeatherInfoState>();
+    useState<CurrentCityWeatherInfoState>({
+      info: weatherResponse.data.userCitiesWeather.edges[0]
+    });
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
