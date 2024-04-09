@@ -6,8 +6,12 @@ import { useWeatherPagination, usePaginationPrefetch } from "@/hooks";
 import { START_PAGE_NUMBER } from "@/shared";
 import { FC } from "react";
 
-export const PaginationPanel: FC = () => {
-    const { totalPages, paginationPageNumbers, currentPage, paginationOptions } =
+type Props = {
+    paginationPageNumbers: number[]
+}
+
+export const PaginationPanel: FC<Props> = ({ paginationPageNumbers }) => {
+    const { totalPages, currentPage, paginationOptions } =
         useWeatherPaginationInfo();
     const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();
     const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({

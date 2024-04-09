@@ -21,12 +21,13 @@ export const WeatherData: FC = async () => {
 
     const totalCount = data?.userCitiesWeather?.paginationInfo.totalCount ?? 0
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    const listFooterComponent = totalPages > 1 ? <PaginationPanel /> : null
+    const paginationPageButtons = Array.from({ length: totalPages }, (_, index) => index + 1)
+    const listFooterComponent = totalPages > 1 ? <PaginationPanel paginationPageNumbers={paginationPageButtons} /> : null
 
     const keyExtractor = (item: { city: string }): string => item.city;
 
     return (
-        <div>
+        <div className="w-full h-full">
             {!data || !data.userCitiesWeather || !data?.userCitiesWeather.edges.length ? (
                 <NoData />
             ) : (

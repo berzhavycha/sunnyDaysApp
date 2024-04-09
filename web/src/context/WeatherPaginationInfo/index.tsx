@@ -25,7 +25,6 @@ type ContextType = {
   totalCount: number;
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
-  paginationPageNumbers: number[];
 };
 
 const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
@@ -45,7 +44,6 @@ export const useWeatherPaginationInfo = (): ContextType => {
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
@@ -79,7 +77,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     setCurrentPage(currentPageParam);
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
-    setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
   }, [paginationOptions, totalCount]);
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
@@ -111,7 +108,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     totalCount,
     setTotalCount,
     totalPages,
-    paginationPageNumbers,
   };
 
   return (
