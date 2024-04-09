@@ -61,6 +61,19 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   );
 
   useEffect(() => {
+    const offset = +(searchParams.get('page') ?? 0);
+    const limit = +(searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT);
+    const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
+  
+    setPaginationOptions({
+      offset,
+      limit,
+      order,
+    });
+  
+  }, [searchParams]);
+
+  useEffect(() => {
     setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1);
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
