@@ -1,17 +1,18 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 
 import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
 import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
-import { City, useQueryParams } from '@/hooks';
+import { City, DEBOUNCE_DELAY, useQueryParams } from '@/hooks';
 
 import { useRenderCityItem } from '../../hooks';
 import { useFormState } from 'react-dom';
 import { addWeatherSubscription } from '@/services';
 import { ApolloError } from '@apollo/client';
 import { useSearchParams } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
   data?: City[]
@@ -45,17 +46,15 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
     }
   }, [addSubscriptionState])
 
-  const [city, setCity] = useState<string>('');
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
 
-  const handleSearch = (text: string): void => {
-    setCity(text)
+  const handleSearch = useDebouncedCallback((text: string): void => {
     if (text) {
       updateQueryParams({ citySearch: text })
     } else {
       deleteQueryParam('citySearch')
     }
-  }
+  }, DEBOUNCE_DELAY)
 
   const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => console.log(text));
 
@@ -67,7 +66,6 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
       <InputAutocomplete
         name='city'
         data={data}
-        search={city}
         onSearchChange={handleSearch}
         placeholder={'Enter your city'}
         error={error.message}

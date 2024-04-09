@@ -12,7 +12,7 @@ type Props<TItem> = {
   name: string;
   loading?: boolean;
   data?: TItem[];
-  search: string;
+  search?: string;
   onRenderItem: (item: TItem) => JSX.Element;
   onSearchChange: (text: string) => void;
   placeholder: string;
