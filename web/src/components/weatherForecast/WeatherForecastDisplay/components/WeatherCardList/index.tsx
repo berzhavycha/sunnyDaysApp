@@ -20,8 +20,8 @@ export const WeatherCardList: FC = () => {
     paginationOptions,
     totalPages,
     onPrefetch,
-    startPageNumber: START_PAGE_NUMBER
-  })
+    startPageNumber: START_PAGE_NUMBER,
+  });
   const { loading } = useIsLoading(data, error);
 
   const listFooterComponent =

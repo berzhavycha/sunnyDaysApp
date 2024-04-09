@@ -1,7 +1,6 @@
+import { useWeatherPaginationInfo } from '@/context';
 import { useServerPagination } from '@/hooks';
 import { PaginationQueryOptionsState } from '@/shared';
-
-import { useWeatherPaginationInfo } from '@/context';
 
 export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>) => Promise<void>;
 
@@ -26,12 +25,10 @@ export const useWeatherPagination = (): HookReturn => {
   const onWeatherPagePrefetch = async (
     variables: Partial<PaginationQueryOptionsState>,
   ): Promise<void> => {
-    await onPrefetch(
-      {
-        ...paginationOptions,
-        ...variables,
-      },
-    );
+    await onPrefetch({
+      ...paginationOptions,
+      ...variables,
+    });
   };
 
   return {

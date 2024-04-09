@@ -24,17 +24,13 @@ export const usePaginationPrefetch = ({
 }: Params): HookReturn => {
   const onPrevPrefetch = async (): Promise<void> => {
     if (currentPage !== startPageNumber && onPrefetch) {
-      await onPrefetch(
-        { offset: paginationOptions.offset - paginationOptions.limit },
-      );
+      await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit });
     }
   };
 
   const onNextPrefetch = async (): Promise<void> => {
     if (currentPage !== totalPages && onPrefetch) {
-      await onPrefetch(
-        { offset: paginationOptions.offset + paginationOptions.limit },
-      );
+      await onPrefetch({ offset: paginationOptions.offset + paginationOptions.limit });
     }
   };
 

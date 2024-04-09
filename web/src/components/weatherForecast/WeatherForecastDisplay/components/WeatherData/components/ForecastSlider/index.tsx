@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FC, useEffect, useState } from 'react';
 import 'swiper/css';
@@ -33,9 +33,15 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
     <>
       {!isSwiperMounted ? (
         <div className="w-full flex flex-row gap-4 pt-5">
-          {forecasts?.slice(0, env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE)?.map(props => (
-            <SubWeatherForecast key={props.id} {...props} className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}`} />
-          ))}
+          {forecasts
+            ?.slice(0, env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE)
+            ?.map((props) => (
+              <SubWeatherForecast
+                key={props.id}
+                {...props}
+                className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE}`}
+              />
+            ))}
         </div>
       ) : (
         <Swiper
@@ -48,12 +54,15 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
           className={`w-full ${isSwiperActive ? 'h-40 -mb-6' : 'h-full'}`}
         >
           {forecasts?.map((props) => (
-            <SwiperSlide className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`} key={props.id}>
-              <SubWeatherForecast className='w-full' {...props} />
+            <SwiperSlide
+              className={`w-1/${env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE} pt-5`}
+              key={props.id}
+            >
+              <SubWeatherForecast className="w-full" {...props} />
             </SwiperSlide>
           ))}
         </Swiper>
       )}
     </>
-  )
+  );
 };

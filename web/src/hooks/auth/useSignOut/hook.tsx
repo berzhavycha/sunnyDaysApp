@@ -2,7 +2,7 @@
 
 import { useMutation } from '@apollo/client';
 
-import { useCurrentUser,  useWeatherPaginationInfo } from '@/context';
+import { useCurrentUser, useWeatherPaginationInfo } from '@/context';
 
 import { SignOutDocument } from './mutations';
 

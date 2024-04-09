@@ -13,7 +13,7 @@ type Props = {
   isDisabled?: boolean;
   className?: string;
   onMouseOver?: () => Promise<void> | void;
-  type?: "button" | "reset" | "submit"
+  type?: 'button' | 'reset' | 'submit';
 };
 
 export const Button: FC<Props> = ({
@@ -23,7 +23,7 @@ export const Button: FC<Props> = ({
   isDisabled,
   className,
   onMouseOver,
-  type
+  type,
 }) => {
   const onPress = async (): Promise<void> => {
     if (!isDisabled) {

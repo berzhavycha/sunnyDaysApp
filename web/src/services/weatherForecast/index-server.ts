@@ -1,1 +1,1 @@
-export * from './fetchers/index-server'
+export * from './fetchers/index-server';

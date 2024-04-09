@@ -23,7 +23,7 @@ type Props<TItem> = {
   isAutocompleteEnabled?: boolean;
   onEnter: () => Promise<void>;
   keyExtractor: (item: TItem) => string;
-  defaultValue?: string
+  defaultValue?: string;
 };
 
 export const InputAutocomplete = <TItem,>({
@@ -40,7 +40,7 @@ export const InputAutocomplete = <TItem,>({
   onRenderItem,
   onEnter,
   keyExtractor,
-  defaultValue
+  defaultValue,
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
   useOutsideClick(autocompleteRef, onPressOutside);
@@ -63,7 +63,7 @@ export const InputAutocomplete = <TItem,>({
         icon={faSearch}
         error={error}
         onFocus={onInputFocus}
-        autoComplete='off'
+        autoComplete="off"
         className="text-xs sm:pl-11 sm:text-base sm:py-2"
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
         defaultValue={defaultValue}

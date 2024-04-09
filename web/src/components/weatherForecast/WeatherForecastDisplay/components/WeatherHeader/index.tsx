@@ -1,12 +1,13 @@
 import { FC } from 'react';
 
-import { ControlButtons, WeatherCityInput } from './components';
-import { getCitiesByPrefix, getCitySearchStatus } from '@/services/index-server';
 import { CitySearchListProvider } from '@/context';
+import { getCitiesByPrefix, getCitySearchStatus } from '@/services/index-server';
+
+import { ControlButtons, WeatherCityInput } from './components';
 
 export const WeatherHeader: FC = async () => {
-  const citySearchData = await getCitiesByPrefix()
-  const citySearchStatusData = await getCitySearchStatus()
+  const citySearchData = await getCitiesByPrefix();
+  const citySearchStatusData = await getCitySearchStatus();
 
   return (
     <CitySearchListProvider citySearchStatusData={citySearchStatusData}>

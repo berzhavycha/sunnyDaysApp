@@ -1,1 +1,1 @@
-export * from './getWeatherForecasts/index-server'
+export * from './getWeatherForecasts/index-server';

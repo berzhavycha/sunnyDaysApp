@@ -1,9 +1,9 @@
 'use client';
 
+import { ApolloQueryResult } from '@apollo/client';
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { CitySearchStatusQuery } from '@/services';
-import { ApolloQueryResult } from '@apollo/client';
 
 type CitySearchListState = {
   isVisible: boolean;
@@ -29,8 +29,8 @@ export const useCitySearchList = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery>
-}
+  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery>;
+};
 
 export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusData }) => {
   const [listState, setListState] = useState<CitySearchListState>({

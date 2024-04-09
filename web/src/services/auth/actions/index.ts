@@ -1,1 +1,1 @@
-export * from './onAuthCachePurge'
+export * from './onAuthCachePurge';

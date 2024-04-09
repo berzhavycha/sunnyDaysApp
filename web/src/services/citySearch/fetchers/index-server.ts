@@ -1,2 +1,2 @@
-export * from './getCitiesByPrefix/index-server'
-export * from './getCitySearchStatus/index-server'
+export * from './getCitiesByPrefix/index-server';
+export * from './getCitySearchStatus/index-server';

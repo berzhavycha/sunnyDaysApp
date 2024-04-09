@@ -44,5 +44,4 @@ export const CurrentCityWeather: FC = () => {
       </ModalBackground>
     </>
   );
-
 };

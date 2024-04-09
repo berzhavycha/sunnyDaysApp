@@ -1,20 +1,21 @@
-import { ApolloQueryResult } from "@apollo/client";
-import { CitySearchStatusDocument, CitySearchStatusQuery } from "./queries";
-import { getClient } from "@/graphql/utils/getClient";
-import { env } from "@/core/env";
+import { ApolloQueryResult } from '@apollo/client';
 
+import { env } from '@/core/env';
+import { getClient } from '@/graphql/utils/getClient';
+
+import { CitySearchStatusDocument, CitySearchStatusQuery } from './queries';
 
 export const getCitySearchStatus = async (): Promise<ApolloQueryResult<CitySearchStatusQuery>> => {
-    const data = await getClient().query({
-        query: CitySearchStatusDocument,
-        context: {
-            fetchOptions: {
-                next: {
-                    revalidate: env.NEXT_PUBLIC_FEATURE_CACHE_SECONDS_TIME
-                }
-            }
-        }
-    })
+  const data = await getClient().query({
+    query: CitySearchStatusDocument,
+    context: {
+      fetchOptions: {
+        next: {
+          revalidate: env.NEXT_PUBLIC_FEATURE_CACHE_SECONDS_TIME,
+        },
+      },
+    },
+  });
 
-    return data
-}
+  return data;
+};

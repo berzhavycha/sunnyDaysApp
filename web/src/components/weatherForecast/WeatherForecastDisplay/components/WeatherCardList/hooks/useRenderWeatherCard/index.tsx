@@ -2,7 +2,6 @@ import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherForecast } from '@/hooks';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
-
 type HookReturn = {
   renderItem(props: WeatherForecast): JSX.Element;
 };

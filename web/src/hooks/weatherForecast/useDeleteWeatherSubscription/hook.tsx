@@ -4,10 +4,7 @@
 import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
 
-import {
-  useCurrentCityWeatherInfo,
-  useSubscriptionError,
-} from '@/context';
+import { useCurrentCityWeatherInfo, useSubscriptionError } from '@/context';
 import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { Direction, IS_CLIENT, MD_BREAKPOINT } from '@/shared';
@@ -17,6 +14,8 @@ import { useWeatherPagination } from '../useWeatherPagination';
 import { purgePageCache, readPageCache, writePageCache } from '../utils';
 
 import { DeleteWeatherSubscriptionDocument } from './mutations';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 type HookReturn = {
   deleteSubscription: (city: string) => Promise<void>;
@@ -52,18 +51,15 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
         },
         async update(cache) {
           // const currentPageCache = readPageCache(cache, paginationOptions);
-
           // if (currentPageCache) {
           //   const clearedCurrentPage = purgePageCache(
           //     currentPageCache.userCitiesWeather.edges,
           //     cityName,
           //   );
-
           //   writePageCache(cache, paginationOptions, {
           //     ...currentPageCache.userCitiesWeather,
           //     edges: clearedCurrentPage ?? [],
           //   });
-
           //   if (
           //     !isPageContentCached(
           //       {
@@ -76,21 +72,18 @@ export const useDeleteWeatherSubscription = (): HookReturn => {
           //     await fetchMore({
           //       variables: { offset: paginationOptions.limit * currentPage },
           //     });
-
           //     const newCurrentPageCache = readPageCache(cache, paginationOptions);
           //     if (newCurrentPageCache) {
           //       const newClearedData = purgePageCache(
           //         newCurrentPageCache.userCitiesWeather.edges,
           //         cityName,
           //       );
-
           //       writePageCache(cache, paginationOptions, {
           //         ...newCurrentPageCache.userCitiesWeather,
           //         edges: newClearedData ?? [],
           //       });
           //     }
           //   }
-
           //   if (
           //     (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
           //     currentPageCache?.userCitiesWeather.edges?.length === 1

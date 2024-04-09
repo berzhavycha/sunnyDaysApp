@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
 import { WeatherCardsListProvider } from '@/context';
-import { WeatherData, CurrentCityWeather, WeatherHeader } from './components';
 import { getWeatherForecasts } from '@/services/index-server';
 
+import { CurrentCityWeather, WeatherData, WeatherHeader } from './components';
 
 export const WeatherForecastDisplay: FC = async () => {
-  const data = await getWeatherForecasts()
+  const data = await getWeatherForecasts();
 
   return (
     <WeatherCardsListProvider weatherResponse={data}>

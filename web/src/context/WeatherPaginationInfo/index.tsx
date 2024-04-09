@@ -48,7 +48,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
 
-
   const defaultLimit = env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
   const defaultOrder = env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
@@ -70,7 +69,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
       limit: limitParam,
       order: orderParam,
     });
-
   }, [searchParams]);
 
   useEffect(() => {

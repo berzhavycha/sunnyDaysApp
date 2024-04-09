@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { FC, memo } from 'react';
 
 import { TemperatureInfo } from '@/components';
-import {weatherIconMapping} from '@/components/weatherForecast'
+import { weatherIconMapping } from '@/components/weatherForecast';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { useCurrentTempUnit } from '@/context';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';

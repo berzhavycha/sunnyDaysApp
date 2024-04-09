@@ -5,4 +5,4 @@ export * from './useIsLoading';
 export * from './useResizeWindow';
 export * from './usePaginationPrefetch';
 export * from './useQueryParams';
-export * from './useServerPagination'
+export * from './useServerPagination';

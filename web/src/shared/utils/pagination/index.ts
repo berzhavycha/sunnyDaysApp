@@ -1,1 +1,1 @@
-export * from './getPaginationParams'
+export * from './getPaginationParams';

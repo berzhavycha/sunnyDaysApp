@@ -6,7 +6,7 @@ type QueryParams = { [key: string]: string | number | boolean };
 
 type HookReturn = {
   updateQueryParams: (newQueryParams: QueryParams) => void;
-  deleteQueryParam: (param: string) => void
+  deleteQueryParam: (param: string) => void;
 };
 
 export const useQueryParams = (): HookReturn => {
@@ -40,6 +40,6 @@ export const useQueryParams = (): HookReturn => {
 
   return {
     updateQueryParams,
-    deleteQueryParam
+    deleteQueryParam,
   };
 };

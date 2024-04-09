@@ -1,2 +1,2 @@
-export * from './action'
-export * from './mutations'
+export * from './action';
+export * from './mutations';

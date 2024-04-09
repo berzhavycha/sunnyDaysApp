@@ -1,2 +1,2 @@
 export * from './SubmitButton';
-export * from './Form'
+export * from './Form';

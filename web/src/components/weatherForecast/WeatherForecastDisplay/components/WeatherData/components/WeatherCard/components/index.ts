@@ -1,1 +1,2 @@
-export * from './WeatherCardInfo'
+export * from './WeatherCardInfo';
+export * from './InteractiveWeatherCard'

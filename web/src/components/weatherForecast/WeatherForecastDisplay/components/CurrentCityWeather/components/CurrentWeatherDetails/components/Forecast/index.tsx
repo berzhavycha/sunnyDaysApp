@@ -6,7 +6,6 @@ import { env } from '@/core/env';
 import { WeatherForecastDays } from '@/hooks';
 
 import { useRenderForecastItem } from './hooks';
-
 import './style/index.css';
 
 type Props = {

@@ -112,7 +112,6 @@ export const useClientPagination = <
       }
 
       updatePaginationOptions(variables);
-
     } catch (error) {
       if (error instanceof ApolloError) {
         onError(error);
