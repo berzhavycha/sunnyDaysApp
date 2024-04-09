@@ -24,7 +24,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
 
   const { onPrefetch } = useWeatherPagination();
   const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
-  const { onNextPrefetch, onPrevPrefetch } = usePaginationPrefetch({
+  const { onPrevPrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber: START_PAGE_NUMBER,
     currentPage,
@@ -40,8 +40,6 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
       weatherData?.userCitiesWeather.edges?.length === 1
     ) {
       await onPrevPrefetch();
-    } else {
-      await onNextPrefetch();
     }
   };
 

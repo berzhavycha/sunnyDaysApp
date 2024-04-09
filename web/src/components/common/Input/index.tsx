@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           type={isPasswordShown ? 'password' : 'text'}
           placeholder={placeholder}
-          className={`text-sm w-full bg-slate-200 pl-8 pr-4 placeholder-gray-500 py-2 rounded-md outline-none ${className}`}
+          className={`${className} text-sm w-full pl-8 pr-4 placeholder-gray-500 py-2 rounded-md outline-none`}
           {...props}
         />
         {isSecured && (

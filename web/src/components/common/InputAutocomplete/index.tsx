@@ -30,6 +30,7 @@ export const InputAutocomplete = <TItem,>({
   name,
   data,
   search,
+  loading,
   onSearchChange,
   placeholder,
   error,
@@ -64,7 +65,7 @@ export const InputAutocomplete = <TItem,>({
         error={error}
         onFocus={onInputFocus}
         autoComplete="off"
-        className="text-xs sm:pl-11 sm:text-base sm:py-2"
+        className={`${loading ? 'bg-sky-200' : 'bg-slate-200'} text-xs sm:pl-11 sm:text-base sm:py-2`}
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
         defaultValue={defaultValue}
       />

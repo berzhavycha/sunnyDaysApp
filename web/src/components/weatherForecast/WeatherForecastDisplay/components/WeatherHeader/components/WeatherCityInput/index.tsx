@@ -1,13 +1,14 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useState, useTransition } from 'react';
 
-import { Button, InputAutocomplete } from '@/components/common';
-import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
-import { useCitySearchList, useSubscriptionError } from '@/context';
+import { InputAutocomplete } from '@/components/common';
+import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { City } from '@/shared';
 
 import { useCitySearch, useRenderCityItem } from './hooks';
+import { SubmitCityButton } from '../SubmitCityButton';
+import { validateCity } from './utils';
 
 type Props = {
   data?: City[];
@@ -15,9 +16,11 @@ type Props = {
 
 export const WeatherCityInput: FC<Props> = ({ data }) => {
   const [city, setCity] = useState<string>('');
-  const { error } = useSubscriptionError();
+  const { error, setError } = useSubscriptionError();
+  const { weatherData } = useWeatherCardsList()
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { queryParamsHandler, addSubscriptionAction } = useCitySearch();
+  const [isPending, startTransition] = useTransition()
 
   const searchHandler = (text: string): void => {
     setCity(text);
@@ -25,9 +28,20 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
   };
 
   const onFormAction = (formData: FormData): void => {
-    addSubscriptionAction(formData);
-    queryParamsHandler('');
-    setCity('');
+    const city = formData.get('city')?.toString() ?? ''
+
+    const errorMessage = validateCity(city, weatherData)
+
+    if (errorMessage) {
+      setError({ message: errorMessage })
+    }
+
+    startTransition(() => {
+      addSubscriptionAction(formData).then(() => {
+        queryParamsHandler('');
+        setCity('');
+      })
+    })
   };
 
   const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => {
@@ -45,6 +59,7 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
     >
       <InputAutocomplete
         name="city"
+        loading={isPending}
         data={data}
         search={city}
         onSearchChange={searchHandler}
@@ -57,11 +72,7 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
         onRenderItem={renderCityItem}
         keyExtractor={keyExtractor}
       />
-      <Button
-        type="submit"
-        content={ADD_SUBSCRIPTION_BTN_CONTENT}
-        className="text-xs py-1 px-1 sm:text-base sm:py-2 sm:px-4"
-      />
+      <SubmitCityButton isPending={isPending} />
     </form>
   );
 };

@@ -1,6 +1,6 @@
 import { env } from '@/core/env';
 
-import { UserCitiesWeatherQuery } from '../../fetchers';
+import { UserCitiesWeatherQuery } from '@/services';
 
 export const validateCityRules = [
   {

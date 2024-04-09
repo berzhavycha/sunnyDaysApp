@@ -1,6 +1,4 @@
 import { ApolloError } from '@apollo/client';
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { DEBOUNCE_DELAY } from '@/components/weatherForecast/constants';
@@ -10,38 +8,26 @@ import { addWeatherSubscription } from '@/services';
 
 type HookReturn = {
   queryParamsHandler: (text: string) => void;
-  addSubscriptionAction: (payload: FormData) => void;
-  addSubscriptionState: { error: string };
+  addSubscriptionAction: (payload: FormData) => Promise<void>;
 };
 
 export const useCitySearch = (): HookReturn => {
   const { weatherData } = useWeatherCardsList();
-  const { setError, errorHandler } = useSubscriptionError();
+  const { errorHandler } = useSubscriptionError();
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData);
-  const [addSubscriptionState, addSubscriptionAction] = useFormState(
-    addWeatherSubscriptionWithParams,
-    {
-      error: '',
-    },
-  );
 
   const { updateQueryParams, deleteQueryParam } = useQueryParams();
 
-  useEffect(() => {
+  const addSubscriptionAction = async (formData: FormData): Promise<void> => {
     try {
-      if (addSubscriptionState.error.startsWith('{') && addSubscriptionState.error.endsWith('}')) {
-        const apolloError = JSON.parse(addSubscriptionState.error);
-
-        throw new ApolloError({ graphQLErrors: apolloError.graphQLErrors });
-      }
-
-      setError({ message: addSubscriptionState.error });
+      await addWeatherSubscriptionWithParams(formData)
     } catch (error) {
       if (error instanceof ApolloError) {
-        errorHandler(error);
+        errorHandler(error)
       }
     }
-  }, [addSubscriptionState]);
+  }
+
 
   const queryParamsHandler = useDebouncedCallback((text: string): void => {
     if (text) {
@@ -53,7 +39,6 @@ export const useCitySearch = (): HookReturn => {
 
   return {
     queryParamsHandler,
-    addSubscriptionAction,
-    addSubscriptionState,
+    addSubscriptionAction
   };
 };

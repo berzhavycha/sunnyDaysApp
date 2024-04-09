@@ -11,42 +11,24 @@ import { countTotalPages, getPaginationParams } from '@/shared';
 import { UserCitiesWeatherQuery } from '../../fetchers';
 
 import { AddWeatherSubscriptionDocument } from './mutations';
-import { validateCity } from './utils';
-
-type AddSubscriptionState = {
-  error: string;
-};
 
 export const addWeatherSubscription = async (
   weatherData: UserCitiesWeatherQuery,
-  prevData: AddSubscriptionState,
   formData: FormData,
-): Promise<AddSubscriptionState> => {
-  try {
-    const city = {
-      name: formData.get('city') as string,
-    };
+): Promise<void> => {
+  const city = {
+    name: formData.get('city') as string,
+  };
 
-    const errorMessage = validateCity(city.name, weatherData);
+  const { errors } = await getClient().mutate({
+    mutation: AddWeatherSubscriptionDocument,
+    variables: {
+      city,
+    },
+  });
 
-    if (errorMessage) {
-      return { ...prevData, error: errorMessage };
-    }
-
-    const { errors } = await getClient().mutate({
-      mutation: AddWeatherSubscriptionDocument,
-      variables: {
-        city,
-      },
-    });
-
-    if (errors?.length) {
-      throw new ApolloError({ graphQLErrors: errors });
-    }
-  } catch (error) {
-    // We have to stringify ApolloError instance due to this issue:
-    // https://stackoverflow.com/a/78265128
-    return { ...prevData, error: JSON.stringify(error) };
+  if (errors?.length) {
+    throw new ApolloError({ graphQLErrors: errors });
   }
 
   const { paginationOptions } = getPaginationParams();
@@ -66,6 +48,4 @@ export const addWeatherSubscription = async (
   } else {
     revalidateTag('forecasts');
   }
-
-  return { ...prevData, error: '' };
 };
