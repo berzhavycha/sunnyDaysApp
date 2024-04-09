@@ -10,8 +10,8 @@ import { Input } from '../Input';
 
 type Props<TItem> = {
   name: string;
-  loading: boolean;
-  data: TItem[];
+  loading?: boolean;
+  data?: TItem[];
   search: string;
   onRenderItem: (item: TItem) => JSX.Element;
   onSearchChange: (text: string) => void;
@@ -23,11 +23,11 @@ type Props<TItem> = {
   isAutocompleteEnabled?: boolean;
   onEnter: () => Promise<void>;
   keyExtractor: (item: TItem) => string;
+  defaultValue?: string
 };
 
 export const InputAutocomplete = <TItem,>({
   name,
-  loading,
   data,
   search,
   onSearchChange,
@@ -40,6 +40,7 @@ export const InputAutocomplete = <TItem,>({
   onRenderItem,
   onEnter,
   keyExtractor,
+  defaultValue
 }: Props<TItem>): JSX.Element => {
   const autocompleteRef = useRef<HTMLDivElement>(null);
   useOutsideClick(autocompleteRef, onPressOutside);
@@ -65,8 +66,9 @@ export const InputAutocomplete = <TItem,>({
         autoComplete='off'
         className="text-xs sm:pl-11 sm:text-base sm:py-2"
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
+        defaultValue={defaultValue}
       />
-      {!loading && data && isAutocompleteShown && isAutocompleteEnabled && (
+      {data && isAutocompleteShown && isAutocompleteEnabled && (
         <div className="absolute top-14 bg-white w-full z-10 rounded-xl overflow-hidden">
           <CustomFlatList
             className="flex flex-col"

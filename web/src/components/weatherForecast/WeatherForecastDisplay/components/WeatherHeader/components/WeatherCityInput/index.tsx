@@ -5,14 +5,19 @@ import { FC, useEffect, useState } from 'react';
 import { Button, InputAutocomplete } from '@/components/common';
 import { ADD_SUBSCRIPTION_BTN_CONTENT } from '@/components/weatherForecast';
 import { useCitySearchList, useSubscriptionError, useWeatherCardsList } from '@/context';
-import { useCityInputComplete } from '@/hooks';
+import { City, useQueryParams } from '@/hooks';
 
 import { useRenderCityItem } from '../../hooks';
 import { useFormState } from 'react-dom';
 import { addWeatherSubscription } from '@/services';
 import { ApolloError } from '@apollo/client';
+import { useSearchParams } from 'next/navigation';
 
-export const WeatherCityInput: FC = () => {
+type Props = {
+  data?: City[]
+}
+
+export const WeatherCityInput: FC<Props> = ({ data }) => {
   const { weatherData } = useWeatherCardsList()
   const { error, setError, errorHandler } = useSubscriptionError();
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData)
@@ -20,6 +25,9 @@ export const WeatherCityInput: FC = () => {
   const [addSubscriptionState, addSubscriptionAction] = useFormState(addWeatherSubscriptionWithParams, {
     error: '',
   })
+  const searchParams = useSearchParams();
+
+  const { updateQueryParams, deleteQueryParam } = useQueryParams()
 
   useEffect(() => {
     try {
@@ -39,7 +47,15 @@ export const WeatherCityInput: FC = () => {
 
   const [city, setCity] = useState<string>('');
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { data, loading } = useCityInputComplete(city);
+
+  const handleSearch = (text: string): void => {
+    setCity(text)
+    if (text) {
+      updateQueryParams({ citySearch: text })
+    } else {
+      deleteQueryParam('citySearch')
+    }
+  }
 
   const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => console.log(text));
 
@@ -50,10 +66,9 @@ export const WeatherCityInput: FC = () => {
     <form action={addSubscriptionAction} className="w-full flex items-start justify-between mb-2 gap-4 sm:gap-8 md:max-xl:mb-0">
       <InputAutocomplete
         name='city'
-        loading={loading}
         data={data}
         search={city}
-        onSearchChange={setCity}
+        onSearchChange={handleSearch}
         placeholder={'Enter your city'}
         error={error.message}
         onPressOutside={onPressOutside}
@@ -63,6 +78,7 @@ export const WeatherCityInput: FC = () => {
         onRenderItem={renderCityItem}
         onEnter={onAddSubscription}
         keyExtractor={keyExtractor}
+        defaultValue={searchParams.get('citySearch')?.toString()}
       />
       <Button
         type='submit'
