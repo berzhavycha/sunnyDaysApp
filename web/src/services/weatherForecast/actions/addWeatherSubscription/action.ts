@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 import { env } from '@/core/env';
 import { getClient } from '@/graphql/utils/getClient';
-import { getPaginationParams } from '@/shared';
+import { countTotalPages, getPaginationParams } from '@/shared';
 
 import { UserCitiesWeatherQuery } from '../../fetchers';
 
@@ -22,8 +22,6 @@ export const addWeatherSubscription = async (
   prevData: AddSubscriptionState,
   formData: FormData,
 ): Promise<AddSubscriptionState> => {
-  const { paginationOptions } = getPaginationParams();
-
   try {
     const city = {
       name: formData.get('city') as string,
@@ -51,9 +49,12 @@ export const addWeatherSubscription = async (
     return { ...prevData, error: JSON.stringify(error) };
   }
 
+  const { paginationOptions } = getPaginationParams();
+
   const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount;
-  const totalPages = Math.ceil(totalCount / paginationOptions.limit);
+  const totalPages = countTotalPages(weatherData.userCitiesWeather, paginationOptions)
   const isAddingNewPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
+
   if (paginationOptions.offset / paginationOptions.limit + 1 !== totalPages || isAddingNewPage) {
     const page = isAddingNewPage ? totalPages + 1 : totalPages;
     const path = `/weather-forecast?page=${page}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`;
