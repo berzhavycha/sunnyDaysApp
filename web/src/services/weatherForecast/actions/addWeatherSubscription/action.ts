@@ -54,9 +54,8 @@ export const addWeatherSubscription = async (weatherData: UserCitiesWeatherQuery
 
     const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount
     const totalPages = Math.ceil(totalCount / paginationOptions.limit)
-    const isAddingNewPage = (paginationOptions.offset / paginationOptions.limit + 1) * paginationOptions.limit / totalCount === 1
+    const isAddingNewPage =  totalCount % 6 === 0
     if ((paginationOptions.offset / paginationOptions.limit + 1) !== totalPages || isAddingNewPage) {
-        console.log(totalPages, isAddingNewPage)
         const offset = isAddingNewPage ? totalPages : totalPages - 1
         const path = `/weather-forecast?page=${offset * paginationOptions.limit}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
         revalidatePath(path)
