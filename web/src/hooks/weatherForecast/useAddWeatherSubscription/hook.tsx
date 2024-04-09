@@ -26,7 +26,7 @@ export const useAddWeatherSubscription = (
   const { setError, errorHandler } = useSubscriptionError();
   const { data, refetch } = useWeatherData();
   const { onGoToPage } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherCardsList();
+  // const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherCardsList();
   const [addWeatherSubscription, { loading, error }] = useMutation(AddWeatherSubscriptionDocument);
 
   useEffect(() => {
@@ -53,18 +53,18 @@ export const useAddWeatherSubscription = (
         },
       });
 
-      const isAddingOnTheNextPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
-      if (currentPage !== totalPages || isAddingOnTheNextPage) {
-        clearPageCache(client, {
-          ...paginationOptions,
-          offset: (totalPages - 1) * paginationOptions.limit,
-        });
-        await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
-      } else {
-        // startTransition(() => {
-        //   refetch().then(() => setIsAddingCard(false));
-        // });
-      }
+      // const isAddingOnTheNextPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
+      // if (currentPage !== totalPages || isAddingOnTheNextPage) {
+      //   clearPageCache(client, {
+      //     ...paginationOptions,
+      //     offset: (totalPages - 1) * paginationOptions.limit,
+      //   });
+      //   await onGoToPage(isAddingOnTheNextPage ? totalPages + 1 : totalPages);
+      // } else {
+      //   // startTransition(() => {
+      //   //   refetch().then(() => setIsAddingCard(false));
+      //   // });
+      // }
 
       setCity('');
     } catch (err) {

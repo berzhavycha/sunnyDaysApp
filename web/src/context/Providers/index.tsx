@@ -8,6 +8,7 @@ import { CurrentCityWeatherInfoProvider } from '../CurrentCityWeatherInfo';
 import { CurrentTempUnitProvider } from '../CurrentTempUnit';
 import { CurrentUserProvider } from '../CurrentUser';
 import { SubscriptionErrorProvider } from '../SubscriptionError';
+import { WeatherPaginationInfoProvider } from '../WeatherPaginationInfo';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -16,6 +17,7 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
         ApolloWrapper,
         CurrentUserProvider,
         CitySearchListProvider,
+        WeatherPaginationInfoProvider,
         CurrentTempUnitProvider,
         CurrentCityWeatherInfoProvider,
         SubscriptionErrorProvider,

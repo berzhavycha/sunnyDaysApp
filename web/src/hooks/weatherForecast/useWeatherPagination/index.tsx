@@ -1,7 +1,7 @@
 import { useServerPagination } from '@/hooks';
 import { PaginationQueryOptionsState } from '@/shared';
 
-import { useWeatherCardsList } from '@/context';
+import { useWeatherPaginationInfo } from '@/context';
 
 export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>) => Promise<void>;
 
@@ -14,7 +14,7 @@ type HookReturn = {
 
 export const useWeatherPagination = (): HookReturn => {
   const { totalPages, currentPage, paginationOptions, updatePaginationOptions } =
-    useWeatherCardsList();
+    useWeatherPaginationInfo();
 
   const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useServerPagination({
     paginationOptions,

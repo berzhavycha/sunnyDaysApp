@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { DeleteButton, NoData, Spinner } from '@/components/common';
-import { useCurrentCityWeatherInfo, useWeatherCardsList } from '@/context';
+import { useCurrentCityWeatherInfo, useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
 import { env } from '@/core/env';
 import { useIsLoading, usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER } from '@/shared';
@@ -14,11 +14,12 @@ type Props = {
 };
 
 export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
+  const { weatherData } = useWeatherCardsList();
   const { currentCityWeatherInfo, isVisibleBelowMedium } = useCurrentCityWeatherInfo();
   const { dayOfWeek, time } = useCurrentWeatherTime(currentCityWeatherInfo);
 
   const { onPrefetch } = useWeatherPagination();
-  const { weatherData, paginationOptions, currentPage, totalPages, totalCount } = useWeatherCardsList();
+  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo()
   const { loading } = useIsLoading(weatherData);
   const { onNextPrefetch, onPrevPrefetch } = usePaginationPrefetch({
     paginationOptions,
