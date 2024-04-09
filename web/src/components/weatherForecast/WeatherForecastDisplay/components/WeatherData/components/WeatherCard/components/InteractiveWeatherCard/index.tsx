@@ -1,8 +1,8 @@
 'use client';
 
-import React, { FC, isValidElement, memo, PropsWithChildren, ReactElement } from 'react';
+import React, { FC, memo, PropsWithChildren, } from 'react';
 
-import { useCurrentCityWeatherInfo, useCurrentTempUnit } from '@/context';
+import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherForecast } from '@/hooks';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
@@ -12,7 +12,6 @@ type Props = WeatherForecast &
     };
 
 export const InteractiveWeatherCard: FC<Props> = memo(({ city, text, daysForecast, children, ...info }) => {
-    const { currentTempUnit } = useCurrentTempUnit();
     const { setShownWeatherInfo, setCurrentCityWeatherInfo, setIsVisibleBelowMedium } =
         useCurrentCityWeatherInfo();
 
@@ -37,12 +36,7 @@ export const InteractiveWeatherCard: FC<Props> = memo(({ city, text, daysForecas
             onClick={onClick}
             className="w-full min-h-72 flex flex-col justify-between p-4 pb-5 bg-blue-600 rounded-3xl cursor-pointer hover:shadow-[0_0px_15px_5px_rgba(66,165,245,0.4)] transition-shadow sm:max-md:min-h-60 sm:w-[48%] md:w-full lg:w-[48%] 2xl:w-[32%]"
         >
-            {React.Children.map(children, (child) => {
-                if (isValidElement(child)) {
-                    return React.cloneElement(child as ReactElement, { unit: currentTempUnit.name });
-                }
-                return child;
-            })}
+            {children}
         </div>
     );
 });

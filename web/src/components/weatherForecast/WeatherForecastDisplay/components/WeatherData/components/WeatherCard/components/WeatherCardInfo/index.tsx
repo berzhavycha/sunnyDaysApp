@@ -1,19 +1,16 @@
 import Image from 'next/image';
 import { FC, memo } from 'react';
 
-import { TemperatureInfo } from '@/components/common';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { TempUnits, tempUnitSigns } from '@/context';
 import { WeatherForecast } from '@/hooks';
 
 import { ForecastSlider } from '../ForecastSlider';
+import { TodaysTemperature } from '../TodaysTemperature';
 
-type Props = WeatherForecast & {
-  unit: TempUnits;
-};
+type Props = WeatherForecast
 
-export const WeatherCardInfo: FC<Props> = memo(({ city, text, daysForecast, unit, ...info }) => {
+export const WeatherCardInfo: FC<Props> = memo(({ city, text, daysForecast, ...info }) => {
   const weatherIcon = pickWeatherIcon(text);
 
   return (
@@ -21,12 +18,7 @@ export const WeatherCardInfo: FC<Props> = memo(({ city, text, daysForecast, unit
       <div className="flex justify-between items-center mb-2">
         <div className="flex flex-col gap-2 text-left">
           <p className="text-sm text-white sm:text-sm md:text-md">{city}</p>
-          <TemperatureInfo
-            value={info[unit]}
-            tempSign={tempUnitSigns[unit]}
-            size="medium"
-            fontWeight="normal"
-          />
+          <TodaysTemperature celsius={info.celsius} fahrenheit={info.fahrenheit} />
           <p className="text-xs text-white mb-2 sm:text-xs">{text}</p>
         </div>
         <Image
