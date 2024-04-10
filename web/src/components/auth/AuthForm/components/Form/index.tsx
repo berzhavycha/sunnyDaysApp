@@ -34,8 +34,8 @@ export const Form: FC<Props> = ({ authType, authMutation }) => {
     await authHandler(data);
   };
 
-  const inputStyles = 'pl-9 md:pl-10 md:pl-12 sm:text-sm md:text-lg xl:text-xl';
-  const inputIconStyles = 'bg-slate-200 top-8 md:top-12 md:text-md md:text-xl';
+  const inputStyles = 'bg-slate-200  pl-9 md:pl-10 md:pl-12 sm:text-sm md:text-lg xl:text-xl';
+  const inputIconStyles = 'top-8 md:top-12 md:text-md md:text-xl';
 
   return (
     <>

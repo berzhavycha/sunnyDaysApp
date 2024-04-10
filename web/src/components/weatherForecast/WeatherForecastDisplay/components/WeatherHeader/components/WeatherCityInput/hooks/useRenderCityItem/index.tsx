@@ -1,5 +1,5 @@
 import { useCitySearchList } from '@/context';
-import { City } from '@/hooks';
+import { City } from '@/shared';
 
 import { CityAutocompleteItem } from '../../../CityAutocompleteItem';
 

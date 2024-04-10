@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react';
 
-import { UserCitiesWeatherQuery } from '@/hooks';
+import { UserCitiesWeatherQuery } from '@/services';
 
 import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
 import { useSubscriptionError } from '../SubscriptionError';
@@ -43,7 +43,7 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
   const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery>(weatherResponse.data);
   const { setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
-  const { errorHandler, setError } = useSubscriptionError();
+  const { errorHandler } = useSubscriptionError();
 
   useEffect(() => {
     try {
@@ -54,7 +54,6 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
       }
 
       if (data.userCitiesWeather) {
-        setError({ message: '' });
         setWeatherData(data);
         setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
         setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
