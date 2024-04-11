@@ -1,12 +1,45 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { middleware as activatedMiddleware } from '@/middlewares/config'
 
-export const middleware = (request: Request): NextResponse => {
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-url', request.url);
+export const middleware = async (req: NextRequest): Promise<NextResponse> => {
+  const middlewareFunctions = activatedMiddleware.map(fn => fn(req));
+
+  const middlewareHeader = [];
+
+  for (const middleware of middlewareFunctions) {
+    const result = await middleware;
+
+    if (!result.ok) {
+      return result;
+    }
+
+    middlewareHeader.push(result.headers);
+  }
+
+  let redirectTo = null;
+
+  middlewareHeader.some((header) => {
+    const redirect = header.get('x-middleware-request-redirect');
+    if (redirect) {
+      redirectTo = redirect;
+      return true;
+    }
+    return false;
+  });
+
+  if (redirectTo) {
+    return NextResponse.redirect(new URL(redirectTo, req.url), {
+      status: 307,
+    });
+  }
 
   return NextResponse.next({
     request: {
-      headers: requestHeaders,
-    },
+      headers: req.headers
+    }
   });
-};
+}
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|images|favicon.ico).*)']
+}

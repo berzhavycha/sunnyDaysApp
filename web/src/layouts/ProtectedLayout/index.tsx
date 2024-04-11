@@ -8,22 +8,22 @@ import { env } from '@/core/env';
 import { START_PAGE_NUMBER } from '@/shared';
 
 export const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
-  const router = useRouter();
-  const { currentUser, loadingUser } = useCurrentUser();
+  // const router = useRouter();
+  // const { currentUser, loadingUser } = useCurrentUser();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const page = searchParams.get('page') ?? START_PAGE_NUMBER;
-    const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
-    const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
+  // useEffect(() => {
+  //   const page = searchParams.get('page') ?? START_PAGE_NUMBER;
+  //   const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
+  //   const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
-    if (!currentUser && !loadingUser) {
-      router.replace('/sign-in');
-    } else {
-      router.replace(`/weather-forecast?page=${page}&perPage=${limit}&order=${order}`);
-    }
-  }, [currentUser, router, loadingUser]);
+  //   if (!currentUser && !loadingUser) {
+  //     router.replace('/sign-in');
+  //   } else {
+  //     router.replace(`/weather-forecast?page=${page}&perPage=${limit}&order=${order}`);
+  //   }
+  // }, [currentUser, router, loadingUser]);
 
   return <>{children}</>;
 };

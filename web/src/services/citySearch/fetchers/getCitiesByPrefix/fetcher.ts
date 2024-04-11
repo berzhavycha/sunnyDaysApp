@@ -10,15 +10,15 @@ import { CitiesDocument, CitiesQuery } from './queries';
 const { headers } = require('next/headers');
 
 export const getCitiesByPrefix = async (): Promise<ApolloQueryResult<CitiesQuery>> => {
-  const url = new URL(headers().get('x-url'));
-  const searchParams = url.searchParams;
+  // const url = new URL(headers().get('x-url'));
+  // const searchParams = url.searchParams;
 
-  const city = searchParams.get('citySearch') ?? '';
+  // const city = searchParams.get('citySearch') ?? '';
 
   const data = await getClient().query({
     query: CitiesDocument,
     variables: {
-      prefix: city,
+      prefix: 'lv',
       limit: env.NEXT_PUBLIC_CITIES_SEARCH_LIMIT,
       sort: env.NEXT_PUBLIC_CITIES_SEARCH_SORT,
       minPopulation: env.NEXT_PUBLIC_CITIES_SEARCH_MIN_POPULATION,

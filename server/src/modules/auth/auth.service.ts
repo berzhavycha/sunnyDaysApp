@@ -90,7 +90,7 @@ export class AuthService {
       httpOnly: true,
       maxAge:
         ONE_DAY_MILLISECONDS * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
-      sameSite: 'none',
+      sameSite: 'lax',
       secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }
@@ -98,7 +98,7 @@ export class AuthService {
   clearCookies(response: ExtendedGraphQLContext['res']): void {
     response.clearCookie('tokens', {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }

@@ -3,7 +3,7 @@
 import { DocumentNode } from '@apollo/client';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { FC } from 'react';
+import { BaseSyntheticEvent, FC } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/common';
@@ -29,7 +29,9 @@ export const Form: FC<Props> = ({ authType, authMutation }) => {
     resolver: joiResolver(userSchema(authType)),
   });
 
-  const onSubmit = async (data: UserDto): Promise<void> => {
+  const onSubmit = async (data: UserDto, e?: BaseSyntheticEvent): Promise<void> => {
+    e?.preventDefault(); 
+
     await onAuthCachePurge();
     await authHandler(data);
   };

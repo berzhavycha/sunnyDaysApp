@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react';
 
-import { WeatherForecast } from '@/hooks';
+import { WeatherForecast } from '@/shared';
 import { UserCitiesWeatherQuery } from '@/services';
 
 type InfoType = WeatherForecast & {
@@ -57,7 +57,7 @@ type Props = PropsWithChildren & {
 export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
-      info: weatherResponse.data.userCitiesWeather.edges[0],
+      info: weatherResponse.data?.userCitiesWeather.edges[0],
     },
   );
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');

@@ -42,7 +42,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserState | null>(null);
 
   const [fetchUser, { data, loading }] = useLazyQuery(CurrentUserDocument, {
-    onCompleted: () => {
+    onCompleted: async () => {
       if (data && data.currentUser) {
         setCurrentUser(data.currentUser);
       }
