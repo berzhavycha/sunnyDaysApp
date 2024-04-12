@@ -28,7 +28,7 @@ export const refreshTokens = async (request: NextRequest): Promise<void> => {
         const decodedTokens = decodeURIComponent(tokensCookie);
         const tokens = decodedTokens.split('=')[1];
         request.cookies.set('tokens', tokens);
-        request.headers.append('Set-Cookie', `tokens=${tokens}; Path=/;`);
+        request.headers.append('Cookie', `tokens=${tokens}; Path=/;`);
       }
     }
   };
