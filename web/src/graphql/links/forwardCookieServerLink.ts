@@ -5,12 +5,12 @@ import { setContext } from '@apollo/client/link/context';
 const { cookies } = require('next/headers');
 
 export const forwardCookieServerLink = setContext(async (_, { headers }) => {
-    const tokens = cookies().get('tokens');
+  const tokens = cookies().get('tokens');
 
-    return {
-        headers: {
-            ...headers,
-            Cookie: `tokens=${tokens?.value}`,
-        },
-    };
+  return {
+    headers: {
+      ...headers,
+      Cookie: `tokens=${tokens?.value}`,
+    },
+  };
 });

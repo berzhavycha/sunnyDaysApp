@@ -3,6 +3,7 @@ import React, { FC, memo } from 'react';
 
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
+
 import { ClientTemperatureInfo } from '../ClientTemperatureInfo';
 
 type Props = {
@@ -27,11 +28,7 @@ export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, className,
           className="w-14 h-14 absolute top-[-24px] left-1/5 sm:w-12 sm:h-12 md:w-18 md:h-18"
         />
         <div className="mt-8 pb-1 sm:mt-6">
-          <ClientTemperatureInfo
-            size="small"
-            fontWeight="normal"
-            {...info}
-          />
+          <ClientTemperatureInfo size="small" fontWeight="normal" {...info} />
         </div>
       </div>
       <p className="text-white text-[12px]">{dayOfWeek}</p>

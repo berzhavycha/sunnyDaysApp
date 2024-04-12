@@ -1,10 +1,10 @@
 import { ApolloError } from '@apollo/client';
 import { FC } from 'react';
 
+import { Spinner } from '@/components/common';
 import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { deleteWeatherSubscription } from '@/services';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
-import { Spinner } from '@/components/common';
 
 type Props = {
   isVisible: boolean;
@@ -15,12 +15,13 @@ type Props = {
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
   const { errorHandler, setError } = useSubscriptionError();
   const { weatherData } = useWeatherCardsList();
-  const { setIsVisibleBelowMedium, isDeletionInProgress, setIsDeletionInProgress } = useCurrentCityWeatherInfo();
+  const { setIsVisibleBelowMedium, isDeletionInProgress, setIsDeletionInProgress } =
+    useCurrentCityWeatherInfo();
 
   const onDelete = async (): Promise<void> => {
     try {
-      setIsDeletionInProgress(true)
-      await deleteWeatherSubscription(weatherData, city)
+      setIsDeletionInProgress(true);
+      await deleteWeatherSubscription(weatherData, city);
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
         setIsVisibleBelowMedium(false);
       }
@@ -30,9 +31,9 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
         errorHandler(error);
       }
     } finally {
-      setIsDeletionInProgress(false)
+      setIsDeletionInProgress(false);
       onClose();
-    };
+    }
   };
 
   return (
@@ -40,9 +41,9 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
       className={`${isVisible ? 'flex' : 'hidden'} ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} w-96 md:w-[450px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex-col items-center p-5 pb-3 md:p-8 md:pb-5 rounded-md shadow-lg z-30`}
     >
       <>
-        {isDeletionInProgress ?
+        {isDeletionInProgress ? (
           <Spinner />
-          :
+        ) : (
           <>
             <h3 className="mb-6 text-md md:text-xl">Are you sure you want to delete {city}?</h3>
             <div className="w-full flex gap-4 justify-end">
@@ -59,7 +60,8 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
                 Cancel
               </button>
             </div>
-          </>}
+          </>
+        )}
       </>
     </div>
   );

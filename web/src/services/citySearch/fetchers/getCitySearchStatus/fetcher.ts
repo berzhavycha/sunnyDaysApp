@@ -1,15 +1,15 @@
 import { ApolloQueryResult } from '@apollo/client';
 
 import { env } from '@/core/env';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { getClient } from '@/graphql/utils/getClient';
 
 import { CitySearchStatusDocument, CitySearchStatusQuery } from './queries';
-import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 
 type CitySearchStatusData = {
-  citySearchStatusResponse: ApolloQueryResult<CitySearchStatusQuery> | null,
-  error: string
-}
+  citySearchStatusResponse: ApolloQueryResult<CitySearchStatusQuery> | null;
+  error: string;
+};
 
 export const getCitySearchStatus = async (): Promise<CitySearchStatusData> => {
   try {
@@ -26,12 +26,12 @@ export const getCitySearchStatus = async (): Promise<CitySearchStatusData> => {
 
     return {
       citySearchStatusResponse: data,
-      error: ''
+      error: '',
     };
   } catch (error) {
     return {
       citySearchStatusResponse: null,
-      error: UNEXPECTED_ERROR_MESSAGE
+      error: UNEXPECTED_ERROR_MESSAGE,
     };
   }
 };

@@ -10,7 +10,7 @@ export const WeatherData: FC = async () => {
   const { responseData } = await getWeatherForecasts();
   const { paginationOptions } = getPaginationParams();
 
-  const totalPages = countTotalPages(responseData?.data?.userCitiesWeather, paginationOptions)
+  const totalPages = countTotalPages(responseData?.data?.userCitiesWeather, paginationOptions);
   const paginationPageButtons = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const listFooterComponent =
@@ -20,7 +20,9 @@ export const WeatherData: FC = async () => {
 
   return (
     <div className="w-full h-full">
-      {!responseData?.data || !responseData.data?.userCitiesWeather || !responseData.data?.userCitiesWeather.edges.length ? (
+      {!responseData?.data ||
+      !responseData.data?.userCitiesWeather ||
+      !responseData.data?.userCitiesWeather.edges.length ? (
         <NoData />
       ) : (
         <CustomFlatList

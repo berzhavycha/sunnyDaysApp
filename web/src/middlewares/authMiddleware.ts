@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { CurrentUserDocument } from '@/context/CurrentUser/queries';
 import { createClient } from '@/graphql';
+
 import { redirectToWeatherForecast, refreshTokens } from './utils';
 
 export const authMiddleware = async (request: NextRequest): Promise<NextResponse | undefined> => {

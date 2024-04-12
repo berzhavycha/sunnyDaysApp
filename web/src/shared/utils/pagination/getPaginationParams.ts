@@ -1,4 +1,5 @@
 import { PaginationQueryOptionsState } from '@/shared/types';
+
 import { extractPaginationParams } from './extractPaginationParams';
 
 // GitHub issue - https://github.com/vercel/next.js/issues/49757#issuecomment-1894910792
@@ -14,7 +15,7 @@ export const getPaginationParams = (): PaginationReturn => {
   const url = new URL(headers().get('x-url'));
   const searchParams = url.searchParams;
 
-  const { page, offset, limit, order } = extractPaginationParams(searchParams)
+  const { page, offset, limit, order } = extractPaginationParams(searchParams);
 
   const paginationOptions: PaginationQueryOptionsState = {
     offset,

@@ -37,11 +37,13 @@ export const useWeatherCardsList = (): ContextType => {
 
 type Props = PropsWithChildren & {
   queryData: ApolloQueryResult<UserCitiesWeatherQuery> | null;
-  queryError: ApolloError | null
+  queryError: ApolloError | null;
 };
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, queryData, queryError }) => {
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(queryData?.data);
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
+    queryData?.data,
+  );
   const { setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { errorHandler } = useSubscriptionError();

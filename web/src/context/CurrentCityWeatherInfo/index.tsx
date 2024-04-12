@@ -34,8 +34,8 @@ type ContextType = {
   setCurrentForecastDay: Dispatch<SetStateAction<string>>;
   isVisibleBelowMedium: boolean;
   setIsVisibleBelowMedium: Dispatch<SetStateAction<boolean>>;
-  isDeletionInProgress: boolean,
-  setIsDeletionInProgress: Dispatch<SetStateAction<boolean>>
+  isDeletionInProgress: boolean;
+  setIsDeletionInProgress: Dispatch<SetStateAction<boolean>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -67,7 +67,7 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ queryData, children 
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false);
 
-  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false)
+  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
@@ -96,7 +96,7 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ queryData, children 
     isVisibleBelowMedium,
     setIsVisibleBelowMedium,
     isDeletionInProgress,
-    setIsDeletionInProgress
+    setIsDeletionInProgress,
   };
 
   return (

@@ -52,7 +52,7 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
         },
       });
 
-      const { page, limit, order } = extractPaginationParams(searchParams)
+      const { page, limit, order } = extractPaginationParams(searchParams);
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
       setCurrentUser(data);

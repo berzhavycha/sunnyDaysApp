@@ -1,16 +1,16 @@
 import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 import { env } from '@/core/env';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { getClient } from '@/graphql/utils/getClient';
 import { getPaginationParams } from '@/shared';
 
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
-import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 
 export type FetchWeatherForecast = {
-  responseData: ApolloQueryResult<UserCitiesWeatherQuery> | null,
-  error: ApolloError | null
-}
+  responseData: ApolloQueryResult<UserCitiesWeatherQuery> | null;
+  error: ApolloError | null;
+};
 
 export const getWeatherForecasts = async (): Promise<FetchWeatherForecast> => {
   try {
@@ -33,12 +33,12 @@ export const getWeatherForecasts = async (): Promise<FetchWeatherForecast> => {
 
     return {
       responseData: data,
-      error: null
+      error: null,
     };
   } catch (error) {
     return {
       responseData: null,
-      error: new ApolloError({ errorMessage: UNEXPECTED_ERROR_MESSAGE })
-    }
+      error: new ApolloError({ errorMessage: UNEXPECTED_ERROR_MESSAGE }),
+    };
   }
 };

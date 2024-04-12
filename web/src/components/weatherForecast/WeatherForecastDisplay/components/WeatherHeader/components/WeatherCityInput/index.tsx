@@ -14,10 +14,10 @@ export const WeatherCityInput: FC = () => {
   const [city, setCity] = useState<string>('');
 
   const { error } = useSubscriptionError();
-  
+
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { addSubscriptionAction } = useCitySearch();
-  
+
   const { data, loading } = useCityInputAutocomplete(city);
 
   const searchHandler = (text: string): void => setCity(text);

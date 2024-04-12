@@ -13,7 +13,7 @@ import {
 } from 'react';
 
 import { useQueryParams } from '@/hooks';
-import { UserCitiesWeatherQueryVariables } from '@/services'
+import { UserCitiesWeatherQueryVariables } from '@/services';
 import { extractPaginationParams, PaginationQueryOptionsState } from '@/shared';
 
 type ContextType = {
@@ -48,7 +48,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
 
-  const { page, offset, limit, order } = extractPaginationParams(searchParams)
+  const { page, offset, limit, order } = extractPaginationParams(searchParams);
 
   const [currentPage, setCurrentPage] = useState<number>(page);
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
