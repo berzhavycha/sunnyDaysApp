@@ -17,6 +17,8 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
             query: CurrentUserDocument
         })
 
+        console.log(userResponse.data, tokens, url.pathname)
+
         if (userResponse.data.currentUser) {
             if (url.pathname !== '/weather-forecast') {
                 const page = +(searchParams.get('page') ?? START_PAGE_NUMBER);
@@ -46,6 +48,7 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
                 }
             );
 
+            console.log("RESPONSE", response.ok)
             const setCookiesHeader = response.headers.get('set-cookie') ?? '';
 
             const cookies = setCookiesHeader.split(',');
@@ -55,6 +58,7 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
                     const decodedTokens = decodeURIComponent(tokensCookie);
                     const tokens = decodedTokens.split('=')[1];
                     request.cookies.set('tokens', tokens)
+                    request.headers.append('Set-Cookie', `tokens=${tokens}; Path=/;`)
                 }
             }
 

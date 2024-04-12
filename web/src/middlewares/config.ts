@@ -1,7 +1,7 @@
 import { authMiddleware } from './authMiddleware';
-import { searchParamsMiddleware } from './searchParamsMiddleware';
+import { urlMiddleware } from './urlMiddleware';
 
 export const middleware = [
     authMiddleware,
-    searchParamsMiddleware,
+    urlMiddleware,
 ]
