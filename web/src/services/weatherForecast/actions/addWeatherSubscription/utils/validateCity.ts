@@ -1,4 +1,5 @@
 import { UserCitiesWeatherQuery } from '@/services';
+
 import { validateCityRules } from '../constants';
 
 export const validateCity = (city: string, data: UserCitiesWeatherQuery | null): string | void => {

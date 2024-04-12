@@ -2,5 +2,4 @@ import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rs
 
 import { createClient } from './createClient';
 
-
 export const { getClient } = registerApolloClient(createClient);

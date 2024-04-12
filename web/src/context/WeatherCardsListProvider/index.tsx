@@ -19,8 +19,8 @@ import { useSubscriptionError } from '../SubscriptionError';
 import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
 
 type ContextType = {
-  weatherData: UserCitiesWeatherQuery;
-  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery>>;
+  weatherData: UserCitiesWeatherQuery | undefined;
+  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | undefined>>;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -36,34 +36,39 @@ export const useWeatherCardsList = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  weatherResponse: ApolloQueryResult<UserCitiesWeatherQuery>;
+  queryData: ApolloQueryResult<UserCitiesWeatherQuery> | null;
+  queryError: ApolloError | null
 };
 
-export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery>(weatherResponse.data);
+export const WeatherCardsListProvider: FC<Props> = ({ children, queryData, queryError }) => {
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(queryData?.data);
   const { setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { errorHandler } = useSubscriptionError();
 
   useEffect(() => {
     try {
-      const { data, errors } = weatherResponse;
+      if (queryData) {
+        const { data, errors } = queryData;
 
-      if (errors?.length) {
-        throw new ApolloError({ graphQLErrors: errors });
-      }
+        if (errors?.length) {
+          throw new ApolloError({ graphQLErrors: errors });
+        }
 
-      if (data.userCitiesWeather) {
-        setWeatherData(data);
-        setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
-        setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+        if (data.userCitiesWeather) {
+          setWeatherData(data);
+          setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
+          setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+        }
+      } else if (queryError) {
+        throw queryError;
       }
     } catch (error) {
       if (error instanceof ApolloError) {
         errorHandler(error);
       }
     }
-  }, [weatherResponse]);
+  }, [queryData, queryError]);
 
   const contextValue: ContextType = {
     weatherData,

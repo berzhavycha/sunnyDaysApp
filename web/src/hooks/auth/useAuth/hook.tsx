@@ -1,16 +1,16 @@
 'use client';
 
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { useCurrentUser } from '@/context';
-import { START_PAGE_NUMBER, fieldsErrorHandler } from '@/shared';
+import { env } from '@/core/env';
+import { fieldsErrorHandler, START_PAGE_NUMBER } from '@/shared';
 
 import { pickUserErrorMessages } from '../utils';
 
 import { SignInDocument } from './mutations';
-import { env } from '@/core/env';
-import { useSearchParams, useRouter } from 'next/navigation';
 
 export type UserDto = {
   email: string;
@@ -53,12 +53,10 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
         },
       });
 
-
       const page = searchParams.get('page') ?? START_PAGE_NUMBER;
       const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
       const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
 
-      
       setFieldsError({ email: '', password: '', confirmPassword: '' });
       setCurrentUser(data);
 

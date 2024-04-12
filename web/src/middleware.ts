@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { middleware as activatedMiddleware } from '@/middlewares/config'
+import { NextRequest, NextResponse } from 'next/server';
+
+import { middleware as activatedMiddleware } from '@/middlewares/config';
 
 export const middleware = async (req: NextRequest): Promise<NextResponse> => {
-  const middlewareFunctions = activatedMiddleware.map(fn => fn(req));
+  const middlewareFunctions = activatedMiddleware.map((fn) => fn(req));
 
   const middlewareHeader = [];
 
@@ -35,11 +36,11 @@ export const middleware = async (req: NextRequest): Promise<NextResponse> => {
 
   return NextResponse.next({
     request: {
-      headers: req.headers
-    }
+      headers: req.headers,
+    },
   });
-}
+};
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|images|favicon.ico).*)']
-}
+  matcher: ['/((?!api|_next/static|_next/image|images|favicon.ico).*)'],
+};

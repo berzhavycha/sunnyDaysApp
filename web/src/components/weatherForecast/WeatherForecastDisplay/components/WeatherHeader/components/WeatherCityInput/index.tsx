@@ -4,22 +4,22 @@ import { FC, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
-
-import { useCitySearch, useRenderCityItem } from './hooks';
-import { SubmitCityButton } from '../SubmitCityButton';
 import { useCityInputAutocomplete } from '@/hooks';
 
+import { SubmitCityButton } from '../SubmitCityButton';
+
+import { useCitySearch, useRenderCityItem } from './hooks';
 
 export const WeatherCityInput: FC = () => {
   const [city, setCity] = useState<string>('');
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { addSubscriptionAction, } = useCitySearch();
+  const { addSubscriptionAction } = useCitySearch();
   const { data, loading } = useCityInputAutocomplete(city);
 
   const searchHandler = (text: string): void => setCity(text);
 
-  const onSubmit = (): void => setCity('')
+  const onSubmit = (): void => setCity('');
 
   const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => {
     const formData = new FormData();

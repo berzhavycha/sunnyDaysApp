@@ -1,10 +1,10 @@
 import { ApolloError } from '@apollo/client';
 import { FC, useTransition } from 'react';
 
+import { Spinner } from '@/components/common';
 import { useCurrentCityWeatherInfo, useSubscriptionError, useWeatherCardsList } from '@/context';
 import { deleteWeatherSubscription } from '@/services';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
-import { Spinner } from '@/components/common';
 
 type Props = {
   isVisible: boolean;
@@ -16,23 +16,26 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
   const { errorHandler, setError } = useSubscriptionError();
   const { weatherData } = useWeatherCardsList();
   const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
 
   const onDelete = async (): Promise<void> => {
     startTransition(() => {
-      deleteWeatherSubscription(weatherData, city).then(() => {
-        if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
-          setIsVisibleBelowMedium(false);
-        }
-        setError({ message: '' });
-      }).catch((error) => {
-        if (error instanceof ApolloError) {
-          errorHandler(error);
-        }
-      }).finally(() => {
-        onClose();
-      })
-    })
+      deleteWeatherSubscription(weatherData, city)
+        .then(() => {
+          if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
+            setIsVisibleBelowMedium(false);
+          }
+          setError({ message: '' });
+        })
+        .catch((error) => {
+          if (error instanceof ApolloError) {
+            errorHandler(error);
+          }
+        })
+        .finally(() => {
+          onClose();
+        });
+    });
   };
 
   return (

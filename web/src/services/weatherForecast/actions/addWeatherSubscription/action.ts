@@ -52,7 +52,7 @@ export const addWeatherSubscription = async (
   const { paginationOptions } = getPaginationParams();
 
   const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount;
-  const totalPages = countTotalPages(weatherData.userCitiesWeather, paginationOptions)
+  const totalPages = countTotalPages(weatherData.userCitiesWeather, paginationOptions);
   const isAddingNewPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
 
   if (paginationOptions.offset / paginationOptions.limit + 1 !== totalPages || isAddingNewPage) {
@@ -62,7 +62,7 @@ export const addWeatherSubscription = async (
 
     // Redirect should be used outside of try...catch block:
     // https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
-    console.log("REDIRECTING")
+    console.log('REDIRECTING');
     redirect(path);
   } else {
     revalidateTag('forecasts');

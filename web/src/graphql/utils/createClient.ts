@@ -8,33 +8,30 @@ import { resolvers } from '../resolvers';
 const { cookies } = require('next/headers');
 
 const forwardCookieServerLink = setContext(async (_, { headers }) => {
-    const tokens = cookies().get('tokens');
+  const tokens = cookies().get('tokens');
 
-    return {
-        headers: {
-            ...headers,
-            Cookie: `tokens=${tokens?.value}`,
-        },
-    };
+  return {
+    headers: {
+      ...headers,
+      Cookie: `tokens=${tokens?.value}`,
+    },
+  };
 });
 
 export const createClient = (): ApolloClient<NormalizedCacheObject> => {
-    const apolloClient = new ApolloClient({
-        cache: new InMemoryCache(),
-        resolvers,
-        defaultOptions: {
-            query: {
-                errorPolicy: 'all',
-            },
-        },
-    });
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+    resolvers,
+    defaultOptions: {
+      query: {
+        errorPolicy: 'all',
+      },
+    },
+  });
 
-    const apolloLinks = ApolloLink.from([
-        forwardCookieServerLink,
-        mainHttpLink,
-    ]);
+  const apolloLinks = ApolloLink.from([forwardCookieServerLink, mainHttpLink]);
 
-    apolloClient.setLink(apolloLinks);
+  apolloClient.setLink(apolloLinks);
 
-    return apolloClient;
+  return apolloClient;
 };

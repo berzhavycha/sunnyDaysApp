@@ -12,15 +12,15 @@ import {
   useState,
 } from 'react';
 
-import { WeatherForecast } from '@/shared';
 import { UserCitiesWeatherQuery } from '@/services';
+import { WeatherForecast } from '@/shared';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
 };
 
 export type CurrentCityWeatherInfoState = {
-  info: InfoType;
+  info: InfoType | undefined;
 };
 
 type ContextType = {
@@ -51,13 +51,13 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  weatherResponse: ApolloQueryResult<UserCitiesWeatherQuery>;
+  queryData: ApolloQueryResult<UserCitiesWeatherQuery> | null;
 };
 
-export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
+export const CurrentCityWeatherInfoProvider: FC<Props> = ({ queryData, children }) => {
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
-      info: weatherResponse.data?.userCitiesWeather.edges[0],
+      info: queryData?.data?.userCitiesWeather.edges[0],
     },
   );
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');

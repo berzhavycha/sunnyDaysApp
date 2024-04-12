@@ -2,12 +2,12 @@
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import React, { ChangeEvent, useRef } from 'react';
+import { useFormStatus } from 'react-dom';
 
 import { useOutsideClick } from '@/hooks';
 
 import { CustomFlatList } from '../CustomFlatList';
 import { Input } from '../Input';
-import { useFormStatus } from 'react-dom';
 
 type Props<TItem> = {
   name: string;
@@ -46,7 +46,7 @@ export const InputAutocomplete = <TItem,>({
   const autocompleteRef = useRef<HTMLDivElement>(null);
   useOutsideClick(autocompleteRef, onPressOutside);
 
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => onSearchChange(e.target.value);
   const onKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>): Promise<void> => {

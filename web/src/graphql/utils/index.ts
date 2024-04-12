@@ -1,2 +1,2 @@
 export * from './refreshAccessToken';
-export * from './createClient'
+export * from './createClient';

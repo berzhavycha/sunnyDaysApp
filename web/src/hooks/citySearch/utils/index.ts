@@ -1,2 +1,2 @@
-export * from './extractData'
-export * from './getCitiesQueryVariables'
+export * from './extractData';
+export * from './getCitiesQueryVariables';
