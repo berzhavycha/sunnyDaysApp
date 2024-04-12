@@ -29,7 +29,7 @@ export const useCitySearchList = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery>;
+  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery> | null;
 };
 
 export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusData }) => {
@@ -41,7 +41,7 @@ export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusDa
   useEffect(() => {
     setListState((prevState) => ({
       ...prevState,
-      isEnabled: citySearchStatusData.data.citySearchStatus ?? false,
+      isEnabled: citySearchStatusData?.data.citySearchStatus ?? false,
     }));
   }, [citySearchStatusData]);
 
