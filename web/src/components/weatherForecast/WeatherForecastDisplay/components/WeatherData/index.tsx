@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { CustomFlatList, NoData } from '@/components/common';
 import { getWeatherForecasts } from '@/services/index-server';
-import { getPaginationParams } from '@/shared';
+import { countTotalPages, getPaginationParams } from '@/shared';
 
 import { PaginationPanel, WeatherCard } from './components';
 
@@ -10,8 +10,7 @@ export const WeatherData: FC = async () => {
   const { responseData } = await getWeatherForecasts();
   const { paginationOptions } = getPaginationParams();
 
-  const totalCount = responseData?.data.userCitiesWeather?.paginationInfo.totalCount ?? 0;
-  const totalPages = Math.ceil(totalCount / paginationOptions.limit);
+  const totalPages = countTotalPages(responseData?.data.userCitiesWeather, paginationOptions)
   const paginationPageButtons = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const listFooterComponent =

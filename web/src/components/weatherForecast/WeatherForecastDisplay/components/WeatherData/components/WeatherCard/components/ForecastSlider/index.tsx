@@ -8,7 +8,7 @@ import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { env } from '@/core/env';
-import { WeatherForecastDays } from '@/hooks';
+import { WeatherForecastDays } from '@/shared';
 
 import { ForecastPreview } from '../ForecastPreview';
 import { SubWeatherForecast } from '../SubWeatherForecast';
@@ -23,7 +23,7 @@ export const ForecastSlider: FC<Props> = ({ forecasts }) => {
   const [isSwiperMounted, setIsSwiperMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    // we want to show the preview of forecast info instead of loader before swiper is mounted during SSR
+    // we want to show the preview of forecast info instead of loader before Swiper is mounted during SSR
     setIsSwiperMounted(true);
   }, []);
 

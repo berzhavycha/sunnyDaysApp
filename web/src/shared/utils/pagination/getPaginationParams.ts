@@ -6,12 +6,12 @@ import { PaginationQueryOptionsState } from '@/shared/types';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { headers } = require('next/headers');
 
-type FetchReturn = {
+type PaginationReturn = {
   page: number;
   paginationOptions: PaginationQueryOptionsState;
 };
 
-export const getPaginationParams = (): FetchReturn => {
+export const getPaginationParams = (): PaginationReturn => {
   const url = new URL(headers().get('x-url'));
   const searchParams = url.searchParams;
 

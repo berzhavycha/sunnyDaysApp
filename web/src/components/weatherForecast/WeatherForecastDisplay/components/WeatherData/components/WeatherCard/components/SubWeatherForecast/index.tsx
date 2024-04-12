@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import React, { FC, memo } from 'react';
 
-import { TemperatureInfo } from '@/components';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { tempUnitSigns, useCurrentTempUnit } from '@/context';
+import { ClientTemperatureInfo } from '../ClientTemperatureInfo';
 
 type Props = {
   celsius: number;
@@ -15,7 +14,6 @@ type Props = {
 };
 
 export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, className, ...info }) => {
-  const { currentTempUnit } = useCurrentTempUnit();
   const weatherIcon = pickWeatherIcon(text);
 
   return (
@@ -29,11 +27,10 @@ export const SubWeatherForecast: FC<Props> = memo(({ text, dayOfWeek, className,
           className="w-14 h-14 absolute top-[-24px] left-1/5 sm:w-12 sm:h-12 md:w-18 md:h-18"
         />
         <div className="mt-8 pb-1 sm:mt-6">
-          <TemperatureInfo
-            value={info[currentTempUnit.name]}
-            tempSign={tempUnitSigns[currentTempUnit.name]}
+          <ClientTemperatureInfo
             size="small"
             fontWeight="normal"
+            {...info}
           />
         </div>
       </div>

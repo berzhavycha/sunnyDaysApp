@@ -2,23 +2,25 @@
 
 import { FC } from 'react';
 
-import { TemperatureInfo } from '@/components/common';
+import { FontWeight, Size, TemperatureInfo } from '@/components/common';
 import { tempUnitSigns, useCurrentTempUnit } from '@/context';
 
 type Props = {
+  size: Size;
+  fontWeight: FontWeight;
   celsius: number;
   fahrenheit: number;
 };
 
-export const TodaysTemperature: FC<Props> = ({ ...info }) => {
+export const ClientTemperatureInfo: FC<Props> = ({ size, fontWeight, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
 
   return (
     <TemperatureInfo
       value={info[currentTempUnit.name]}
       tempSign={tempUnitSigns[currentTempUnit.name]}
-      size="medium"
-      fontWeight="normal"
+      size={size}
+      fontWeight={fontWeight}
     />
   );
 };

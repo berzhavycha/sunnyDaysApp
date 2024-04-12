@@ -3,10 +3,10 @@ import { FC, memo } from 'react';
 
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { WeatherForecast } from '@/hooks';
+import { WeatherForecast } from '@/shared';
 
 import { ForecastSlider } from '../ForecastSlider';
-import { TodaysTemperature } from '../TodaysTemperature';
+import { ClientTemperatureInfo } from '../ClientTemperatureInfo';
 
 type Props = WeatherForecast;
 
@@ -18,7 +18,12 @@ export const WeatherCardInfo: FC<Props> = memo(({ city, text, daysForecast, ...i
       <div className="flex justify-between items-center mb-2">
         <div className="flex flex-col gap-2 text-left">
           <p className="text-sm text-white sm:text-sm md:text-md">{city}</p>
-          <TodaysTemperature celsius={info.celsius} fahrenheit={info.fahrenheit} />
+          <ClientTemperatureInfo
+            size="medium"
+            fontWeight="normal"
+            celsius={info.celsius}
+            fahrenheit={info.fahrenheit}
+          />
           <p className="text-xs text-white mb-2 sm:text-xs">{text}</p>
         </div>
         <Image

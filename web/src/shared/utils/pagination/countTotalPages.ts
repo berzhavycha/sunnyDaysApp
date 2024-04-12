@@ -7,7 +7,7 @@ type DataWithPaginationInfo = {
 };
 
 export const countTotalPages = <T extends DataWithPaginationInfo>(
-  data: T,
+  data: T | undefined,
   paginationOptions: PaginationQueryOptionsState,
 ): number => {
   const totalCount = data?.paginationInfo.totalCount ?? 0;
