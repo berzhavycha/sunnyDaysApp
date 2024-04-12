@@ -12,9 +12,9 @@ import {
   useState,
 } from 'react';
 
-import { env } from '@/core/env';
-import { useQueryParams, UserCitiesWeatherQueryVariables } from '@/hooks';
-import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+import { useQueryParams } from '@/hooks';
+import { UserCitiesWeatherQueryVariables } from '@/services'
+import { extractPaginationParams, PaginationQueryOptionsState } from '@/shared';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;
@@ -48,31 +48,25 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
 
-  const defaultLimit = env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
-  const defaultOrder = env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
+  const { page, offset, limit, order } = extractPaginationParams(searchParams)
 
-  const currentPageParam = +(searchParams.get('page') ?? START_PAGE_NUMBER);
-  const limitParam = +(searchParams.get('perPage') ?? defaultLimit);
-  const orderParam = searchParams.get('order') ?? defaultOrder;
-  const offset = (currentPageParam - 1) * limitParam;
-
-  const [currentPage, setCurrentPage] = useState<number>(currentPageParam);
+  const [currentPage, setCurrentPage] = useState<number>(page);
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset,
-    limit: limitParam,
-    order: orderParam,
+    limit,
+    order,
   });
 
   useEffect(() => {
     setPaginationOptions({
       offset,
-      limit: limitParam,
-      order: orderParam,
+      limit,
+      order,
     });
   }, [searchParams]);
 
   useEffect(() => {
-    setCurrentPage(currentPageParam);
+    setCurrentPage(page);
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
   }, [paginationOptions, totalCount]);
