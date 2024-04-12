@@ -21,6 +21,7 @@ export const useSignOut = (): HookReturn => {
   const signOutHandler = async (): Promise<void> => {
     await onSignOut();
     await signOutMutation();
+    
     router.replace('/sign-in');
 
     setPaginationOptions((prev) => ({

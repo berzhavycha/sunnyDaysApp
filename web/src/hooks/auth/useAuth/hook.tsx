@@ -5,8 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { useCurrentUser } from '@/context';
-import { env } from '@/core/env';
-import { fieldsErrorHandler, START_PAGE_NUMBER } from '@/shared';
+import { extractPaginationParams, fieldsErrorHandler } from '@/shared';
 
 import { pickUserErrorMessages } from '../utils';
 
@@ -53,9 +52,7 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
         },
       });
 
-      const page = searchParams.get('page') ?? START_PAGE_NUMBER;
-      const limit = searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT;
-      const order = searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER;
+      const { page, limit, order } = extractPaginationParams(searchParams)
 
       setFieldsError({ email: '', password: '', confirmPassword: '' });
       setCurrentUser(data);
