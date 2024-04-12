@@ -13,7 +13,7 @@ import { UserCitiesWeatherQuery } from '../../fetchers';
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
 export const deleteWeatherSubscription = async (
-  weatherData: UserCitiesWeatherQuery,
+  weatherData: UserCitiesWeatherQuery | undefined,
   cityName: string,
 ): Promise<void> => {
   const { page, paginationOptions } = getPaginationParams();
@@ -31,11 +31,11 @@ export const deleteWeatherSubscription = async (
     throw new ApolloError({ graphQLErrors: errors });
   }
 
-  const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount;
+  const totalCount = weatherData?.userCitiesWeather.paginationInfo.totalCount ?? 0;
 
   if (
     (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
-    weatherData.userCitiesWeather.edges.length === 1 &&
+    weatherData?.userCitiesWeather.edges.length === 1 &&
     totalCount - 1 > 0
   ) {
     const path = `/weather-forecast?page=${page - 1}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`;

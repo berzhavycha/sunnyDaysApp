@@ -10,7 +10,7 @@ import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 import { CurrentWeatherDetails, DeletionModal } from './components';
 
 export const CurrentCityWeather: FC = () => {
-  const { isVisibleBelowMedium, setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
+  const { isVisibleBelowMedium, setIsVisibleBelowMedium, isDeletionInProgress } = useCurrentCityWeatherInfo();
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [cityToDelete, setCityToDelete] = useState<string>('');
 
@@ -23,18 +23,23 @@ export const CurrentCityWeather: FC = () => {
     }
   };
 
-  const onCloseDeletionModal = (): void => setIsDeleting(false);
+  const onCloseDeletionModal = (): void => {
+    if (!isDeletionInProgress) {
+      setIsDeleting(false)
+    }
+  };
 
   const onDelete = (city: string): void => {
     setIsDeleting(true);
     setCityToDelete(city);
   };
 
+
   return (
     <>
       <ModalBackground isVisible={isVisibleBelowMedium} onClose={onCloseWeatherModal}>
         <CurrentWeatherDetails onDelete={onDelete} />
-        <ModalBackground isVisible={isDeleting} onClose={onCloseDeletionModal} zIndex={30}>
+        <ModalBackground isVisible={isDeleting || isDeletionInProgress} onClose={onCloseDeletionModal} zIndex={30}>
           <DeletionModal
             isVisible={isDeleting}
             city={cityToDelete}
