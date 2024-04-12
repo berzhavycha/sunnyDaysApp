@@ -5,8 +5,7 @@ import { TemperatureInfo } from '@/components';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { tempUnitSigns, useCurrentCityWeatherInfo, useCurrentTempUnit } from '@/context';
-import { WeatherForecastDays } from '@/hooks';
-import { upperCaseFirstLetter } from '@/shared';
+import { WeatherForecastDays, upperCaseFirstLetter } from '@/shared';
 
 type Props = WeatherForecastDays & {
   onClick: () => void;

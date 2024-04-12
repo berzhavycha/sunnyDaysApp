@@ -18,7 +18,7 @@ type AddSubscriptionState = {
 };
 
 export const addWeatherSubscription = async (
-  weatherData: UserCitiesWeatherQuery,
+  weatherData: UserCitiesWeatherQuery | undefined,
   prevData: AddSubscriptionState,
   formData: FormData,
 ): Promise<AddSubscriptionState> => {
@@ -51,8 +51,8 @@ export const addWeatherSubscription = async (
 
   const { paginationOptions } = getPaginationParams();
 
-  const totalCount = weatherData.userCitiesWeather.paginationInfo.totalCount;
-  const totalPages = countTotalPages(weatherData.userCitiesWeather, paginationOptions);
+  const totalCount = weatherData?.userCitiesWeather.paginationInfo.totalCount ?? 0;
+  const totalPages = countTotalPages(weatherData?.userCitiesWeather, paginationOptions);
   const isAddingNewPage = totalCount % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0;
 
   if (paginationOptions.offset / paginationOptions.limit + 1 !== totalPages || isAddingNewPage) {

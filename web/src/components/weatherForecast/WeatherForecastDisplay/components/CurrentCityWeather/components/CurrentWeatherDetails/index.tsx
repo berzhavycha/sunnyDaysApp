@@ -32,7 +32,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
     onPrefetch,
   });
 
-  const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info.city ?? '');
+  const onDeleteCity = (): void => onDelete(currentCityWeatherInfo?.info?.city ?? '');
 
   const onMouseOverDeleteBtn = async (): Promise<void> => {
     if (

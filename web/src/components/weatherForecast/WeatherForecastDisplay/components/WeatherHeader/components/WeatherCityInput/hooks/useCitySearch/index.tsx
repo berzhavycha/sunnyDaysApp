@@ -12,6 +12,7 @@ type HookReturn = {
 export const useCitySearch = (): HookReturn => {
   const { weatherData } = useWeatherCardsList();
   const { setError, errorHandler } = useSubscriptionError();
+  
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData);
   const [addSubscriptionState, addSubscriptionAction] = useFormState(
     addWeatherSubscriptionWithParams,

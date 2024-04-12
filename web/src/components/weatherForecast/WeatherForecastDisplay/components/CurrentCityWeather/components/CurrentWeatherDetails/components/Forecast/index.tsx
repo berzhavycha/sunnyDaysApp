@@ -3,7 +3,7 @@ import { FC, memo } from 'react';
 import { CustomFlatList } from '@/components';
 import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
-import { WeatherForecastDays } from '@/hooks';
+import { WeatherForecastDays } from '@/shared';
 
 import { useRenderForecastItem } from './hooks';
 import './style/index.css';
