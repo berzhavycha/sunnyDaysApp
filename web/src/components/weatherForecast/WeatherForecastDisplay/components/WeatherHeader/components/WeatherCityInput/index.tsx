@@ -4,25 +4,20 @@ import { FC, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
-import { City } from '@/shared';
 
 import { useCitySearch, useRenderCityItem } from './hooks';
 import { SubmitCityButton } from '../SubmitCityButton';
+import { useCityInputAutocomplete } from '@/hooks';
 
-type Props = {
-  data?: City[];
-};
 
-export const WeatherCityInput: FC<Props> = ({ data }) => {
+export const WeatherCityInput: FC = () => {
   const [city, setCity] = useState<string>('');
   const { error } = useSubscriptionError();
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { queryParamsHandler, addSubscriptionAction, } = useCitySearch();
+  const { addSubscriptionAction, } = useCitySearch();
+  const { data, loading } = useCityInputAutocomplete(city);
 
-  const searchHandler = (text: string): void => {
-    setCity(text);
-    queryParamsHandler(text);
-  };
+  const searchHandler = (text: string): void => setCity(text);
 
   const onSubmit = (): void => setCity('')
 
@@ -42,6 +37,7 @@ export const WeatherCityInput: FC<Props> = ({ data }) => {
     >
       <InputAutocomplete
         name="city"
+        loading={loading}
         data={data}
         search={city}
         onSearchChange={searchHandler}

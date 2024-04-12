@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 
@@ -33,6 +33,11 @@ export class CitiesService {
 
   async deleteCity(name: string): Promise<DeleteResult> {
     const city = await this.findByName(name);
+
+    if (!city) {
+      throw new NotFoundException(`City '${name}' not found!`);
+    }
+
     return this.citiesRepository.delete(city.id);
   }
 }

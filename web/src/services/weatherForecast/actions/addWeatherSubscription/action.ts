@@ -62,7 +62,7 @@ export const addWeatherSubscription = async (
 
     // Redirect should be used outside of try...catch block:
     // https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
-    console.log("REDIRECTT")
+    console.log("REDIRECTING")
     redirect(path);
   } else {
     revalidateTag('forecasts');

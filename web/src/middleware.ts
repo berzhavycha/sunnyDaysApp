@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { middleware as activatedMiddleware } from '@/middlewares/config'
 
 export const middleware = async (req: NextRequest): Promise<NextResponse> => {
+  console.log(req.url)
   const middlewareFunctions = activatedMiddleware.map(fn => fn(req));
 
   const middlewareHeader = [];
