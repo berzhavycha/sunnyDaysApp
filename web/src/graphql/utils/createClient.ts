@@ -1,27 +1,10 @@
 import { ApolloClient, ApolloLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 
-import { mainHttpLink } from '../links';
-import { resolvers } from '../resolvers';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { cookies } = require('next/headers');
-
-const forwardCookieServerLink = setContext(async (_, { headers }) => {
-  const tokens = cookies().get('tokens');
-
-  return {
-    headers: {
-      ...headers,
-      Cookie: `tokens=${tokens?.value}`,
-    },
-  };
-});
+import { forwardCookieServerLink, mainHttpLink } from '../links';
 
 export const createClient = (): ApolloClient<NormalizedCacheObject> => {
   const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
-    resolvers,
     defaultOptions: {
       query: {
         errorPolicy: 'all',
