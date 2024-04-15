@@ -1,6 +1,6 @@
 export type WeatherForecast = {
   id?: string;
-  city: string;
+  city?: string;
   celsius: number;
   fahrenheit: number;
   humidity: number;

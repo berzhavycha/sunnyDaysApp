@@ -1,6 +1,5 @@
 'use client';
 
-import { ApolloQueryResult } from '@apollo/client';
 import {
   createContext,
   Dispatch,
@@ -12,7 +11,6 @@ import {
   useState,
 } from 'react';
 
-import { UserCitiesWeatherQuery } from '@/services';
 import { WeatherForecast } from '@/shared';
 
 type InfoType = WeatherForecast & {
@@ -53,13 +51,15 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  queryData: ApolloQueryResult<UserCitiesWeatherQuery> | null;
+  weatherResponse: string;
 };
 
-export const CurrentCityWeatherInfoProvider: FC<Props> = ({ queryData, children }) => {
+export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
+  const { responseData } = JSON.parse(weatherResponse)
+
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
-      info: queryData?.data?.userCitiesWeather.edges[0],
+      info: responseData?.data.userCitiesWeather.edges[0],
     },
   );
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');

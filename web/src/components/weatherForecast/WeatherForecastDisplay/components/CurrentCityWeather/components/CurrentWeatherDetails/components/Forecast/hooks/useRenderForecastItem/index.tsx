@@ -1,5 +1,5 @@
 import { useCurrentCityWeatherInfo } from '@/context';
-import { WeatherForecastDays } from '@/hooks';
+import { WeatherForecastDays } from '@/shared';
 
 import { ForecastItem } from '../../../ForecastItem';
 
@@ -17,14 +17,12 @@ export const useRenderForecastItem = (): HookReturn => {
       setCurrentForecastDay(props.dayOfWeek);
 
       setCurrentCityWeatherInfo((prev) => {
-        if (prev) {
-          return {
-            info: {
-              ...prev.info,
-              ...props,
-            },
-          };
-        }
+        return {
+          info: {
+            ...prev.info,
+            ...props,
+          },
+        };
       });
     };
 

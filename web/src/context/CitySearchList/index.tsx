@@ -1,9 +1,6 @@
 'use client';
 
-import { ApolloQueryResult } from '@apollo/client';
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
-
-import { CitySearchStatusQuery } from '@/services';
 
 type CitySearchListState = {
   isVisible: boolean;
@@ -29,10 +26,12 @@ export const useCitySearchList = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  citySearchStatusData: ApolloQueryResult<CitySearchStatusQuery> | null;
+  citySearchStatus: string;
 };
 
-export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusData }) => {
+export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatus }) => {
+  const { responseData } = JSON.parse(citySearchStatus)
+
   const [listState, setListState] = useState<CitySearchListState>({
     isVisible: false,
     isEnabled: false,
@@ -41,9 +40,9 @@ export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatusDa
   useEffect(() => {
     setListState((prevState) => ({
       ...prevState,
-      isEnabled: citySearchStatusData?.data.citySearchStatus ?? false,
+      isEnabled: responseData?.data.citySearchStatus ?? false,
     }));
-  }, [citySearchStatusData]);
+  }, [responseData]);
 
   const onPressOutside = (): void => {
     setListState((prevState) => ({

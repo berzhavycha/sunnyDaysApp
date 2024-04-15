@@ -22,12 +22,13 @@ export const useSignOut = (): HookReturn => {
     await onSignOut();
     await signOutMutation();
 
-    router.replace('/sign-in');
-
+    
     setPaginationOptions((prev) => ({
       ...prev,
       offset: 0,
     }));
+    
+    router.replace('/sign-in');
   };
 
   return {

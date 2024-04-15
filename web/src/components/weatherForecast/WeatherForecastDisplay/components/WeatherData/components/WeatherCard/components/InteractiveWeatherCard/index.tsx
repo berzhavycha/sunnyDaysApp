@@ -3,8 +3,7 @@
 import React, { FC, memo, PropsWithChildren } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
-import { WeatherForecast } from '@/hooks';
-import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
+import { WeatherForecast , IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
 type Props = WeatherForecast &
   PropsWithChildren & {

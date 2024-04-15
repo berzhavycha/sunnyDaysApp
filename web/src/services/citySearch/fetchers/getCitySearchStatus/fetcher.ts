@@ -1,17 +1,13 @@
-import { ApolloQueryResult } from '@apollo/client';
-
 import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { getClient } from '@/graphql/utils/getClient';
 
 import { CitySearchStatusDocument, CitySearchStatusQuery } from './queries';
+import { FetchResponse } from '@/shared';
+import { ApolloError } from '@apollo/client';
 
-type CitySearchStatusData = {
-  citySearchStatusResponse: ApolloQueryResult<CitySearchStatusQuery> | null;
-  error: string;
-};
 
-export const getCitySearchStatus = async (): Promise<CitySearchStatusData> => {
+export const getCitySearchStatus = async (): Promise<FetchResponse<CitySearchStatusQuery>> => {
   try {
     const data = await getClient().query({
       query: CitySearchStatusDocument,
@@ -25,13 +21,13 @@ export const getCitySearchStatus = async (): Promise<CitySearchStatusData> => {
     });
 
     return {
-      citySearchStatusResponse: data,
-      error: '',
+      responseData: data,
+      error: null,
     };
   } catch (error) {
     return {
-      citySearchStatusResponse: null,
-      error: UNEXPECTED_ERROR_MESSAGE,
+      responseData: null,
+      error: new ApolloError({ errorMessage: UNEXPECTED_ERROR_MESSAGE }),
     };
   }
 };
