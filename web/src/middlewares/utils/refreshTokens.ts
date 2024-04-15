@@ -17,7 +17,7 @@ export const refreshTokens = async (request: NextRequest): Promise<void> => {
     }),
     headers: {
       'Content-Type': 'application/json',
-      Cookie: request.headers.get('cookie') ?? '',
+      Cookie: request.headers.get('Cookie') ?? '',
     },
   });
 
@@ -29,7 +29,7 @@ export const refreshTokens = async (request: NextRequest): Promise<void> => {
       const decodedTokens = decodeURIComponent(tokensCookie);
       const tokens = decodedTokens.split('=')[1];
       request.cookies.set('tokens', tokens);
-      request.headers.append('Cookie', `tokens=${tokens}; Path=/;`);
+      request.headers.set('Cookie', `tokens=${tokens}; Path=/;`);
     }
   }
 };

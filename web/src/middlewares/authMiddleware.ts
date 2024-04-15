@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { CurrentUserDocument } from '@/context/CurrentUser/queries';
-import { createClient } from '@/graphql';
+import { UNEXPECTED_ERROR_MESSAGE, createClient } from '@/graphql';
 
 import { redirectToWeatherForecast, refreshTokens } from './utils';
 
-export const authMiddleware = async (request: NextRequest): Promise<NextResponse | undefined> => {
+export const authMiddleware = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const apolloClient = createClient();
     const tokens = request.cookies.get('tokens');
@@ -25,7 +25,7 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
       if (pathname !== '/weather-forecast') {
         redirectToWeatherForecast(request, url.searchParams);
       }
-    } else if (pathname !== '/sign-in') {
+    } else if (pathname !== '/sign-in' && pathname !== '/sign-up') {
       request.headers.set('redirect', `/sign-in`);
     }
 
@@ -33,6 +33,10 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
       request,
     });
   } catch (error) {
-    NextResponse.error();
+    return NextResponse.json({
+      error: {
+        message: UNEXPECTED_ERROR_MESSAGE,
+      }
+    })
   }
 };
