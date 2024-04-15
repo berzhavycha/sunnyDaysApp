@@ -15,7 +15,7 @@ export type FetchWeatherForecast = {
 export const getWeatherForecasts = async (): Promise<FetchWeatherForecast> => {
   try {
     const { paginationOptions } = getPaginationParams();
-
+    
     const data = await getClient().query({
       query: UserCitiesWeatherDocument,
       variables: {
