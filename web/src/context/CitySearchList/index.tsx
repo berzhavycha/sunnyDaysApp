@@ -30,19 +30,19 @@ type Props = PropsWithChildren & {
 };
 
 export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatus }) => {
-  const { responseData } = JSON.parse(citySearchStatus)
-
   const [listState, setListState] = useState<CitySearchListState>({
     isVisible: false,
     isEnabled: false,
   });
 
   useEffect(() => {
+    const { responseData } = JSON.parse(citySearchStatus)
+
     setListState((prevState) => ({
       ...prevState,
       isEnabled: responseData?.data.citySearchStatus ?? false,
     }));
-  }, [responseData]);
+  }, [citySearchStatus]);
 
   const onPressOutside = (): void => {
     setListState((prevState) => ({

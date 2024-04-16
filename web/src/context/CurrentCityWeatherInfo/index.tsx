@@ -59,7 +59,7 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, chi
 
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
-      info: responseData?.data.userCitiesWeather.edges[0],
+      info: responseData?.data?.userCitiesWeather.edges[0],
     },
   );
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
