@@ -67,7 +67,7 @@ export const InputAutocomplete = <TItem,>({
         error={error}
         onFocus={onInputFocus}
         autoComplete="off"
-        className={`${pending ? 'bg-sky-200' : 'bg-slate-200'} text-xs sm:pl-11 sm:text-base sm:py-2`}
+        className={`${pending ? 'bg-sky-300' : 'bg-slate-200'} text-xs sm:pl-11 sm:text-base sm:py-2`}
         iconStyles="top-2 text-xs sm:text-base md:text-md md:text-xl"
         defaultValue={defaultValue}
       />

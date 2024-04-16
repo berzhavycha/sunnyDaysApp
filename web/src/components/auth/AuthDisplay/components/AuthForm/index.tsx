@@ -18,7 +18,7 @@ type Props = {
   authMutation: DocumentNode;
 };
 
-export const Form: FC<Props> = ({ authType, authMutation }) => {
+export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
   const { authHandler, fieldsError, loading } = useAuth(authMutation);
   const {
     register,
