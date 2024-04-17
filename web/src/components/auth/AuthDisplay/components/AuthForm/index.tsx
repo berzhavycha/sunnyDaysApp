@@ -5,6 +5,7 @@ import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { BaseSyntheticEvent, FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'next/navigation';
 
 import { Input } from '@/components/common';
 import { AuthType, useAuth, UserDto } from '@/hooks';
@@ -19,6 +20,7 @@ type Props = {
 };
 
 export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
+  const searchParams = useSearchParams()
   const { authHandler, fieldsError, loading } = useAuth(authMutation);
   const {
     register,
@@ -42,7 +44,7 @@ export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
   return (
     <>
       <div className="text-xs mb-2 text-center text-red-500 mt-2 h-2 md:mb-4 md:text-md">
-        {fieldsError.unexpectedError}
+        {fieldsError.unexpectedError || searchParams.get('error')}
       </div>
       <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
