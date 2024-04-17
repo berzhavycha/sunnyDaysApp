@@ -27,8 +27,6 @@ export const deleteWeatherSubscription = async (
     },
   });
 
-  console.log(errors);
-
   if (errors?.length) {
     throw new ApolloError({ graphQLErrors: errors });
   }
