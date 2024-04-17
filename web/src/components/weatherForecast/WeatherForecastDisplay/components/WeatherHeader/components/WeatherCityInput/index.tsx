@@ -28,6 +28,7 @@ export const WeatherCityInput: FC = () => {
     const formData = new FormData();
     formData.append('city', text);
     addSubscriptionAction(formData);
+    setCity('')
   });
 
   const keyExtractor = (item: { name: string }): string => item.name;
