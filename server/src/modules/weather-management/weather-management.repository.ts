@@ -8,7 +8,7 @@ import { HttpStatusCode } from '@shared';
 import { IWeatherApiResponse } from './interfaces';
 
 @Injectable()
-export class WeatherForecastRepository {
+export class WeatherManagementRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,

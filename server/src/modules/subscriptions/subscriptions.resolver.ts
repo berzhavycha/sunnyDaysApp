@@ -15,7 +15,11 @@ export class SubscriptionsResolver {
     @Args('input') cityDto: CityDto,
     @CurrentUser('id') id: string,
   ): Promise<Subscription> {
-    return this.subscriptionService.createSubscription(cityDto.name, id);
+    return this.subscriptionService.createSubscription(
+      cityDto.name,
+      cityDto.forecastDaysAmount,
+      id,
+    );
   }
 
   @Mutation(() => Subscription)

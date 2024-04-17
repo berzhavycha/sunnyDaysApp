@@ -1,29 +1,28 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
-import { v4 as uuidv4 } from 'uuid';
 
-import { daysOfWeek, Order, upperCaseEveryFirstLetter } from '@shared';
+import { Order } from '@shared';
 
-import { CitiesService } from '@modules/cities';
 import { SubscriptionsService } from '@modules/subscriptions';
+import {
+  WeatherForecast,
+  WeatherManagementRepository,
+  WeatherManagementService,
+} from '@modules/weather-management';
 
-import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
-import { IForecastDay, IWeatherApiResponse } from './interfaces';
-import { PaginatedWeatherForecast, WeatherDay, WeatherForecast } from './types';
-import { WeatherForecastRepository } from './weather-forecast.repository';
+import { PaginatedWeatherForecast } from './types';
 
 @Injectable()
 export class WeatherForecastService {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
-    private readonly weatherApiRepository: WeatherForecastRepository,
+    private readonly weatherApiRepository: WeatherManagementRepository,
+    private readonly weatherManagementService: WeatherManagementService,
     private readonly configService: ConfigService,
-    private readonly citiesService: CitiesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(options: {
     userId: string;
@@ -34,7 +33,6 @@ export class WeatherForecastService {
   }): Promise<PaginatedWeatherForecast> {
     const { userId, offset, limit, order, forecastDaysAmount } = options;
 
-    let problematicCity: string;
     const userSubscriptions =
       await this.subscriptionsService.getPaginatedSubscriptionsByUserId({
         userId,
@@ -68,109 +66,46 @@ export class WeatherForecastService {
       cities.push(name);
 
       weatherForecastsPromises.push(
-        this.weatherApiRepository
-          .getCityWeather(name, forecastDaysAmount)
-          .catch((error) => {
-            problematicCity = name;
-            throw error;
-          }),
+        this.weatherApiRepository.getCityWeather(name, forecastDaysAmount),
       );
     }
 
-    try {
-      const responses = await Promise.all(weatherForecastsPromises);
-      const validResponses = responses.filter((res) => res !== null);
+    const responses = await Promise.all(weatherForecastsPromises);
+    const validResponses = responses.filter((res) => res !== null);
 
-      const newForecasts = this.mapResponsesToWeatherForecasts(
-        validResponses,
-        cities,
+    const newForecasts: WeatherForecast[] = [];
+
+    validResponses.forEach(async (response, index) => {
+      const forecast =
+        this.weatherManagementService.mapResponseToWeatherForecast(
+          response,
+          cities[index],
+        );
+
+      newForecasts.push(forecast);
+
+      await this.cacheManager.set(
+        `weather_forecast:${forecast.city.toLowerCase()}`,
+        forecast,
+        {
+          ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
+          // Type bug
+          // Stackoverflow answer - https://stackoverflow.com/a/77066815
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
       );
-
-      for (const forecast of newForecasts) {
-        await this.cacheManager.set(
-          `weather_forecast:${forecast.city.toLowerCase()}`,
-          forecast,
-          {
-            ttl: this.configService.get<number>(
-              'REDIS_WEATHER_DATA_TTL_SECONDS',
-            ),
-            // Type bug
-            // Stackoverflow answer - https://stackoverflow.com/a/77066815
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-        );
-      }
-
-      const forecastList = [...cachedForecasts, ...newForecasts];
-
-      const allUserSubscriptions =
-        await this.subscriptionsService.getSubscriptionsByUserId(userId);
-
-      return {
-        edges: forecastList,
-        paginationInfo: {
-          totalCount: allUserSubscriptions.length,
-        },
-      };
-    } catch (error) {
-      this.citiesService.deleteCity(problematicCity);
-      if (
-        error.response.data.error &&
-        error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
-      ) {
-        throw new BadRequestException(
-          error.response.data.error.message,
-          error.response.status,
-        );
-      } else {
-        throw error;
-      }
-    }
-  }
-
-  private mapResponsesToWeatherForecasts(
-    responses: AxiosResponse<IWeatherApiResponse>[],
-    cities: string[],
-  ): WeatherForecast[] {
-    return responses.map((response, index) => {
-      const { data } = response;
-
-      return {
-        id: uuidv4(),
-        city: upperCaseEveryFirstLetter(cities[index]),
-        celsius: data.current.temp_c,
-        fahrenheit: data.current.temp_f,
-        text: data.current.condition.text,
-        humidity: data.current.humidity,
-        precip: data.current.precip_mm,
-        windSpeed: data.current.wind_kph,
-        time: data.location.localtime,
-        daysForecast: this.mapForecastDays(data.forecast.forecastday),
-      };
     });
-  }
 
-  private mapForecastDays(forecastDays: IForecastDay[]): WeatherDay[] {
-    return forecastDays.map((forecast) => {
-      const { date, day } = forecast;
-      const dateInstance = new Date(date);
+    const forecastList = [...cachedForecasts, ...newForecasts];
 
-      const dayOfWeek = daysOfWeek[dateInstance.getDay()];
+    const allUserSubscriptions =
+      await this.subscriptionsService.getSubscriptionsByUserId(userId);
 
-      return {
-        id: uuidv4(),
-        celsius: day.avgtemp_c,
-        fahrenheit: day.avgtemp_f,
-        text: day.condition.text,
-        humidity: day.avghumidity,
-        precip: day.totalprecip_mm,
-        windSpeed: day.maxwind_kph,
-        maxCelsius: day.maxtemp_c,
-        minCelsius: day.mintemp_c,
-        maxFahrenheit: day.maxtemp_f,
-        minFahrenheit: day.mintemp_f,
-        dayOfWeek,
-      };
-    });
+    return {
+      edges: forecastList,
+      paginationInfo: {
+        totalCount: allUserSubscriptions.length,
+      },
+    };
   }
 }

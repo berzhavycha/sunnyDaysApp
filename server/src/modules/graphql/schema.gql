@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 input CityInput {
+  forecastDaysAmount: String!
   name: String!
 }
 

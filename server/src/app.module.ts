@@ -13,6 +13,8 @@ import { SubscriptionsModule } from '@modules/subscriptions';
 import { UsersModule } from '@modules/users';
 import { WeatherForecastModule } from '@modules/weather-forecast';
 
+import { WeatherManagementModule } from './modules/weather-management';
+
 @Module({
   imports: [
     DatabaseModule,
@@ -26,6 +28,7 @@ import { WeatherForecastModule } from '@modules/weather-forecast';
     SubscriptionsModule,
     CitySearchModule,
     FeaturesModule,
+    WeatherManagementModule,
   ],
   providers: [
     {

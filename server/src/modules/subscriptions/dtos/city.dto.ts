@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
 
@@ -7,4 +8,8 @@ export class CityDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
+
+  @Field(() => String)
+  @Optional()
+  readonly forecastDaysAmount: number;
 }
