@@ -20,7 +20,7 @@ export type Scalars = {
   DateTime: { input: any; output: any };
 };
 
-export type CityInput = {
+export type AddCityInput = {
   forecastDaysAmount: Scalars['Int']['input'];
   name: Scalars['String']['input'];
 };
@@ -28,6 +28,10 @@ export type CityInput = {
 export type Credentials = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type DeleteCityInput = {
+  name: Scalars['String']['input'];
 };
 
 export type Message = {
@@ -46,11 +50,11 @@ export type Mutation = {
 };
 
 export type MutationAddWeatherSubscriptionArgs = {
-  input: CityInput;
+  input: AddCityInput;
 };
 
 export type MutationDeleteWeatherSubscriptionArgs = {
-  input: CityInput;
+  input: DeleteCityInput;
 };
 
 export type MutationSignInArgs = {

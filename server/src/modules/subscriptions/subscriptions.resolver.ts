@@ -2,17 +2,17 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { CurrentUser } from '@modules/auth/decorators';
 
-import { CityDto } from './dtos';
+import { AddCityDto, DeleteCityDto } from './dtos';
 import { Subscription } from './entities';
 import { SubscriptionsService } from './subscriptions.service';
 
 @Resolver()
 export class SubscriptionsResolver {
-  constructor(private readonly subscriptionService: SubscriptionsService) {}
+  constructor(private readonly subscriptionService: SubscriptionsService) { }
 
   @Mutation(() => Subscription)
   async addWeatherSubscription(
-    @Args('input') cityDto: CityDto,
+    @Args('input') cityDto: AddCityDto,
     @CurrentUser('id') id: string,
   ): Promise<Subscription> {
     return this.subscriptionService.createSubscription(
@@ -24,7 +24,7 @@ export class SubscriptionsResolver {
 
   @Mutation(() => Subscription)
   async deleteWeatherSubscription(
-    @Args('input') cityDto: CityDto,
+    @Args('input') cityDto: DeleteCityDto,
     @CurrentUser('id') id: string,
   ): Promise<Subscription> {
     return this.subscriptionService.deleteSubscription(cityDto.name, id);

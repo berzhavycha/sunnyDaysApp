@@ -3,7 +3,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 import * as Types from '@/graphql/__generated__/types';
 
 export type DeleteWeatherSubscriptionMutationVariables = Types.Exact<{
-  city: Types.CityInput;
+  city: Types.DeleteCityInput;
 }>;
 
 export type DeleteWeatherSubscriptionMutation = {
@@ -24,7 +24,7 @@ export const DeleteWeatherSubscriptionDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'city' } },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CityInput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'DeleteCityInput' } },
           },
         },
       ],
