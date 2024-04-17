@@ -7,7 +7,6 @@ import { FetchResponse, getPaginationParams } from '@/shared';
 
 import { UserCitiesWeatherDocument, UserCitiesWeatherQuery } from './queries';
 
-
 export const getWeatherForecasts = async (): Promise<FetchResponse<UserCitiesWeatherQuery>> => {
   try {
     const { paginationOptions } = getPaginationParams();

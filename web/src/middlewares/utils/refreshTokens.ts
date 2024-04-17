@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 
 import { env } from '@/core/env';
 
-export const refreshTokens = async (request: NextRequest): Promise<void> => {
+export const refreshTokens = async (request: NextRequest): Promise<string> => {
   // we have to use fetch instead of Apollo Client to get access to cookies
   const response = await fetch(env.NEXT_PUBLIC_BASE_URL, {
     method: 'POST',
@@ -28,7 +28,10 @@ export const refreshTokens = async (request: NextRequest): Promise<void> => {
       const tokensCookie = cookie.split(';')[0].trim();
       const decodedTokens = decodeURIComponent(tokensCookie);
       const tokens = decodedTokens.split('=')[1];
-      request.cookies.set('tokens', tokens);
+      // request.cookies.set('tokens', tokens);
+      return tokens;
     }
   }
+
+  return '';
 };

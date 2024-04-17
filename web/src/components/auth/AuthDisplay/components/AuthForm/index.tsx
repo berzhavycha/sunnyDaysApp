@@ -31,6 +31,8 @@ export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
 
   const onSubmit = async (data: UserDto, e?: BaseSyntheticEvent): Promise<void> => {
     e?.preventDefault();
+
+    await onAuthCachePurge();
     await authHandler(data);
   };
 

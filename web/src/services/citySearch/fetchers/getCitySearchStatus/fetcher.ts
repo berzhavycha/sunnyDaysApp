@@ -1,11 +1,11 @@
+import { ApolloError } from '@apollo/client';
+
 import { env } from '@/core/env';
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { getClient } from '@/graphql/utils/getClient';
+import { FetchResponse } from '@/shared';
 
 import { CitySearchStatusDocument, CitySearchStatusQuery } from './queries';
-import { FetchResponse } from '@/shared';
-import { ApolloError } from '@apollo/client';
-
 
 export const getCitySearchStatus = async (): Promise<FetchResponse<CitySearchStatusQuery>> => {
   try {

@@ -36,7 +36,7 @@ export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatus }
   });
 
   useEffect(() => {
-    const { responseData } = JSON.parse(citySearchStatus)
+    const { responseData } = JSON.parse(citySearchStatus);
 
     setListState((prevState) => ({
       ...prevState,

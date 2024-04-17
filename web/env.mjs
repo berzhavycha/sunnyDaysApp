@@ -15,5 +15,7 @@ export const clientEnv = {
 };
 
 export const serverEnv = {
-    SECRET_COOKIE_KEY: process.env.SECRET_COOKIE_KEY
+    SECRET_COOKIE_KEY: process.env.SECRET_COOKIE_KEY,
+    NODE_ENV: process.env.NODE_ENV,
+    COOKIE_EXPIRATION_DAYS_TIME: process.env.COOKIE_EXPIRATION_DAYS_TIME
 };

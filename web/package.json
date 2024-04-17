@@ -34,7 +34,8 @@
     "react-spinners": "^0.13.8",
     "sharp": "^0.33.2",
     "swiper": "^11.1.0",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+    "with-refresh-token": "^0.2.5"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",

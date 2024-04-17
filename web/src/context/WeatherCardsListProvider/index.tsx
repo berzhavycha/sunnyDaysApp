@@ -40,7 +40,7 @@ type Props = PropsWithChildren & {
 };
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
-  const { responseData, error } = JSON.parse(weatherResponse)
+  const { responseData, error } = JSON.parse(weatherResponse);
   const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
     responseData?.data,
   );

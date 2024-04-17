@@ -17,5 +17,7 @@ export const clientSchema = Joi.object({
 });
 
 export const serverSchema = Joi.object({
-    SECRET_COOKIE_KEY: Joi.string().required()
+    SECRET_COOKIE_KEY: Joi.string().required(),
+    NODE_ENV: Joi.string().default('development'),
+    COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(90)
 });

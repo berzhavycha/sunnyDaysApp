@@ -55,7 +55,7 @@ type Props = PropsWithChildren & {
 };
 
 export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
-  const { responseData } = JSON.parse(weatherResponse)
+  const { responseData } = JSON.parse(weatherResponse);
 
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {

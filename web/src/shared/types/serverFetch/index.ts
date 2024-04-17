@@ -1,7 +1,6 @@
-import { ApolloQueryResult, ApolloError } from "@apollo/client";
+import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 export type FetchResponse<T> = {
-    responseData: ApolloQueryResult<T> | null;
-    error: ApolloError | null;
-  };
-  
+  responseData: ApolloQueryResult<T> | null;
+  error: ApolloError | null;
+};

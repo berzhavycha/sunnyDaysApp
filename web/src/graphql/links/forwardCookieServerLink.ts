@@ -10,7 +10,7 @@ export const forwardCookieServerLink = setContext(async (_, { headers }) => {
       ...headers,
       Cookie: cookies()
         .getAll()
-        .map(({ name, value }: { name: string, value: string }) => `${name}=${value}`)
+        .map(({ name, value }: { name: string; value: string }) => `${name}=${value}`)
         .join(';'),
     },
   };
