@@ -21,7 +21,7 @@ export type Scalars = {
 };
 
 export type CityInput = {
-  forecastDaysAmount: Scalars['String']['input'];
+  forecastDaysAmount: Scalars['Int']['input'];
   name: Scalars['String']['input'];
 };
 

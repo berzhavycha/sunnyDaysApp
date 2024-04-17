@@ -26,7 +26,7 @@ export class CitiesService {
     private readonly weatherManagementService: WeatherManagementService,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async createCity(
     cityName: string,
@@ -35,14 +35,11 @@ export class CitiesService {
     try {
       let city = await this.findByName(cityName);
 
-      if (city) {
-        return city;
-      }
-
       const response = await this.weatherApiRepository.getCityWeather(
         cityName,
         forecastDaysAmount,
       );
+
       const forecast =
         this.weatherManagementService.mapResponseToWeatherForecast(
           response,
@@ -59,6 +56,10 @@ export class CitiesService {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       );
+
+      if (city) {
+        return city;
+      }
 
       city = this.citiesRepository.create({ name: cityName.toLowerCase() });
       return this.citiesRepository.save(city);
