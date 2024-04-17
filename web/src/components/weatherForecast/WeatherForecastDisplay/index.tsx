@@ -1,24 +1,21 @@
-import { FC } from 'react';
-
-import { CurrentCityWeatherInfoProvider, WeatherCardsListProvider } from '@/context';
-import { getWeatherForecasts } from '@/services/index-server';
+import { FC, Suspense } from 'react';
 
 import { CurrentCityWeather, WeatherData, WeatherHeader } from './components';
+import { Spinner } from '@/components/common';
+import { WeatherForecastProviders } from '../WeatherForecastProviders';
 
 export const WeatherForecastDisplay: FC = async () => {
-  const weatherResponse = await getWeatherForecasts();
-
   return (
-    <CurrentCityWeatherInfoProvider weatherResponse={JSON.stringify(weatherResponse)}>
-      <WeatherCardsListProvider weatherResponse={JSON.stringify(weatherResponse)}>
-        <div className="flex md:gap-0 bg-gray-900 min-h-screen 2xl:h-screen p-6 py-8 md:p-12 overflow-hidden">
-          <CurrentCityWeather />
-          <div className="w-full md:w-1/2 md:ml-[52%] lg:ml-[45%] lg:w-full xl:ml-[37%] 2xl:ml-[28%]">
-            <WeatherHeader />
+    <WeatherForecastProviders>
+      <div className="flex md:gap-0 bg-gray-900 min-h-screen 2xl:h-screen p-6 py-8 md:p-12 overflow-hidden">
+        <CurrentCityWeather />
+        <div className="w-full md:w-1/2 md:ml-[52%] lg:ml-[45%] lg:w-full xl:ml-[37%] 2xl:ml-[28%]">
+          <WeatherHeader />
+          <Suspense fallback={<Spinner />}>
             <WeatherData />
-          </div>
+          </Suspense>
         </div>
-      </WeatherCardsListProvider>
-    </CurrentCityWeatherInfoProvider>
+      </div>
+    </WeatherForecastProviders>
   );
 };
