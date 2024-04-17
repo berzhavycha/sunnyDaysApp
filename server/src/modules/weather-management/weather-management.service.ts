@@ -1,15 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
+import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
 import { daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
 
 import { IForecastDay, IWeatherApiResponse } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
+import { WeatherManagementRepository } from './weather-management.repository';
 
 @Injectable()
 export class WeatherManagementService {
-  public mapResponseToWeatherForecast(
+  constructor(
+    private readonly weatherApiRepository: WeatherManagementRepository,
+    private readonly configService: ConfigService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
+
+  async getCityWeather(
+    name: string,
+    forecastDaysAmount: number,
+  ): Promise<AxiosResponse<IWeatherApiResponse>> {
+    return this.weatherApiRepository.getCityWeather(name, forecastDaysAmount);
+  }
+
+  async cacheForecast(forecast: WeatherForecast): Promise<void> {
+    await this.cacheManager.set(
+      `weather_forecast:${forecast.city.toLowerCase()}`,
+      forecast,
+      {
+        ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
+        // Type bug
+        // Stackoverflow answer - https://stackoverflow.com/a/77066815
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
+    );
+  }
+
+  mapResponseToWeatherForecast(
     response: AxiosResponse<IWeatherApiResponse>,
     city: string,
   ): WeatherForecast {
@@ -29,7 +59,7 @@ export class WeatherManagementService {
     };
   }
 
-  public mapForecastDays(forecastDays: IForecastDay[]): WeatherDay[] {
+  mapForecastDays(forecastDays: IForecastDay[]): WeatherDay[] {
     return forecastDays.map((forecast) => {
       const { date, day } = forecast;
       const dateInstance = new Date(date);

@@ -8,7 +8,6 @@ import { Order } from '@shared';
 import { SubscriptionsService } from '@modules/subscriptions';
 import {
   WeatherForecast,
-  WeatherManagementRepository,
   WeatherManagementService,
 } from '@modules/weather-management';
 
@@ -18,7 +17,6 @@ import { PaginatedWeatherForecast } from './types';
 export class WeatherForecastService {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
-    private readonly weatherApiRepository: WeatherManagementRepository,
     private readonly weatherManagementService: WeatherManagementService,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -66,7 +64,7 @@ export class WeatherForecastService {
       cities.push(name);
 
       weatherForecastsPromises.push(
-        this.weatherApiRepository.getCityWeather(name, forecastDaysAmount),
+        this.weatherManagementService.getCityWeather(name, forecastDaysAmount),
       );
     }
 
@@ -84,16 +82,7 @@ export class WeatherForecastService {
 
       newForecasts.push(forecast);
 
-      await this.cacheManager.set(
-        `weather_forecast:${forecast.city.toLowerCase()}`,
-        forecast,
-        {
-          ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
-          // Type bug
-          // Stackoverflow answer - https://stackoverflow.com/a/77066815
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-      );
+      await this.weatherManagementService.cacheForecast(forecast);
     });
 
     const forecastList = [...cachedForecasts, ...newForecasts];

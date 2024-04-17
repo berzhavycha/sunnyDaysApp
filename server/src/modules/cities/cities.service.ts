@@ -1,18 +1,13 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cache } from 'cache-manager';
 import { DeleteResult, Repository } from 'typeorm';
 
 import {
   NO_MATCHING_LOCATION_FOUND_ERROR_CODE,
-  WeatherManagementRepository,
   WeatherManagementService,
 } from '@modules/weather-management';
 
@@ -22,11 +17,8 @@ import { City } from './entities';
 export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
-    private readonly weatherApiRepository: WeatherManagementRepository,
     private readonly weatherManagementService: WeatherManagementService,
-    private readonly configService: ConfigService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async createCity(
     cityName: string,
@@ -35,7 +27,7 @@ export class CitiesService {
     try {
       let city = await this.findByName(cityName);
 
-      const response = await this.weatherApiRepository.getCityWeather(
+      const response = await this.weatherManagementService.getCityWeather(
         cityName,
         forecastDaysAmount,
       );
@@ -46,16 +38,7 @@ export class CitiesService {
           cityName,
         );
 
-      await this.cacheManager.set(
-        `weather_forecast:${forecast.city.toLowerCase()}`,
-        forecast,
-        {
-          ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
-          // Type bug
-          // Stackoverflow answer - https://stackoverflow.com/a/77066815
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-      );
+      await this.weatherManagementService.cacheForecast(forecast);
 
       if (city) {
         return city;
