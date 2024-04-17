@@ -8,7 +8,7 @@ import { SubscriptionsService } from './subscriptions.service';
 
 @Resolver()
 export class SubscriptionsResolver {
-  constructor(private readonly subscriptionService: SubscriptionsService) { }
+  constructor(private readonly subscriptionService: SubscriptionsService) {}
 
   @Mutation(() => Subscription)
   async addWeatherSubscription(

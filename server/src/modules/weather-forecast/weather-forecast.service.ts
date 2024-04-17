@@ -1,6 +1,5 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
 
 import { Order } from '@shared';
@@ -18,7 +17,6 @@ export class WeatherForecastService {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
     private readonly weatherManagementService: WeatherManagementService,
-    private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 

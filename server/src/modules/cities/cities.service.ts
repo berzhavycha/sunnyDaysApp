@@ -25,8 +25,6 @@ export class CitiesService {
     forecastDaysAmount: number,
   ): Promise<City> {
     try {
-      let city = await this.findByName(cityName);
-
       const response = await this.weatherManagementService.getCityWeather(
         cityName,
         forecastDaysAmount,
@@ -39,6 +37,8 @@ export class CitiesService {
         );
 
       await this.weatherManagementService.cacheForecast(forecast);
+
+      let city = await this.findByName(cityName);
 
       if (city) {
         return city;
