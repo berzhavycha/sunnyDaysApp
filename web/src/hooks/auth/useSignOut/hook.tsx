@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCurrentUser, useWeatherPaginationInfo } from '@/context';
 
 import { SignOutDocument } from './mutations';
+import { onAuthCachePurge } from '@/services';
 
 type HookReturn = {
   loading: boolean;
@@ -28,6 +29,7 @@ export const useSignOut = (): HookReturn => {
     }));
 
     router.replace('/sign-in');
+    await onAuthCachePurge();
   };
 
   return {

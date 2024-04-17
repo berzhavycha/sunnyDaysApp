@@ -9,7 +9,6 @@ import { useSearchParams } from 'next/navigation';
 
 import { Input } from '@/components/common';
 import { AuthType, useAuth, UserDto } from '@/hooks';
-import { onAuthCachePurge } from '@/services';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
@@ -33,8 +32,6 @@ export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
 
   const onSubmit = async (data: UserDto, e?: BaseSyntheticEvent): Promise<void> => {
     e?.preventDefault();
-
-    await onAuthCachePurge();
     await authHandler(data);
   };
 
