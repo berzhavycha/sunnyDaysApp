@@ -5,8 +5,8 @@ import { env } from '@/core/env';
 import { createClient, UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { NODE_ENV, ONE_DAY_MILLISECONDS, OriginalError, UNAUTHORIZED_ERROR_CODE } from '@/shared';
 
-import { redirectToWeatherForecast, refreshTokens, setCookie } from './utils';
 import { authRoutes } from './constants';
+import { redirectToWeatherForecast, refreshTokens, setCookie } from './utils';
 
 export const authMiddleware = async (
   request: NextRequest,
@@ -32,7 +32,7 @@ export const authMiddleware = async (
       tokens &&
       userResponse.errors &&
       (userResponse.errors[0].extensions.originalError as OriginalError).statusCode ===
-      UNAUTHORIZED_ERROR_CODE
+        UNAUTHORIZED_ERROR_CODE
     ) {
       const tokens = await refreshTokens(request);
       if (tokens) {

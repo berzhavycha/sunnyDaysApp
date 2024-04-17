@@ -3,9 +3,9 @@
 import { DocumentNode } from '@apollo/client';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useSearchParams } from 'next/navigation';
 import { BaseSyntheticEvent, FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSearchParams } from 'next/navigation';
 
 import { Input } from '@/components/common';
 import { AuthType, useAuth, UserDto } from '@/hooks';
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const { authHandler, fieldsError, loading } = useAuth(authMutation);
   const {
     register,

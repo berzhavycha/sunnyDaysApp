@@ -36,7 +36,10 @@ export const addWeatherSubscription = async (
     const { errors } = await getClient().mutate({
       mutation: AddWeatherSubscriptionDocument,
       variables: {
-        city,
+        city: {
+          name: city.name,
+          forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
+        },
       },
     });
 

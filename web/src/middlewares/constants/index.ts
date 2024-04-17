@@ -1,3 +1,3 @@
-export const protectedRoutes = ['/weather-forecast']
+export const protectedRoutes = ['/weather-forecast'];
 
-export const authRoutes = ['/sign-in', '/sign-up']
+export const authRoutes = ['/sign-in', '/sign-up'];

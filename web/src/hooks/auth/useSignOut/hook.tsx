@@ -4,9 +4,9 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 
 import { useCurrentUser, useWeatherPaginationInfo } from '@/context';
+import { onAuthCachePurge } from '@/services';
 
 import { SignOutDocument } from './mutations';
-import { onAuthCachePurge } from '@/services';
 
 type HookReturn = {
   loading: boolean;
