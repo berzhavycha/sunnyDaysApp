@@ -40,6 +40,7 @@ export const authMiddleware = async (
           redirectToWeatherForecast(request, url.searchParams);
         }
 
+        // https://github.com/vercel/next.js/issues/49442#issuecomment-2041387328
         return setCookie(request, response, {
           name: 'tokens',
           value: tokens,
