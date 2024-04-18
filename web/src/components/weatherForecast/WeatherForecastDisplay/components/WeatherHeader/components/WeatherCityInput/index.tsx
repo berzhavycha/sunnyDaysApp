@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
@@ -12,6 +12,7 @@ import { useCitySearch, useRenderCityItem } from './hooks';
 
 export const WeatherCityInput: FC = () => {
   const [city, setCity] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const { error } = useSubscriptionError();
 
@@ -24,17 +25,19 @@ export const WeatherCityInput: FC = () => {
 
   const onSubmit = (): void => setCity('');
 
-  const { renderCityItem } = useRenderCityItem(async (text: string): Promise<void> => {
-    const formData = new FormData();
-    formData.append('city', text);
-    addSubscriptionAction(formData);
-    setCity('');
+  const { renderCityItem } = useRenderCityItem((text: string): void => {
+    const inputElement = formRef.current?.querySelector('input');
+    if (formRef.current && inputElement) {
+      inputElement.value = text;
+      formRef.current.requestSubmit();
+    }
   });
 
   const keyExtractor = (item: { name: string }): string => item.name;
 
   return (
     <form
+      ref={formRef}
       action={addSubscriptionAction}
       onSubmit={onSubmit}
       className="w-full flex items-start justify-between mb-2 gap-4 sm:gap-8 md:max-xl:mb-0"

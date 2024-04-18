@@ -42,7 +42,6 @@ export const SubscriptionErrorProvider: FC<PropsWithChildren> = ({ children }) =
   });
 
   const errorHandler = (error: ApolloError): void => {
-    console.log(error);
     if (error.graphQLErrors[0]?.extensions.originalError) {
       // Use type assertion to access the 'message' property.
       // TypeScript infers the type of 'extensions' keys as 'unknown',

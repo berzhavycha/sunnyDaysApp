@@ -48,6 +48,7 @@ export class CitiesService {
       return this.citiesRepository.save(city);
     } catch (error) {
       if (
+        error.response &&
         error.response.data.error &&
         error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
       ) {
