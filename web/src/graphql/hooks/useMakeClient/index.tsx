@@ -30,11 +30,11 @@ export const useMakeClient = (): UseMakeClientReturn => {
     client.setLink(
       !IS_CLIENT
         ? ApolloLink.from([
-          new SSRMultipartLink({
-            stripDefer: true,
-          }),
-          apolloLinks,
-        ])
+            new SSRMultipartLink({
+              stripDefer: true,
+            }),
+            apolloLinks,
+          ])
         : apolloLinks,
     );
 
