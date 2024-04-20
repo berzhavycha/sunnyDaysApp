@@ -1,5 +1,5 @@
 import { DocumentNode } from '@apollo/client';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 import { AuthType } from '@/hooks';
 
@@ -20,7 +20,10 @@ export const AuthDisplay: FC<Props> = ({ title, authType, subtitle, authMutation
           {title}
         </h1>
         <p className="text-xs mb-1 text-blue-900 text-center md:mb-2 md:text-lg">{subtitle}</p>
-        <AuthForm authType={authType} authMutation={authMutation} />
+        {/*https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout*/}
+        <Suspense>
+          <AuthForm authType={authType} authMutation={authMutation} />
+        </Suspense>
       </div>
     </>
   );
