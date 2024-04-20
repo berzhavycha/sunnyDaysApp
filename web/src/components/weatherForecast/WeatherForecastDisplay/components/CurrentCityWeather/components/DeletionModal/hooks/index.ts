@@ -1,1 +1,1 @@
-export * from './useDeleteWeatherCard'
+export * from './useDeleteWeatherCard';

@@ -1,9 +1,7 @@
 import { FC } from 'react';
 
 import { DeleteButton, NoData } from '@/components/common';
-import {
-  useCurrentCityWeatherInfo,
-} from '@/context';
+import { useCurrentCityWeatherInfo } from '@/context';
 
 import { Forecast, TodayWeatherInfo } from './components';
 import { useCurrentWeatherTime } from './hooks';
@@ -28,10 +26,7 @@ export const CurrentWeatherDetails: FC<Props> = ({ onDelete }) => {
         <>
           <TodayWeatherInfo {...currentCityWeatherInfo.info} dayOfWeek={dayOfWeek} time={time} />
           <Forecast info={currentCityWeatherInfo.info.daysForecast ?? []} />
-          <DeleteButton
-            text="Delete City"
-            onClick={onDeleteCity}
-          />
+          <DeleteButton text="Delete City" onClick={onDeleteCity} />
         </>
       )}
     </div>

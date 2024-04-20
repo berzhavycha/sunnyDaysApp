@@ -1,2 +1,2 @@
-export * from './ClientTemperatureInfo'
-export * from './TemperatureInfo'
+export * from './ClientTemperatureInfo';
+export * from './TemperatureInfo';

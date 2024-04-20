@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { Modal } from '@/components/common';
+
 import { useDeleteWeatherCard } from './hooks';
 
 type Props = {
@@ -10,7 +11,10 @@ type Props = {
 };
 
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose }) => {
-  const { isDeletionInProgress, onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({ city, onClose })
+  const { isDeletionInProgress, onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
+    city,
+    onClose,
+  });
 
   return (
     <Modal

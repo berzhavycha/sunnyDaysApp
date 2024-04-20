@@ -7,7 +7,9 @@ type HookReturn = {
   renderCityItem: (args: City) => JSX.Element;
 };
 
-export const useRenderCityItem = (onCitySelect: (text: string) => Promise<void> | void): HookReturn => {
+export const useRenderCityItem = (
+  onCitySelect: (text: string) => Promise<void> | void,
+): HookReturn => {
   const { onPressOutside } = useCitySearchList();
 
   const renderCityItem = (item: City): JSX.Element => {

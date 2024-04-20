@@ -1,6 +1,10 @@
 import { FC, PropsWithChildren, Suspense } from 'react';
 
-import { CurrentCityWeatherInfoProvider, WeatherCardsListProvider, WeatherPaginationInfoProvider } from '@/context';
+import {
+  CurrentCityWeatherInfoProvider,
+  WeatherCardsListProvider,
+  WeatherPaginationInfoProvider,
+} from '@/context';
 import { getWeatherForecasts } from '@/services/index-server';
 
 export const WeatherForecastProviders: FC<PropsWithChildren> = async ({ children }) => {
@@ -17,7 +21,7 @@ export const WeatherForecastProviders: FC<PropsWithChildren> = async ({ children
             </WeatherCardsListProvider>
           </CurrentCityWeatherInfoProvider>
         </WeatherPaginationInfoProvider>
-      </Suspense >
+      </Suspense>
     </>
   );
 };

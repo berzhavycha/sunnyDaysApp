@@ -9,4 +9,4 @@ export * from './Compose';
 export * from './PageLoading';
 export * from './ErrorBoundary';
 export * from './Buttons';
-export * from './Modals'
+export * from './Modals';
