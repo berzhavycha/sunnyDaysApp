@@ -5,7 +5,7 @@ import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { WeatherForecast } from '@/shared';
 
-import { ClientTemperatureInfo } from '../ClientTemperatureInfo';
+import { ClientTemperatureInfo } from '@/components/common';
 import { ForecastSlider } from '../ForecastSlider';
 
 type Props = WeatherForecast;

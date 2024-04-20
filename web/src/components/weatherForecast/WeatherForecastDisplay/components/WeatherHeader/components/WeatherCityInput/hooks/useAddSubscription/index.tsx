@@ -9,7 +9,7 @@ type HookReturn = {
   addSubscriptionAction: (payload: FormData) => void;
 };
 
-export const useCitySearch = (): HookReturn => {
+export const useAddSubscription = (): HookReturn => {
   const { weatherData } = useWeatherCardsList();
   const { setError, errorHandler } = useSubscriptionError();
 

@@ -11,4 +11,5 @@ export * from './PageLoading';
 export * from './ErrorBoundary';
 export * from './Buttons';
 export * from './ModalBackground';
+export * from './ClientTemperatureInfo'
 export * from './Modal'

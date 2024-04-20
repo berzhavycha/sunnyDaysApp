@@ -8,16 +8,16 @@ import { useCityInputAutocomplete } from '@/hooks';
 
 import { SubmitCityButton } from '../SubmitCityButton';
 
-import { useCitySearch, useRenderCityItem } from './hooks';
+import { useAddSubscription, useRenderCityItem } from './hooks';
 
 export const WeatherCityInput: FC = () => {
-  const [city, setCity] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
+  const [city, setCity] = useState<string>('');
 
   const { error } = useSubscriptionError();
 
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { addSubscriptionAction } = useCitySearch();
+  const { addSubscriptionAction } = useAddSubscription();
 
   const { data, loading } = useCityInputAutocomplete(city);
 

@@ -1,2 +1,2 @@
-export * from './useCitySearch';
+export * from './useAddSubscription';
 export * from './useRenderCityItem';
