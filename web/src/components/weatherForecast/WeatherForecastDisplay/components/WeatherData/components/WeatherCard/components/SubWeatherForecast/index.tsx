@@ -4,7 +4,7 @@ import React, { FC, memo } from 'react';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 
-import { ClientTemperatureInfo } from '../../../../../../../../common/ClientTemperatureInfo';
+import { ClientTemperatureInfo } from '@/components/common';
 
 type Props = {
   celsius: number;

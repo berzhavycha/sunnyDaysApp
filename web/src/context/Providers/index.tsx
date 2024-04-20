@@ -14,9 +14,9 @@ export const Providers: FC<PropsWithChildren> = ({ children }) => {
       components={[
         ApolloWrapper,
         CurrentUserProvider,
+        SubscriptionErrorProvider,
         WeatherPaginationInfoProvider,
         CurrentTempUnitProvider,
-        SubscriptionErrorProvider,
       ]}
     >
       {children}

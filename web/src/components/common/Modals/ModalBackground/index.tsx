@@ -4,7 +4,7 @@ import React, { FC, PropsWithChildren, useRef } from 'react';
 
 import { useOutsideClick } from '@/hooks';
 
-import { CloseButton } from '../Buttons';
+import { CloseButton } from '../../Buttons';
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
