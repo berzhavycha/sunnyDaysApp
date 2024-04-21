@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
 
 type CitySearchListState = {
   isVisible: boolean;
@@ -30,19 +30,12 @@ type Props = PropsWithChildren & {
 };
 
 export const CitySearchListProvider: FC<Props> = ({ children, citySearchStatus }) => {
+  const { responseData } = JSON.parse(citySearchStatus);
+
   const [listState, setListState] = useState<CitySearchListState>({
     isVisible: false,
-    isEnabled: false,
+    isEnabled: responseData?.data.citySearchStatus ?? false,
   });
-
-  useEffect(() => {
-    const { responseData } = JSON.parse(citySearchStatus);
-
-    setListState((prevState) => ({
-      ...prevState,
-      isEnabled: responseData?.data.citySearchStatus ?? false,
-    }));
-  }, [citySearchStatus]);
 
   const onPressOutside = (): void => {
     setListState((prevState) => ({
