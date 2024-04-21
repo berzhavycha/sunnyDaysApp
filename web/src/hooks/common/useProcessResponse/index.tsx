@@ -38,7 +38,7 @@ export const useProcessResponse = <TData,>({
                 onError(error);
             }
         }
-    }, [jsonResponse, onSuccess, onError])
+    }, [jsonResponse])
 
     return { responseData, error }
 };
