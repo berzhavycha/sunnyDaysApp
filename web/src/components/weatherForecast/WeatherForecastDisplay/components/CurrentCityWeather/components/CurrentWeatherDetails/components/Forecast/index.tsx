@@ -5,8 +5,8 @@ import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
 import { WeatherForecastDays } from '@/shared';
 
-import { useRenderForecastItem } from './hooks';
 import './style/index.css';
+import { InteractiveForecastItems } from '../InteractiveForecastItem';
 
 type Props = {
   info: WeatherForecastDays[];
@@ -14,7 +14,6 @@ type Props = {
 
 export const Forecast: FC<Props> = memo(({ info }) => {
   const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
-  const { renderItem } = useRenderForecastItem();
 
   const isScrollable =
     env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
@@ -36,7 +35,7 @@ export const Forecast: FC<Props> = memo(({ info }) => {
       </div>
       <CustomFlatList
         data={info}
-        renderItem={renderItem}
+        renderItem={InteractiveForecastItems}
         className={`custom-scroll ${isScrollable && 'pr-3'} flex flex-col justify-between h-64 overflow-scroll md:gap-1 lg:gap-2`}
         keyExtractor={keyExtractor}
       />
