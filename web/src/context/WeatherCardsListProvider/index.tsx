@@ -1,6 +1,5 @@
 'use client';
 
-import { ApolloError } from '@apollo/client';
 import {
   createContext,
   Dispatch,
@@ -8,7 +7,6 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 
@@ -17,6 +15,7 @@ import { UserCitiesWeatherQuery } from '@/services';
 import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
 import { useSubscriptionError } from '../SubscriptionError';
 import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
+import { useProcessResponse } from '@/hooks';
 
 type ContextType = {
   weatherData: UserCitiesWeatherQuery | undefined;
@@ -40,37 +39,25 @@ type Props = PropsWithChildren & {
 };
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
-  const { responseData, error } = JSON.parse(weatherResponse);
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
-    responseData?.data,
-  );
   const { setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { errorHandler } = useSubscriptionError();
 
-  useEffect(() => {
-    try {
-      if (responseData) {
-        const { data, errors } = responseData;
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
+    JSON.parse(weatherResponse).responseData?.data,
+  );
 
-        if (errors?.length) {
-          throw new ApolloError({ graphQLErrors: errors });
-        }
+  const onSuccess = (data: UserCitiesWeatherQuery): void => {
+    setWeatherData(data);
+    setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
+    setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
+  }
 
-        if (data.userCitiesWeather) {
-          setWeatherData(data);
-          setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
-          setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
-        }
-      } else if (error) {
-        throw error;
-      }
-    } catch (error) {
-      if (error instanceof ApolloError) {
-        errorHandler(error);
-      }
-    }
-  }, [weatherResponse]);
+  useProcessResponse<UserCitiesWeatherQuery>({
+    jsonResponse: weatherResponse,
+    onSuccess,
+    onError: errorHandler
+  })
 
   const contextValue: ContextType = {
     weatherData,
