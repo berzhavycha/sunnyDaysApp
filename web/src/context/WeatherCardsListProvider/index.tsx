@@ -6,6 +6,7 @@ import {
   FC,
   PropsWithChildren,
   SetStateAction,
+  useCallback,
   useContext,
   useState,
 } from 'react';
@@ -47,11 +48,11 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
     JSON.parse(weatherResponse).responseData?.data,
   );
 
-  const onSuccess = (data: UserCitiesWeatherQuery): void => {
+  const onSuccess = useCallback((data: UserCitiesWeatherQuery) => {
     setWeatherData(data);
     setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
     setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
-  }
+  }, [setWeatherData, setTotalCount, setCurrentCityWeatherInfo])
 
   useProcessResponse<UserCitiesWeatherQuery>({
     jsonResponse: weatherResponse,
