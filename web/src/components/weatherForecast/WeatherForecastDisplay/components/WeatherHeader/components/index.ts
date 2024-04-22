@@ -1,3 +1,3 @@
 export * from './CityAutocompleteItem';
-export * from './WeatherCityInput';
+export * from './WeatherCitySearch';
 export * from './ControlButtons';

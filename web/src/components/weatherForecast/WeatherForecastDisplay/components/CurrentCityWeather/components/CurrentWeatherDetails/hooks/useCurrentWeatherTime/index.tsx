@@ -1,5 +1,6 @@
 import { CurrentCityWeatherInfoState } from '@/context';
 import { daysOfWeek, getTimeFormat } from '@/shared';
+import { useEffect, useState } from 'react';
 
 type HookReturn = {
   dayOfWeek: string;
@@ -9,17 +10,19 @@ type HookReturn = {
 export const useCurrentWeatherTime = (
   currentCityWeatherInfo: CurrentCityWeatherInfoState | undefined,
 ): HookReturn => {
-  let dayOfWeek: string = ''
-  let time: string = ''
+  const [dayOfWeek, setDayOfWeek] = useState<string>('')
+  const [time, setTime] = useState<string>('')
 
-  if (currentCityWeatherInfo?.info?.dayOfWeek) {
-    dayOfWeek = currentCityWeatherInfo.info.dayOfWeek
-    time = ''
-  } else {
-    const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
-    dayOfWeek = daysOfWeek[dateInstance.getDay()];
-    time = `${getTimeFormat(dateInstance.getHours())}:${getTimeFormat(dateInstance.getMinutes())}`
-  }
+  useEffect(() => {
+    if (currentCityWeatherInfo?.info?.dayOfWeek) {
+      setDayOfWeek(currentCityWeatherInfo.info.dayOfWeek)
+      setTime('')
+    } else {
+      const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
+      setDayOfWeek(daysOfWeek[dateInstance.getDay()]);
+      setTime(`${getTimeFormat(dateInstance.getHours())}:${getTimeFormat(dateInstance.getMinutes())}`)
+    }
+  }, [currentCityWeatherInfo])
 
   return { dayOfWeek, time };
 };
