@@ -1,10 +1,11 @@
 'use client';
 
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
+import { env } from '@/core/env';
+
 import { TempUnits } from './constants';
-import { env } from "@/core/env";
 
 type CurrentTempUnitState = {
   name: TempUnits;
@@ -28,12 +29,12 @@ export const useCurrentTempUnit = (): ContextType => {
 };
 
 type Props = PropsWithChildren & {
-  cookieTempUnit?: TempUnits
-}
+  cookieTempUnit?: TempUnits;
+};
 
 export const CurrentTempUnitProvider: FC<Props> = ({ children, cookieTempUnit }) => {
   const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>({
-    name: cookieTempUnit ?? TempUnits.CELSIUS
+    name: cookieTempUnit ?? TempUnits.CELSIUS,
   });
 
   useEffect(() => {

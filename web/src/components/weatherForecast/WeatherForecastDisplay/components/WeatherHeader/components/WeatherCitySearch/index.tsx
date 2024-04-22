@@ -2,10 +2,10 @@
 
 import { FC, useRef, useState } from 'react';
 
+import { CityAutocomplete } from '../CityAutocomplete';
 import { SubmitCityButton } from '../SubmitCityButton';
 
 import { useAddSubscription } from './hooks';
-import { CityAutocomplete } from '../CityAutocomplete';
 
 export const WeatherCitySearch: FC = () => {
   const formRef = useRef<HTMLFormElement>(null);

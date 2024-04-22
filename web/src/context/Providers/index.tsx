@@ -8,13 +8,7 @@ import { SubscriptionErrorProvider } from '../SubscriptionError';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Compose
-      components={[
-        ApolloWrapper,
-        CurrentUserProvider,
-        SubscriptionErrorProvider,
-      ]}
-    >
+    <Compose components={[ApolloWrapper, CurrentUserProvider, SubscriptionErrorProvider]}>
       {children}
     </Compose>
   );

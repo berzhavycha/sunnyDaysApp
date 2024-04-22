@@ -14,7 +14,7 @@ const { cookies } = require('next/headers');
 
 export const WeatherForecastProviders: FC<PropsWithChildren> = async ({ children }) => {
   const weatherResponse = await getWeatherForecasts();
-  const cookieTempUnit = cookies().get('current-temp-unit')
+  const cookieTempUnit = cookies().get('current-temp-unit');
 
   return (
     <>

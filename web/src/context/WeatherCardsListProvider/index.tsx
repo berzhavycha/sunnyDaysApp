@@ -10,12 +10,12 @@ import {
   useState,
 } from 'react';
 
+import { useProcessResponse } from '@/hooks';
 import { UserCitiesWeatherQuery } from '@/services';
 
 import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
 import { useSubscriptionError } from '../SubscriptionError';
 import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
-import { useProcessResponse } from '@/hooks';
 
 type ContextType = {
   weatherData: UserCitiesWeatherQuery | undefined;
@@ -51,13 +51,13 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
     setWeatherData(data);
     setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
     setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
-  }
+  };
 
   useProcessResponse<UserCitiesWeatherQuery>({
     jsonResponse: weatherResponse,
     onSuccess,
-    onError: errorHandler
-  })
+    onError: errorHandler,
+  });
 
   const contextValue: ContextType = {
     weatherData,

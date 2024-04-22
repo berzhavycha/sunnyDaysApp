@@ -5,9 +5,10 @@ import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
 import { WeatherForecastDays } from '@/shared';
 
-import './style/index.css';
 import { InteractiveForecastItems } from '../InteractiveForecastItem';
 import { TodaysForecastButton } from '../TodaysForecastButton';
+
+import './style/index.css';
 
 type Props = {
   info: WeatherForecastDays[];
