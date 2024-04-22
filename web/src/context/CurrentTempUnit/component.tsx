@@ -1,10 +1,10 @@
 'use client';
 
+import Cookies from "js-cookie";
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-import { IS_CLIENT } from '@/shared';
-
 import { TempUnits } from './constants';
+import { env } from "@/core/env";
 
 type CurrentTempUnitState = {
   name: TempUnits;
@@ -27,14 +27,19 @@ export const useCurrentTempUnit = (): ContextType => {
   return tempUnitContext;
 };
 
-export const CurrentTempUnitProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>(() => {
-    const savedTempUnit = IS_CLIENT && localStorage.getItem('tempUnit');
-    return savedTempUnit ? { name: savedTempUnit as TempUnits } : { name: TempUnits.CELSIUS };
+type Props = PropsWithChildren & {
+  cookieTempUnit?: TempUnits
+}
+
+export const CurrentTempUnitProvider: FC<Props> = ({ children, cookieTempUnit }) => {
+  const [currentTempUnit, setCurrentTempUnit] = useState<CurrentTempUnitState>({
+    name: cookieTempUnit ?? TempUnits.CELSIUS
   });
 
   useEffect(() => {
-    localStorage.setItem('tempUnit', currentTempUnit.name);
+    Cookies.set('current-temp-unit', currentTempUnit.name, {
+      expires: env.NEXT_PUBLIC_TEMP_UNIT_COOKIE_EXPIRATION_DAYS_TIME,
+    });
   }, [currentTempUnit]);
 
   const onCelsius = (): void => {

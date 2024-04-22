@@ -13,11 +13,11 @@ export const clientSchema = Joi.object({
     NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE: Joi.number().default(3),
     NEXT_PUBLIC_WEATHER_FORECAST_CACHE_SECONDS_TIME: Joi.number().default(1800),
     NEXT_PUBLIC_PASSWORD_MIN_LENGTH: Joi.number().default(8),
-    NEXT_PUBLIC_FEATURE_CACHE_SECONDS_TIME: Joi.number().default(900)
+    NEXT_PUBLIC_FEATURE_CACHE_SECONDS_TIME: Joi.number().default(900),
+    NEXT_PUBLIC_TEMP_UNIT_COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(90)
 });
 
 export const serverSchema = Joi.object({
-    SECRET_COOKIE_KEY: Joi.string().required(),
     NODE_ENV: Joi.string().default('development'),
     COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(90)
 });
