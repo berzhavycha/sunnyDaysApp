@@ -1,2 +1,2 @@
-export * from './queries'
-export * from './component'
+export * from './queries';
+export * from './component';

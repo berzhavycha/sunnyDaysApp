@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -19,9 +23,13 @@ export class SubscriptionsService {
 
   async createSubscription(
     cityName: string,
+    forecastDaysAmount: number,
     userId: string,
   ): Promise<Subscription> {
-    const city = await this.citiesService.createCity(cityName);
+    const city = await this.citiesService.createCity(
+      cityName,
+      forecastDaysAmount,
+    );
 
     const existingSubscription = await this.subscriptionRepository.findOne({
       where: { cityId: city.id, userId },
@@ -52,7 +60,9 @@ export class SubscriptionsService {
     });
 
     if (!subscription) {
-      throw new NotFoundException(`Subscription not found for city '${cityName}'`);
+      throw new NotFoundException(
+        `Subscription not found for city '${cityName}'`,
+      );
     }
 
     await this.subscriptionRepository.delete({ id: subscription.id });

@@ -1,8 +1,10 @@
 'use client';
 
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/navigation';
 
 import { useCurrentUser, useWeatherPaginationInfo } from '@/context';
+import { onAuthCachePurge } from '@/services';
 
 import { SignOutDocument } from './mutations';
 
@@ -15,6 +17,7 @@ export const useSignOut = (): HookReturn => {
   const { onSignOut } = useCurrentUser();
   const { setPaginationOptions } = useWeatherPaginationInfo();
   const [signOutMutation, { loading }] = useMutation(SignOutDocument);
+  const router = useRouter();
 
   const signOutHandler = async (): Promise<void> => {
     await onSignOut();
@@ -24,6 +27,9 @@ export const useSignOut = (): HookReturn => {
       ...prev,
       offset: 0,
     }));
+
+    router.replace('/sign-in');
+    await onAuthCachePurge();
   };
 
   return {

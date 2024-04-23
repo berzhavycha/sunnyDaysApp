@@ -1,5 +1,5 @@
 import { OnPrefetch } from '@/hooks';
-import { Direction, PaginationQueryOptionsState } from '@/shared';
+import { PaginationQueryOptionsState } from '@/shared';
 
 type Params = {
   paginationOptions: PaginationQueryOptionsState;
@@ -24,19 +24,13 @@ export const usePaginationPrefetch = ({
 }: Params): HookReturn => {
   const onPrevPrefetch = async (): Promise<void> => {
     if (currentPage !== startPageNumber && onPrefetch) {
-      await onPrefetch(
-        { offset: paginationOptions.offset - paginationOptions.limit },
-        Direction.BACKWARD,
-      );
+      await onPrefetch({ offset: paginationOptions.offset - paginationOptions.limit });
     }
   };
 
   const onNextPrefetch = async (): Promise<void> => {
     if (currentPage !== totalPages && onPrefetch) {
-      await onPrefetch(
-        { offset: paginationOptions.offset + paginationOptions.limit },
-        Direction.FORWARD,
-      );
+      await onPrefetch({ offset: paginationOptions.offset + paginationOptions.limit });
     }
   };
 
@@ -44,7 +38,7 @@ export const usePaginationPrefetch = ({
     if (onPrefetch) {
       const offset = (page - 1) * paginationOptions.limit;
 
-      await onPrefetch({ offset }, currentPage < page ? Direction.FORWARD : Direction.BACKWARD);
+      await onPrefetch({ offset });
     }
   };
 

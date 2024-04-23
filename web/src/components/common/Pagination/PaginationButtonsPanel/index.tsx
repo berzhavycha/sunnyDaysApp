@@ -2,14 +2,10 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
 
-import { OnPrefetch, usePaginationPrefetch } from '@/hooks';
-import { PaginationQueryOptionsState } from '@/shared';
-
 import { Button } from '../../Buttons';
 import { PaginationPageButtons } from '../PaginationPageButtons';
 
 type Props = {
-  paginationOptions: PaginationQueryOptionsState;
   startPageNumber: number;
   currentPage: number;
   paginationPageNumbers: number[];
@@ -17,11 +13,12 @@ type Props = {
   onGoToPage: (page: number) => Promise<void>;
   onClickNext: () => Promise<void>;
   onClickPrev: () => Promise<void>;
-  onPrefetch?: OnPrefetch;
+  onPrevPrefetch?: () => Promise<void>;
+  onNextPrefetch?: () => Promise<void>;
+  onGoToPagePrefetch?: (page: number) => Promise<void>;
 };
 
 export const PaginationButtonsPanel: FC<Props> = ({
-  paginationOptions,
   startPageNumber,
   currentPage,
   paginationPageNumbers,
@@ -29,16 +26,10 @@ export const PaginationButtonsPanel: FC<Props> = ({
   onGoToPage,
   onClickNext,
   onClickPrev,
-  onPrefetch,
+  onNextPrefetch,
+  onPrevPrefetch,
+  onGoToPagePrefetch,
 }): JSX.Element => {
-  const { onPrevPrefetch, onNextPrefetch, onGoToPagePrefetch } = usePaginationPrefetch({
-    paginationOptions,
-    startPageNumber,
-    currentPage,
-    totalPages,
-    onPrefetch,
-  });
-
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;
 

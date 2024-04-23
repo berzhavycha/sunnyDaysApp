@@ -11,19 +11,19 @@ import {
   useState,
 } from 'react';
 
-import { WeatherForecast } from '@/hooks';
+import { WeatherForecast } from '@/shared';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
 };
 
 export type CurrentCityWeatherInfoState = {
-  info: InfoType;
+  info: InfoType | undefined;
 };
 
 type ContextType = {
-  currentCityWeatherInfo: CurrentCityWeatherInfoState | undefined;
-  setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState | undefined>>;
+  currentCityWeatherInfo: CurrentCityWeatherInfoState;
+  setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState>>;
   isTodayCurrentWeather: boolean;
   setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
   setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
@@ -32,6 +32,8 @@ type ContextType = {
   setCurrentForecastDay: Dispatch<SetStateAction<string>>;
   isVisibleBelowMedium: boolean;
   setIsVisibleBelowMedium: Dispatch<SetStateAction<boolean>>;
+  isDeletionInProgress: boolean;
+  setIsDeletionInProgress: Dispatch<SetStateAction<boolean>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -48,13 +50,24 @@ export const useCurrentCityWeatherInfo = (): ContextType => {
   return context;
 };
 
-export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [currentCityWeatherInfo, setCurrentCityWeatherInfo] =
-    useState<CurrentCityWeatherInfoState>();
+type Props = PropsWithChildren & {
+  weatherResponse: string;
+};
+
+export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
+  const { responseData } = JSON.parse(weatherResponse);
+
+  const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
+    {
+      info: responseData?.data?.userCitiesWeather.edges[0],
+    },
+  );
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false);
+
+  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
@@ -82,6 +95,8 @@ export const CurrentCityWeatherInfoProvider: FC<PropsWithChildren> = ({ children
     setCurrentForecastDay,
     isVisibleBelowMedium,
     setIsVisibleBelowMedium,
+    isDeletionInProgress,
+    setIsDeletionInProgress,
   };
 
   return (

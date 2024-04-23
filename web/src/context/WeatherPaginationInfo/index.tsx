@@ -12,9 +12,11 @@ import {
   useState,
 } from 'react';
 
-import { env } from '@/core/env';
-import { useQueryParams, UserCitiesWeatherQueryVariables } from '@/hooks';
-import { PaginationQueryOptionsState } from '@/shared';
+import { useQueryParams } from '@/hooks';
+import { UserCitiesWeatherQueryVariables } from '@/services';
+import { extractPaginationParams, PaginationQueryOptionsState } from '@/shared';
+
+import { useSubscriptionError } from '../SubscriptionError';
 
 type ContextType = {
   paginationOptions: PaginationQueryOptionsState;
@@ -25,7 +27,6 @@ type ContextType = {
   totalCount: number;
   setTotalCount: Dispatch<SetStateAction<number>>;
   totalPages: number;
-  paginationPageNumbers: number[];
 };
 
 const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
@@ -45,40 +46,53 @@ export const useWeatherPaginationInfo = (): ContextType => {
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [paginationPageNumbers, setPaginationPageNumbers] = useState<number[]>([]);
 
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
 
+  const { setError } = useSubscriptionError();
+
+  const { page, offset, limit, order } = extractPaginationParams(searchParams);
+
+  const [currentPage, setCurrentPage] = useState<number>(page);
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
-    offset: +(searchParams.get('page') ?? 0),
-    limit: +(searchParams.get('perPage') ?? env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT),
-    order: searchParams.get('order') ?? env.NEXT_PUBLIC_WEATHER_CITIES_ORDER,
+    offset,
+    limit,
+    order,
   });
 
-  const [currentPage, setCurrentPage] = useState<number>(
-    paginationOptions.offset / paginationOptions.limit + 1,
-  );
+  useEffect(() => {
+    setPaginationOptions({
+      offset,
+      limit,
+      order,
+    });
+    setError({ message: '' });
+  }, [searchParams]);
 
   useEffect(() => {
-    setCurrentPage(paginationOptions.offset / paginationOptions.limit + 1);
+    setCurrentPage(page);
     const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
     setTotalPages(totalPagesRes);
-    setPaginationPageNumbers(Array.from({ length: totalPagesRes }, (_, index) => index + 1));
   }, [paginationOptions, totalCount]);
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
     const { offset, limit, ...restOptions } = newOptions;
 
-    updateQueryParams({
-      page: offset ?? paginationOptions.offset,
-      perPage: limit ?? paginationOptions.limit,
+    const perPage = limit ?? paginationOptions.limit;
+    const page = (offset ?? paginationOptions.offset) / perPage + 1;
+
+    const updatedQueryParams = {
+      perPage,
+      page,
       ...restOptions,
-    });
+    };
+
+    updateQueryParams(updatedQueryParams);
 
     setPaginationOptions({
       ...paginationOptions,
-      ...newOptions
+      ...newOptions,
     });
   };
 
@@ -91,7 +105,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     totalCount,
     setTotalCount,
     totalPages,
-    paginationPageNumbers,
   };
 
   return (

@@ -1,10 +1,11 @@
 'use client';
 
 import { ApolloError, DocumentNode, useMutation } from '@apollo/client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { useCurrentUser } from '@/context';
-import { fieldsErrorHandler } from '@/shared';
+import { extractPaginationParams, fieldsErrorHandler } from '@/shared';
 
 import { pickUserErrorMessages } from '../utils';
 
@@ -35,7 +36,8 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
     confirmPassword: '',
     unexpectedError: '',
   });
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [authMutation, { loading }] = useMutation(mutation);
   const { setCurrentUser } = useCurrentUser();
 
@@ -50,8 +52,12 @@ export const useAuth = (mutation: DocumentNode = SignInDocument): HookReturn => 
         },
       });
 
+      const { page, limit, order } = extractPaginationParams(searchParams);
+
       setFieldsError({ email: '', password: '', confirmPassword: '' });
       setCurrentUser(data);
+
+      router.replace(`/weather-forecast?page=${page}&perPage=${limit}&order=${order}`);
     } catch (error) {
       if (error instanceof ApolloError) {
         const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);

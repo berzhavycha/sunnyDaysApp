@@ -2,11 +2,10 @@ import Image from 'next/image';
 import { FC, memo } from 'react';
 
 import { TemperatureInfo } from '@/components';
-import { useCurrentCityWeatherInfo, useCurrentTempUnit, tempUnitSigns } from '@/context';
-import { WeatherForecastDays } from '@/hooks';
-import { upperCaseFirstLetter } from '@/shared';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
+import { tempUnitSigns, useCurrentCityWeatherInfo, useCurrentTempUnit } from '@/context';
+import { upperCaseFirstLetter, WeatherForecastDays } from '@/shared';
 
 type Props = WeatherForecastDays & {
   onClick: () => void;

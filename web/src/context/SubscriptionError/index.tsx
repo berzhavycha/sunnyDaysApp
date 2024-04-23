@@ -12,12 +12,9 @@ import {
 } from 'react';
 
 import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+import { OriginalError } from '@/shared';
 
 type SubscriptionErrorState = {
-  message: string;
-};
-
-type OriginalError = {
   message: string;
 };
 

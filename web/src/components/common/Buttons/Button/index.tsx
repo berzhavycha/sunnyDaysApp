@@ -8,11 +8,12 @@ import { buttonStyle } from './constants';
 
 type Props = {
   content: string | number | JSX.Element;
-  onClick: () => Promise<void> | void;
+  onClick?: () => Promise<void> | void;
   isActive?: boolean;
   isDisabled?: boolean;
   className?: string;
   onMouseOver?: () => Promise<void> | void;
+  type?: 'button' | 'reset' | 'submit';
 };
 
 export const Button: FC<Props> = ({
@@ -22,9 +23,10 @@ export const Button: FC<Props> = ({
   isDisabled,
   className,
   onMouseOver,
+  type,
 }) => {
   const onPress = async (): Promise<void> => {
-    if (!isDisabled) {
+    if (!isDisabled && onClick) {
       await onClick();
     }
   };
@@ -36,6 +38,7 @@ export const Button: FC<Props> = ({
 
   return (
     <button
+      type={type}
       className={`${isActiveButtonStyle} ${isDisabledButtonStyle} px-4 text-white py-2 rounded-xl hover:bg-blue-800 hover:border-blue-800 transition-all cursor-pointer ${className}`}
       onClick={onPress}
       disabled={isDisabled}

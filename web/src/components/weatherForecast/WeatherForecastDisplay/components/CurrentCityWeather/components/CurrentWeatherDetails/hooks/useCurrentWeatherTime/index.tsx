@@ -16,12 +16,11 @@ export const useCurrentWeatherTime = (
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.dayOfWeek) {
-      setDayOfWeek(currentCityWeatherInfo?.info.dayOfWeek);
+      setDayOfWeek(currentCityWeatherInfo.info.dayOfWeek);
       setTime('');
     } else {
       const dateInstance = new Date(currentCityWeatherInfo?.info?.time ?? '');
-      const dayOfWeek = daysOfWeek[dateInstance.getDay()];
-      setDayOfWeek(dayOfWeek);
+      setDayOfWeek(daysOfWeek[dateInstance.getDay()]);
       setTime(
         `${getTimeFormat(dateInstance.getHours())}:${getTimeFormat(dateInstance.getMinutes())}`,
       );

@@ -7,19 +7,19 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 
-import { UserCitiesWeatherQuery } from '@/hooks';
-import { MOCKED_WEATHER_CARD } from '@/shared';
+import { useProcessResponse } from '@/hooks';
+import { UserCitiesWeatherQuery } from '@/services';
+
+import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
+import { useSubscriptionError } from '../SubscriptionError';
+import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
 
 type ContextType = {
-  isAddingCard: boolean;
-  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
-  weatherData: UserCitiesWeatherQuery | null;
-  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | null>>;
-  loadingCardErrorHandler: () => void;
+  weatherData: UserCitiesWeatherQuery | undefined;
+  setWeatherData: Dispatch<SetStateAction<UserCitiesWeatherQuery | undefined>>;
 };
 
 const WeatherCardsListContext = createContext<ContextType | null>(null);
@@ -34,56 +34,34 @@ export const useWeatherCardsList = (): ContextType => {
   return context;
 };
 
-export const WeatherCardsListProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | null>(null);
-  const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
+type Props = PropsWithChildren & {
+  weatherResponse: string;
+};
 
-  useEffect(() => {
-    if (isAddingCard) {
-      setWeatherData((prevData) => {
-        if (prevData) {
-          return {
-            ...prevData,
-            userCitiesWeather: {
-              ...prevData.userCitiesWeather,
-              edges: [
-                ...prevData.userCitiesWeather.edges,
-                {
-                  ...MOCKED_WEATHER_CARD,
-                  _loading: true,
-                },
-              ],
-            },
-          };
-        }
+export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
+  const { setTotalCount } = useWeatherPaginationInfo();
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
+  const { errorHandler } = useSubscriptionError();
 
-        return null;
-      });
-    }
-  }, [isAddingCard]);
+  const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
+    JSON.parse(weatherResponse).responseData?.data,
+  );
 
-  const loadingCardErrorHandler = (): void => {
-    setWeatherData((prevData) => {
-      if (prevData) {
-        return {
-          ...prevData,
-          userCitiesWeather: {
-            ...prevData.userCitiesWeather,
-            edges: [...prevData.userCitiesWeather.edges].filter((edge) => !edge._loading),
-          },
-        };
-      }
-
-      return null;
-    });
+  const onSuccess = (data: UserCitiesWeatherQuery): void => {
+    setWeatherData(data);
+    setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
+    setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
   };
 
+  useProcessResponse<UserCitiesWeatherQuery>({
+    jsonResponse: weatherResponse,
+    onSuccess,
+    onError: errorHandler,
+  });
+
   const contextValue: ContextType = {
-    isAddingCard,
-    setIsAddingCard,
     weatherData,
     setWeatherData,
-    loadingCardErrorHandler,
   };
 
   return (

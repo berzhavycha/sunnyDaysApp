@@ -2,7 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { CurrentUser } from '@modules/auth/decorators';
 
-import { CityDto } from './dtos';
+import { AddCityDto, DeleteCityDto } from './dtos';
 import { Subscription } from './entities';
 import { SubscriptionsService } from './subscriptions.service';
 
@@ -12,15 +12,19 @@ export class SubscriptionsResolver {
 
   @Mutation(() => Subscription)
   async addWeatherSubscription(
-    @Args('input') cityDto: CityDto,
+    @Args('input') cityDto: AddCityDto,
     @CurrentUser('id') id: string,
   ): Promise<Subscription> {
-    return this.subscriptionService.createSubscription(cityDto.name, id);
+    return this.subscriptionService.createSubscription(
+      cityDto.name,
+      cityDto.forecastDaysAmount,
+      id,
+    );
   }
 
   @Mutation(() => Subscription)
   async deleteWeatherSubscription(
-    @Args('input') cityDto: CityDto,
+    @Args('input') cityDto: DeleteCityDto,
     @CurrentUser('id') id: string,
   ): Promise<Subscription> {
     return this.subscriptionService.deleteSubscription(cityDto.name, id);

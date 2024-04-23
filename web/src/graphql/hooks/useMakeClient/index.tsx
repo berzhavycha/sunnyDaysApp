@@ -7,9 +7,7 @@ import {
 
 import { IS_CLIENT } from '@/shared';
 
-import { errorLink, forwardCookieLink, mainHttpLink, refreshTokenLink } from '../../links';
-import { resolvers } from '../../resolvers';
-import { typePolicies } from '../../typePolicies';
+import { errorLink, mainHttpLink, refreshTokenLink } from '../../links';
 
 type UseMakeClientReturn = {
   makeClient: () => NextSSRApolloClient<NormalizedCacheObject>;
@@ -18,10 +16,7 @@ type UseMakeClientReturn = {
 export const useMakeClient = (): UseMakeClientReturn => {
   const makeClient = (): NextSSRApolloClient<NormalizedCacheObject> => {
     const client = new NextSSRApolloClient({
-      cache: new NextSSRInMemoryCache({
-        typePolicies,
-      }),
-      resolvers,
+      cache: new NextSSRInMemoryCache(),
     });
 
     const apolloLinks = ApolloLink.from([
@@ -38,7 +33,6 @@ export const useMakeClient = (): UseMakeClientReturn => {
             new SSRMultipartLink({
               stripDefer: true,
             }),
-            forwardCookieLink,
             apolloLinks,
           ])
         : apolloLinks,

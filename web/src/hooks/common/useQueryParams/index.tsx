@@ -6,6 +6,7 @@ type QueryParams = { [key: string]: string | number | boolean };
 
 type HookReturn = {
   updateQueryParams: (newQueryParams: QueryParams) => void;
+  deleteQueryParam: (param: string) => void;
 };
 
 export const useQueryParams = (): HookReturn => {
@@ -27,7 +28,18 @@ export const useQueryParams = (): HookReturn => {
     router.push(`${pathname}${query}`);
   };
 
+  const deleteQueryParam = (paramKey: string): void => {
+    const current = new URLSearchParams(searchParams.toString());
+    current.delete(paramKey);
+
+    const search = current.toString();
+    const query = search ? `?${search}` : '';
+
+    router.push(`${pathname}${query}`);
+  };
+
   return {
     updateQueryParams,
+    deleteQueryParam,
   };
 };

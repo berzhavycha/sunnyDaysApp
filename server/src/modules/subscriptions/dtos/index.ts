@@ -1,1 +1,2 @@
-export * from './city.dto';
+export * from './addCity.dto';
+export * from './deleteCity.dto';

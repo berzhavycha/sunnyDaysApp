@@ -17,17 +17,21 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
   DateTime: { input: any; output: any };
 };
 
-export type CityInput = {
+export type AddCityInput = {
+  forecastDaysAmount: Scalars['Int']['input'];
   name: Scalars['String']['input'];
 };
 
 export type Credentials = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type DeleteCityInput = {
+  name: Scalars['String']['input'];
 };
 
 export type Message = {
@@ -46,11 +50,11 @@ export type Mutation = {
 };
 
 export type MutationAddWeatherSubscriptionArgs = {
-  input: CityInput;
+  input: AddCityInput;
 };
 
 export type MutationDeleteWeatherSubscriptionArgs = {
-  input: CityInput;
+  input: DeleteCityInput;
 };
 
 export type MutationSignInArgs = {
@@ -132,8 +136,6 @@ export type WeatherDay = {
 
 export type WeatherForecast = {
   __typename?: 'WeatherForecast';
-  _deleted: Scalars['Boolean']['output'];
-  _loading: Scalars['Boolean']['output'];
   celsius: Scalars['Float']['output'];
   city: Scalars['String']['output'];
   daysForecast: Array<WeatherDay>;

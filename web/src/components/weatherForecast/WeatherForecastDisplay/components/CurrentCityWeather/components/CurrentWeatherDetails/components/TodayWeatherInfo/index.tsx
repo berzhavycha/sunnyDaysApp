@@ -2,11 +2,12 @@ import { faCloudRain, faDroplet, faWind } from '@fortawesome/free-solid-svg-icon
 import Image from 'next/image';
 import { FC, memo } from 'react';
 
-import { TemperatureInfo, weatherIconMapping } from '@/components';
+import { TemperatureInfo } from '@/components';
+import { weatherIconMapping } from '@/components/weatherForecast';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
 import { useCurrentTempUnit } from '@/context';
 import { tempUnitSigns } from '@/context/CurrentTempUnit/constants';
-import { WeatherForecast } from '@/hooks';
+import { WeatherForecast } from '@/shared';
 
 import { ExtraWeatherInfo } from '../ExtraWeatherInfo';
 
@@ -22,7 +23,7 @@ export const TodayWeatherInfo: FC<Props> = memo(
     return (
       <div className="bg-blue-600 rounded-3xl p-5">
         <p className="text-white font-bold text-sm md:text-md lg:text-lg">{city}</p>
-        <p className="text-white font-light text-xs mb-2 lg:text-sm">
+        <p className="text-white font-light text-xs h-7 lg:text-sm">
           {dayOfWeek}
           {time && `, ${time}`}
         </p>

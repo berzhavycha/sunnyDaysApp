@@ -22,7 +22,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -89,17 +89,20 @@ export class AuthService {
     response.cookie('tokens', tokens, {
       httpOnly: true,
       maxAge:
-        ONE_DAY_MILLISECONDS * this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
-      sameSite: 'none',
-      secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
+        ONE_DAY_MILLISECONDS *
+        this.configService.get<number>('COOKIE_EXPIRATION_DAYS_TIME'),
+      sameSite: 'lax',
+      secure:
+        this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }
 
   clearCookies(response: ExtendedGraphQLContext['res']): void {
     response.clearCookie('tokens', {
       httpOnly: true,
-      sameSite: 'none',
-      secure: this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
+      sameSite: 'lax',
+      secure:
+        this.configService.get<string>('NODE_ENV') === NODE_ENV.production,
     });
   }
 
