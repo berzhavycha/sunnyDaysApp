@@ -17,7 +17,6 @@ type Props = {
 export const CityAutocomplete: FC<Props> = ({ city, setCity, formRef }) => {
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
   const { data, loading } = useCityInputAutocomplete(city);
-  const searchHandler = (text: string): void => setCity(text);
 
   const { error } = useSubscriptionError();
 
@@ -37,7 +36,7 @@ export const CityAutocomplete: FC<Props> = ({ city, setCity, formRef }) => {
       loading={loading}
       data={data}
       search={city}
-      onSearchChange={searchHandler}
+      onSearchChange={setCity}
       placeholder={'Enter your city'}
       error={error.message}
       onPressOutside={onPressOutside}
