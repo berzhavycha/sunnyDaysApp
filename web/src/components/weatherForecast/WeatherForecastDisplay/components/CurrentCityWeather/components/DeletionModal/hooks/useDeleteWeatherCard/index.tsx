@@ -47,7 +47,7 @@ export const useDeleteWeatherCard = ({ city, onClose }: HookInput): HookReturn =
       }
       setError({ message: '' });
     } catch (error) {
-      if (error instanceof ApolloError) {
+      if (error instanceof ApolloError || error instanceof Error) {
         errorHandler(error);
       }
     } finally {
