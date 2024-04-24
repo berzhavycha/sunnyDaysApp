@@ -6,6 +6,7 @@ import { createContext, FC, PropsWithChildren, useContext, useEffect, useState }
 import { env } from '@/core/env';
 
 import { TempUnits } from './constants';
+import { NODE_ENV } from '@/shared';
 
 type CurrentTempUnitState = {
   name: TempUnits;
@@ -40,6 +41,8 @@ export const CurrentTempUnitProvider: FC<Props> = ({ children, cookieTempUnit })
   useEffect(() => {
     Cookies.set('current-temp-unit', currentTempUnit.name, {
       expires: env.NEXT_PUBLIC_TEMP_UNIT_COOKIE_EXPIRATION_DAYS_TIME,
+      sameSite: 'None',
+      secure: env.NODE_ENV === NODE_ENV.production,
     });
   }, [currentTempUnit]);
 
