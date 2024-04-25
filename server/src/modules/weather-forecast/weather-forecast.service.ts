@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
-import { Order } from '@shared';
+import { Order, weatherForecastKey } from '@shared';
 
 import { SubscriptionsService } from '@modules/subscriptions';
 import {
@@ -18,7 +18,7 @@ export class WeatherForecastService {
     private readonly subscriptionsService: SubscriptionsService,
     private readonly weatherManagementService: WeatherManagementService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getUserCitiesWeather(options: {
     userId: string;
@@ -52,7 +52,7 @@ export class WeatherForecastService {
       const { name } = subscription.city;
 
       const cachedForecast = await this.cacheManager.get<WeatherForecast>(
-        `weather_forecast:${name}`,
+        weatherForecastKey(name),
       );
       if (cachedForecast) {
         cachedForecasts.push(cachedForecast);

@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 import { Cache } from 'cache-manager';
 
-import { TOO_MANY_REQUESTS_ERROR_CODE } from '@shared';
+import { TOO_MANY_REQUESTS_ERROR_CODE, citySearchKey } from '@shared';
 
 import { CitySearchRepository } from './city-search.repository';
 import { CityPrefixArgsDto } from './dtos';
@@ -16,14 +16,14 @@ export class CitySearchService {
     private readonly citySearchRepository: CitySearchRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
   ): Promise<SearchedCity[]> {
     try {
       const cachedCities = await this.cacheManager.get<SearchedCity[]>(
-        `cities:${cityPrefixArgs.limit}:${cityPrefixArgs.prefix}`,
+        citySearchKey(cityPrefixArgs.limit, cityPrefixArgs.prefix),
       );
 
       if (cachedCities) {
@@ -42,7 +42,7 @@ export class CitySearchService {
       );
 
       await this.cacheManager.set(
-        `cities:${cityPrefixArgs.limit}:${cityPrefixArgs.prefix}`,
+        citySearchKey(cityPrefixArgs.limit, cityPrefixArgs.prefix),
         uniqueCities,
         {
           ttl: this.configService.get<number>(

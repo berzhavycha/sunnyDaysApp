@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
-import { daysOfWeek, upperCaseEveryFirstLetter } from '@shared';
+import { daysOfWeek, upperCaseEveryFirstLetter, weatherForecastKey } from '@shared';
 
 import { IForecastDay, IWeatherApiResponse } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
@@ -28,7 +28,7 @@ export class WeatherManagementService {
 
   async cacheForecast(forecast: WeatherForecast): Promise<void> {
     await this.cacheManager.set(
-      `weather_forecast:${forecast.city.toLowerCase()}`,
+      weatherForecastKey(forecast.city),
       forecast,
       {
         ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
