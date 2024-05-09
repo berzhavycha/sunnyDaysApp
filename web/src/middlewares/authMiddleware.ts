@@ -53,7 +53,7 @@ export const authMiddleware = async (
         request.headers.set('redirect', `/sign-in?error=You have to login first!`);
       }
     } else if (!authRoutes.includes(pathname)) {
-      request.headers.set('redirect', `/sign-in?error=You have to login first!`);
+      request.headers.set('redirect', `/sign-in`);
     }
 
     return NextResponse.next({

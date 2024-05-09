@@ -1,18 +1,9 @@
+// Import validated env for server and client to enable its validaiton
 import { serverValidatedEnv } from './serverEnvValidation.mjs';
 import { clientValidatedEnv } from './clientEnvValidation.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    async redirects() {
-        return [
-            {
-                source: '/',
-                destination: '/sign-in',
-                permanent: true,
-            },
-        ];
-    },
-
     images: {
         remotePatterns: [
             {
