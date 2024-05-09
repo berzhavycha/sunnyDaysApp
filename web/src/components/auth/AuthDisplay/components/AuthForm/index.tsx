@@ -3,7 +3,6 @@
 import { DocumentNode } from '@apollo/client';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useSearchParams } from 'next/navigation';
 import { BaseSyntheticEvent, FC } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,14 +11,15 @@ import { AuthType, useAuth, UserDto } from '@/hooks';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
+import { SearchParams } from '@/shared';
 
 type Props = {
   authType: AuthType;
   authMutation: DocumentNode;
+  searchParams: SearchParams
 };
 
-export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
-  const searchParams = useSearchParams();
+export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) => {
   const { authHandler, fieldsError, loading } = useAuth(authMutation);
   const {
     register,
@@ -41,7 +41,7 @@ export const AuthForm: FC<Props> = ({ authType, authMutation }) => {
   return (
     <>
       <div className="text-xs mb-2 text-center text-red-500 mt-2 h-2 md:mb-4 md:text-md">
-        {fieldsError.unexpectedError || searchParams.get('error')}
+        {fieldsError.unexpectedError || searchParams.error}
       </div>
       <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
