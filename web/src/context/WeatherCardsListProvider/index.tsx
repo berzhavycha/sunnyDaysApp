@@ -7,15 +7,15 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
-import { useProcessResponse } from '@/hooks';
 import { UserCitiesWeatherQuery } from '@/services';
 
 import { useCurrentCityWeatherInfo } from '../CurrentCityWeatherInfo';
 import { useSubscriptionError } from '../SubscriptionError';
-import { useWeatherPaginationInfo } from '../WeatherPaginationInfo';
+import { processResponse } from '@/shared';
 
 type ContextType = {
   weatherData: UserCitiesWeatherQuery | undefined;
@@ -39,7 +39,6 @@ type Props = PropsWithChildren & {
 };
 
 export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse }) => {
-  const { setTotalCount } = useWeatherPaginationInfo();
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
   const { errorHandler } = useSubscriptionError();
 
@@ -49,15 +48,16 @@ export const WeatherCardsListProvider: FC<Props> = ({ children, weatherResponse 
 
   const onSuccess = (data: UserCitiesWeatherQuery): void => {
     setWeatherData(data);
-    setTotalCount(data.userCitiesWeather.paginationInfo?.totalCount ?? 0);
     setCurrentCityWeatherInfo({ info: data.userCitiesWeather.edges[0] });
   };
 
-  useProcessResponse<UserCitiesWeatherQuery>({
-    jsonResponse: weatherResponse,
-    onSuccess,
-    onError: errorHandler,
-  });
+  useEffect(() => {
+    processResponse({
+      jsonResponse: weatherResponse,
+      onSuccess,
+      onError: errorHandler,
+    });
+  }, [weatherResponse])
 
   const contextValue: ContextType = {
     weatherData,

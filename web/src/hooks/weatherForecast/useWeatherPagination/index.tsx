@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useWeatherPaginationInfo } from '@/context';
+import { useWeatherCardsList, useWeatherPaginationInfo } from '@/context';
 import { usePagination } from '@/hooks/common';
-import { PaginationQueryOptionsState } from '@/shared';
+import { PaginationQueryOptionsState, countTotalPages } from '@/shared';
 
 export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>) => Promise<void>;
 
@@ -17,14 +17,15 @@ type HookReturn = {
 
 export const useWeatherPagination = (): HookReturn => {
   const router = useRouter();
-  const { totalPages, currentPage, paginationOptions, updatePaginationOptions } =
+  const { weatherData } = useWeatherCardsList()
+  const { currentPage, paginationOptions, updatePaginationOptions } =
     useWeatherPaginationInfo();
 
   const { onGoToPage, onClickNext, onClickPrev } = usePagination({
     paginationOptions,
     updatePaginationOptions,
     currentPage,
-    totalPages,
+    totalPages: countTotalPages(weatherData?.userCitiesWeather, paginationOptions),
   });
 
   const onWeatherPagePrefetch = async (

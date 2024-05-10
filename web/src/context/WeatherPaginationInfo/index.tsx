@@ -23,10 +23,6 @@ type ContextType = {
   setPaginationOptions: Dispatch<SetStateAction<PaginationQueryOptionsState>>;
   updatePaginationOptions: (newOptions: Partial<UserCitiesWeatherQueryVariables>) => void;
   currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  totalCount: number;
-  setTotalCount: Dispatch<SetStateAction<number>>;
-  totalPages: number;
 };
 
 const WeatherPaginationInfoContext = createContext<ContextType | null>(null);
@@ -44,9 +40,6 @@ export const useWeatherPaginationInfo = (): ContextType => {
 };
 
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
-
   const searchParams = useSearchParams();
   const { updateQueryParams } = useQueryParams();
 
@@ -54,7 +47,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
 
   const { page, offset, limit, order } = extractPaginationParams(searchParams);
 
-  const [currentPage, setCurrentPage] = useState<number>(page);
   const [paginationOptions, setPaginationOptions] = useState<PaginationQueryOptionsState>({
     offset,
     limit,
@@ -69,12 +61,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     });
     setError({ message: '' });
   }, [searchParams]);
-
-  useEffect(() => {
-    setCurrentPage(page);
-    const totalPagesRes = Math.ceil(totalCount / paginationOptions.limit);
-    setTotalPages(totalPagesRes);
-  }, [paginationOptions, totalCount]);
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
     const { offset, limit, ...restOptions } = newOptions;
@@ -100,11 +86,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     paginationOptions,
     updatePaginationOptions,
     setPaginationOptions,
-    currentPage,
-    setCurrentPage,
-    totalCount,
-    setTotalCount,
-    totalPages,
+    currentPage: page,
   };
 
   return (

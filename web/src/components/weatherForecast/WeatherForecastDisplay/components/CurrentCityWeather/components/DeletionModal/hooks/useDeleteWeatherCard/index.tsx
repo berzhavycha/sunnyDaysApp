@@ -9,7 +9,7 @@ import {
 import { env } from '@/core/env';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { deleteWeatherSubscription } from '@/services';
-import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER } from '@/shared';
+import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages } from '@/shared';
 
 type HookReturn = {
   isDeletionInProgress: boolean;
@@ -29,12 +29,12 @@ export const useDeleteWeatherCard = ({ city, onClose }: HookInput): HookReturn =
     useCurrentCityWeatherInfo();
 
   const { onPrefetch } = useWeatherPagination();
-  const { paginationOptions, currentPage, totalPages, totalCount } = useWeatherPaginationInfo();
+  const { paginationOptions, currentPage } = useWeatherPaginationInfo();
   const { onPrevPrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber: START_PAGE_NUMBER,
     currentPage,
-    totalPages,
+    totalPages: countTotalPages(weatherData?.userCitiesWeather, paginationOptions),
     onPrefetch,
   });
 
@@ -58,8 +58,9 @@ export const useDeleteWeatherCard = ({ city, onClose }: HookInput): HookReturn =
 
   const onMouseOverDeleteBtn = async (): Promise<void> => {
     if (
-      (totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
-      weatherData?.userCitiesWeather.edges?.length === 1
+      weatherData &&
+      (weatherData.userCitiesWeather.paginationInfo.totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
+      weatherData.userCitiesWeather.edges?.length === 1
     ) {
       await onPrevPrefetch();
     }
