@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { AuthDisplay } from '@/components';
-import { AuthType, SignInDocument } from '@/hooks';
+import { AuthType } from '@/hooks';
 import { SearchParams } from '@/shared';
 
 type Props = {
@@ -14,7 +14,6 @@ const SignIn: FC<Props> = ({ searchParams }) => {
       title="Sign In"
       subtitle="Nice to see you again!"
       authType={AuthType.SIGN_IN}
-      authMutation={SignInDocument}
       searchParams={searchParams}
     />
   );

@@ -14,7 +14,7 @@ import {
 
 import { CurrentUserDocument } from './queries';
 
-type CurrentUserState = {
+export type CurrentUserState = {
   email: string;
 };
 

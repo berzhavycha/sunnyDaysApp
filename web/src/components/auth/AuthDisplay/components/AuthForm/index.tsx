@@ -1,26 +1,26 @@
 'use client';
 
-import { DocumentNode } from '@apollo/client';
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { BaseSyntheticEvent, FC } from 'react';
+import { BaseSyntheticEvent, FC, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/common';
-import { AuthType, useAuth, UserDto } from '@/hooks';
+import { AuthType, UserDto } from '@/hooks';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
 import { SearchParams } from '@/shared';
+import { auth } from '@/services';
+import { useFormState } from 'react-dom';
 
 type Props = {
   authType: AuthType;
-  authMutation: DocumentNode;
   searchParams: SearchParams
 };
 
-export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) => {
-  const { authHandler, fieldsError, loading } = useAuth(authMutation);
+export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
@@ -30,10 +30,28 @@ export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) =>
     resolver: joiResolver(userSchema(authType)),
   });
 
-  const onSubmit = async (data: UserDto, e?: BaseSyntheticEvent): Promise<void> => {
+
+  const authWithParams = auth.bind(null, authType);
+  const [authState, authAction] = useFormState(
+    authWithParams,
+    {
+      data: null,
+      fieldsError: {
+        email: '',
+        password: ''
+      }
+    },
+  );
+
+  console.log(authState)
+
+  const onSubmit = handleSubmit((data: UserDto, e?: BaseSyntheticEvent) => {
     e?.preventDefault();
-    await authHandler(data);
-  };
+
+    startTransition(() => {
+      authAction(data)
+    });
+  });
 
   const inputStyles = 'bg-slate-200  pl-9 md:pl-10 md:pl-12 sm:text-sm md:text-lg xl:text-xl';
   const inputIconStyles = 'top-8 md:top-12 md:text-md md:text-xl';
@@ -41,14 +59,14 @@ export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) =>
   return (
     <>
       <div className="text-xs mb-2 text-center text-red-500 mt-2 h-2 md:mb-4 md:text-md">
-        {fieldsError.unexpectedError || searchParams.error}
+        {authState?.fieldsError.unexpectedError || searchParams.error}
       </div>
-      <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="mt-4" onSubmit={onSubmit}>
         <Input
           {...register('email')}
           label="Email:"
           placeholder="Enter your email"
-          error={errors.email?.message ?? fieldsError.email ?? ''}
+          error={errors.email?.message ?? authState?.fieldsError.email ?? ''}
           icon={faEnvelope}
           className={inputStyles}
           iconStyles={inputIconStyles}
@@ -58,7 +76,7 @@ export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) =>
           {...register('password')}
           label="Password:"
           placeholder="Enter your password"
-          error={errors.password?.message ?? fieldsError.password ?? ''}
+          error={errors.password?.message ?? authState?.fieldsError.password ?? ''}
           icon={faLock}
           className={inputStyles}
           iconStyles={inputIconStyles}
@@ -70,7 +88,7 @@ export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) =>
             {...register('confirmPassword')}
             label="Confirm Password:"
             placeholder="Enter confirm password"
-            error={errors?.confirmPassword?.message ?? fieldsError.confirmPassword ?? ''}
+            error={errors?.confirmPassword?.message ?? authState?.fieldsError.confirmPassword ?? ''}
             icon={faKey}
             className={inputStyles}
             iconStyles={inputIconStyles}
@@ -78,7 +96,7 @@ export const AuthForm: FC<Props> = ({ authType, authMutation, searchParams }) =>
             isSecured
           />
         )}
-        <SubmitButton isPending={loading} text={authType} />
+        <SubmitButton isPending={isPending} text={authType} />
       </form>
     </>
   );
