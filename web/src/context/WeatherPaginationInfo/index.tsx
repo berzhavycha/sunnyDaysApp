@@ -41,7 +41,6 @@ export const useWeatherPaginationInfo = (): ContextType => {
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
   const searchParams = useSearchParams();
-  const { setError } = useSubscriptionError();
 
   const { page, offset, limit, order } = extractPaginationParams(searchParams);
 
@@ -50,17 +49,6 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     limit,
     order,
   });
-
-  useEffect(() => {
-    setPaginationOptions({
-      offset,
-      limit,
-      order,
-    });
-    setError({ message: '' });
-  }, [searchParams]);
-
-  console.log(paginationOptions)
 
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
     const { offset, limit, ...restOptions } = newOptions;
