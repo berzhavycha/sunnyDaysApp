@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   createContext,
   Dispatch,
@@ -12,9 +12,8 @@ import {
   useState,
 } from 'react';
 
-import { useQueryParams } from '@/hooks';
 import { UserCitiesWeatherQueryVariables } from '@/services';
-import { extractPaginationParams, PaginationQueryOptionsState } from '@/shared';
+import { updateQueryParams, extractPaginationParams, PaginationQueryOptionsState } from '@/shared';
 
 import { useSubscriptionError } from '../SubscriptionError';
 
@@ -40,9 +39,8 @@ export const useWeatherPaginationInfo = (): ContextType => {
 };
 
 export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter()
   const searchParams = useSearchParams();
-  const { updateQueryParams } = useQueryParams();
-
   const { setError } = useSubscriptionError();
 
   const { page, offset, limit, order } = extractPaginationParams(searchParams);
@@ -62,6 +60,8 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
     setError({ message: '' });
   }, [searchParams]);
 
+  console.log(paginationOptions)
+
   const updatePaginationOptions = (newOptions: Partial<UserCitiesWeatherQueryVariables>): void => {
     const { offset, limit, ...restOptions } = newOptions;
 
@@ -74,7 +74,7 @@ export const WeatherPaginationInfoProvider: FC<PropsWithChildren> = ({ children 
       ...restOptions,
     };
 
-    updateQueryParams(updatedQueryParams);
+    updateQueryParams(router, updatedQueryParams);
 
     setPaginationOptions({
       ...paginationOptions,
