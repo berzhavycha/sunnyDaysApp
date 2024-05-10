@@ -12,7 +12,6 @@ type HookReturn = {
 export const useQueryParams = (): HookReturn => {
   const router = useRouter();
   const pathname = usePathname();
-
   const searchParams = useSearchParams();
 
   const updateQueryParams = (newQueryParams: QueryParams): void => {
