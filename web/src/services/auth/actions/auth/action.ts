@@ -25,16 +25,26 @@ export const auth = async (authType: AuthType, prevState: AuthState, formData: U
   try {
     const tokens = await authUser(authType, formData)
 
-    cookies().set('tokens', tokens, {
-      httpOnly: true,
-      maxAge: ONE_DAY_MILLISECONDS * env.COOKIE_EXPIRATION_DAYS_TIME,
-      sameSite: 'lax',
-      secure: env.NODE_ENV === NODE_ENV.production,
-    })
+    if (tokens) {
+      cookies().set('tokens', tokens, {
+        httpOnly: true,
+        maxAge: ONE_DAY_MILLISECONDS * env.COOKIE_EXPIRATION_DAYS_TIME,
+        sameSite: 'lax',
+        secure: env.NODE_ENV === NODE_ENV.production,
+      })
 
-    const { page, paginationOptions } = getPaginationParams();
-    const path = `/weather-forecast?page=${page}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
-    redirect(path);
+      const { page, paginationOptions } = getPaginationParams();
+      const path = `/weather-forecast?page=${page}&perPage=${paginationOptions.limit}&order=${paginationOptions.order}`
+      redirect(path);
+    } else {
+      return {
+        fieldsError: {
+          email: '',
+          password: '',
+          unexpectedError: UNEXPECTED_ERROR_MESSAGE
+        }
+      }
+    }
   } catch (error) {
     if (error instanceof ApolloError) {
       const fieldErrors = fieldsErrorHandler<UserDto>(error, pickUserErrorMessages);

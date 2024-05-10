@@ -25,17 +25,16 @@ export const authMiddleware = async (
     });
 
     if (userResponse.data.currentUser) {
-      console.log("============1============")
       if (pathname !== '/weather-forecast') {
         redirectToWeatherForecast(request, url.searchParams);
       }
     } else if (
-      tokens &&
+      tokens && 
+      tokens.value && 
       userResponse.errors &&
       (userResponse.errors[0].extensions.originalError as OriginalError).statusCode ===
         UNAUTHORIZED_ERROR_CODE
     ) {
-      console.log("============2============")
       const tokens = await refreshTokens(request);
       if (tokens) {
         if (pathname !== '/weather-forecast') {
@@ -55,7 +54,6 @@ export const authMiddleware = async (
         request.headers.set('redirect', `/sign-in?error=You have to login first!`);
       }
     } else if (!authRoutes.includes(pathname)) {
-      console.log("============3============")
       request.headers.set('redirect', `/sign-in`);
     }
 

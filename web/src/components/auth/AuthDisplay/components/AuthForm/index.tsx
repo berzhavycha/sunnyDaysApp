@@ -6,11 +6,11 @@ import { BaseSyntheticEvent, FC, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/common';
-import { AuthType, UserDto } from '@/hooks';
+import { AuthType } from '@/hooks';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
-import { SearchParams } from '@/shared';
+import { SearchParams, UserDto } from '@/shared';
 import { auth } from '@/services';
 import { useFormState } from 'react-dom';
 
@@ -35,15 +35,12 @@ export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
   const [authState, authAction] = useFormState(
     authWithParams,
     {
-      data: null,
       fieldsError: {
         email: '',
         password: ''
       }
     },
   );
-
-  console.log(authState)
 
   const onSubmit = handleSubmit((data: UserDto, e?: BaseSyntheticEvent) => {
     e?.preventDefault();
