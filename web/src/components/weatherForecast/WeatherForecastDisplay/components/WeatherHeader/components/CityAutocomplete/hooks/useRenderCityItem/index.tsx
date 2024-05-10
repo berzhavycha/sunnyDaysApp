@@ -1,4 +1,3 @@
-import { useCitySearchList } from '@/context';
 import { City } from '@/shared';
 
 import { CityAutocompleteItem } from '../../../CityAutocompleteItem';
@@ -8,10 +7,9 @@ type HookReturn = {
 };
 
 export const useRenderCityItem = (
+  onPressOutside: () => void,
   onCitySelect: (text: string) => Promise<void> | void,
 ): HookReturn => {
-  const { onPressOutside } = useCitySearchList();
-
   const renderCityItem = (item: City): JSX.Element => {
     const citySelectHandler = async (): Promise<void> => {
       await onCitySelect(item.name);

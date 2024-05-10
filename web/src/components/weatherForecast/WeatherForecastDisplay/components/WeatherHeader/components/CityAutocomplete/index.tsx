@@ -3,11 +3,12 @@
 import { Ref, RefObject, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
-import { useCitySearchList, useSubscriptionError } from '@/context';
+import { useSubscriptionError } from '@/context';
 
 import { useRenderCityItem } from './hooks';
 import { getCitiesByPrefix, DEBOUNCE_DELAY } from '@/services';
 import { City } from '@/shared';
+import { useCitySearchList } from './hooks/useCitySearchList';
 
 export type CityRef = {
   resetCity: () => void
@@ -25,13 +26,15 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
 
   const { error } = useSubscriptionError();
 
-  const { renderCityItem } = useRenderCityItem((text: string): void => {
-    const inputElement = formRef.current?.querySelector('input');
-    if (formRef.current && inputElement) {
-      inputElement.value = text;
-      formRef.current.requestSubmit();
-    }
-  });
+  const { renderCityItem } = useRenderCityItem(
+    onPressOutside,
+    (text: string): void => {
+      const inputElement = formRef.current?.querySelector('input');
+      if (formRef.current && inputElement) {
+        inputElement.value = text;
+        formRef.current.requestSubmit();
+      }
+    });
 
   useEffect(() => {
     const timerId = setTimeout(async () => {

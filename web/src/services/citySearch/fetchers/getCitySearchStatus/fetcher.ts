@@ -1,15 +1,14 @@
-import { ApolloError } from '@apollo/client';
+'use server'
 
 import { env } from '@/core/env';
-import { UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+
+import { CitySearchStatusDocument } from './queries';
 import { getClient } from '@/graphql/utils/getClient';
-import { FetchResponse } from '@/shared';
 
-import { CitySearchStatusDocument, CitySearchStatusQuery } from './queries';
-
-export const getCitySearchStatus = async (): Promise<FetchResponse<CitySearchStatusQuery>> => {
+export const getCitySearchStatus = async (): Promise<boolean> => {
   try {
-    const data = await getClient().query({
+    // github issue - https://github.com/apollographql/apollo-client-nextjs/issues/78#issuecomment-1675673507 
+    const { data } = await getClient().query({
       query: CitySearchStatusDocument,
       context: {
         fetchOptions: {
@@ -20,14 +19,8 @@ export const getCitySearchStatus = async (): Promise<FetchResponse<CitySearchSta
       },
     });
 
-    return {
-      responseData: data,
-      error: null,
-    };
+    return data.citySearchStatus
   } catch (error) {
-    return {
-      responseData: null,
-      error: new ApolloError({ errorMessage: UNEXPECTED_ERROR_MESSAGE }),
-    };
+    return false
   }
 };
