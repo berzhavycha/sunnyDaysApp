@@ -1,12 +1,13 @@
 'use client';
 
-import { Ref, RefObject, forwardRef, useImperativeHandle, useState } from 'react';
+import { Ref, RefObject, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
 import { useCitySearchList, useSubscriptionError } from '@/context';
-import { useCityInputAutocomplete } from '@/hooks';
 
 import { useRenderCityItem } from './hooks';
+import { getCitiesByPrefix, DEBOUNCE_DELAY } from '@/services';
+import { City } from '@/shared';
 
 export type CityRef = {
   resetCity: () => void
@@ -18,9 +19,9 @@ type Props = {
 
 export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Ref<CityRef>) => {
   const [city, setCity] = useState<string>('');
+  const [autocompleteCities, setAutocompleteCities] = useState<City[]>([])
 
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-  const { data, loading } = useCityInputAutocomplete(city);
 
   const { error } = useSubscriptionError();
 
@@ -31,6 +32,17 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
       formRef.current.requestSubmit();
     }
   });
+
+  useEffect(() => {
+    const timerId = setTimeout(async () => {
+      const cities = await getCitiesByPrefix(city)
+      setAutocompleteCities(cities)
+    }, DEBOUNCE_DELAY);
+
+    return (): void => {
+      clearTimeout(timerId);
+    };
+  }, [city]);
 
   const resetCity = (): void => setCity('');
 
@@ -43,8 +55,7 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
   return (
     <InputAutocomplete
       name="city"
-      loading={loading}
-      data={data}
+      data={autocompleteCities}
       search={city}
       onSearchChange={setCity}
       placeholder={'Enter your city'}
