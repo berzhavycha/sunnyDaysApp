@@ -4,12 +4,12 @@ import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
   useWeatherCardsList,
-  useWeatherPaginationInfo,
 } from '@/context';
 import { env } from '@/core/env';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { deleteWeatherSubscription } from '@/services';
-import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages } from '@/shared';
+import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPaginationParams } from '@/shared';
+import { useSearchParams } from 'next/navigation';
 
 type HookReturn = {
   isDeletionInProgress: boolean;
@@ -28,12 +28,14 @@ export const useDeleteWeatherCard = ({ city, onClose }: HookInput): HookReturn =
   const { setIsVisibleBelowMedium, isDeletionInProgress, setIsDeletionInProgress } =
     useCurrentCityWeatherInfo();
 
+  const searchParams = useSearchParams()
+  const { page, ...paginationOptions } = extractPaginationParams(searchParams)
+
   const { onPrefetch } = useWeatherPagination();
-  const { paginationOptions, currentPage } = useWeatherPaginationInfo();
   const { onPrevPrefetch } = usePaginationPrefetch({
     paginationOptions,
     startPageNumber: START_PAGE_NUMBER,
-    currentPage,
+    currentPage: page,
     totalPages: countTotalPages(weatherData?.userCitiesWeather, paginationOptions),
     onPrefetch,
   });

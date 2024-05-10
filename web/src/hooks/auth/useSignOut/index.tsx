@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useCurrentUser, useSubscriptionError, useWeatherPaginationInfo } from '@/context';
+import { useCurrentUser, useSubscriptionError } from '@/context';
 import { signOut } from '@/services';
 import { ApolloError } from '@apollo/client';
 
@@ -12,7 +12,6 @@ type HookReturn = {
 
 export const useSignOut = (): HookReturn => {
   const { onSignOut } = useCurrentUser();
-  const { setPaginationOptions } = useWeatherPaginationInfo();
   const { errorHandler } = useSubscriptionError()
   const router = useRouter();
 
@@ -25,10 +24,6 @@ export const useSignOut = (): HookReturn => {
         throw new ApolloError({ graphQLErrors: errors })
       }
 
-      setPaginationOptions((prev) => ({
-        ...prev,
-        offset: 0,
-      }));
       router.replace('/sign-in');
     } catch (error) {
       if (error instanceof ApolloError) {

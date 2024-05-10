@@ -1,4 +1,7 @@
-import { PaginationQueryOptionsState, START_PAGE_NUMBER } from '@/shared';
+'use client'
+
+import { PaginationQueryOptionsState, START_PAGE_NUMBER, updatePaginationOptions } from '@/shared';
+import { useRouter } from 'next/navigation';
 
 interface HookReturn {
   onClickPrev: () => Promise<void>;
@@ -6,22 +9,22 @@ interface HookReturn {
   onGoToPage: (page: number) => Promise<void>;
 }
 
-interface UsePaginationDependencies<TVariables> {
+interface UsePaginationDependencies {
   currentPage: number;
   totalPages: number;
   paginationOptions: PaginationQueryOptionsState;
-  updatePaginationOptions: (newOptions: Partial<PaginationQueryOptionsState | TVariables>) => void;
 }
 
-export const usePagination = <TVariables,>({
+export const usePagination = ({
   paginationOptions,
-  updatePaginationOptions,
   currentPage,
   totalPages,
-}: UsePaginationDependencies<TVariables>): HookReturn => {
+}: UsePaginationDependencies): HookReturn => {
+  const router = useRouter()
+
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {
-      updatePaginationOptions({
+      updatePaginationOptions(router, paginationOptions, {
         offset: paginationOptions.offset - paginationOptions.limit,
       });
     }
@@ -29,14 +32,14 @@ export const usePagination = <TVariables,>({
 
   const onClickNext = async (): Promise<void> => {
     if (currentPage !== totalPages) {
-      updatePaginationOptions({
+      updatePaginationOptions(router, paginationOptions, {
         offset: paginationOptions.offset + paginationOptions.limit,
       });
     }
   };
 
   const onGoToPage = async (page: number): Promise<void> => {
-    updatePaginationOptions({
+    updatePaginationOptions(router, paginationOptions, {
       offset: (page - 1) * paginationOptions.limit,
     });
   };
