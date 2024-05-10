@@ -1,5 +1,3 @@
-'use server'
-
 import { ApolloError } from '@apollo/client';
 
 import { env } from '@/core/env';

@@ -1,4 +1,4 @@
-import { getCitySearchStatus } from "@/services/citySearch/fetchers/getCitySearchStatus/fetcher";
+import { getCitySearchStatus } from "@/services/citySearch/actions/getCitySearchStatus/fetcher";
 import { useEffect, useState } from "react";
 
 type CitySearchListState = {

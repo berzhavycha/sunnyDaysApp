@@ -1,1 +1,1 @@
-export * from './fetchers';
+export * from './actions';

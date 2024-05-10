@@ -1,5 +1,3 @@
-'use server'
-
 import { env } from '@/core/env';
 
 import { CitySearchStatusDocument } from './queries';
