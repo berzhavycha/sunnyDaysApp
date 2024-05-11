@@ -41,7 +41,7 @@ export const CurrentTempUnitProvider: FC<Props> = ({ children, cookieTempUnit })
   useEffect(() => {
     Cookies.set('current-temp-unit', currentTempUnit.name, {
       expires: env.NEXT_PUBLIC_TEMP_UNIT_COOKIE_EXPIRATION_DAYS_TIME,
-      sameSite: 'None',
+      sameSite: 'lax',
       secure: env.NODE_ENV === NODE_ENV.production,
     });
   }, [currentTempUnit]);
