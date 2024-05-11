@@ -1,4 +1,4 @@
-// Import validated env for server and client to enable its validaiton
+// Import validated env for server and client to enable its validation
 import { serverValidatedEnv } from './serverEnvValidation.mjs';
 import { clientValidatedEnv } from './clientEnvValidation.mjs';
 

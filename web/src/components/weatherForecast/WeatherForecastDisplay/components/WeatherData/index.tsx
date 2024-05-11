@@ -14,7 +14,7 @@ export const WeatherData: FC = async () => {
   const paginationPageButtons = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const listFooterComponent =
-    totalPages > 1 ? <PaginationPanel paginationPageNumbers={paginationPageButtons} /> : null;
+    totalPages > 1 ? <PaginationPanel weatherData={responseData?.data} paginationPageNumbers={paginationPageButtons} /> : null;
 
   const keyExtractor = (item: { city: string }): string => item.city;
 

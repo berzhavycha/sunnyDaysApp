@@ -33,6 +33,8 @@ export const PaginationButtonsPanel: FC<Props> = ({
   const isPrevBtnActive = currentPage !== startPageNumber;
   const isNextBtnActive = currentPage < totalPages;
 
+  console.log(currentPage, startPageNumber, totalPages)
+
   const prevBtnContent = <FontAwesomeIcon icon={faArrowLeft} />;
   const nextBtnContent = <FontAwesomeIcon icon={faArrowRight} />;
 

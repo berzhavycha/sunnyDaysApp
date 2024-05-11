@@ -11,9 +11,10 @@ type HookReturn = {
 };
 
 export const useSignOut = (): HookReturn => {
+  const router = useRouter();
+  
   const { onSignOut } = useCurrentUser();
   const { errorHandler } = useSubscriptionError()
-  const router = useRouter();
 
   const signOutHandler = async (): Promise<void> => {
     try {

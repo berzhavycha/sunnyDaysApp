@@ -10,7 +10,7 @@ type HookReturn = {
 
 export const useParseWeatherData = (weatherResponse: string): HookReturn => {
     const [weatherData, setWeatherData] = useState<UserCitiesWeatherQuery | undefined>(
-        JSON.parse(weatherResponse).responseData?.data,
+        JSON.parse(weatherResponse)?.data,
     );
 
     useEffect(() => {
