@@ -5,10 +5,10 @@ import { Ref, RefObject, forwardRef, useEffect, useImperativeHandle, useState } 
 import { InputAutocomplete } from '@/components/common';
 import { useSubscriptionError } from '@/context';
 
-import { useRenderCityItem } from './hooks';
 import { getCitiesByPrefix, DEBOUNCE_DELAY } from '@/services';
 import { City } from '@/shared';
 import { useCitySearchList } from './hooks/useCitySearchList';
+import { CityAutocompleteItem } from '../CityAutocompleteItem';
 
 export type CityRef = {
   resetCity: () => void
@@ -26,15 +26,13 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
 
   const { error } = useSubscriptionError();
 
-  const { renderCityItem } = useRenderCityItem(
-    onPressOutside,
-    (text: string): void => {
-      const inputElement = formRef.current?.querySelector('input');
-      if (formRef.current && inputElement) {
-        inputElement.value = text;
-        formRef.current.requestSubmit();
-      }
-    });
+  const onCitySelect = (text: string): void => {
+    const inputElement = formRef.current?.querySelector('input');
+    if (formRef.current && inputElement) {
+      inputElement.value = text;
+      formRef.current.requestSubmit();
+    }
+  }
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
@@ -54,6 +52,7 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
   }))
 
   const keyExtractor = (item: { name: string }): string => item.name;
+  const renderCityItem = (item: City): JSX.Element => <CityAutocompleteItem {...item} onPressOutside={onPressOutside} onCitySelect={onCitySelect} />
 
   return (
     <InputAutocomplete

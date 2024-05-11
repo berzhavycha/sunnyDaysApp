@@ -5,16 +5,21 @@ import { FC } from 'react';
 type Props = {
   name: string;
   country: string;
-  onClick: (city: string) => Promise<void>;
+  onPressOutside: () => void,
+  onCitySelect: (text: string) => Promise<void> | void,
 };
 
-export const CityAutocompleteItem: FC<Props> = ({ name, country, onClick }) => {
-  const onItemClick = async (): Promise<void> => await onClick(name);
+export const CityAutocompleteItem: FC<Props> = ({ name, country, onPressOutside, onCitySelect }) => {
+
+  const citySelectHandler = async (): Promise<void> => {
+    await onCitySelect(name);
+    onPressOutside();
+  };
 
   return (
     <div
       className="text-xs text-black py-3 px-4 flex gap-2 items-center transition-colors duration-300 hover:bg-gray-200 cursor-pointer sm:text-base"
-      onClick={onItemClick}
+      onClick={citySelectHandler}
     >
       <FontAwesomeIcon className="text-blue-600" icon={faLocationPin} />
       <div className="flex">
