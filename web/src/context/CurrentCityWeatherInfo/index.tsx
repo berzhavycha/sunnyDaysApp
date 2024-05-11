@@ -76,6 +76,10 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, chi
     }
   }, [currentCityWeatherInfo?.info?.city]);
 
+  useEffect(() => {
+    setCurrentCityWeatherInfo({ info: responseData?.data?.userCitiesWeather.edges[0] })
+  }, [weatherResponse])
+
   const onTodayCurrentWeather = (): void => {
     if (shownWeatherInfo) {
       setCurrentForecastDay('');

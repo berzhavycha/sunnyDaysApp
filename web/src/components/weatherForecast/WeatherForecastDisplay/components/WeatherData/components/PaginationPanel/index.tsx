@@ -3,17 +3,17 @@
 import { FC } from 'react';
 
 import { PaginationButtonsPanel } from '@/components/common';
-import { useWeatherCardsList } from '@/context';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { START_PAGE_NUMBER, countTotalPages, extractPaginationParams } from '@/shared';
 import { useSearchParams } from 'next/navigation';
+import { UserCitiesWeatherQuery } from '@/services';
 
 type Props = {
+  weatherData?: UserCitiesWeatherQuery
   paginationPageNumbers: number[];
 };
 
-export const PaginationPanel: FC<Props> = ({ paginationPageNumbers }) => {
-  const { weatherData } = useWeatherCardsList()
+export const PaginationPanel: FC<Props> = ({ weatherData, paginationPageNumbers }) => {
   const searchParams = useSearchParams()
   const { page, ...paginationOptions } = extractPaginationParams(searchParams)
   const { onGoToPage, onClickNext, onClickPrev, onPrefetch } = useWeatherPagination();

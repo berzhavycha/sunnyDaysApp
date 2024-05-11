@@ -2,15 +2,14 @@ import { ApolloError } from '@apollo/client';
 import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 
-import { useSubscriptionError, useWeatherCardsList } from '@/context';
-import { addWeatherSubscription } from '@/services';
+import { useSubscriptionError } from '@/context';
+import { UserCitiesWeatherQuery, addWeatherSubscription } from '@/services';
 
 type HookReturn = {
   addSubscriptionAction: (payload: FormData) => void;
 };
 
-export const useAddSubscription = (): HookReturn => {
-  const { weatherData } = useWeatherCardsList();
+export const useAddSubscription = (weatherData?: UserCitiesWeatherQuery): HookReturn => {
   const { setError, errorHandler } = useSubscriptionError();
 
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData);

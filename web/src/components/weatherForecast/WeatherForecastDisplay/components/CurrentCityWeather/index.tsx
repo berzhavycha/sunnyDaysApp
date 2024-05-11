@@ -4,16 +4,21 @@ import { FC, useState } from 'react';
 
 import { ModalBackground } from '@/components/common';
 import { useCurrentCityWeatherInfo } from '@/context';
-import { useResizeWindow } from '@/hooks';
+import { useParseWeatherData, useResizeWindow } from '@/hooks';
 import { IS_CLIENT, MD_BREAKPOINT } from '@/shared';
 
 import { CurrentWeatherDetails, DeletionModal } from './components';
 
-export const CurrentCityWeather: FC = () => {
+type Props = {
+  weatherResponse: string;
+}
+
+export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
   const { isVisibleBelowMedium, setIsVisibleBelowMedium, isDeletionInProgress } =
     useCurrentCityWeatherInfo();
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false);
   const [cityToDelete, setCityToDelete] = useState<string>('');
+  const { weatherData } = useParseWeatherData(weatherResponse)
 
   const [windowWidth, setWindowWidth] = useState(IS_CLIENT ? window.innerWidth : 0);
   useResizeWindow(() => setWindowWidth(IS_CLIENT ? window.innerWidth : 0));
@@ -35,6 +40,7 @@ export const CurrentCityWeather: FC = () => {
     setCityToDelete(city);
   };
 
+
   return (
     <>
       <ModalBackground isVisible={isVisibleBelowMedium} onClose={onCloseWeatherModal}>
@@ -48,6 +54,7 @@ export const CurrentCityWeather: FC = () => {
             isVisible={isDeletionModalOpen}
             city={cityToDelete}
             onClose={onCloseDeletionModal}
+            weatherData={weatherData}
           />
         </ModalBackground>
       </ModalBackground>

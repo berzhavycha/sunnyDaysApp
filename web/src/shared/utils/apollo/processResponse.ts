@@ -3,7 +3,7 @@ import { ApolloError } from '@apollo/client';
 type ProcessDataOptions<TData> = {
   jsonResponse: string;
   onSuccess: (data: TData) => void;
-  onError: (error: ApolloError) => void;
+  onError?: (error: ApolloError) => void;
 };
 
 export const processResponse = <TData>({
@@ -28,7 +28,7 @@ export const processResponse = <TData>({
       throw new ApolloError({ graphQLErrors: [error] });
     }
   } catch (error) {
-    if (error instanceof ApolloError) {
+    if (error instanceof ApolloError && onError) {
       onError(error);
     }
   }

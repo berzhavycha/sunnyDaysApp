@@ -2,9 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useWeatherCardsList } from '@/context';
 import { usePagination } from '@/hooks/common';
 import { PaginationQueryOptionsState, countTotalPages, extractPaginationParams } from '@/shared';
+import { UserCitiesWeatherQuery } from '@/services';
 
 export type OnPrefetch = (variables: Partial<PaginationQueryOptionsState>) => Promise<void>;
 
@@ -15,11 +15,10 @@ type HookReturn = {
   onPrefetch: OnPrefetch;
 };
 
-export const useWeatherPagination = (): HookReturn => {
+export const useWeatherPagination = (weatherData?: UserCitiesWeatherQuery): HookReturn => {
   const router = useRouter();
   const searchParams = useSearchParams()
 
-  const { weatherData } = useWeatherCardsList()
   const { page, ...paginationOptions } = extractPaginationParams(searchParams)
 
   const { onGoToPage, onClickNext, onClickPrev } = usePagination({

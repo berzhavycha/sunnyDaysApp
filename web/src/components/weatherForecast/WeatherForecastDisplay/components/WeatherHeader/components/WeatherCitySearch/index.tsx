@@ -6,12 +6,18 @@ import { CityAutocomplete, CityRef } from '../CityAutocomplete';
 import { SubmitCityButton } from '../SubmitCityButton';
 
 import { useAddSubscription } from './hooks';
+import { useParseWeatherData } from '@/hooks';
 
-export const WeatherCitySearch: FC = () => {
+type Props = {
+  weatherResponse: string
+}
+
+export const WeatherCitySearch: FC<Props> = ({ weatherResponse }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const cityAutocompleteRef = useRef<CityRef>(null);
+  const { weatherData } = useParseWeatherData(weatherResponse)
 
-  const { addSubscriptionAction } = useAddSubscription();
+  const { addSubscriptionAction } = useAddSubscription(weatherData);
 
   const onSubmit = (): void => cityAutocompleteRef.current?.resetCity();
 

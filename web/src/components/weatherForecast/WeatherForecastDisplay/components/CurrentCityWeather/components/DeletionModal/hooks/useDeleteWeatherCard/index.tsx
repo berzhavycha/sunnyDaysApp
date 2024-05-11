@@ -3,11 +3,10 @@ import { ApolloError } from '@apollo/client';
 import {
   useCurrentCityWeatherInfo,
   useSubscriptionError,
-  useWeatherCardsList,
 } from '@/context';
 import { env } from '@/core/env';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
-import { deleteWeatherSubscription } from '@/services';
+import { UserCitiesWeatherQuery, deleteWeatherSubscription } from '@/services';
 import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPaginationParams } from '@/shared';
 import { useSearchParams } from 'next/navigation';
 
@@ -20,11 +19,11 @@ type HookReturn = {
 type HookInput = {
   city: string;
   onClose: () => void;
+  weatherData?: UserCitiesWeatherQuery;
 };
 
-export const useDeleteWeatherCard = ({ city, onClose }: HookInput): HookReturn => {
+export const useDeleteWeatherCard = ({ city, onClose, weatherData }: HookInput): HookReturn => {
   const { errorHandler, setError } = useSubscriptionError();
-  const { weatherData } = useWeatherCardsList();
   const { setIsVisibleBelowMedium, isDeletionInProgress, setIsDeletionInProgress } =
     useCurrentCityWeatherInfo();
 
