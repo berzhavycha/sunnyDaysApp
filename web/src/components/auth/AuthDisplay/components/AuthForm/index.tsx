@@ -13,6 +13,7 @@ import { SubmitButton } from '../SubmitButton';
 import { SearchParams, UserDto } from '@/shared';
 import { auth } from '@/services';
 import { useFormState } from 'react-dom';
+import { useCurrentUser } from '@/context';
 
 type Props = {
   authType: AuthType;
@@ -21,6 +22,7 @@ type Props = {
 
 export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
   const [isPending, startTransition] = useTransition();
+  const { fetchUser } = useCurrentUser()
   const {
     register,
     handleSubmit,
@@ -48,6 +50,10 @@ export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
     startTransition(() => {
       authAction(data)
     });
+
+    if (Object.values(authState.fieldsError).every(field => !field)) {
+      fetchUser()
+    }
   });
 
   const inputStyles = 'bg-slate-200  pl-9 md:pl-10 md:pl-12 sm:text-sm md:text-lg xl:text-xl';

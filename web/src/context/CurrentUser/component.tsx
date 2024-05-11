@@ -1,6 +1,6 @@
 'use client';
 
-import { useApolloClient, useLazyQuery } from '@apollo/client';
+import { LazyQueryExecFunction, useApolloClient, useLazyQuery } from '@apollo/client';
 import {
   createContext,
   Dispatch,
@@ -12,13 +12,15 @@ import {
   useState,
 } from 'react';
 
-import { CurrentUserDocument } from './queries';
+import { CurrentUserDocument, CurrentUserQuery } from './queries';
+import { Exact } from '@/graphql/__generated__/types';
 
 export type CurrentUserState = {
   email: string;
 };
 
 type ContextType = {
+  fetchUser: LazyQueryExecFunction<CurrentUserQuery, Exact<{ [key: string]: never; }>>,
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
   loadingUser: boolean;
@@ -60,6 +62,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const contextValue: ContextType = {
+    fetchUser,
     currentUser,
     setCurrentUser,
     loadingUser: loading,
