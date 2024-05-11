@@ -15,13 +15,11 @@ export const InteractiveWeatherCard: FC<Props> = memo(({ children, ...info }) =>
     setShownWeatherInfo,
     setCurrentCityWeatherInfo,
     setIsVisibleBelowMedium,
-    setIsTodayCurrentWeather,
   } = useCurrentCityWeatherInfo();
 
   const onClick = (): void => {
     const props = { ...info };
 
-    setIsTodayCurrentWeather(true);
     setShownWeatherInfo(props);
     setCurrentCityWeatherInfo({ info: props });
 

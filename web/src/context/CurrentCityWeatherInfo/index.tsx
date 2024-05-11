@@ -12,6 +12,7 @@ import {
 } from 'react';
 
 import { WeatherForecast } from '@/shared';
+import { useSubscriptionError } from '../SubscriptionError';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -24,16 +25,10 @@ export type CurrentCityWeatherInfoState = {
 type ContextType = {
   currentCityWeatherInfo: CurrentCityWeatherInfoState;
   setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState>>;
-  isTodayCurrentWeather: boolean;
-  setIsTodayCurrentWeather: Dispatch<SetStateAction<boolean>>;
+  shownWeatherInfo?: InfoType
   setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
-  onTodayCurrentWeather: () => void;
-  currentForecastDay: string;
-  setCurrentForecastDay: Dispatch<SetStateAction<string>>;
   isVisibleBelowMedium: boolean;
   setIsVisibleBelowMedium: Dispatch<SetStateAction<boolean>>;
-  isDeletionInProgress: boolean;
-  setIsDeletionInProgress: Dispatch<SetStateAction<boolean>>;
 };
 
 const CurrentCityWeatherContext = createContext<ContextType | null>(null);
@@ -57,50 +52,35 @@ type Props = PropsWithChildren & {
 export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
   const { responseData } = JSON.parse(weatherResponse);
 
+  const { errorHandler } = useSubscriptionError()
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
       info: responseData?.data?.userCitiesWeather.edges[0],
     },
   );
-  const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [shownWeatherInfo, setShownWeatherInfo] = useState<InfoType>();
-  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
   const [isVisibleBelowMedium, setIsVisibleBelowMedium] = useState<boolean>(false);
-
-  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentCityWeatherInfo?.info?.city) {
-      setCurrentForecastDay('');
       setShownWeatherInfo(currentCityWeatherInfo.info);
     }
   }, [currentCityWeatherInfo?.info?.city]);
 
   useEffect(() => {
     setCurrentCityWeatherInfo({ info: responseData?.data?.userCitiesWeather.edges[0] })
-  }, [weatherResponse])
-
-  const onTodayCurrentWeather = (): void => {
-    if (shownWeatherInfo) {
-      setCurrentForecastDay('');
-      setIsTodayCurrentWeather(true);
-      setCurrentCityWeatherInfo({ info: shownWeatherInfo });
+    if (responseData?.errors) {
+      errorHandler(responseData.errors)
     }
-  };
+  }, [weatherResponse])
 
   const contextValue: ContextType = {
     currentCityWeatherInfo,
     setCurrentCityWeatherInfo,
-    isTodayCurrentWeather,
-    setIsTodayCurrentWeather,
+    shownWeatherInfo,
     setShownWeatherInfo,
-    onTodayCurrentWeather,
-    currentForecastDay,
-    setCurrentForecastDay,
     isVisibleBelowMedium,
     setIsVisibleBelowMedium,
-    isDeletionInProgress,
-    setIsDeletionInProgress,
   };
 
   return (

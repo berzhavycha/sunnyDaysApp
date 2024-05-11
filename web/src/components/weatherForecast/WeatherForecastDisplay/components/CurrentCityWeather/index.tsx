@@ -14,8 +14,9 @@ type Props = {
 }
 
 export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
-  const { isVisibleBelowMedium, setIsVisibleBelowMedium, isDeletionInProgress } =
+  const { isVisibleBelowMedium, setIsVisibleBelowMedium } =
     useCurrentCityWeatherInfo();
+  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false)
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false);
   const [cityToDelete, setCityToDelete] = useState<string>('');
   const { weatherData } = useParseWeatherData(weatherResponse)
@@ -55,6 +56,8 @@ export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
             city={cityToDelete}
             onClose={onCloseDeletionModal}
             weatherData={weatherData}
+            isDeletionInProgress={isDeletionInProgress}
+            setIsDeletionInProgress={setIsDeletionInProgress}
           />
         </ModalBackground>
       </ModalBackground>

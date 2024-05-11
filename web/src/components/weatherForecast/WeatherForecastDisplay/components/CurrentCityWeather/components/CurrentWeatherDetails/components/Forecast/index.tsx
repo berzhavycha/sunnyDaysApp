@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useState } from 'react';
 
 import { CustomFlatList } from '@/components';
 import { useCurrentCityWeatherInfo } from '@/context';
@@ -15,12 +15,25 @@ type Props = {
 };
 
 export const Forecast: FC<Props> = memo(({ info }) => {
-  const { onTodayCurrentWeather, isTodayCurrentWeather } = useCurrentCityWeatherInfo();
+  const { shownWeatherInfo, setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
+
+  const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
+  const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
+
+
+  const onTodayCurrentWeather = (): void => {
+    if (shownWeatherInfo) {
+      setCurrentForecastDay('');
+      setIsTodayCurrentWeather(true);
+      setCurrentCityWeatherInfo({ info: shownWeatherInfo });
+    }
+  };
 
   const isScrollable =
     env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
 
   const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
+  const renderItem = (item: WeatherForecastDays): JSX.Element => <InteractiveForecastItems {...item} currentForecastDay={currentForecastDay} setCurrentForecastDay={setCurrentForecastDay} setIsTodayCurrentWeather={setIsTodayCurrentWeather} />
 
   return (
     <div className="bg-blue-600 rounded-3xl py-2 px-2 h-full sm:pt-4 sm:py-2 sm:px-3">
@@ -30,7 +43,7 @@ export const Forecast: FC<Props> = memo(({ info }) => {
       </div>
       <CustomFlatList
         data={info}
-        renderItem={InteractiveForecastItems}
+        renderItem={renderItem}
         className={`custom-scroll ${isScrollable && 'pr-3'} flex flex-col justify-between h-64 overflow-scroll md:gap-1 lg:gap-2`}
         keyExtractor={keyExtractor}
       />

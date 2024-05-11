@@ -4,16 +4,16 @@ import { FC, memo } from 'react';
 import { TemperatureInfo } from '@/components';
 import { weatherIconMapping } from '@/components/weatherForecast/constants';
 import { pickWeatherIcon } from '@/components/weatherForecast/utils';
-import { tempUnitSigns, useCurrentCityWeatherInfo, useCurrentTempUnit } from '@/context';
+import { tempUnitSigns, useCurrentTempUnit } from '@/context';
 import { upperCaseFirstLetter, WeatherForecastDays } from '@/shared';
 
 type Props = WeatherForecastDays & {
   onClick: () => void;
+  currentForecastDay: string;
 };
 
-export const ForecastItem: FC<Props> = memo(({ onClick, text, dayOfWeek, ...info }) => {
+export const ForecastItem: FC<Props> = memo(({ onClick, text, dayOfWeek, currentForecastDay, ...info }) => {
   const { currentTempUnit } = useCurrentTempUnit();
-  const { currentForecastDay } = useCurrentCityWeatherInfo();
 
   const weatherIcon = pickWeatherIcon(text);
 

@@ -11,7 +11,6 @@ import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPa
 import { useSearchParams } from 'next/navigation';
 
 type HookReturn = {
-  isDeletionInProgress: boolean;
   onDelete: () => Promise<void>;
   onMouseOverDeleteBtn: () => Promise<void>;
 };
@@ -20,11 +19,12 @@ type HookInput = {
   city: string;
   onClose: () => void;
   weatherData?: UserCitiesWeatherQuery;
+  setIsDeletionInProgress: (state: boolean) => void
 };
 
-export const useDeleteWeatherCard = ({ city, onClose, weatherData }: HookInput): HookReturn => {
+export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletionInProgress }: HookInput): HookReturn => {
   const { errorHandler, setError } = useSubscriptionError();
-  const { setIsVisibleBelowMedium, isDeletionInProgress, setIsDeletionInProgress } =
+  const { setIsVisibleBelowMedium } =
     useCurrentCityWeatherInfo();
 
   const searchParams = useSearchParams()
@@ -68,7 +68,6 @@ export const useDeleteWeatherCard = ({ city, onClose, weatherData }: HookInput):
   };
 
   return {
-    isDeletionInProgress,
     onDelete,
     onMouseOverDeleteBtn,
   };

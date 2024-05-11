@@ -5,23 +5,28 @@ import { WeatherForecastDays } from '@/shared';
 
 import { ForecastItem } from '../ForecastItem';
 
-export const InteractiveForecastItems = (props: WeatherForecastDays): JSX.Element => {
-  const { setCurrentCityWeatherInfo, setIsTodayCurrentWeather, setCurrentForecastDay } =
-    useCurrentCityWeatherInfo();
+type Props = WeatherForecastDays & {
+  currentForecastDay: string;
+  setCurrentForecastDay: (day: string) => void;
+  setIsTodayCurrentWeather: (state: boolean) => void;
+}
+
+export const InteractiveForecastItems = ({ currentForecastDay, setCurrentForecastDay, setIsTodayCurrentWeather, ...weatherProps }: Props): JSX.Element => {
+  const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
 
   const onForecastItemClick = useCallback((): void => {
     setIsTodayCurrentWeather(false);
-    setCurrentForecastDay(props.dayOfWeek);
+    setCurrentForecastDay(weatherProps.dayOfWeek);
 
     setCurrentCityWeatherInfo((prev) => {
       return {
         info: {
           ...prev.info,
-          ...props,
+          ...weatherProps,
         },
       };
     });
-  }, [setIsTodayCurrentWeather, setCurrentForecastDay, setCurrentCityWeatherInfo]);
+  }, [setCurrentCityWeatherInfo]);
 
-  return <ForecastItem {...props} onClick={onForecastItemClick} />;
+  return <ForecastItem {...weatherProps} currentForecastDay={currentForecastDay} onClick={onForecastItemClick} />;
 };

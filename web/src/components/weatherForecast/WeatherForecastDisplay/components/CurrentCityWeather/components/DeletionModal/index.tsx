@@ -10,13 +10,16 @@ type Props = {
   city: string;
   onClose: () => void;
   weatherData?: UserCitiesWeatherQuery
+  isDeletionInProgress: boolean
+  setIsDeletionInProgress: (state: boolean) => void
 };
 
-export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData }) => {
-  const { isDeletionInProgress, onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
+export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData, isDeletionInProgress, setIsDeletionInProgress }) => {
+  const { onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
     city,
     onClose,
-    weatherData
+    weatherData,
+    setIsDeletionInProgress
   });
 
   return (
