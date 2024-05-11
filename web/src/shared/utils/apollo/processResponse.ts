@@ -12,20 +12,12 @@ export const processResponse = <TData>({
   onError,
 }: ProcessDataOptions<TData>): void => {
   try {
-    const { responseData, error } = JSON.parse(jsonResponse);
+    const { data, errors } = JSON.parse(jsonResponse);
 
-    if (responseData) {
-      const { data, errors } = responseData;
-
-      if (errors?.length) {
-        throw new ApolloError({ graphQLErrors: errors });
-      }
-
-      if (data) {
-        onSuccess(data);
-      }
-    } else if (error) {
-      throw new ApolloError({ graphQLErrors: [error] });
+    if (data) {
+      onSuccess(data);
+    } else if (errors?.length) {
+      throw new ApolloError({ graphQLErrors: errors });
     }
   } catch (error) {
     if (error instanceof ApolloError && onError) {
