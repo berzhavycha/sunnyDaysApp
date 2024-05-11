@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherForecastDays } from '@/shared';
@@ -11,7 +11,7 @@ type Props = WeatherForecastDays & {
   setIsTodayCurrentWeather: (state: boolean) => void;
 }
 
-export const InteractiveForecastItems = ({ currentForecastDay, setCurrentForecastDay, setIsTodayCurrentWeather, ...weatherProps }: Props): JSX.Element => {
+export const InteractiveForecastItems: FC<Props> = ({ currentForecastDay, setCurrentForecastDay, setIsTodayCurrentWeather, ...weatherProps }) => {
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
 
   const onForecastItemClick = useCallback((): void => {
