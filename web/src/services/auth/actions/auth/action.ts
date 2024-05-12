@@ -21,6 +21,12 @@ type AuthState = {
   fieldsError: FieldErrorsState<UserDto>
 }
 
+const unexpectedErrorState = {
+  email: '',
+  password: '',
+  unexpectedError: UNEXPECTED_ERROR_MESSAGE
+}
+
 export const auth = async (authType: AuthType, prevState: AuthState, formData: UserDto): Promise<AuthState> => {
   try {
     const tokens = await authUser(authType, formData)
@@ -38,11 +44,7 @@ export const auth = async (authType: AuthType, prevState: AuthState, formData: U
       redirect(path);
     } else {
       return {
-        fieldsError: {
-          email: '',
-          password: '',
-          unexpectedError: UNEXPECTED_ERROR_MESSAGE
-        }
+        fieldsError: unexpectedErrorState
       }
     }
   } catch (error) {
@@ -59,11 +61,7 @@ export const auth = async (authType: AuthType, prevState: AuthState, formData: U
       throw error
     } else {
       return {
-        fieldsError: {
-          email: '',
-          password: '',
-          unexpectedError: UNEXPECTED_ERROR_MESSAGE
-        }
+        fieldsError: unexpectedErrorState
       }
     }
   }

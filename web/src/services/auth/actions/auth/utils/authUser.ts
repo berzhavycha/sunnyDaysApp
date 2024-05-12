@@ -1,8 +1,8 @@
 import { AuthType } from "@/hooks";
 import { UserDto, extractCookiesFromResponse } from "@/shared";
-import { getAuthMutation } from "./getAuthMutation";
 import { env } from "@/core/env";
 import { ApolloError } from "@apollo/client";
+import { authMutations } from '../../../constants'
 
 export const authUser = async (authType: AuthType, userDto: UserDto, extraVariables?: object): Promise<string | null> => {
     const variables = {
@@ -13,7 +13,7 @@ export const authUser = async (authType: AuthType, userDto: UserDto, extraVariab
     const response = await fetch(env.NEXT_PUBLIC_BASE_URL, {
         method: 'POST',
         body: JSON.stringify({
-            query: getAuthMutation(authType),
+            query: authMutations[authType],
             variables
         }),
         headers: {
