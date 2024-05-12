@@ -1,6 +1,6 @@
 import { ApolloError } from '@apollo/client';
 
-import { FieldErrorsState } from '@/hooks';
+import { FieldErrorsState } from '@/shared/types';
 
 export const fieldsErrorHandler = <T>(
   errors: ApolloError,

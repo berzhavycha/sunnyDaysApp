@@ -8,7 +8,7 @@ import { env } from '@/core/env';
 import { getClient } from '@/graphql/utils/getClient';
 import { getPaginationParams } from '@/shared';
 
-import { UserCitiesWeatherQuery } from '../../fetchers';
+import { UserCitiesWeatherQuery } from '../getWeatherForecasts';
 
 import { DeleteWeatherSubscriptionDocument } from './mutations';
 
