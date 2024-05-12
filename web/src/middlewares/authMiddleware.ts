@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { CurrentUserDocument } from '@/context/CurrentUser/queries';
+import { CurrentUserDocument } from '@/services/auth/actions/getCurrentUser/queries';
 import { env } from '@/core/env';
 import { createClient, UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
 import { NODE_ENV, ONE_DAY_MILLISECONDS, OriginalError, UNAUTHORIZED_ERROR_CODE } from '@/shared';

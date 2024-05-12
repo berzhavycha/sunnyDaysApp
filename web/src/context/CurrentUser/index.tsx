@@ -1,6 +1,5 @@
 'use client';
 
-import { LazyQueryExecFunction, useApolloClient, useLazyQuery } from '@apollo/client';
 import {
   createContext,
   Dispatch,
@@ -12,18 +11,16 @@ import {
   useState,
 } from 'react';
 
-import { CurrentUserDocument, CurrentUserQuery } from './queries';
-import { Exact } from '@/graphql/__generated__/types';
+import { getCurrentUser } from '@/services';
 
 export type CurrentUserState = {
   email: string;
 };
 
 type ContextType = {
-  fetchUser: LazyQueryExecFunction<CurrentUserQuery, Exact<{ [key: string]: never; }>>,
+  fetchUser: () => Promise<void>,
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
-  loadingUser: boolean;
   onSignOut: () => Promise<void>;
 };
 
@@ -40,17 +37,12 @@ export const useCurrentUser = (): ContextType => {
 };
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-  const client = useApolloClient();
   const [currentUser, setCurrentUser] = useState<CurrentUserState | null>(null);
 
-  const [fetchUser, { data, loading }] = useLazyQuery(CurrentUserDocument, {
-    onCompleted: async () => {
-      if (data && data.currentUser) {
-        setCurrentUser(data.currentUser);
-      }
-    },
-    errorPolicy: 'all',
-  });
+  const fetchUser = async (): Promise<void> => {
+    const userData = await getCurrentUser();
+    setCurrentUser(userData.data.currentUser);
+  };
 
   useEffect(() => {
     fetchUser();
@@ -58,14 +50,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const onSignOut = async (): Promise<void> => {
     setCurrentUser(null);
-    await client.clearStore();
   };
 
   const contextValue: ContextType = {
     fetchUser,
     currentUser,
     setCurrentUser,
-    loadingUser: loading,
     onSignOut,
   };
 
