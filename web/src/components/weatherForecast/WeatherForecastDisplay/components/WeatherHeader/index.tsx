@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { ControlButtons, WeatherCitySearch } from './components';
-import { getWeatherForecasts } from '@/services/index-server';
+import { getWeatherForecasts } from '@/services';
 
 export const WeatherHeader: FC = async () => {
   const { responseData } = await getWeatherForecasts();

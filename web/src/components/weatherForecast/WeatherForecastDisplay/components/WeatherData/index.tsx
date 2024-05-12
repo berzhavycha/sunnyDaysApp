@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { CustomFlatList, NoData } from '@/components/common';
-import { getWeatherForecasts } from '@/services/index-server';
+import { getWeatherForecasts } from '@/services';
 import { countTotalPages, getPaginationParams } from '@/shared';
 
 import { PaginationPanel, WeatherCard } from './components';

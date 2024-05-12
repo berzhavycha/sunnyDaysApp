@@ -1,4 +1,4 @@
-import { signInMutation, signUpMutation } from "./actions";
+import { signInMutation, signUpMutation } from "./actions/auth/mutations";
 
 export enum AuthType {
   SIGN_UP = 'signUp',
