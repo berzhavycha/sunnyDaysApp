@@ -1,2 +1,2 @@
-export * from './action'
+export { auth } from './action'
 export * from './mutations'

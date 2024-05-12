@@ -1,3 +1,3 @@
 export * from './constants'
-export * from './fetcher'
+export { getCitiesByPrefix } from './action'
 export * from './queries'

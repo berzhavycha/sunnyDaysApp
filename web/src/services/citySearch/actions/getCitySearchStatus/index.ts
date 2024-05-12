@@ -1,2 +1,2 @@
 export * from './queries';
-export * from './fetcher'
+export { getCitySearchStatus } from './action'

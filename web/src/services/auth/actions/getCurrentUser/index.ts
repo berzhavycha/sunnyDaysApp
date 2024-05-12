@@ -1,2 +1,2 @@
-export * from './action'
+export { getCurrentUser } from './action'
 export * from './queries'

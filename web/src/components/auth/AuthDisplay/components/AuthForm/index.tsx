@@ -11,7 +11,7 @@ import { AuthType } from '@/hooks';
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
 import { SearchParams, UserDto } from '@/shared';
-import { auth } from '@/services';
+import { auth } from '@/services/auth';
 import { useFormState } from 'react-dom';
 import { useCurrentUser } from '@/context';
 
