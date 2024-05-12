@@ -3,11 +3,10 @@
 import { Ref, RefObject, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 import { InputAutocomplete } from '@/components/common';
-import { useSubscriptionError } from '@/context';
 
 import { getCitiesByPrefix, DEBOUNCE_DELAY } from '@/services';
 import { City } from '@/shared';
-import { useCitySearchList } from './hooks/useCitySearchList';
+import { useCitySearchList } from './hooks';
 import { CityAutocompleteItem } from '../CityAutocompleteItem';
 
 export type CityRef = {
@@ -16,15 +15,14 @@ export type CityRef = {
 
 type Props = {
   formRef: RefObject<HTMLFormElement>;
+  errorMessage: string;
 };
 
-export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Ref<CityRef>) => {
+export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef, errorMessage }, ref: Ref<CityRef>) => {
   const [city, setCity] = useState<string>('');
   const [autocompleteCities, setAutocompleteCities] = useState<City[]>([])
 
   const { listState, onInputFocus, onPressOutside } = useCitySearchList();
-
-  const { error } = useSubscriptionError();
 
   const onCitySelect = (text: string): void => {
     const inputElement = formRef.current?.querySelector('input');
@@ -61,7 +59,7 @@ export const CityAutocomplete = forwardRef<CityRef, Props>(({ formRef }, ref: Re
       search={city}
       onSearchChange={setCity}
       placeholder={'Enter your city'}
-      error={error.message}
+      error={errorMessage}
       onPressOutside={onPressOutside}
       onInputFocus={onInputFocus}
       isAutocompleteShown={listState.isVisible}

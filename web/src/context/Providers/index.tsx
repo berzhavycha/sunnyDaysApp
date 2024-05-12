@@ -2,13 +2,12 @@ import { FC, PropsWithChildren } from 'react';
 
 import { Compose } from '@/components';
 
-import { ApolloWrapper } from '../ApolloWrapper';
 import { CurrentUserProvider } from '../CurrentUser';
-import { SubscriptionErrorProvider } from '../SubscriptionError';
+import { CookieTempUnitProvider } from '../CurrentTempUnit';
 
 export const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Compose components={[ApolloWrapper, CurrentUserProvider, SubscriptionErrorProvider]}>
+    <Compose components={[CurrentUserProvider, CookieTempUnitProvider]}>
       {children}
     </Compose>
   );

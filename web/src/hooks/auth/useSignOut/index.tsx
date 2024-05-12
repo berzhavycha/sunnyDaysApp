@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useCurrentUser, useSubscriptionError } from '@/context';
+import { useCurrentUser } from '@/context';
 import { signOut } from '@/services';
 import { ApolloError } from '@apollo/client';
 
@@ -12,25 +12,18 @@ type HookReturn = {
 
 export const useSignOut = (): HookReturn => {
   const router = useRouter();
-  
+
   const { onSignOut } = useCurrentUser();
-  const { errorHandler } = useSubscriptionError()
 
   const signOutHandler = async (): Promise<void> => {
-    try {
-      await onSignOut();
-      const { errors } = await signOut()
+    await onSignOut();
+    const { errors } = await signOut()
 
-      if (errors) {
-        throw new ApolloError({ graphQLErrors: errors })
-      }
-
-      router.replace('/sign-in');
-    } catch (error) {
-      if (error instanceof ApolloError) {
-        errorHandler(error)
-      }
+    if (errors) {
+      throw new ApolloError({ graphQLErrors: errors })
     }
+
+    router.replace('/sign-in');
   };
 
   return {

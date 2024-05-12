@@ -37,7 +37,7 @@ export const addWeatherSubscription = async (
       mutation: AddWeatherSubscriptionDocument,
       variables: {
         city: {
-          name: city.name,
+          ...city,
           forecastDaysAmount: env.NEXT_PUBLIC_MAX_FORECAST_DAYS,
         },
       },

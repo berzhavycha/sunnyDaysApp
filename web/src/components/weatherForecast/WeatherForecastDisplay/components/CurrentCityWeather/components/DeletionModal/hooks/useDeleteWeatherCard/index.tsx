@@ -1,16 +1,15 @@
 import { ApolloError } from '@apollo/client';
 
-import {
-  useCurrentCityWeatherInfo,
-  useSubscriptionError,
-} from '@/context';
+import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
 import { UserCitiesWeatherQuery, deleteWeatherSubscription } from '@/services';
-import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPaginationParams } from '@/shared';
+import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPaginationParams, getApolloErrorMessage } from '@/shared';
 import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 type HookReturn = {
+  error: string;
   onDelete: () => Promise<void>;
   onMouseOverDeleteBtn: () => Promise<void>;
 };
@@ -23,9 +22,8 @@ type HookInput = {
 };
 
 export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletionInProgress }: HookInput): HookReturn => {
-  const { errorHandler, setError } = useSubscriptionError();
-  const { setIsVisibleBelowMedium } =
-    useCurrentCityWeatherInfo();
+  const [error, setError] = useState<string>('')
+  const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
 
   const searchParams = useSearchParams()
   const { page, ...paginationOptions } = extractPaginationParams(searchParams)
@@ -46,14 +44,14 @@ export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletion
       if (IS_CLIENT && window.innerWidth < MD_BREAKPOINT) {
         setIsVisibleBelowMedium(false);
       }
-      setError({ message: '' });
+      setError('');
+      onClose();
     } catch (error) {
       if (error instanceof ApolloError || error instanceof Error) {
-        errorHandler(error);
+        setError(getApolloErrorMessage(error))
       }
     } finally {
       setIsDeletionInProgress(false);
-      onClose();
     }
   };
 
@@ -68,6 +66,7 @@ export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletion
   };
 
   return {
+    error,
     onDelete,
     onMouseOverDeleteBtn,
   };

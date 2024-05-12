@@ -10,7 +10,6 @@ type Props = {
 };
 
 export const CityAutocompleteItem: FC<Props> = ({ name, country, onPressOutside, onCitySelect }) => {
-
   const citySelectHandler = async (): Promise<void> => {
     await onCitySelect(name);
     onPressOutside();

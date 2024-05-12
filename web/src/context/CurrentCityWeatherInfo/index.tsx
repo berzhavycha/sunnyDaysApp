@@ -12,7 +12,6 @@ import {
 } from 'react';
 
 import { WeatherForecast } from '@/shared';
-import { useSubscriptionError } from '../SubscriptionError';
 
 type InfoType = WeatherForecast & {
   dayOfWeek?: string;
@@ -52,7 +51,6 @@ type Props = PropsWithChildren & {
 export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, children }) => {
   const { responseData } = JSON.parse(weatherResponse);
 
-  const { errorHandler } = useSubscriptionError()
   const [currentCityWeatherInfo, setCurrentCityWeatherInfo] = useState<CurrentCityWeatherInfoState>(
     {
       info: responseData?.data?.userCitiesWeather.edges[0],
@@ -69,9 +67,6 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, chi
 
   useEffect(() => {
     setCurrentCityWeatherInfo({ info: responseData?.data?.userCitiesWeather.edges[0] })
-    if (responseData?.errors) {
-      errorHandler(responseData.errors)
-    }
   }, [weatherResponse])
 
   const contextValue: ContextType = {

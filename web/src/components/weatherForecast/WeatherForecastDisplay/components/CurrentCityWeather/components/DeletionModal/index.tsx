@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData, isDeletionInProgress, setIsDeletionInProgress }) => {
-  const { onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
+  const { error, onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
     city,
     onClose,
     weatherData,
@@ -24,6 +24,7 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData
 
   return (
     <Modal
+      error={error}
       isVisible={isVisible}
       onOk={onDelete}
       onMouseOverOk={onMouseOverDeleteBtn}

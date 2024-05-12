@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Spinner } from '@/components/common';
 
 type Props = {
+  error?: string;
   isVisible: boolean;
   text: string;
   onClose: () => void;
@@ -11,7 +12,7 @@ type Props = {
   onMouseOverOk?: () => void | Promise<void>;
 };
 
-export const Modal: FC<Props> = ({ isVisible, text, loading, onMouseOverOk, onOk, onClose }) => {
+export const Modal: FC<Props> = ({ error, isVisible, text, loading, onMouseOverOk, onOk, onClose }) => {
   return (
     <div
       className={`${isVisible ? 'flex' : 'hidden'} ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} w-96 md:w-[450px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex-col items-center p-5 pb-3 md:p-8 md:pb-5 rounded-md shadow-lg z-30`}
@@ -21,7 +22,8 @@ export const Modal: FC<Props> = ({ isVisible, text, loading, onMouseOverOk, onOk
           <Spinner />
         ) : (
           <>
-            <h3 className="mb-6 text-md md:text-xl">{text}</h3>
+            <h3 className="mb-3 text-md md:text-xl">{text}</h3>
+            <h5 className="mb-8 text-left text-red-500 h-2 text-sm md:text-sm">{error}</h5>
             <div className="w-full flex gap-4 justify-end">
               <button
                 onClick={onOk}

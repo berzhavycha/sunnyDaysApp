@@ -52,6 +52,7 @@ export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
           zIndex={30}
         >
           <DeletionModal
+            key={cityToDelete}
             isVisible={isDeletionModalOpen}
             city={cityToDelete}
             onClose={onCloseDeletionModal}

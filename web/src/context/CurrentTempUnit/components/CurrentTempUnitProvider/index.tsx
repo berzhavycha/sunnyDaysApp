@@ -5,7 +5,7 @@ import { createContext, FC, PropsWithChildren, useContext, useEffect, useState }
 
 import { env } from '@/core/env';
 
-import { TempUnits } from './constants';
+import { TempUnits } from '../../constants';
 import { NODE_ENV } from '@/shared';
 
 type CurrentTempUnitState = {
