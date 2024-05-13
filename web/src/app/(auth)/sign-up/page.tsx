@@ -1,8 +1,7 @@
 import { FC } from 'react';
 
 import { AuthDisplay } from '@/components';
-import { AuthType, } from '@/hooks';
-import { SearchParams } from '@/shared';
+import { AuthType, SearchParams } from '@/shared';
 
 type Props = {
   searchParams: SearchParams

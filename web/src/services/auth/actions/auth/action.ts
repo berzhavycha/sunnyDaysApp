@@ -1,11 +1,9 @@
 'use server'
 
-import { AuthType } from '@/hooks';
-
 import { ApolloError } from '@apollo/client';
-import { redirect, } from 'next/navigation';
+import { redirect} from 'next/navigation';
 
-import { FieldErrorsState, NODE_ENV, ONE_DAY_MILLISECONDS, UserDto, fieldsErrorHandler, getPaginationParams } from '@/shared';
+import { AuthType, FieldErrorsState, NODE_ENV, ONE_DAY_MILLISECONDS, UserDto, fieldsErrorHandler, getPaginationParams } from '@/shared';
 
 import { authUser, pickUserErrorMessages } from './utils';
 

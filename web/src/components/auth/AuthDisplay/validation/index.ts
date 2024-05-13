@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 import { env } from '@/core/env';
-import { AuthType } from '@/hooks';
+import { AuthType } from '@/shared';
 
 export const userSchema = (actionType: AuthType): Joi.Schema => {
   let schema = Joi.object({

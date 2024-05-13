@@ -8,6 +8,12 @@ export const daysOfWeek = [
   'Saturday',
 ];
 
+
+export enum AuthType {
+  SIGN_UP = 'signUp',
+  SIGN_IN = 'signIn',
+}
+
 export const UNAUTHORIZED_ERROR_CODE = 401;
 
 export const ONE_DAY_SECONDS = 60 * 60 * 24;

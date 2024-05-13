@@ -5,12 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
 
 import { Button } from '@/components/common';
-import { tempUnitSigns, useCurrentTempUnit } from '@/context';
-import { useSignOut } from '@/hooks';
+import { tempUnitSigns, useCurrentTempUnit, useCurrentUser } from '@/context';
+import { signOut } from '@/services';
 
 export const ControlButtons: FC = () => {
-  const { signOutHandler } = useSignOut();
+  const { onSignOut } = useCurrentUser();
   const { currentTempUnit, onTempUnitChange } = useCurrentTempUnit();
+
+  const signOutHandler = async (): Promise<void> => {
+    await onSignOut();
+    await signOut()
+  }
 
   const onSignOutBtnContent = <FontAwesomeIcon icon={faSignOut} className="text-white text-md" />;
 

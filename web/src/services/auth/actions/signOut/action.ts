@@ -1,21 +1,17 @@
 'use server'
 
 import { getClient } from "@/graphql/utils/getClient"
-import { SignOutDocument, SignOutMutation } from "./mutations"
+import { SignOutDocument } from "./mutations"
 import { cookies } from "next/headers"
-import { FetchResult } from "@apollo/client"
 import { revalidatePath } from "next/cache"
+import { redirect } from 'next/navigation';
 
-export const signOut = async (): Promise<FetchResult<SignOutMutation>> => {
-    const data = await getClient().mutate({
+export const signOut = async (): Promise<void> => {
+    await getClient().mutate({
         mutation: SignOutDocument
     })
 
-    if (!data.errors?.length) {
-        cookies().delete('tokens')
-    }
-
+    cookies().delete('tokens')
     revalidatePath('/');
-
-    return data
+    redirect('/sign-in')
 }

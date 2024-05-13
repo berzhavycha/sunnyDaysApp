@@ -6,11 +6,10 @@ import { BaseSyntheticEvent, FC, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/common';
-import { AuthType } from '@/hooks';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
-import { SearchParams, UserDto } from '@/shared';
+import { AuthType, SearchParams, UserDto } from '@/shared';
 import { auth } from '@/services/auth';
 import { useFormState } from 'react-dom';
 import { useCurrentUser } from '@/context';

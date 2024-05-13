@@ -16,9 +16,8 @@ export const useParseWeatherData = (weatherResponse: string): HookReturn => {
     );
     const [error, setError] = useState<string>('')
 
-    const onError = (error: ApolloError | Error): void => {
-        setError(getApolloErrorMessage(error))
-    }
+    const onError = (error: ApolloError | Error): void => setError(getApolloErrorMessage(error))
+
 
     useEffect(() => {
         processResponse({
