@@ -9,9 +9,14 @@ type Props = WeatherForecastDays & {
   currentForecastDay: string;
   setCurrentForecastDay: (day: string) => void;
   setIsTodayCurrentWeather: (state: boolean) => void;
-}
+};
 
-export const InteractiveForecastItems: FC<Props> = ({ currentForecastDay, setCurrentForecastDay, setIsTodayCurrentWeather, ...weatherProps }) => {
+export const InteractiveForecastItems: FC<Props> = ({
+  currentForecastDay,
+  setCurrentForecastDay,
+  setIsTodayCurrentWeather,
+  ...weatherProps
+}) => {
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
 
   const onForecastItemClick = useCallback((): void => {
@@ -28,5 +33,11 @@ export const InteractiveForecastItems: FC<Props> = ({ currentForecastDay, setCur
     });
   }, [setCurrentCityWeatherInfo]);
 
-  return <ForecastItem {...weatherProps} currentForecastDay={currentForecastDay} onClick={onForecastItemClick} />;
+  return (
+    <ForecastItem
+      {...weatherProps}
+      currentForecastDay={currentForecastDay}
+      onClick={onForecastItemClick}
+    />
+  );
 };

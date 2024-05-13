@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { ApolloError } from '@apollo/client';
 

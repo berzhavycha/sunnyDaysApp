@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { CurrentUserDocument } from '@/services/auth/actions/getCurrentUser/queries';
 import { env } from '@/core/env';
 import { createClient, UNEXPECTED_ERROR_MESSAGE } from '@/graphql';
+import { CurrentUserDocument } from '@/services/auth/actions/getCurrentUser/queries';
 import { NODE_ENV, ONE_DAY_MILLISECONDS, OriginalError, UNAUTHORIZED_ERROR_CODE } from '@/shared';
 
 import { authRoutes } from './constants';
@@ -29,8 +29,8 @@ export const authMiddleware = async (
         redirectToWeatherForecast(request, url.searchParams);
       }
     } else if (
-      tokens && 
-      tokens.value && 
+      tokens &&
+      tokens.value &&
       userResponse.errors &&
       (userResponse.errors[0].extensions.originalError as OriginalError).statusCode ===
         UNAUTHORIZED_ERROR_CODE

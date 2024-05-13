@@ -14,15 +14,20 @@ export const WeatherData: FC = async () => {
   const paginationPageButtons = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const listFooterComponent =
-    totalPages > 1 ? <PaginationPanel weatherData={responseData?.data} paginationPageNumbers={paginationPageButtons} /> : null;
+    totalPages > 1 ? (
+      <PaginationPanel
+        weatherData={responseData?.data}
+        paginationPageNumbers={paginationPageButtons}
+      />
+    ) : null;
 
   const keyExtractor = (item: { city: string }): string => item.city;
 
   return (
     <div className="w-full h-full">
       {!responseData?.data ||
-        !responseData.data?.userCitiesWeather ||
-        !responseData.data?.userCitiesWeather.edges.length ? (
+      !responseData.data?.userCitiesWeather ||
+      !responseData.data?.userCitiesWeather.edges.length ? (
         <NoData />
       ) : (
         <CustomFlatList

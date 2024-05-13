@@ -1,12 +1,19 @@
 import { ApolloError } from '@apollo/client';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
 import { env } from '@/core/env';
 import { usePaginationPrefetch, useWeatherPagination } from '@/hooks';
-import { UserCitiesWeatherQuery, deleteWeatherSubscription } from '@/services';
-import { IS_CLIENT, MD_BREAKPOINT, START_PAGE_NUMBER, countTotalPages, extractPaginationParams, getApolloErrorMessage } from '@/shared';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { deleteWeatherSubscription, UserCitiesWeatherQuery } from '@/services';
+import {
+  countTotalPages,
+  extractPaginationParams,
+  getApolloErrorMessage,
+  IS_CLIENT,
+  MD_BREAKPOINT,
+  START_PAGE_NUMBER,
+} from '@/shared';
 
 type HookReturn = {
   error: string;
@@ -18,15 +25,20 @@ type HookInput = {
   city: string;
   onClose: () => void;
   weatherData?: UserCitiesWeatherQuery;
-  setIsDeletionInProgress: (state: boolean) => void
+  setIsDeletionInProgress: (state: boolean) => void;
 };
 
-export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletionInProgress }: HookInput): HookReturn => {
-  const [error, setError] = useState<string>('')
+export const useDeleteWeatherCard = ({
+  city,
+  onClose,
+  weatherData,
+  setIsDeletionInProgress,
+}: HookInput): HookReturn => {
+  const [error, setError] = useState<string>('');
   const { setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
 
-  const searchParams = useSearchParams()
-  const { page, ...paginationOptions } = extractPaginationParams(searchParams)
+  const searchParams = useSearchParams();
+  const { page, ...paginationOptions } = extractPaginationParams(searchParams);
 
   const { onPrefetch } = useWeatherPagination();
   const { onPrevPrefetch } = usePaginationPrefetch({
@@ -48,7 +60,7 @@ export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletion
       onClose();
     } catch (error) {
       if (error instanceof ApolloError || error instanceof Error) {
-        setError(getApolloErrorMessage(error))
+        setError(getApolloErrorMessage(error));
       }
     } finally {
       setIsDeletionInProgress(false);
@@ -58,7 +70,9 @@ export const useDeleteWeatherCard = ({ city, onClose, weatherData, setIsDeletion
   const onMouseOverDeleteBtn = async (): Promise<void> => {
     if (
       weatherData &&
-      (weatherData.userCitiesWeather.paginationInfo.totalCount - 1) % env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT === 0 &&
+      (weatherData.userCitiesWeather.paginationInfo.totalCount - 1) %
+        env.NEXT_PUBLIC_WEATHER_CITIES_LIMIT ===
+        0 &&
       weatherData.userCitiesWeather.edges?.length === 1
     ) {
       await onPrevPrefetch();

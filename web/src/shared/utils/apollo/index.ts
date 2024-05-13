@@ -1,4 +1,4 @@
 export * from './fieldsErrorHandler';
 export * from './getFetchPolicyForKey';
-export * from './processResponse'
-export * from './getApolloErrorMessage'
+export * from './processResponse';
+export * from './getApolloErrorMessage';

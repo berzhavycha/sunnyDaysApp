@@ -3,25 +3,25 @@
 import { faEnvelope, faKey, faLock } from '@fortawesome/free-solid-svg-icons';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { BaseSyntheticEvent, FC, useTransition } from 'react';
+import { useFormState } from 'react-dom';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/common';
+import { useCurrentUser } from '@/context';
+import { auth } from '@/services/auth';
+import { AuthType, SearchParams, UserDto } from '@/shared';
 
 import { userSchema } from '../../validation';
 import { SubmitButton } from '../SubmitButton';
-import { AuthType, SearchParams, UserDto } from '@/shared';
-import { auth } from '@/services/auth';
-import { useFormState } from 'react-dom';
-import { useCurrentUser } from '@/context';
 
 type Props = {
   authType: AuthType;
-  searchParams: SearchParams
+  searchParams: SearchParams;
 };
 
 export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
   const [isPending, startTransition] = useTransition();
-  const { fetchUser } = useCurrentUser()
+  const { fetchUser } = useCurrentUser();
   const {
     register,
     handleSubmit,
@@ -31,27 +31,23 @@ export const AuthForm: FC<Props> = ({ authType, searchParams }) => {
     resolver: joiResolver(userSchema(authType)),
   });
 
-
   const authWithParams = auth.bind(null, authType);
-  const [authState, authAction] = useFormState(
-    authWithParams,
-    {
-      fieldsError: {
-        email: '',
-        password: ''
-      }
+  const [authState, authAction] = useFormState(authWithParams, {
+    fieldsError: {
+      email: '',
+      password: '',
     },
-  );
+  });
 
   const onSubmit = handleSubmit((data: UserDto, e?: BaseSyntheticEvent) => {
     e?.preventDefault();
 
     startTransition(() => {
-      authAction(data)
+      authAction(data);
     });
 
-    if (Object.values(authState.fieldsError).every(field => !field)) {
-      fetchUser()
+    if (Object.values(authState.fieldsError).every((field) => !field)) {
+      fetchUser();
     }
   });
 

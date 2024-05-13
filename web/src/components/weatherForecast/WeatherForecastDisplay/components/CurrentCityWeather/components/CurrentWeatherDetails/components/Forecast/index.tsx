@@ -20,7 +20,6 @@ export const Forecast: FC<Props> = memo(({ info }) => {
   const [currentForecastDay, setCurrentForecastDay] = useState<string>('');
   const [isTodayCurrentWeather, setIsTodayCurrentWeather] = useState<boolean>(true);
 
-
   const onTodayCurrentWeather = (): void => {
     if (shownWeatherInfo) {
       setCurrentForecastDay('');
@@ -33,7 +32,14 @@ export const Forecast: FC<Props> = memo(({ info }) => {
     env.NEXT_PUBLIC_MAX_FORECAST_DAYS !== env.NEXT_PUBLIC_FORECAST_DAYS_PER_SLIDE;
 
   const keyExtractor = (item: { dayOfWeek: string }): string => item.dayOfWeek;
-  const renderItem = (item: WeatherForecastDays): JSX.Element => <InteractiveForecastItems {...item} currentForecastDay={currentForecastDay} setCurrentForecastDay={setCurrentForecastDay} setIsTodayCurrentWeather={setIsTodayCurrentWeather} />
+  const renderItem = (item: WeatherForecastDays): JSX.Element => (
+    <InteractiveForecastItems
+      {...item}
+      currentForecastDay={currentForecastDay}
+      setCurrentForecastDay={setCurrentForecastDay}
+      setIsTodayCurrentWeather={setIsTodayCurrentWeather}
+    />
+  );
 
   return (
     <div className="bg-blue-600 rounded-3xl py-2 px-2 h-full sm:pt-4 sm:py-2 sm:px-3">

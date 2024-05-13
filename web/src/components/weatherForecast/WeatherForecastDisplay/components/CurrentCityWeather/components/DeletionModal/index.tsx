@@ -1,25 +1,32 @@
 import { FC } from 'react';
 
 import { Modal } from '@/components/common';
+import { UserCitiesWeatherQuery } from '@/services';
 
 import { useDeleteWeatherCard } from './hooks';
-import { UserCitiesWeatherQuery } from '@/services';
 
 type Props = {
   isVisible: boolean;
   city: string;
   onClose: () => void;
-  weatherData?: UserCitiesWeatherQuery
-  isDeletionInProgress: boolean
-  setIsDeletionInProgress: (state: boolean) => void
+  weatherData?: UserCitiesWeatherQuery;
+  isDeletionInProgress: boolean;
+  setIsDeletionInProgress: (state: boolean) => void;
 };
 
-export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData, isDeletionInProgress, setIsDeletionInProgress }) => {
+export const DeletionModal: FC<Props> = ({
+  isVisible,
+  city,
+  onClose,
+  weatherData,
+  isDeletionInProgress,
+  setIsDeletionInProgress,
+}) => {
   const { error, onDelete, onMouseOverDeleteBtn } = useDeleteWeatherCard({
     city,
     onClose,
     weatherData,
-    setIsDeletionInProgress
+    setIsDeletionInProgress,
   });
 
   return (
@@ -34,4 +41,3 @@ export const DeletionModal: FC<Props> = ({ isVisible, city, onClose, weatherData
     />
   );
 };
-

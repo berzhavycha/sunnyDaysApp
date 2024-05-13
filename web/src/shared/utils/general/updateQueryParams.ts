@@ -1,15 +1,19 @@
-import { SearchParams } from "@/shared/types";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-export const updateQueryParams = (router: AppRouterInstance, newQueryParams: SearchParams): void => {
-    const current = new URLSearchParams(window.location.search);
+import { SearchParams } from '@/shared/types';
 
-    for (const key in newQueryParams) {
-        current.set(key, `${newQueryParams[key]}`);
-    }
+export const updateQueryParams = (
+  router: AppRouterInstance,
+  newQueryParams: SearchParams,
+): void => {
+  const current = new URLSearchParams(window.location.search);
 
-    const search = current.toString();
-    const query = search ? `?${search}` : '';
+  for (const key in newQueryParams) {
+    current.set(key, `${newQueryParams[key]}`);
+  }
 
-    router.push(`${window.location.pathname}${query}`);
+  const search = current.toString();
+  const query = search ? `?${search}` : '';
+
+  router.push(`${window.location.pathname}${query}`);
 };

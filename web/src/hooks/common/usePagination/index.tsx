@@ -1,7 +1,8 @@
-'use client'
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 import { PaginationQueryOptionsState, START_PAGE_NUMBER, updatePaginationOptions } from '@/shared';
-import { useRouter } from 'next/navigation';
 
 interface HookReturn {
   onClickPrev: () => Promise<void>;
@@ -20,7 +21,7 @@ export const usePagination = ({
   currentPage,
   totalPages,
 }: UsePaginationDependencies): HookReturn => {
-  const router = useRouter()
+  const router = useRouter();
 
   const onClickPrev = async (): Promise<void> => {
     if (currentPage !== START_PAGE_NUMBER) {

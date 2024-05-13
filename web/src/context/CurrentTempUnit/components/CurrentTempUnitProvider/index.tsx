@@ -4,9 +4,9 @@ import Cookies from 'js-cookie';
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { env } from '@/core/env';
+import { NODE_ENV } from '@/shared';
 
 import { TempUnits } from '../../constants';
-import { NODE_ENV } from '@/shared';
 
 type CurrentTempUnitState = {
   name: TempUnits;

@@ -12,7 +12,15 @@ type Props = {
   onMouseOverOk?: () => void | Promise<void>;
 };
 
-export const Modal: FC<Props> = ({ error, isVisible, text, loading, onMouseOverOk, onOk, onClose }) => {
+export const Modal: FC<Props> = ({
+  error,
+  isVisible,
+  text,
+  loading,
+  onMouseOverOk,
+  onOk,
+  onClose,
+}) => {
   return (
     <div
       className={`${isVisible ? 'flex' : 'hidden'} ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} w-96 md:w-[450px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex-col items-center p-5 pb-3 md:p-8 md:pb-5 rounded-md shadow-lg z-30`}

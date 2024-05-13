@@ -1,17 +1,19 @@
-'use server'
+'use server';
 
-import { getClient } from "@/graphql/utils/getClient"
-import { SignOutDocument } from "./mutations"
-import { cookies } from "next/headers"
-import { revalidatePath } from "next/cache"
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export const signOut = async (): Promise<void> => {
-    await getClient().mutate({
-        mutation: SignOutDocument
-    })
+import { getClient } from '@/graphql/utils/getClient';
 
-    cookies().delete('tokens')
-    revalidatePath('/');
-    redirect('/sign-in')
-}
+import { SignOutDocument } from './mutations';
+
+export const signOut = async (): Promise<void> => {
+  await getClient().mutate({
+    mutation: SignOutDocument,
+  });
+
+  cookies().delete('tokens');
+  revalidatePath('/');
+  redirect('/sign-in');
+};

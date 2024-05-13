@@ -2,7 +2,7 @@ import { ApolloError } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import { UserCitiesWeatherQuery, addWeatherSubscription } from '@/services';
+import { addWeatherSubscription, UserCitiesWeatherQuery } from '@/services';
 import { getApolloErrorMessage } from '@/shared';
 
 type HookReturn = {
@@ -11,7 +11,7 @@ type HookReturn = {
 };
 
 export const useAddSubscription = (weatherData?: UserCitiesWeatherQuery): HookReturn => {
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string>('');
 
   const addWeatherSubscriptionWithParams = addWeatherSubscription.bind(null, weatherData);
   const [addSubscriptionState, addSubscriptionAction] = useFormState(
@@ -32,7 +32,7 @@ export const useAddSubscription = (weatherData?: UserCitiesWeatherQuery): HookRe
       setError(addSubscriptionState.error);
     } catch (error) {
       if (error instanceof ApolloError) {
-        setError(getApolloErrorMessage(error))
+        setError(getApolloErrorMessage(error));
       }
     }
   }, [addSubscriptionState]);

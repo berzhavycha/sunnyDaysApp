@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
 import { AuthType } from '@/hooks';
+import { SearchParams } from '@/shared';
 
 import { AuthForm } from './components';
-import { SearchParams } from '@/shared';
 
 type Props = {
   title: string;
   subtitle: string;
   authType: AuthType;
-  searchParams: SearchParams
+  searchParams: SearchParams;
 };
 
 export const AuthDisplay: FC<Props> = ({ title, authType, subtitle, searchParams }) => {

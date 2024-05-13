@@ -1,2 +1,2 @@
 export * from './queries';
-export { getWeatherForecasts } from './action'
+export { getWeatherForecasts } from './action';

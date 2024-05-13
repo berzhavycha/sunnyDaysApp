@@ -24,7 +24,7 @@ export type CurrentCityWeatherInfoState = {
 type ContextType = {
   currentCityWeatherInfo: CurrentCityWeatherInfoState;
   setCurrentCityWeatherInfo: Dispatch<SetStateAction<CurrentCityWeatherInfoState>>;
-  shownWeatherInfo?: InfoType
+  shownWeatherInfo?: InfoType;
   setShownWeatherInfo: Dispatch<SetStateAction<InfoType | undefined>>;
   isVisibleBelowMedium: boolean;
   setIsVisibleBelowMedium: Dispatch<SetStateAction<boolean>>;
@@ -66,8 +66,8 @@ export const CurrentCityWeatherInfoProvider: FC<Props> = ({ weatherResponse, chi
   }, [currentCityWeatherInfo?.info?.city]);
 
   useEffect(() => {
-    setCurrentCityWeatherInfo({ info: responseData?.data?.userCitiesWeather.edges[0] })
-  }, [weatherResponse])
+    setCurrentCityWeatherInfo({ info: responseData?.data?.userCitiesWeather.edges[0] });
+  }, [weatherResponse]);
 
   const contextValue: ContextType = {
     currentCityWeatherInfo,

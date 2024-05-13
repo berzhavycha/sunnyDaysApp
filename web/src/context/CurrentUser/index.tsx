@@ -18,7 +18,7 @@ export type CurrentUserState = {
 };
 
 type ContextType = {
-  fetchUser: () => Promise<void>,
+  fetchUser: () => Promise<void>;
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
   onSignOut: () => Promise<void>;

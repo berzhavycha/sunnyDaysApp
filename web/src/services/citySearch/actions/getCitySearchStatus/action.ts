@@ -1,7 +1,8 @@
-'use server'
+'use server';
+
+import { getClient } from '@/graphql/utils/getClient';
 
 import { CitySearchStatusDocument } from './queries';
-import { getClient } from '@/graphql/utils/getClient';
 
 export const getCitySearchStatus = async (): Promise<boolean> => {
   try {
@@ -9,8 +10,8 @@ export const getCitySearchStatus = async (): Promise<boolean> => {
       query: CitySearchStatusDocument,
     });
 
-    return data.citySearchStatus
+    return data.citySearchStatus;
   } catch (error) {
-    return false
+    return false;
   }
 };

@@ -1,11 +1,10 @@
 import { FC, Suspense } from 'react';
 
 import { Spinner } from '@/components/common';
-
-import { CurrentCityWeather, WeatherData, WeatherHeader } from './components';
 import { CurrentCityWeatherInfoProvider } from '@/context';
 import { getWeatherForecasts } from '@/services';
 
+import { CurrentCityWeather, WeatherData, WeatherHeader } from './components';
 
 export const WeatherForecastDisplay: FC = async () => {
   const weatherResponse = await getWeatherForecasts();

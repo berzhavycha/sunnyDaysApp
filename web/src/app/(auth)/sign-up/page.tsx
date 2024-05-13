@@ -4,8 +4,8 @@ import { AuthDisplay } from '@/components';
 import { AuthType, SearchParams } from '@/shared';
 
 type Props = {
-  searchParams: SearchParams
-}
+  searchParams: SearchParams;
+};
 
 const SignUp: FC<Props> = ({ searchParams }) => {
   return (

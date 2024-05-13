@@ -11,15 +11,14 @@ import { CurrentWeatherDetails, DeletionModal } from './components';
 
 type Props = {
   weatherResponse: string;
-}
+};
 
 export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
-  const { isVisibleBelowMedium, setIsVisibleBelowMedium } =
-    useCurrentCityWeatherInfo();
-  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false)
+  const { isVisibleBelowMedium, setIsVisibleBelowMedium } = useCurrentCityWeatherInfo();
+  const [isDeletionInProgress, setIsDeletionInProgress] = useState<boolean>(false);
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState<boolean>(false);
   const [cityToDelete, setCityToDelete] = useState<string>('');
-  const { weatherData } = useParseWeatherData(weatherResponse)
+  const { weatherData } = useParseWeatherData(weatherResponse);
 
   const [windowWidth, setWindowWidth] = useState(IS_CLIENT ? window.innerWidth : 0);
   useResizeWindow(() => setWindowWidth(IS_CLIENT ? window.innerWidth : 0));
@@ -40,7 +39,6 @@ export const CurrentCityWeather: FC<Props> = ({ weatherResponse }) => {
     setIsDeletionModalOpen(true);
     setCityToDelete(city);
   };
-
 
   return (
     <>

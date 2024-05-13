@@ -5,11 +5,16 @@ import { FC } from 'react';
 type Props = {
   name: string;
   country: string;
-  onPressOutside: () => void,
-  onCitySelect: (text: string) => Promise<void> | void,
+  onPressOutside: () => void;
+  onCitySelect: (text: string) => Promise<void> | void;
 };
 
-export const CityAutocompleteItem: FC<Props> = ({ name, country, onPressOutside, onCitySelect }) => {
+export const CityAutocompleteItem: FC<Props> = ({
+  name,
+  country,
+  onPressOutside,
+  onCitySelect,
+}) => {
   const citySelectHandler = async (): Promise<void> => {
     await onCitySelect(name);
     onPressOutside();

@@ -1,4 +1,4 @@
 export * from './getTimeFormat';
 export * from './upperCaseFirstLetter';
-export * from './extractCookiesFromResponse'
-export * from './updateQueryParams'
+export * from './extractCookiesFromResponse';
+export * from './updateQueryParams';

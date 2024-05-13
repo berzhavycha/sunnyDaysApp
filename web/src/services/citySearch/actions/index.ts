@@ -1,2 +1,2 @@
 export * from './getCitySearchStatus';
-export * from './getCitiesByPrefix'
+export * from './getCitiesByPrefix';

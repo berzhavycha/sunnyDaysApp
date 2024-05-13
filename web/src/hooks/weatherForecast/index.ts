@@ -1,2 +1,2 @@
 export * from './useWeatherPagination';
-export * from './useParseWeatherData'
+export * from './useParseWeatherData';

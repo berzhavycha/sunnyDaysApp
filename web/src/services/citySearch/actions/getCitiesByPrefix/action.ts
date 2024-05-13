@@ -1,15 +1,16 @@
-'use server'
+'use server';
 
-import { getClient } from "@/graphql/utils/getClient";
-import { CitiesDocument } from "./queries";
-import { getCitiesQueryVariables, extractData } from "./utils";
-import { City } from "@/shared"
+import { getClient } from '@/graphql/utils/getClient';
+import { City } from '@/shared';
+
+import { CitiesDocument } from './queries';
+import { extractData, getCitiesQueryVariables } from './utils';
 
 export const getCitiesByPrefix = async (city: string): Promise<City[]> => {
-    const { data } = await getClient().query({
-        query: CitiesDocument,
-        variables: getCitiesQueryVariables(city)
-    });
+  const { data } = await getClient().query({
+    query: CitiesDocument,
+    variables: getCitiesQueryVariables(city),
+  });
 
-    return extractData(data);
-}
+  return extractData(data);
+};

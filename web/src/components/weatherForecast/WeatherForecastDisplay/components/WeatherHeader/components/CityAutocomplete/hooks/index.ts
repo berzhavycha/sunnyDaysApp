@@ -1,1 +1,1 @@
-export * from './useCitySearchList'
+export * from './useCitySearchList';

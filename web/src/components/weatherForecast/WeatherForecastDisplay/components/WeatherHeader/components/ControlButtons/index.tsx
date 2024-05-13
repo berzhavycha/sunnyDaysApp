@@ -14,8 +14,8 @@ export const ControlButtons: FC = () => {
 
   const signOutHandler = async (): Promise<void> => {
     await onSignOut();
-    await signOut()
-  }
+    await signOut();
+  };
 
   const onSignOutBtnContent = <FontAwesomeIcon icon={faSignOut} className="text-white text-md" />;
 
