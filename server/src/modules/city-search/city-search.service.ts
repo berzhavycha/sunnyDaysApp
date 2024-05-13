@@ -58,10 +58,8 @@ export class CitySearchService {
     } catch (error) {
       if (
         error instanceof AxiosError &&
-        error.response.status === TOO_MANY_REQUESTS_ERROR_CODE
+        error.response.status !== TOO_MANY_REQUESTS_ERROR_CODE
       ) {
-        console.log('Too many requests in a small period of time!');
-      } else {
         throw error;
       }
     }
