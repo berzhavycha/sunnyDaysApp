@@ -1,5 +1,4 @@
 FROM node:21.6.2-alpine3.18 AS base
-RUN npm install -g npm@10.7.0
 WORKDIR /home/node
 USER node
 COPY --chown=node:node package*.json ./
