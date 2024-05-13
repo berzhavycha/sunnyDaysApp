@@ -23,6 +23,8 @@ export const useAddSubscription = (weatherData?: UserCitiesWeatherQuery): HookRe
 
   useEffect(() => {
     try {
+      setError('')
+      
       if (addSubscriptionState.error.startsWith('{') && addSubscriptionState.error.endsWith('}')) {
         const apolloError = JSON.parse(addSubscriptionState.error);
 
