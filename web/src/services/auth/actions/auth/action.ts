@@ -2,6 +2,7 @@
 
 import { ApolloError } from '@apollo/client';
 import { isRedirectError } from 'next/dist/client/components/redirect';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { env } from '@/core/env';
@@ -17,10 +18,6 @@ import {
 } from '@/shared';
 
 import { authUser, pickUserErrorMessages } from './utils';
-
-// GitHub issue - https://github.com/vercel/next.js/issues/49757#issuecomment-1894910792
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { cookies } = require('next/headers');
 
 type AuthState = {
   fieldsError: FieldErrorsState<UserDto>;

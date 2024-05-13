@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import {
   createContext,
   Dispatch,
@@ -21,7 +22,6 @@ type ContextType = {
   fetchUser: () => Promise<void>;
   currentUser: CurrentUserState | null;
   setCurrentUser: Dispatch<SetStateAction<CurrentUserState | null>>;
-  onSignOut: () => Promise<void>;
 };
 
 const CurrentUserContext = createContext<ContextType | null>(null);
@@ -38,6 +38,7 @@ export const useCurrentUser = (): ContextType => {
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserState | null>(null);
+  const pathname = usePathname();
 
   const fetchUser = async (): Promise<void> => {
     const userData = await getCurrentUser();
@@ -46,17 +47,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
-
-  const onSignOut = async (): Promise<void> => {
-    setCurrentUser(null);
-  };
+  }, [pathname]);
 
   const contextValue: ContextType = {
     fetchUser,
     currentUser,
     setCurrentUser,
-    onSignOut,
   };
 
   return <CurrentUserContext.Provider value={contextValue}>{children}</CurrentUserContext.Provider>;
