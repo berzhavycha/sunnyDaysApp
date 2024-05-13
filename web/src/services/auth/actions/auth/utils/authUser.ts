@@ -10,6 +10,7 @@ export const authUser = async (authType: AuthType, userDto: UserDto, extraVariab
         ...extraVariables
     };
 
+    // we have to use fetch instead of Apollo Client to get access to cookies
     const response = await fetch(env.NEXT_PUBLIC_BASE_URL, {
         method: 'POST',
         body: JSON.stringify({

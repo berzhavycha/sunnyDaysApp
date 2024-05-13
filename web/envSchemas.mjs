@@ -14,7 +14,6 @@ export const clientSchema = Joi.object({
     NEXT_PUBLIC_DYNAMIC_CACHE_SECONDS_TIME: Joi.number().default(60),
     NEXT_PUBLIC_STATIC_CACHE_SECONDS_TIME: Joi.number().default(900),
     NEXT_PUBLIC_PASSWORD_MIN_LENGTH: Joi.number().default(8),
-    NEXT_PUBLIC_FEATURE_CACHE_SECONDS_TIME: Joi.number().default(900),
     NEXT_PUBLIC_TEMP_UNIT_COOKIE_EXPIRATION_DAYS_TIME: Joi.number().default(90)
 });
 
