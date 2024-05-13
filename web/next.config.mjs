@@ -1,9 +1,17 @@
-// Import validated env for server and client to enable its validation
+// Importing validated environment variables for server and client configurations
 import { serverValidatedEnv } from './serverEnvValidation.mjs';
 import { clientValidatedEnv } from './clientEnvValidation.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Configuring cache duration for stale data on weather-forecast pages
+    // Disabling Data Cache using headers() function necessitates setting Router Cache duration
+    experimental: {
+        staleTimes: {
+            dynamic: clientValidatedEnv.NEXT_PUBLIC_DYNAMIC_CACHE_SECONDS_TIME,
+            static: clientValidatedEnv.NEXT_PUBLIC_STATIC_CACHE_SECONDS_TIME,
+        }
+    },
     images: {
         remotePatterns: [
             {
