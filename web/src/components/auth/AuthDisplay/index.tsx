@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { AuthType } from '@/hooks';
-import { SearchParams } from '@/shared';
+import { AuthType, SearchParams } from '@/shared';
 
 import { AuthForm } from './components';
 

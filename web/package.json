@@ -12,12 +12,12 @@
     "watch": "graphql-codegen -w"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=18.17.0",
     "npm": ">=9.0.0"
   },
   "dependencies": {
     "@apollo/client": "^3.8.9",
-    "@apollo/experimental-nextjs-app-support": "^0.8.0",
+    "@apollo/experimental-nextjs-app-support": "^0.10.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
@@ -29,8 +29,8 @@
     "joi": "^17.12.2",
     "js-cookie": "^3.0.5",
     "next": "^14.3.0-canary.4",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.0",
     "react-spinners": "^0.13.8",
     "sharp": "^0.33.2",
@@ -39,6 +39,8 @@
     "with-refresh-token": "^0.2.5"
   },
   "devDependencies": {
+    "@babel/plugin-transform-class-properties": "^7.24.1",
+    "@babel/plugin-transform-object-rest-spread": "^7.24.5",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/near-operation-file-preset": "^3.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

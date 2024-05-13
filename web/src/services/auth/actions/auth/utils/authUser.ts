@@ -1,8 +1,7 @@
 import { ApolloError } from '@apollo/client';
 
 import { env } from '@/core/env';
-import { AuthType } from '@/hooks';
-import { extractCookiesFromResponse, UserDto } from '@/shared';
+import { AuthType, extractCookiesFromResponse, UserDto } from '@/shared';
 
 import { authMutations } from '../../../constants';
 
