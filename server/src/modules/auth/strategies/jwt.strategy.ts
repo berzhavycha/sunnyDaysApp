@@ -1,41 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express-serve-static-core';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { SafeUser, UsersService } from '@modules/users';
+import { UsersService } from '@modules/users';
 
-import { JwtPayload } from '../interfaces';
+import { BaseJwtStrategy } from './base-jwt.strategy';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends BaseJwtStrategy {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
+    usersService: UsersService,
+    configService: ConfigService,
   ) {
-    super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        JwtStrategy.extractJWTFromCookie,
-      ]),
-      ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_ACCESS_SECRET'),
-    });
-  }
-
-  private static extractJWTFromCookie(req: Request): string | null {
-    if (req.cookies && req.cookies.tokens) {
-      return req.cookies.tokens.accessToken;
-    }
-    return null;
-  }
-
-  async validate(payload: JwtPayload): Promise<SafeUser> {
-    const user = await this.usersService.findById(payload.sub);
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    return this.usersService.getSafeUser(user);
+    super(usersService, configService.get<string>('JWT_ACCESS_SECRET'));
   }
 }
