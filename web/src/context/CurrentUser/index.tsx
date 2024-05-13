@@ -45,7 +45,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
       const userData = await getCurrentUser();
       setCurrentUser(userData.data.currentUser);
     } catch (error) {
-      setCurrentUser(null)
+      setCurrentUser(null);
     }
   };
 

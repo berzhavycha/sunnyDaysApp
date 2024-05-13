@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 
 import { useCurrentCityWeatherInfo } from '@/context';
 import { WeatherForecastDays } from '@/shared';
@@ -19,7 +19,7 @@ export const InteractiveForecastItems: FC<Props> = ({
 }) => {
   const { setCurrentCityWeatherInfo } = useCurrentCityWeatherInfo();
 
-  const onForecastItemClick = useCallback((): void => {
+  const onForecastItemClick = (): void => {
     setIsTodayCurrentWeather(false);
     setCurrentForecastDay(weatherProps.dayOfWeek);
 
@@ -31,7 +31,7 @@ export const InteractiveForecastItems: FC<Props> = ({
         },
       };
     });
-  }, [setCurrentCityWeatherInfo]);
+  };
 
   return (
     <ForecastItem
