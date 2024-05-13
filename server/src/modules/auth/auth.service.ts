@@ -12,7 +12,7 @@ import { NODE_ENV, ONE_DAY_MILLISECONDS } from '@shared';
 import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser, UsersService } from '@modules/users';
 
-import { DUPLICATE_EMAIL_ERROR_CODE } from './constants';
+import { DUPLICATE_EMAIL_ERROR_CODE, errorMessages } from './constants';
 import { UserDto } from './dtos';
 import { AuthResult, ITokens, JwtPayload } from './interfaces';
 
@@ -22,7 +22,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(registerUserDto: UserDto): Promise<AuthResult> {
     try {
@@ -41,7 +41,7 @@ export class AuthService {
       };
     } catch (error) {
       if (error.code === DUPLICATE_EMAIL_ERROR_CODE) {
-        throw new ConflictException('Email is already in use!');
+        throw new ConflictException(errorMessages.DUPLICATE_EMAIL);
       } else {
         throw error;
       }
@@ -61,14 +61,14 @@ export class AuthService {
   ): Promise<SafeUser | null> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
-      throw new UnauthorizedException('Invalid email!');
+      throw new UnauthorizedException(errorMessages.INVALID_EMAIL);
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
       return this.usersService.getSafeUser(user);
     }
 
-    throw new UnauthorizedException('Invalid password!');
+    throw new UnauthorizedException(errorMessages.INVALID_PASSWORD);
   }
 
   async signOut(userId: string): Promise<void> {
@@ -109,7 +109,7 @@ export class AuthService {
   async validateRefreshToken(userId: string, token: string): Promise<void> {
     const { refreshTokenHash } = await this.usersService.findById(userId);
     if (refreshTokenHash && !(await bcrypt.compare(token, refreshTokenHash))) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException(errorMessages.INVALID_REFRESH_TOKEN);
     }
   }
 

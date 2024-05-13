@@ -12,6 +12,7 @@ import {
 } from '@modules/weather-management';
 
 import { City } from './entities';
+import { cityErrorMessages } from './constants';
 
 @Injectable()
 export class CitiesService {
@@ -76,7 +77,7 @@ export class CitiesService {
     const city = await this.findByName(name);
 
     if (!city) {
-      throw new NotFoundException(`City '${name}' not found!`);
+      throw new NotFoundException(cityErrorMessages.cityNotFound(name));
     }
 
     return this.citiesRepository.delete(city.id);

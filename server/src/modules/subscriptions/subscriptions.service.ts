@@ -6,11 +6,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Order, upperCaseEveryFirstLetter } from '@shared';
+import { Order } from '@shared';
 
 import { CitiesService } from '@modules/cities';
 
-import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN } from './constants';
+import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN, subscriptionErrorMessages } from './constants';
 import { Subscription } from './entities';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) {}
+  ) { }
 
   async createSubscription(
     cityName: string,
@@ -37,9 +37,7 @@ export class SubscriptionsService {
 
     if (existingSubscription) {
       throw new BadRequestException(
-        `You already have a subscription for ${upperCaseEveryFirstLetter(
-          city.name,
-        )}`,
+        subscriptionErrorMessages.subscriptionExists(city.name),
       );
     }
 
@@ -61,7 +59,7 @@ export class SubscriptionsService {
 
     if (!subscription) {
       throw new NotFoundException(
-        `Subscription not found for city '${cityName}'`,
+        subscriptionErrorMessages.subscriptionNotFound(cityName),
       );
     }
 

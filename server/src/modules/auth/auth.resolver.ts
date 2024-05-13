@@ -9,6 +9,7 @@ import { CurrentUser, Public } from './decorators';
 import { UserDto } from './dtos';
 import { JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
 import { Message, UserPayload } from './types';
+import { errorMessages } from './constants';
 
 @Resolver()
 export class AuthResolver {
@@ -48,7 +49,7 @@ export class AuthResolver {
     const refreshToken = context.req.cookies.tokens?.refreshToken;
 
     if (!refreshToken) {
-      throw new Error('Refresh token not found in cookies.');
+      throw new Error(errorMessages.REFRESH_TOKEN_NOT_FOUND);
     }
 
     const tokens = await this.authService.refreshAccessToken(refreshToken);
