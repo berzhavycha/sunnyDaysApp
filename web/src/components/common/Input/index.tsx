@@ -45,7 +45,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         />
         {isSecured && (
           <button
-            type="button"
+            tabIndex={-1}
+            type='button'
             className="absolute top-7 right-3 md:top-12"
             onClick={toggleShowPassword}
           >
