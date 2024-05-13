@@ -15,9 +15,9 @@ type Props = {
 export const WeatherCitySearch: FC<Props> = ({ weatherResponse }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const cityAutocompleteRef = useRef<CityRef>(null);
-  const { weatherData } = useParseWeatherData(weatherResponse)
+  const { error: weatherErrorMessage, weatherData } = useParseWeatherData(weatherResponse)
 
-  const { error, addSubscriptionAction } = useAddSubscription(weatherData);
+  const { error: addSubscriptionErrorMessage, addSubscriptionAction } = useAddSubscription(weatherData);
 
   const onSubmit = (): void => cityAutocompleteRef.current?.resetCity();
 
@@ -28,7 +28,7 @@ export const WeatherCitySearch: FC<Props> = ({ weatherResponse }) => {
       onSubmit={onSubmit}
       className="w-full flex items-start justify-between mb-2 gap-4 sm:gap-8 md:max-xl:mb-0"
     >
-      <CityAutocomplete errorMessage={error} ref={cityAutocompleteRef} formRef={formRef} />
+      <CityAutocomplete errorMessage={weatherErrorMessage || addSubscriptionErrorMessage} ref={cityAutocompleteRef} formRef={formRef} />
       <SubmitCityButton />
     </form>
   );
