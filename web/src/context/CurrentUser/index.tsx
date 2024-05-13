@@ -41,8 +41,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
 
   const fetchUser = async (): Promise<void> => {
-    const userData = await getCurrentUser();
-    setCurrentUser(userData.data.currentUser);
+    try {
+      const userData = await getCurrentUser();
+      setCurrentUser(userData.data.currentUser);
+    } catch (error) {
+      setCurrentUser(null)
+    }
   };
 
   useEffect(() => {
