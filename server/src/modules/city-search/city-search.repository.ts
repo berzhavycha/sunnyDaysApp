@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 
-import { HttpStatusCode } from '@shared';
+import { HttpStatusCode, urlBuilder } from '@shared';
 
 import { CityPrefixArgsDto } from './dtos';
 import { CitySearchResponse } from './interfaces';
@@ -13,7 +13,7 @@ export class CitySearchRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   async getCitiesByPrefix(
     cityPrefixArgs: CityPrefixArgsDto,
@@ -24,7 +24,13 @@ export class CitySearchRepository {
       'SEARCH_CITIES_API_BASE_URL',
     );
 
-    const apiUrl = `${searchCityApiBaseUrl}?namePrefix=${prefix}&sort=${sort}&offset=${offset}&limit=${limit}&minPopulation=${minPopulation}`;
+    const apiUrl = urlBuilder(searchCityApiBaseUrl, {
+      namePrefix: prefix,
+      offset,
+      sort,
+      limit,
+      minPopulation
+    })
 
     return this.httpService
       .get(apiUrl, {

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 
-import { HttpStatusCode } from '@shared';
+import { HttpStatusCode, urlBuilder } from '@shared';
 
 import { IWeatherApiResponse } from './interfaces';
 
@@ -12,7 +12,7 @@ export class WeatherManagementRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   async getCityWeather(
     cityName: string,
@@ -23,7 +23,11 @@ export class WeatherManagementRepository {
       'WEATHER_API_BASE_URL',
     );
 
-    const apiUrl = `${weatherApiBaseUrl}?key=${weatherApiKey}&q=${cityName}&days=${forecastDays}`;
+    const apiUrl = urlBuilder(weatherApiBaseUrl, {
+      key: weatherApiKey,
+      q: cityName,
+      days: forecastDays
+    })
 
     return this.httpService
       .get(apiUrl, {
