@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -9,7 +9,7 @@ import { SafeUser } from './interfaces';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async createUser(
     email: string,
@@ -51,5 +51,15 @@ export class UsersService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, refreshTokenHash, ...result } = user;
     return result;
+  }
+
+  async validateUserById(id: string): Promise<SafeUser> {
+    const user = await this.findById(id);
+    
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return this.getSafeUser(user);
   }
 }
