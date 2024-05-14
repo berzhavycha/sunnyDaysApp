@@ -27,7 +27,7 @@ export class AuthResolver {
     return user;
   }
 
-  @Public()
+  @Public()  
   @Mutation(() => UserPayload)
   @UseGuards(LocalAuthGuard)
   async signIn(

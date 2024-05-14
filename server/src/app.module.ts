@@ -18,8 +18,8 @@ import { WeatherManagementModule } from './modules/weather-management';
 @Module({
   imports: [
     DatabaseModule,
-    ConfigModule,
     GraphqlModule,
+    ConfigModule,
     RedisModule,
     AuthModule,
     UsersModule,
