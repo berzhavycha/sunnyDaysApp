@@ -12,6 +12,7 @@ services:
         - /home/node/.next
     ports:
       - "3000:3000"
+    restart: unless-stopped
 
   server:
     build: 

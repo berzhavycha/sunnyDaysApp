@@ -80,12 +80,17 @@ Steps to Build Docker Container in Development Mode using docker-compose:
 \$ cd docker
 ```
 
-3. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
+3. Navigate to the scripts directory: 
+```
+\$ cd scripts
+```
+
+4. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
 ```
 chmod +x ./up_fullstack_dev.sh
 ```
 
-4. Build and run docker containers by running up_fullstack_dev.sh file: 
+5. Build and run docker containers by running up_fullstack_dev.sh file: 
 ```
 \$ ./up_fullstack_dev.sh
 ```
@@ -102,12 +107,18 @@ chmod +x ./up_fullstack_dev.sh
 \$ cd docker
 ```
 
+3. Navigate to the scripts directory: 
+```
+\$ cd scripts
+```
+
+
 3. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
 ```
 chmod +x ./up_fullstack_prod.sh
 ```
 
-4. Build and run docker containers by running up_fullstack_prod.sh file: 
+5. Build and run docker containers by running up_fullstack_prod.sh file: 
 ```
 \$ ./up_fullstack_prod.sh
 ```
