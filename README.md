@@ -112,8 +112,7 @@ chmod +x ./up_fullstack_dev.sh
 \$ cd scripts
 ```
 
-
-3. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
+4. Set Execute Permissions: You need to set the execute permissions on the script file. You can do this using the chmod command:
 ```
 chmod +x ./up_fullstack_prod.sh
 ```
