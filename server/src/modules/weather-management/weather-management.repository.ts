@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import { HttpStatusCode, urlBuilder } from '@shared';
 
 import { IWeatherApiResponse } from './interfaces';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class WeatherManagementRepository {
@@ -29,7 +30,7 @@ export class WeatherManagementRepository {
       days: forecastDays
     })
 
-    return this.httpService
+    const response = this.httpService
       .get(apiUrl, {
         validateStatus: function (status) {
           return (
@@ -38,6 +39,7 @@ export class WeatherManagementRepository {
           );
         },
       })
-      .toPromise();
+
+    return firstValueFrom(response)
   }
 }

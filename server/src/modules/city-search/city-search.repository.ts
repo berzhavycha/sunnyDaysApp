@@ -7,6 +7,7 @@ import { HttpStatusCode, urlBuilder } from '@shared';
 
 import { CityPrefixArgsDto } from './dtos';
 import { CitySearchResponse } from './interfaces';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class CitySearchRepository {
@@ -32,23 +33,23 @@ export class CitySearchRepository {
       minPopulation
     })
 
-    return this.httpService
-      .get(apiUrl, {
-        headers: {
-          'X-RapidAPI-Key': this.configService.get<string>(
-            'SEARCH_CITIES_API_KEY',
-          ),
-          'X-RapidAPI-Host': this.configService.get<string>(
-            'SEARCH_CITIES_API_HOST',
-          ),
-        },
-        validateStatus: function (status) {
-          return (
-            status >= HttpStatusCode.SUCCESS &&
-            status < HttpStatusCode.REDIRECTION
-          );
-        },
-      })
-      .toPromise();
+    const response = this.httpService.get(apiUrl, {
+      headers: {
+        'X-RapidAPI-Key': this.configService.get<string>(
+          'SEARCH_CITIES_API_KEY',
+        ),
+        'X-RapidAPI-Host': this.configService.get<string>(
+          'SEARCH_CITIES_API_HOST',
+        ),
+      },
+      validateStatus: function (status) {
+        return (
+          status >= HttpStatusCode.SUCCESS &&
+          status < HttpStatusCode.REDIRECTION
+        );
+      },
+    });
+
+    return firstValueFrom(response);
   }
 }
