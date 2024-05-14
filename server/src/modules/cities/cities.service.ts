@@ -1,15 +1,11 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 
-import {
-  NO_MATCHING_LOCATION_FOUND_ERROR_CODE,
-  WeatherManagementService,
-} from '@modules/weather-management';
+import { WeatherManagementService } from '@modules/weather-management';
 
 import { City } from './entities';
 import { cityErrorMessages } from './constants';
@@ -19,48 +15,22 @@ export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
     private readonly weatherManagementService: WeatherManagementService,
-  ) {}
+  ) { }
 
   async createCity(
     cityName: string,
     forecastDaysAmount: number,
   ): Promise<City> {
-    try {
-      const response = await this.weatherManagementService.getCityWeather(
-        cityName,
-        forecastDaysAmount,
-      );
+    let city = await this.findByName(cityName);
 
-      const forecast =
-        this.weatherManagementService.mapResponseToWeatherForecast(
-          response,
-          cityName,
-        );
-
-      await this.weatherManagementService.cacheForecast(forecast);
-
-      let city = await this.findByName(cityName);
-
-      if (city) {
-        return city;
-      }
-
-      city = this.citiesRepository.create({ name: cityName.toLowerCase() });
-      return this.citiesRepository.save(city);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data.error &&
-        error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
-      ) {
-        throw new BadRequestException(
-          error.response.data.error.message,
-          error.response.status,
-        );
-      } else {
-        throw error;
-      }
+    if (city) {
+      return city;
     }
+
+    this.weatherManagementService.validateCity(cityName, forecastDaysAmount)
+    
+    city = this.citiesRepository.create({ name: cityName.toLowerCase() });
+    return this.citiesRepository.save(city);
   }
 
   async findByName(name: string): Promise<City> {

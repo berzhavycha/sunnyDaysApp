@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
@@ -10,6 +10,7 @@ import { daysOfWeek, upperCaseEveryFirstLetter, weatherForecastKey } from '@shar
 import { IForecastDay, IWeatherApiResponse } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherManagementRepository } from './weather-management.repository';
+import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
 @Injectable()
 export class WeatherManagementService {
@@ -17,7 +18,7 @@ export class WeatherManagementService {
     private readonly weatherApiRepository: WeatherManagementRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async getCityWeather(
     name: string,
@@ -81,5 +82,35 @@ export class WeatherManagementService {
         dayOfWeek,
       };
     });
+  }
+
+  async validateCity(cityName: string, forecastDaysAmount: number): Promise<void> {
+    try {
+      const response = await this.getCityWeather(
+        cityName,
+        forecastDaysAmount,
+      );
+
+      const forecast =
+        this.mapResponseToWeatherForecast(
+          response,
+          cityName,
+        );
+
+      await this.cacheForecast(forecast);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data.error &&
+        error.response.data.error.code === NO_MATCHING_LOCATION_FOUND_ERROR_CODE
+      ) {
+        throw new BadRequestException(
+          error.response.data.error.message,
+          error.response.status,
+        );
+      } else {
+        throw error;
+      }
+    }
   }
 }
