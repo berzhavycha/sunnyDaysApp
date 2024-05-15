@@ -5,11 +5,11 @@ import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser } from '@modules/users';
 
 import { AuthService } from './auth.service';
+import { errorMessages } from './constants';
 import { CurrentUser, Public } from './decorators';
 import { UserDto } from './dtos';
 import { JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
 import { Message, UserPayload } from './types';
-import { errorMessages } from './constants';
 
 @Resolver()
 export class AuthResolver {
@@ -27,7 +27,7 @@ export class AuthResolver {
     return user;
   }
 
-  @Public()  
+  @Public()
   @Mutation(() => UserPayload)
   @UseGuards(LocalAuthGuard)
   async signIn(

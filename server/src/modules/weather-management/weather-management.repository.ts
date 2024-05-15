@@ -2,18 +2,18 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
+import { firstValueFrom } from 'rxjs';
 
 import { HttpStatusCode, urlBuilder } from '@shared';
 
 import { IWeatherApiResponse } from './interfaces';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class WeatherManagementRepository {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   async getCityWeather(
     cityName: string,
@@ -27,19 +27,18 @@ export class WeatherManagementRepository {
     const apiUrl = urlBuilder(weatherApiBaseUrl, {
       key: weatherApiKey,
       q: cityName,
-      days: forecastDays
-    })
+      days: forecastDays,
+    });
 
-    const response = this.httpService
-      .get(apiUrl, {
-        validateStatus: function (status) {
-          return (
-            status >= HttpStatusCode.SUCCESS &&
-            status < HttpStatusCode.REDIRECTION
-          );
-        },
-      })
+    const response = this.httpService.get(apiUrl, {
+      validateStatus: function (status) {
+        return (
+          status >= HttpStatusCode.SUCCESS &&
+          status < HttpStatusCode.REDIRECTION
+        );
+      },
+    });
 
-    return firstValueFrom(response)
+    return firstValueFrom(response);
   }
 }

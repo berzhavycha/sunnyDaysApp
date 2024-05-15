@@ -10,7 +10,11 @@ import { Order } from '@shared';
 
 import { CitiesService } from '@modules/cities';
 
-import { DEFAULT_ORDER, DEFAULT_ORDER_COLUMN, subscriptionErrorMessages } from './constants';
+import {
+  DEFAULT_ORDER,
+  DEFAULT_ORDER_COLUMN,
+  subscriptionErrorMessages,
+} from './constants';
 import { Subscription } from './entities';
 
 @Injectable()
@@ -19,7 +23,7 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async createSubscription(
     cityName: string,

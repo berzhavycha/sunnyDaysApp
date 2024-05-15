@@ -1,21 +1,18 @@
-import {
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 
 import { WeatherManagementService } from '@modules/weather-management';
 
-import { City } from './entities';
 import { cityErrorMessages } from './constants';
+import { City } from './entities';
 
 @Injectable()
 export class CitiesService {
   constructor(
     @InjectRepository(City) private readonly citiesRepository: Repository<City>,
     private readonly weatherManagementService: WeatherManagementService,
-  ) { }
+  ) {}
 
   async createCity(
     cityName: string,
@@ -27,8 +24,8 @@ export class CitiesService {
       return city;
     }
 
-    this.weatherManagementService.validateCity(cityName, forecastDaysAmount)
-    
+    this.weatherManagementService.validateCity(cityName, forecastDaysAmount);
+
     city = this.citiesRepository.create({ name: cityName.toLowerCase() });
     return this.citiesRepository.save(city);
   }

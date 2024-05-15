@@ -18,7 +18,7 @@ export class WeatherForecastService {
     private readonly subscriptionsService: SubscriptionsService,
     private readonly weatherManagementService: WeatherManagementService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getUserCitiesWeather(options: {
     userId: string;

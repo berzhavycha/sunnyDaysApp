@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 
-import { ConfigModule } from '@modules/config';
 import { AuthModule, JwtAuthGuard } from '@modules/auth';
 import { CitiesModule } from '@modules/cities';
 import { CitySearchModule } from '@modules/city-search';
+import { ConfigModule } from '@modules/config';
 import { DatabaseModule } from '@modules/database';
 import { FeaturesModule } from '@modules/features';
 import { GraphqlModule } from '@modules/graphql';

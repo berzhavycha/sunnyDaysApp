@@ -12,4 +12,4 @@ import { configValidationSchema } from './validation';
     }),
   ],
 })
-export class ConfigModule { }
+export class ConfigModule {}

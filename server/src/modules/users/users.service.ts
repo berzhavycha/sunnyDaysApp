@@ -9,7 +9,7 @@ import { SafeUser } from './interfaces';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async createUser(
     email: string,
@@ -55,7 +55,7 @@ export class UsersService {
 
   async validateUserById(id: string): Promise<SafeUser> {
     const user = await this.findById(id);
-    
+
     if (!user) {
       throw new UnauthorizedException();
     }

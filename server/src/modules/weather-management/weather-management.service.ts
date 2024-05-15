@@ -5,12 +5,16 @@ import { AxiosResponse } from 'axios';
 import { Cache } from 'cache-manager';
 import { v4 as uuidv4 } from 'uuid';
 
-import { daysOfWeek, upperCaseEveryFirstLetter, weatherForecastKey } from '@shared';
+import {
+  daysOfWeek,
+  upperCaseEveryFirstLetter,
+  weatherForecastKey,
+} from '@shared';
 
+import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 import { IForecastDay, IWeatherApiResponse } from './interfaces';
 import { WeatherDay, WeatherForecast } from './types';
 import { WeatherManagementRepository } from './weather-management.repository';
-import { NO_MATCHING_LOCATION_FOUND_ERROR_CODE } from './constants';
 
 @Injectable()
 export class WeatherManagementService {
@@ -18,7 +22,7 @@ export class WeatherManagementService {
     private readonly weatherApiRepository: WeatherManagementRepository,
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) { }
+  ) {}
 
   async getCityWeather(
     name: string,
@@ -28,16 +32,12 @@ export class WeatherManagementService {
   }
 
   async cacheForecast(forecast: WeatherForecast): Promise<void> {
-    await this.cacheManager.set(
-      weatherForecastKey(forecast.city),
-      forecast,
-      {
-        ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
-        // Type bug
-        // Stackoverflow answer - https://stackoverflow.com/a/77066815
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any,
-    );
+    await this.cacheManager.set(weatherForecastKey(forecast.city), forecast, {
+      ttl: this.configService.get<number>('REDIS_WEATHER_DATA_TTL_SECONDS'),
+      // Type bug
+      // Stackoverflow answer - https://stackoverflow.com/a/77066815
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
   }
 
   mapResponseToWeatherForecast(
@@ -84,18 +84,14 @@ export class WeatherManagementService {
     });
   }
 
-  async validateCity(cityName: string, forecastDaysAmount: number): Promise<void> {
+  async validateCity(
+    cityName: string,
+    forecastDaysAmount: number,
+  ): Promise<void> {
     try {
-      const response = await this.getCityWeather(
-        cityName,
-        forecastDaysAmount,
-      );
+      const response = await this.getCityWeather(cityName, forecastDaysAmount);
 
-      const forecast =
-        this.mapResponseToWeatherForecast(
-          response,
-          cityName,
-        );
+      const forecast = this.mapResponseToWeatherForecast(response, cityName);
 
       await this.cacheForecast(forecast);
     } catch (error) {

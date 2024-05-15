@@ -1,14 +1,16 @@
 import { ApolloDriver } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GqlModuleAsyncOptions } from '@nestjs/graphql';
-import { NODE_ENV } from '@shared';
 import { Request, Response } from 'express-serve-static-core';
+
+import { NODE_ENV } from '@shared';
 
 export const graphqlConfigAsync: GqlModuleAsyncOptions = {
   imports: [ConfigModule],
   driver: ApolloDriver,
   useFactory: (configService: ConfigService) => {
-    const isProduction = configService.get<string>('NODE_ENV') === NODE_ENV.production;
+    const isProduction =
+      configService.get<string>('NODE_ENV') === NODE_ENV.production;
 
     return {
       driver: ApolloDriver,

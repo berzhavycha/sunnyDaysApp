@@ -4,10 +4,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express-serve-static-core';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { extractJWTFromCookies } from '@shared';
+
 import { SafeUser, UsersService } from '@modules/users';
 
 import { JwtPayload } from '../interfaces';
-import { extractJWTFromCookies } from '@shared';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -24,6 +25,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
   async validate(payload: JwtPayload): Promise<SafeUser> {
-    return this.usersService.validateUserById(payload.sub)
+    return this.usersService.validateUserById(payload.sub);
   }
 }
