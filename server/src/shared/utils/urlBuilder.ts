@@ -1,4 +1,6 @@
-export const urlBuilder = (baseUrl: string, queryParams: { [key: string]: string | string[] | number | undefined }): string => {
+import { SearchParams } from "@shared/types";
+
+export const urlBuilder = (baseUrl: string, queryParams: SearchParams): string => {
     const transformedParams: Record<string, string> = {};
     for (const key in queryParams) {
         const value = queryParams[key];
