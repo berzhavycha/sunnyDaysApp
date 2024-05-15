@@ -5,7 +5,7 @@ import { ExtendedGraphQLContext } from '@modules/graphql';
 import { SafeUser } from '@modules/users';
 
 import { AuthService } from './auth.service';
-import { errorMessages } from './constants';
+import { errorMessages, successMessages } from './constants';
 import { CurrentUser, Public } from './decorators';
 import { UserDto } from './dtos';
 import { JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
@@ -13,7 +13,7 @@ import { Message, UserPayload } from './types';
 
 @Resolver()
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Public()
   @Mutation(() => UserPayload)
@@ -55,7 +55,7 @@ export class AuthResolver {
     const tokens = await this.authService.refreshAccessToken(refreshToken);
     this.authService.setCookies(context.res, tokens);
 
-    return { message: 'Has signed refreshed token successfully!' };
+    return { message: successMessages.REFRESH_TOKEN };
   }
 
   @Mutation(() => Message)
@@ -66,7 +66,7 @@ export class AuthResolver {
     await this.authService.signOut(id);
     this.authService.clearCookies(context.res);
 
-    return { message: 'Has signed out successfully!' };
+    return { message: successMessages.SIGN_OUT };
   }
 
   @Query(() => UserPayload, { name: 'currentUser', nullable: true })
