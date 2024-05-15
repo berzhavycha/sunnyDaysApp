@@ -6,9 +6,11 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { extractJWTFromCookies } from '@shared';
 
-import { SafeUser, UsersService } from '@modules/users';
+import { SafeUser } from '@modules/users';
 
 import { JwtPayload } from '../interfaces';
+
+import { AuthService } from './../auth.service';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(
@@ -16,7 +18,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   'jwt-refresh',
 ) {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
     private readonly configService: ConfigService,
   ) {
     super({
@@ -29,6 +31,6 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   }
 
   async validate(payload: JwtPayload): Promise<SafeUser> {
-    return this.usersService.validateUserById(payload.sub);
+    return this.authService.validateUserById(payload.sub);
   }
 }

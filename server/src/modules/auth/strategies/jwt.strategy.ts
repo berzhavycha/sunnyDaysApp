@@ -6,14 +6,15 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { extractJWTFromCookies } from '@shared';
 
-import { SafeUser, UsersService } from '@modules/users';
+import { SafeUser } from '@modules/users';
 
+import { AuthService } from '../auth.service';
 import { JwtPayload } from '../interfaces';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
     private readonly configService: ConfigService,
   ) {
     super({
@@ -25,6 +26,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
   async validate(payload: JwtPayload): Promise<SafeUser> {
-    return this.usersService.validateUserById(payload.sub);
+    return this.authService.validateUserById(payload.sub);
   }
 }

@@ -8,8 +8,7 @@ export const errorMessages = {
   REFRESH_TOKEN_NOT_FOUND: 'Refresh token not found in cookies.',
 };
 
-
 export const successMessages = {
   REFRESH_TOKEN: 'Has signed refreshed token successfully!',
-  SIGN_OUT: 'Has signed out successfully!'
-}
+  SIGN_OUT: 'Has signed out successfully!',
+};

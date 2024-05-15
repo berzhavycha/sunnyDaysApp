@@ -55,7 +55,7 @@ export class AuthService {
     };
   }
 
-  async validateUser(
+  async validateUserCredentials(
     email: string,
     password: string,
   ): Promise<SafeUser | null> {
@@ -69,6 +69,16 @@ export class AuthService {
     }
 
     throw new UnauthorizedException(errorMessages.INVALID_PASSWORD);
+  }
+
+  async validateUserById(id: string): Promise<SafeUser> {
+    const user = await this.usersService.findById(id);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return this.usersService.getSafeUser(user);
   }
 
   async signOut(userId: string): Promise<void> {

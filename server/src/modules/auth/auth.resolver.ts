@@ -13,7 +13,7 @@ import { Message, UserPayload } from './types';
 
 @Resolver()
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Mutation(() => UserPayload)
