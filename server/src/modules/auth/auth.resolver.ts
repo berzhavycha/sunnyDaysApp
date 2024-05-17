@@ -6,16 +6,15 @@ import { SafeUser } from '@modules/users';
 
 import { AuthService } from './auth.service';
 import { errorMessages, successMessages } from './constants';
-import { CurrentUser, Public } from './decorators';
+import { CurrentUser } from './decorators';
 import { UserDto } from './dtos';
-import { JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
+import { JwtAuthGuard, JwtRefreshTokenGuard, LocalAuthGuard } from './guards';
 import { Message, UserPayload } from './types';
 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @Mutation(() => UserPayload)
   async signUp(
     @Args('input') userDto: UserDto,
@@ -27,7 +26,6 @@ export class AuthResolver {
     return user;
   }
 
-  @Public()
   @Mutation(() => UserPayload)
   @UseGuards(LocalAuthGuard)
   async signIn(
@@ -40,7 +38,6 @@ export class AuthResolver {
     return user;
   }
 
-  @Public()
   @Mutation(() => Message)
   @UseGuards(JwtRefreshTokenGuard)
   async refreshAccess(
@@ -59,6 +56,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => Message)
+  @UseGuards(JwtAuthGuard)
   public async signOut(
     @CurrentUser('id') id: string,
     @Context() context: ExtendedGraphQLContext,
@@ -70,6 +68,7 @@ export class AuthResolver {
   }
 
   @Query(() => UserPayload, { name: 'currentUser', nullable: true })
+  @UseGuards(JwtAuthGuard)
   public async getCurrentUser(
     @CurrentUser() user: SafeUser,
   ): Promise<UserPayload | null> {

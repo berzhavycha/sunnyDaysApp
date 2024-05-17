@@ -1,12 +1,14 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { CurrentUser } from '@modules/auth';
+import { CurrentUser, JwtAuthGuard } from '@modules/auth';
 
 import { ForecastParamArgsDto } from './dtos';
 import { PaginatedWeatherForecast } from './types';
 import { WeatherForecastService } from './weather-forecast.service';
 
 @Resolver()
+@UseGuards(JwtAuthGuard)
 export class WeatherForecastResolver {
   constructor(
     private readonly weatherForecastService: WeatherForecastService,

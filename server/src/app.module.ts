@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 
-import { AuthModule, JwtAuthGuard } from '@modules/auth';
+import { AuthModule } from '@modules/auth';
 import { CitiesModule } from '@modules/cities';
 import { CitySearchModule } from '@modules/city-search';
 import { ConfigModule } from '@modules/config';
@@ -12,8 +11,7 @@ import { RedisModule } from '@modules/redis';
 import { SubscriptionsModule } from '@modules/subscriptions';
 import { UsersModule } from '@modules/users';
 import { WeatherForecastModule } from '@modules/weather-forecast';
-
-import { WeatherManagementModule } from './modules/weather-management';
+import { WeatherManagementModule } from '@modules/weather-management';
 
 @Module({
   imports: [
@@ -29,12 +27,6 @@ import { WeatherManagementModule } from './modules/weather-management';
     CitySearchModule,
     FeaturesModule,
     WeatherManagementModule,
-  ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
   ],
 })
 export class AppModule {}

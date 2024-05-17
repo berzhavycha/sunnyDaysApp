@@ -1,5 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
+import { JwtAuthGuard } from '@modules/auth';
 import { CurrentUser } from '@modules/auth/decorators';
 
 import { AddCityDto, DeleteCityDto } from './dtos';
@@ -7,6 +9,7 @@ import { Subscription } from './entities';
 import { SubscriptionsService } from './subscriptions.service';
 
 @Resolver()
+@UseGuards(JwtAuthGuard)
 export class SubscriptionsResolver {
   constructor(private readonly subscriptionService: SubscriptionsService) {}
 
