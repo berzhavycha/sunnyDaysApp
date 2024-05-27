@@ -35,8 +35,7 @@
     "react-spinners": "^0.13.8",
     "sharp": "^0.33.2",
     "swiper": "^11.1.0",
-    "use-debounce": "^10.0.0",
-    "with-refresh-token": "^0.2.5"
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.1",
