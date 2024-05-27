@@ -50,7 +50,7 @@ export const authMiddleware = async (
           sameSite: 'lax',
           secure: env.NODE_ENV === NODE_ENV.production,
         });
-      } else {
+      } else if(!authRoutes.includes(pathname)){
         request.headers.set('redirect', `/sign-in?error=You have to login first!`);
       }
     } else if (!authRoutes.includes(pathname)) {
